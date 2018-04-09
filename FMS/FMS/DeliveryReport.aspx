@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="FMS.SiteMaster" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DeliveryReport.aspx.cs" Inherits="FMS.DeliveryReport" %>
 
 <!DOCTYPE html>
 
@@ -67,6 +67,7 @@
       <!--Header End-->
       
        <!--Side Navigation Start-->
+       <!--Side Navigation Start-->
       <aside>
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
@@ -76,16 +77,16 @@
               	  <h5 class="centered">Thokozani Mangana</h5>
               	  	
                   <li class="mt">
-                      <a class="active" href="Main">
+                      <a  href="Main">
                           <i class="fa fa-dashboard"></i>
                           <span>Home</span>
                       </a>
                   </li>
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a  href="javascript:;" >
                           <i class="fa fa-desktop"></i>
-                          <span>Trucks</span>
+                          <span> Trucks</span>
                       </a>
                       <ul class="sub">
                          <li><a href="AddTruck">Add Truck</a></li> 
@@ -95,7 +96,7 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a  href="javascript:;" >
                           <i class="fa fa-cogs"></i>
                           <span>Drivers</span>
                       </a>
@@ -115,9 +116,8 @@
                           <li><a  href="DeleteUser">Delete User</a></li>
                       </ul>
                   </li>
-
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a class="active" href="javascript:;" >
                           <i class=" fa fa-bar-chart-o"></i>
                           <span> Reports</span>
                       </a>
@@ -132,30 +132,58 @@
              <!--Side Navigation End-->
           </div>
       </aside>
-        <!--main content start-->
+              <!--main content start-->
+            <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
 
               <div class="row">
                   <div class="col-lg-9 main-chart">
-                  <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
+                  <h3 align="center"> Delivery Report </h3>
+                                            <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Truck Plate</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form">
+                              </div>
+                          </div>
+                                                <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">To</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form">
+                              </div>
+                          </div>
+                                     <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">From</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form">
+                              </div>
+                          </div>
+                      <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Report Type</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form">
+                                  <button class="btn btn-theme btn-block" href="#" type="submit" > Search</button>
+
+                              </div>
+                                                  
+                        
+                 
+                          </div>
                                           
-                    				
+                    	                      	
 					
 					
-					<div class="row mt">
-
-
-					</div>
 					
-                  </div>
+                  </div><!-- /col-lg-9 END SECTION MIDDLE -->
                   
                   
-              <!-- Notifications Start -->
+      <!-- **********************************************************************************************************************************************************
+      RIGHT SIDEBAR CONTENT
+      *********************************************************************************************************************************************************** -->                  
+                  
                   <div class="col-lg-3 ds">
-                    <!--Alerts-->
-						<h3> Notifications</h3>
+                    <!--COMPLETED ACTIONS DONUTS CHART-->
+						<h3>Notifications</h3>
                                         
                       <!-- First Action -->
                       <div class="desc">
@@ -213,12 +241,12 @@
                       	</div>
                       </div>
 
+
                       
                   </div><!-- /col-lg-3 -->
               </div><! --/row -->
           </section>
       </section>
-
 
           <footer class="site-footer">
           <div class="text-center">
@@ -228,11 +256,24 @@
               </a>
           </div>
       </footer>
-        </div>
 
     </form>
 
+                <!-- js placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
    
+    <script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="assets/js/jquery.scrollTo.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="assets/js/jquery.sparkline.js"></script>
+
+
+    <!--common script for all pages-->
+    <script src="assets/js/common-scripts.js"></script>
+    
+    <script type="text/javascript" src="assets/js/gritter/js/jquery.gritter.js"></script>
+    <script type="text/javascript" src="assets/js/gritter-conf.js"></script>
 </body>
+
 </html>
 

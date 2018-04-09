@@ -2,5 +2,5 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
-    <h3>The drivers' page showcasing things like monitor trucks, add trucks, delete trucks and many more </h3>
+    <h3>The drivers' page showcasing things like monitor drivers, add drivers, delete drivers and more features </h3>
 </asp:Content>

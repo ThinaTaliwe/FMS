@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -154,8 +155,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DriverReport.aspx" />
+    <Content Include="DeliveryReport.aspx" />
+    <Content Include="TruckReport.aspx" />
+    <Content Include="AddUser.aspx" />
+    <Content Include="AddTruck.aspx" />
+    <Content Include="AddDriver.aspx" />
+    <Content Include="DeleteUser.aspx" />
+    <Content Include="DeleteTruck.aspx" />
+    <Content Include="DeleteDriver.aspx" />
     <Content Include="Drivers.aspx" />
     <Content Include="Help.aspx" />
+    <Content Include="Home_Dummy.html" />
     <Content Include="Login.html" />
     <Content Include="Main.aspx" />
     <Content Include="Account\AddPhoneNumber.aspx" />
@@ -182,6 +193,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
+    <Content Include="Main_2.aspx" />
+    <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -216,6 +229,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
+    <Content Include="SiteM2.aspx" />
     <Content Include="Trucks.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -337,7 +351,70 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DriverReport.aspx.cs">
+      <DependentUpon>DriverReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverReport.aspx.designer.cs">
+      <DependentUpon>DriverReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeliveryReport.aspx.cs">
+      <DependentUpon>DeliveryReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeliveryReport.aspx.designer.cs">
+      <DependentUpon>DeliveryReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TruckReport.aspx.cs">
+      <DependentUpon>TruckReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TruckReport.aspx.designer.cs">
+      <DependentUpon>TruckReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddUser.aspx.cs">
+      <DependentUpon>AddUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddUser.aspx.designer.cs">
+      <DependentUpon>AddUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddTruck.aspx.cs">
+      <DependentUpon>AddTruck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddTruck.aspx.designer.cs">
+      <DependentUpon>AddTruck.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="AddDriver.aspx.cs">
+      <DependentUpon>AddDriver.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddDriver.aspx.designer.cs">
+      <DependentUpon>AddDriver.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteUser.aspx.cs">
+      <DependentUpon>DeleteUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteUser.aspx.designer.cs">
+      <DependentUpon>DeleteUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteTruck.aspx.cs">
+      <DependentUpon>DeleteTruck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteTruck.aspx.designer.cs">
+      <DependentUpon>DeleteTruck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteDriver.aspx.cs">
+      <DependentUpon>DeleteDriver.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteDriver.aspx.designer.cs">
+      <DependentUpon>DeleteDriver.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Drivers.aspx.cs">
       <DependentUpon>Drivers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -379,6 +456,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Main_2.aspx.cs">
+      <DependentUpon>Main_2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Main_2.aspx.designer.cs">
+      <DependentUpon>Main_2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -395,6 +479,13 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="SiteM2.aspx.cs">
+      <DependentUpon>SiteM2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SiteM2.aspx.designer.cs">
+      <DependentUpon>SiteM2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Trucks.aspx.cs">
       <DependentUpon>Trucks.aspx</DependentUpon>
@@ -409,6 +500,13 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
