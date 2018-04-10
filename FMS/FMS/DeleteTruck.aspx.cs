@@ -9,6 +9,9 @@ namespace FMS
 {
     public partial class DeleteTruck : System.Web.UI.Page
     {
+        /*
+         * UI Interfsce to delete truck 
+         * */
         protected void Page_Load(object sender, EventArgs e)
         {
 

@@ -8,7 +8,9 @@ using System.Web.UI.WebControls;
 namespace FMS
 {
     public partial class CreateDelivery : System.Web.UI.Page
-    {
+    {  /**
+         * Ui Class for delivery creating 
+         */
         protected void Page_Load(object sender, EventArgs e)
         {
 

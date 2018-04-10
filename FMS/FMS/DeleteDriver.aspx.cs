@@ -9,6 +9,9 @@ namespace FMS
 {
     public partial class DeleteDriver : System.Web.UI.Page
     {
+        /*
+         * UI Interfsce to delete driver 
+         * */
         protected void Page_Load(object sender, EventArgs e)
         {
 
