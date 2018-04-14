@@ -12,20 +12,17 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="assets/css/zabuto_calendar.css">
-    <link rel="stylesheet" type="text/css" href="assets/js/gritter/css/jquery.gritter.css" />
-    <link rel="stylesheet" type="text/css" href="assets/lineicons/style.css">    
-    
-    <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
-
-
-
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:bundlereference runat="server" path="~/Content/ass/css/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Image for favicon -->
+       <link href="~/fav.jpg" rel="shortcut icon" type="image/x-icon" />
+    <!-- Javascript File -->
+    <script type="text/javascript"src="Content/ass/js/custom.js"></script> 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="Content/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
     <form runat="server">
@@ -49,190 +46,132 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
-
-    <section id="container" >
-      <!--Header Start-->
-       <header class="header black-bg">
-
-            <!--Company Name-->
-            <a href="Main" class="logo"><b>New Era Commerce</b></a>
-            <div class="nav notify-row" id="top_menu">
+<!-- Top Navigation for logo and account info -->
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <h1><a href="index.html">New Era Commerce</a></h1>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group form">
+                                
+                                <span class="input-group-btn">
+                                    
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="navbar navbar-inverse" role="banner">
+                        <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Thokozani <b class="caret"></b></a>
+                                    <ul class="dropdown-menu animated fadeInUp">
+                                        <li><a href="Login">Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
-            <div class="top-menu">
-            	<ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="#">Logout</a></li>
-            	</ul>
+        </div>
+    </div>
+    <!-- Main Menu -->
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="sidebar content-box" style="display: block;">
+                    <ul class="nav">
+                        <!-- Main menu -->
+                        <li class="current"><a href="Home"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+                         <li><a href="MonitorTrucks"><i class="glyphicon glyphicon-eye-open"></i> Monitor Trucks</a></li>
+                         <li><a href="CreateDelivery"><i class="glyphicon glyphicon-road"></i> Create Delivery</a></li>
+                        <li class="submenu">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-record"></i> Trucks
+                                <span class="caret pull-right"></span>
+                            </a>
+                            <!-- Sub menu -->
+                            <ul>
+                                <li><a href="AddTruck">Add Truck</a></li>
+                                <li><a href="DeleteTruck">Delete Truck</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-user"></i> Drivers
+                                <span class="caret pull-right"></span>
+                            </a>
+                            <!-- Sub menu -->
+                            <ul>
+                                <li><a href="AddDriver">Add Driver</a></li>
+                                <li><a href="UpdateDriver">Update Driver</a></li>
+                                <li><a href="DeleteDriver">Delete Driver</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-user"></i> User
+                                <span class="caret pull-right"></span>
+                            </a>
+                            <!-- Sub menu -->
+                            <ul>
+                                <li><a href="AddUser">Add User</a></li>
+                                <li><a href="Update User">Update User</a></li>
+                                <li><a href="DeleteUser">Delete User</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-stats"></i> Generate Reports
+                                <span class="caret pull-right"></span>
+                            </a>
+                            <!-- Sub menu -->
+                            <ul>
+                                <li><a href="TruckReport">Truck Report</a></li>
+                                <li><a href="DriverReport">Driver Report</a></li>
+                                <li><a href="DeliveryReport">Delivery Report</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </header>
-      <!--Header End-->
-      
-       <!--Side Navigation Start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">
-              
-              	
-              	  <h5 class="centered">Thokozani Mangana</h5>
-              	  	
-                  <li class="mt">
-                      <a class="active" href="Main">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Home</span>
-                      </a>
-                  </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-desktop"></i>
-                          <span>Trucks</span>
-                      </a>
-                      <ul class="sub">
-                         <li><a href="AddTruck">Add Truck</a></li> 
-						 <li><a  href=" DeleteTruck">Delete Truck</a></li>
-                          
-                      </ul>
-                  </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-cogs"></i>
-                          <span>Drivers</span>
-                      </a>
-                      <ul class="sub">
-						  <li><a  href="AddDriver">Add Driver</a></li>
-						  <li><a  href="DeleteDriver">Delete Driver</a></li>
-
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-book"></i>
-                          <span>Users</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="AddUser">Add User</a></li>
-                          <li><a  href="DeleteUser">Delete User</a></li>
-                      </ul>
-                  </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class=" fa fa-bar-chart-o"></i>
-                          <span> Reports</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="TruckReport">Truck Reports</a></li>
-                          <li><a  href="DeliveryReport">Delivery Reports</a></li>
-                          <li><a  href="DriverReport">Driver Reports</a></li>
-                      </ul>
-                  </li>
-
-              </ul>
-             <!--Side Navigation End-->
-          </div>
-      </aside>
-        <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper">
-
-              <div class="row">
-                  <div class="col-lg-9 main-chart">
-                  <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
-                                          
-                    				
-					
-					
-					<div class="row mt">
-
-
-					</div>
-					
-                  </div>
-                  
-                  
-              <!-- Notifications Start -->
-                  <div class="col-lg-3 ds">
-                    <!--Alerts-->
-						<h3> Notifications</h3>
-                                        
-                      <!-- First Action -->
-                      <div class="desc">
-                      	<div class="thumb">
-                      		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                      	</div>
-                      	<div class="details">
-                      		<p><muted>10 mins</muted><br/>
-                      		   <a href="#">Truck 03</a> ended it's trip<br/>
-                      		</p>
-                      	</div>
-                      </div>
-                      <!-- Second Action -->
-                      <div class="desc">
-                      	<div class="thumb">
-                      		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                      	</div>
-                      	<div class="details">
-                      		<p><muted>10 mins</muted><br/>
-                      		   <a href="#">Truck 03</a> ended it's trip<br/>
-                      		</p>
-                      	</div>
-                      </div>
-                      <!-- Third Action -->
-                      <div class="desc">
-                      	<div class="thumb">
-                      		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                      	</div>
-                      	<div class="details">
-                      		<p><muted>10 mins</muted><br/>
-                      		   <a href="#">Truck 03</a> ended it's trip<br/>
-                      		</p>
-                      	</div>
-                      </div>
-                      <!-- Fourth Action -->
-                      <div class="desc">
-                      	<div class="thumb">
-                      		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                      	</div>
-                      	<div class="details">
-                      		<p><muted>10 mins</muted><br/>
-                      		   <a href="#">Truck 03</a> ended it's trip<br/>
-                      		</p>
-                      	</div>
-                      </div>
-                      <!-- Fifth Action -->
-                      <div class="desc">
-                      	<div class="thumb">
-                      		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                      	</div>
-                      	<div class="details">
-                      		<p><muted>10 mins</muted><br/>
-                      		   <a href="#">Truck 03</a> ended it's trip<br/>
-                      		</p>
-                      	</div>
-                      </div>
-
-                      
-                  </div><!-- /col-lg-3 -->
-              </div><! --/row -->
-          </section>
-      </section>
-
-
-          <footer class="site-footer">
-          <div class="text-center">
-              2018 - Colloid
-              <a href="index.html#" class="go-top">
-                  <i class="fa fa-angle-up"></i>
-              </a>
-          </div>
-      </footer>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="container body-content">
+                        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                        </asp:ContentPlaceHolder>
+                             <hr />
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </form>
 
-   
+    <footer>
+        <div class="container">
+
+            <div class="copy text-center">
+                Copyright 2018 <a href='#'>Colloid</a>
+            </div>
+
+        </div>
+    </footer>
+
+       
+    </form>
+<!--Footer for website  -->
+
+    <script src="Content/js/custom.js"></script>
 </body>
 </html>
-
