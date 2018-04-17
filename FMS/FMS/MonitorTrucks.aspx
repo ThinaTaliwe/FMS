@@ -1,26 +1,24 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
+﻿<%@ Page Title="Monitor Trucks" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MonitorTrucks.aspx.cs" Inherits="FMS.MonitorTrucks" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <script src="http://maps.google.com/maps/api/js?sensor=false"
             type="text/javascript"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=myMap" type="text/javascript"></script>
 </head>
 <body>
-    <div id="map" style="width: 500px; height: 400px;"></div>
+    <div id="map" style="width: 100%; height: 500px;"></div>
 
     <script type="text/javascript">
         var locations = [
-            ['Bondi Beach', -33.890542, 151.274856, 4, "http://maps.google.com/mapfiles/ms/micons/blue.png"],
-            ['Coogee Beach', -33.923036, 151.259052, 5, "http://maps.google.com/mapfiles/ms/micons/green.png"],
-            ['Cronulla Beach', -34.028249, 151.157507, 3, "http://maps.google.com/mapfiles/ms/micons/yellow.png"],
-            ['Manly Beach', -33.80010128657071, 151.28747820854187, 2, "http://maps.google.com/mapfiles/ms/micons/blue.png"],
-            ['Maroubra Beach', -33.950198, 151.259302, 1, "http://maps.google.com/mapfiles/ms/micons/blue.png"]
+            ['Truck 2', -26.1890, 28.0040, 3, "http://maps.google.com/mapfiles/ms/micons/blue.png"],
+            ['Truck 3', -26.195246, 28.034088, 2, "http://maps.google.com/mapfiles/ms/micons/green.png"],
+            ['Truck 1', -26.107567, 28.056702, 1, "http://maps.google.com/mapfiles/ms/micons/yellow.png"],
         ];
 
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 10,
-            center: new google.maps.LatLng(-33.92, 151.25),
+            center: new google.maps.LatLng(-26.1890, 28.0040),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
@@ -46,6 +44,4 @@
     </script>
 </body>
 
-
-
-</html>
+</asp:Content>
