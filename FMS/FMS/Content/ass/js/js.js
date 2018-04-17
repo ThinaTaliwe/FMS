@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function ()
+{
 
 
     $(".submenu > a").click(function (e) {
@@ -18,7 +19,6 @@
     });
 
 });
-
 
 function validate() {
     var username = document.getElementById("username").value;
