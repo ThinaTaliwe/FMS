@@ -1,6 +1,8 @@
-﻿using System;
+﻿using FMS.App_Code;
+using System;
 using System.IO;
 using System.Net.Sockets;
+
 
 namespace FMS
 {
@@ -14,6 +16,7 @@ namespace FMS
         private Stream stream = null;
         private StreamWriter outStream = null;
         private StreamReader inStream = null;
+        private Delivery delivery = null;
 
         public DriverHandle(TcpClient conn)
         {
@@ -26,6 +29,8 @@ namespace FMS
 
         public void handle()
         {
+            while (delivery == null)
+                verify();
             string text = read();
             string[] request = text.Split(' ');
             switch (request[0])
@@ -43,6 +48,11 @@ namespace FMS
                     send("200 ERR Invalid_Request");
                     break;
             }
+        }
+
+        private void verify()
+        {
+            
         }
 
         private void GET(string request)
