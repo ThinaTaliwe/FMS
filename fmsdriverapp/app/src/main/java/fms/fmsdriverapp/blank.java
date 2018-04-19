@@ -2,6 +2,7 @@ package fms.fmsdriverapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class blank extends AppCompatActivity {
 
@@ -9,5 +10,7 @@ public class blank extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blank);
+        TextView txt = (TextView) findViewById(R.id.text);
+        txt.setText("mmeli");
     }
 }

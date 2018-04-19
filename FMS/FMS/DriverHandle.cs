@@ -52,7 +52,8 @@ namespace FMS
 
         private void verify()
         {
-            
+            string[] request = read().Split(' ');
+
         }
 
         private void GET(string request)

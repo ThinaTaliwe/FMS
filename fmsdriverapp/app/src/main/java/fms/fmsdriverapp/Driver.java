@@ -1,5 +1,9 @@
 package fms.fmsdriverapp;
 
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -13,10 +17,19 @@ public class Driver {
     private Socket conn = null;
     private Scanner in = null;
     private PrintWriter out = null;
+    private String address = null;
+    private int port;
 
-    private void connect() {
+
+    public Driver(String address, int port) {
+        this.address = address;
+        this.port = port;
+        connect(address, port);
+    }
+
+    private void connect(String address, int port) {
         try {
-            conn = new Socket(InetAddress.getByName("localhost"), 1998);
+            conn = new Socket(InetAddress.getByName(address), port);
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
         } catch (IOException e) {
@@ -25,12 +38,37 @@ public class Driver {
         }
     }
 
+    public boolean verify() {
+        return false;
+    }
+
     public void PUT(String request) {
-        connect();
         send(request);
         String[] response = read().split(" ");
         switch (response[0]) {
+            case "":
 
+                break;
+        }
+    }
+
+    public void GET(String request) {
+        send(request);
+        String[] response = read().split(" ");
+        switch (response[0]) {
+            case "":
+
+                break;
+        }
+    }
+
+    public void POST(String request) {
+        send(request);
+        String[] response = read().split(" ");
+        switch (response[0]) {
+            case "":
+
+                break;
         }
     }
 

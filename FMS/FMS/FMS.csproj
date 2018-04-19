@@ -201,7 +201,11 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\Deliver.cs" />
     <Compile Include="App_Code\Delivery.cs" />
+    <Compile Include="App_Code\Driver.cs" />
+    <Compile Include="App_Code\Truck.cs" />
+    <Compile Include="App_Code\User.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>

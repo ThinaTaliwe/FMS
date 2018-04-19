@@ -7,8 +7,9 @@
     tools:context=".blank">
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
-        android:layout_height="14dp"
+        android:layout_height="11dp"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.532"
