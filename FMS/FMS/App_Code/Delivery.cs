@@ -18,5 +18,7 @@ namespace FMS.App_Code
         private DateTime departDay;
         private DateTime arrivalDay;
         private User authority;
+
+        public Driver Driver { get => driver; set => driver = value; }
     }
 }
