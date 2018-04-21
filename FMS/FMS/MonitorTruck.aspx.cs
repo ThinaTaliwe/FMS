@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace FMS
 {
-    public partial class Monitor : System.Web.UI.Page
+    public partial class MonitorTruck : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

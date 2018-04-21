@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Monitor Trucks" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MonitorTrucks.aspx.cs" Inherits="FMS.MonitorTrucks" %>
+﻿<%@ Page Title="Monitor Trucks" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MonitorTruck.aspx.cs" Inherits="FMS.MonitorTruck" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -7,7 +7,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=myMap" type="text/javascript"></script>
 </head>
 <body>
-    <div id="map" style="width: 100%; height: 500px;"></div>
+    <div id="TruckMap" style="width: 100%; height: 500px;"></div>
 
     <script type="text/javascript">
         var locations = [
@@ -15,14 +15,13 @@
             ['Truck 3', -26.195246, 28.034088, 2, "http://maps.google.com/mapfiles/ms/micons/green.png"],
             ['Truck 1', -26.107567, 28.056702, 1, "http://maps.google.com/mapfiles/ms/micons/yellow.png"],
         ];
-
-        var map = new google.maps.Map(document.getElementById('map'), {
+        var map = new google.maps.Map(document.getElementById('TruckMap'), {
             zoom: 10,
             center: new google.maps.LatLng(-26.1890, 28.0040),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-        var infowindow = new google.maps.InfoWindow();
+        var infowindow = new google.maps.InfoWindow(); 
 
         var marker, i;
 
