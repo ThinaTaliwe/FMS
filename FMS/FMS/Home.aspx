@@ -1,20 +1,55 @@
 ﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="FMS.Home" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>Trucks</h1>
+    <section id="main-content">
+            <section class="wrapper">
+                <h3>Deliveries Done</h3>
+                <div class="row">
 
-<div id="map" style="width:100%;height:400px;"></div>
+                    <div class="col-md-12">
+                        <div class="content-panel">
+                            <hr>
+                            <table class="table">
+                                <!-- Heading --> 
+                                <thead>
+                                    <tr>
+                                        <th>Order Number</th>
+                                        <th>Truck Plate</th>
+                                        <th>Destination</th>
+                                        <th>Time Delivered</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>RMB 332 GP</td>
+                                        <td>Sasolburg</td>
+                                        <td>12h01</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>RVF 212 GP</td>
+                                        <td>Nelspruit</td>
+                                        <td>11h20</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>BGF 212 GP</td>
+                                        <td>Sasolburg</td>
+                                        <td>10h00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div><! --/content-panel -->
+                    </div><!-- /col-md-12 -->
 
-<script>
-function myMap() {
-  var myCenter = new google.maps.LatLng(-26.1890, 28.0040);
-  var mapCanvas = document.getElementById("map");
-  var mapOptions = {center: myCenter, zoom: 12};
-  var map = new google.maps.Map(mapCanvas, mapOptions);
-  var marker = new google.maps.Marker({position:myCenter});
-  marker.setMap(map);
-}
-</script>
+                    
+                    </div><!-- /col-md-12 -->
+                </div><!-- row -->
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=myMap"></script>
+                
+
+            </section><! --/wrapper -->
+        </section><!-- /MAIN CONTENT -->
+
 
 </asp:Content>
