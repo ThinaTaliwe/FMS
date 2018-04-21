@@ -8,11 +8,11 @@ namespace FMS.App_Code
 {
     interface Deliver
     {
-        public Delivery createDilevery(Truck truck, Driver driver);
-        public Bool assignDriver(Driver driver);
-        public void assignRoute();
-        public Bool assignTruck(Truck truck);
-        public void startDelivery();
-        public void setTrip(String to, String from);
+         Delivery createDilevery(Truck truck, Driver driver);
+         bool assignDriver(Driver driver);
+         void assignRoute();
+         bool assignTruck(Truck truck);
+         void startDelivery();
+         void setTrip(String to, String from);
     }
 }

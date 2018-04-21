@@ -53,23 +53,19 @@
                 <div class="col-md-5">
                     <!-- Logo -->
                     <div class="logo">
-                        <h1><a href="Home">New Era Commerce</a></h1>
+                        <h1><a href="index.html">New Era Commerce</a></h1>
                     </div>
                 </div>
                 <div class="col-md-5">
                     <div class="row">
-                    <div class="navbar navbar-inverse" role="banner">
-                        <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
-                            <ul class="nav navbar-nav">
-                                <li class="dropdown">
-                                    <a href="#" class="glyphicon glyphicon-envelope" data-toggle="dropdown"> 5 <b class="caret"></b></a>
-                                    <ul class="dropdown-menu animated fadeInUp">
-                                       
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                        <div class="col-lg-12">
+                            <div class="input-group form">
+                                
+                                <span class="input-group-btn">
+                                    
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-2">
