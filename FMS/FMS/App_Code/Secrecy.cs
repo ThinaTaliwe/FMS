@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-// 
+//
 using System.Security.Cryptography;
 
 namespace FMS.App_Code
@@ -10,10 +11,8 @@ namespace FMS.App_Code
     /// <summary>
     ///  SHA1 is more secure than MD5
     /// </summary>
-    public static class Secrecy
-    {
-
-        public static string HashPassword(String StrPassword)
+    public class Secrecy{
+        public string HashPassword(String StrPassword)
         {
             SHA1 HashAlgorithm = SHA1.Create();
             //Byte array to store the returned hashed data
@@ -32,5 +31,4 @@ namespace FMS.App_Code
             //Return the hexadecimal string.
             return hashedPassword;
         }
-    }
-}
+    } }
