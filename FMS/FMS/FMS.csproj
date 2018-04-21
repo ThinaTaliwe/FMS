@@ -144,13 +144,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="AddDriver.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />
     <Content Include="Content\ass\js\js.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CreateDelivery.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -161,14 +161,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Home.aspx" />
     <Content Include="Home_Dummy.html" />
     <Content Include="Login.aspx" />
-    <Content Include="Monitor.aspx" />
-    <Content Include="MonitorDriver.aspx" />
-    <Content Include="MonitorTrucks.aspx" />
+    <Content Include="MonitorTruck.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -206,21 +203,11 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Include="AddDriver.aspx.cs">
-      <DependentUpon>AddDriver.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AddDriver.aspx.designer.cs">
-      <DependentUpon>AddDriver.aspx</DependentUpon>
-    </Compile>
-=======
     <Compile Include="App_Code\Deliver.cs" />
     <Compile Include="App_Code\Delivery.cs" />
     <Compile Include="App_Code\Driver.cs" />
     <Compile Include="App_Code\Truck.cs" />
     <Compile Include="App_Code\User.cs" />
->>>>>>> 07a351d2a5813b3b54f95fc38520d66df9e42f93
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -236,6 +223,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateDelivery.aspx.cs">
+      <DependentUpon>CreateDelivery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateDelivery.aspx.designer.cs">
+      <DependentUpon>CreateDelivery.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -263,26 +257,12 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Monitor.aspx.cs">
-      <DependentUpon>Monitor.aspx</DependentUpon>
+    <Compile Include="MonitorTruck.aspx.cs">
+      <DependentUpon>MonitorTruck.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Monitor.aspx.designer.cs">
-      <DependentUpon>Monitor.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MonitorDriver.aspx.cs">
-      <DependentUpon>MonitorDriver.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MonitorDriver.aspx.designer.cs">
-      <DependentUpon>MonitorDriver.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MonitorTrucks.aspx.cs">
-      <DependentUpon>MonitorTrucks.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MonitorTrucks.aspx.designer.cs">
-      <DependentUpon>MonitorTrucks.aspx</DependentUpon>
+    <Compile Include="MonitorTruck.aspx.designer.cs">
+      <DependentUpon>MonitorTruck.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -305,13 +285,6 @@
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -7,11 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FMS
-{
-
-
-    public partial class CreateDelivery
-    {
+namespace FMS {
+    
+    
+    public partial class CreateDelivery {
     }
 }
