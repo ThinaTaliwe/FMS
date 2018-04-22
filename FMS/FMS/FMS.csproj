@@ -214,6 +214,7 @@
     <Compile Include="App_Code\Driver.cs" />
     <Compile Include="App_Code\Truck.cs" />
     <Compile Include="App_Code\User.cs" />
+    <Compile Include="App_Code\Util.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>

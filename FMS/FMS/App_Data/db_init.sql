@@ -117,6 +117,7 @@ CREATE TABLE [dbo].[DRIVERS] (
     [ID]          VARCHAR (13) NOT NULL,
     [CODE]        VARCHAR (3)  NOT NULL,
     [FIRST_ISSUE] DATE         NOT NULL,
+    [EXPIRY] DATE         NOT NULL,
     [RESTRICTION] INT          NOT NULL,
     PRIMARY KEY CLUSTERED ([ID] ASC)
 );

@@ -7,18 +7,19 @@ namespace FMS.App_Code
 {
     public class Delivery
     {
-        private int id;
+        private int id {get;}
         private int orderNum;
-        private Truck truck;
-        private Driver driver;
-        private string from;
-        private string to;
-        private string material;
-        private int load;
-        private DateTime departDay;
-        private DateTime arrivalDay;
-        private User authority;
+        private Truck truck { get; set; }
+        private Driver driver { get; set; }
+        private string from { get; set;  }
+        private string to { get; set; }
+        private string material { get; set; }
+        private int load { get; set; } 
+        private DateTime departDay { get; set; }
+        private DateTime arrivalDay { get; set; }
+        private User authority { get; set; }
 
-        
+
+
     }
 }

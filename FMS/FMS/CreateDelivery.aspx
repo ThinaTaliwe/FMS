@@ -29,12 +29,8 @@
                                          <div class="form-group">
 										    <label  class="col-sm-2 control-label">Truck</label>
 										    <div class="col-sm-10">
-										      <select class="form-control" id="TruckChosen">
-													<option>RMB1454GP</option>
-													<option>FD23FDGP</option>
-													<option>POD453GP</option>
-													<option>FED243GP</option>
-													<option>GOD454GP</option>
+										      <select class="form-control" id="TruckChosen" runat="server">
+													<option>Select a truck</option>
 												</select> 
 			
 										    </div>
@@ -42,11 +38,8 @@
                                          <div class="form-group">
 										    <label  class="col-sm-2 control-label">Driver</label>
 										    <div class="col-sm-10">
-										      <select class="form-control" id="DriverChosen">
-													<option>Marley Taliwe</option>
-													<option>Thina Mavuso</option>
-													<option>Maitso Mkwanazi</option>
-													<option>Bill Bobslay</option>
+										      <select class="form-control" id="DriverChosen" runat="server">
+													<option>Select a driver</option>
 												</select> 
 			
 										    </div>
