@@ -13,6 +13,7 @@
     </asp:PlaceHolder>
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:bundlereference runat="server" path="~/Content/ass" />
     <webopt:bundlereference runat="server" path="~/Content/ass/css/styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- Image for favicon -->
@@ -23,6 +24,9 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="Content/bootstrap/js/bootstrap.min.js"></script>
+         <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="Content/ass/js/forms.js"></script>
+     <script src="Content/ass/js/calender.js"></script>
 </head>
 <body>
     <form runat="server">
