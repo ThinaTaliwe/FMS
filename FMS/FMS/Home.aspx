@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <section id="main-content">
             <section class="wrapper">
+                <div class="content-box-large">
                 <h3>Deliveries Done</h3>
                 <div class="row">
 

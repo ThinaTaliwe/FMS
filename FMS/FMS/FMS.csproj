@@ -146,10 +146,13 @@
     <Content Include="About.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />
+    <Content Include="Content\ass\js\calendar.js" />
+    <Content Include="Content\ass\js\forms.js" />
     <Content Include="Content\ass\js\js.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CreateDelivery.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -222,6 +225,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateDelivery.aspx.cs">
+      <DependentUpon>CreateDelivery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateDelivery.aspx.designer.cs">
+      <DependentUpon>CreateDelivery.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
