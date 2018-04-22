@@ -144,6 +144,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="App_Data\dbFMS.mdf" />
+    <Content Include="App_Data\dbFMS_log.ldf">
+      <DependentUpon>dbFMS.mdf</DependentUpon>
+    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />
     <Content Include="Content\ass\js\calendar.js" />
@@ -290,7 +294,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\ass\img\" />
   </ItemGroup>
   <ItemGroup>
@@ -320,7 +323,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53436</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
