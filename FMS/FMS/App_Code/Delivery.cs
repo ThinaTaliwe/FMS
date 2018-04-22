@@ -19,6 +19,6 @@ namespace FMS.App_Code
         private DateTime arrivalDay;
         private User authority;
 
-
+        
     }
 }
