@@ -32,6 +32,7 @@ namespace FMS
                     if(pass == users.GetString(0))
                     {
                         Session["user"] = new User(Convert.ToString(users.GetString(1)));
+                        Session["name"] = name;
                         Response.Redirect("Home");
                     }
                 }

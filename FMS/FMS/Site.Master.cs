@@ -12,13 +12,15 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Session["user"] == null)
+            if (Session["user"] == null)
             {
-                Session["user"] = new User("1234567890123");
-                Response.Redirect("Login");
+                User u = new User("1234567890123");
+                Session["user"] = u;
+                Session["name"] = u.getName();
+                user.InnerHtml = Convert.ToString(Session["name"]);
             } else
             {
-                user.InnerText = user.Name;
+                
             }
         }
     }
