@@ -144,7 +144,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="App_Data\dbFM.mdf" />
+    <Content Include="App_Data\FMSDB_1.mdf" />
+    <Content Include="App_Data\FMSDB_1_log.ldf">
+      <DependentUpon>FMSDB_1.mdf</DependentUpon>
+    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />
     <Content Include="Content\ass\js\calendar.js" />

@@ -24,7 +24,7 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
         SET NOEXEC ON;
     END
 
-SET DatabaseName "C:\USERS\MMELI\DESKTOP\SCHOOL\IFM3A\TEAM43\FMS\FMS\APP_DATA\DBFMS_.MDF";
+SET DatabaseName "C:\Users\Khanyisile\Desktop\team43\FMS\FMS\App_Data\FMSDB_1.MDF";
 
 GO
 USE [$(DatabaseName)];
