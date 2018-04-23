@@ -24,7 +24,7 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
         SET NOEXEC ON;
     END
 
-SET DatabaseName " ";
+SET DatabaseName "C:\USERS\MMELI\DESKTOP\SCHOOL\IFM3A\TEAM43\FMS\FMS\APP_DATA\DBFMS_.MDF";
 
 GO
 USE [$(DatabaseName)];
@@ -89,6 +89,7 @@ CREATE TABLE [dbo].[DELIVERY] (
     [DELIVERY_DAY] DATETIME      NULL,
     [MATERIAL]     VARCHAR (100) NOT NULL,
 	[LOAD] 		   INT 			 NOT NULL,
+	[LOCATION] 		   VARCHAR(100)   NULL,
     PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 

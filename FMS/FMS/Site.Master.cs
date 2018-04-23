@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using FMS.App_Code;
 
 namespace FMS
 {
@@ -13,6 +14,7 @@ namespace FMS
         {
             if(Session["user"] == null)
             {
+                Session["user"] = new User("1234567890123");
                 Response.Redirect("Login");
             } else
             {

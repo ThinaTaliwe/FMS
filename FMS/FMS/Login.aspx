@@ -23,9 +23,9 @@
 		<div class="login">
 				<input id="username" type="text" placeholder="username" name="user" runat="server"/><br/>
 				<input id="password" type="password" placeholder="password" name="password" runat="server"/><br/>
-				<input id="btnLogin" type="button" value="Login" onclick="validate()" runat="server" onserverclick="logon"/> <br/>
+				<input id="btnLogin" type="button" value="Login" onclick="validate()" runat="server" onserverclick="logon"/> <br/> 
             <div class ="Login_Error"> 
-                <label id="Login_Error">Hey</label>
+                <label id="Login_Error" runat="server"> </label>
             </div>
 		</div>
     </div>

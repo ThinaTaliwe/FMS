@@ -18,8 +18,9 @@ namespace FMS
                 Response.Redirect("Home");
         }
 
-        public void logon(object sender, EventArgs e)
+        protected void logon(object sender, EventArgs e)
         {
+            Login_Error.InnerText = "Logging in";
             var name = username.Value;
             var pass = password.Value;
             var query = "SELECT PASSWORD, ID FROM USERS WHERE NAME LIKE '" + name + "';";
