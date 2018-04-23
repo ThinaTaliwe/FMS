@@ -47,7 +47,10 @@
                                    <div class="form-group">
 										    <label  class="col-sm-2 control-label">Delivery Date</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="DeliveryDate" placeholder="YYYY/MM/DD">
+										     	
+						                    <form action="/action_page.php">
+                                              <input class="form-control" type="date" id="DeliveryDate">
+                                            </form>
 										    </div>
 										  </div>
                                    <div class="form-group">
