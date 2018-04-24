@@ -76,7 +76,7 @@
 												</button>
 												<button class="btn btn-primary" type="submit" onclick="CreateDelivery()">
 													<i class="fa fa-save" ></i>
-													Submit
+													Create Delivery
 												</button>			 
 										  
 										</form>

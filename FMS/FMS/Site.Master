@@ -98,7 +98,17 @@
                         <!-- Main menu -->
                         <li class="current"><a href="Home"><i class="glyphicon glyphicon-home"></i> Home</a></li>
                          <li><a href="MonitorTrucks"><i class="glyphicon glyphicon-eye-open"></i> Monitor Trucks</a></li>
-                         <li><a href="CreateDelivery"><i class="glyphicon glyphicon-road"></i> Create Delivery</a></li>
+                          <li class="submenu">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-road"></i>  Delivery
+                                <span class="caret pull-right"></span>
+                            </a>
+                            <!-- Sub menu -->
+                            <ul>
+                                <li><a href="CreateDelivery">Create Delivery</a></li>
+                                <li><a href="DeliveryDelete">Delete Delivery</a></li>
+                            </ul>
+                        </li>
                         <li class="submenu">
                             <a href="#">
                                 <i class="glyphicon glyphicon-record"></i> Trucks

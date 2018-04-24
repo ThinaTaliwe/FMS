@@ -10,6 +10,6 @@
 namespace FMS {
     
     
-    public partial class AddDriver {
+    public partial class DeleteUser {
     }
 }
