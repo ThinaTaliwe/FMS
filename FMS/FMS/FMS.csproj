@@ -144,9 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="App_Data\FMSDB_1.mdf" />
-    <Content Include="App_Data\FMSDB_1_log.ldf">
-      <DependentUpon>FMSDB_1.mdf</DependentUpon>
+    <Content Include="App_Data\DBDB.mdf" />
+    <Content Include="App_Data\DBDB_log.ldf">
+      <DependentUpon>DBDB.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />
@@ -209,6 +209,7 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\Client.cs" />
     <Compile Include="App_Code\Deliver.cs" />
     <Compile Include="App_Code\Delivery.cs" />
     <Compile Include="App_Code\Driver.cs" />

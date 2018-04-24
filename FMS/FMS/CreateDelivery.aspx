@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Create Delivery" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateDelivery.aspx.cs" Inherits="FMS.CreateDelivery" %>
+﻿<%@ Page Title="Create Delivery" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateDelivery.aspx.cs" Inherits="FMS.CreateDelivery" EnableEventValidation="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
         <div class="page-content">
@@ -23,7 +23,9 @@
 										  <div class="form-group">
 										    <label  class="col-sm-2 control-label">Order Number</label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="OrderNum" placeholder="">
+										      <input class="form-control" id="OrderNum" placeholder="" runat="server">
+                                               <asp:RequiredFieldValidator id="validOrderNum" runat="server" controlToValidate="OrderNum" errorMessage="Enter order number" display="dynamic">
+                                               </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
                                          <div class="form-group">
@@ -32,6 +34,19 @@
 										      <select class="form-control" id="TruckChosen" runat="server">
 													<option>Select a truck</option>
 												</select> 
+                                               <asp:RequiredFieldValidator id="validTruckChosen" runat="server" controlToValidate="TruckChosen" errorMessage="choose truck" display="dynamic">
+                                               </asp:RequiredFieldValidator>
+			
+										    </div>
+										  </div>
+                                         <div class="form-group">
+										    <label  class="col-sm-2 control-label">Client</label>
+										    <div class="col-sm-10">
+										      <select class="form-control" id="Client" runat="server">
+													<option>Select a Client</option>
+												</select> 
+                                               <asp:RequiredFieldValidator id="validClient" runat="server" controlToValidate="Client" errorMessage="Choose client" display="dynamic">
+                                               </asp:RequiredFieldValidator>
 			
 										    </div>
 										  </div>
@@ -41,6 +56,8 @@
 										      <select class="form-control" id="DriverChosen" runat="server">
 													<option>Select a driver</option>
 												</select> 
+                                               <asp:RequiredFieldValidator id="validDriver" runat="server" controlToValidate="DriverChosen" errorMessage="Choose driver" display="dynamic">
+                                               </asp:RequiredFieldValidator>
 			
 										    </div>
 										  </div>
@@ -49,35 +66,52 @@
 										    <div class="col-sm-10">
 										     	
 						                    <form action="/action_page.php">
-                                              <input class="form-control" type="date" id="DeliveryDate">
+                                              <input class="form-control" type="date" id="DeliveryDate" runat="server">
+                                               <asp:RequiredFieldValidator id="validDeliveryDate" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
+                                               </asp:RequiredFieldValidator>
                                             </form>
 										    </div>
 										  </div>
                                    <div class="form-group">
-										    <label class="col-sm-2 control-label">Delivery Time</label>
+										    <label class="col-sm-2 control-label">Material</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="DeliveryTime" placeholder="00H00">
+										      <input  class="form-control" id="Material" placeholder="" runat="server">
+                                               <asp:RequiredFieldValidator id="validMaterial" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
+                                               </asp:RequiredFieldValidator>
+										    </div>
+										  </div>
+                                   <div class="form-group">
+										    <label class="col-sm-2 control-label">Load</label>
+										    <div class="col-sm-10">
+										      <input  class="form-control" id="Load" placeholder="" runat="server">
+                                               <asp:RequiredFieldValidator id="validLoad" runat="server" controlToValidate="Load" errorMessage="Enter Load" display="dynamic">
+                                               </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
                                 <div class="form-group">
 										    <label  class="col-sm-2 control-label">Origin</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="StartRoute" placeholder="">
+										      <input  class="form-control" id="StartRoute" placeholder="" runat="server">
+                                               <asp:RequiredFieldValidator id="validStartRoute" runat="server" controlToValidate="StartRoute" errorMessage="Enter origin" display="dynamic">
+                                               </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
                                    <div class="form-group">
 										    <label class="col-sm-2 control-label">Destination</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="EndRoute" placeholder="">
+										      <input  class="form-control" id="EndRoute" placeholder="" runat="server">
+                                               <asp:RequiredFieldValidator id="validEndRoute" runat="server" controlToValidate="EndRoute" errorMessage="Enter destination" display="dynamic">
+                                               </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
 				  							<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()">
 													Cancel
 												</button>
-												<button class="btn btn-primary" type="submit" onclick="CreateDelivery()">
+												<button class="btn btn-primary" type="submit" onclick="CreateDelivery()" onserverclick="newDelivery" runat="server">
 													<i class="fa fa-save" ></i>
 													Submit
-												</button>			 
+												</button>		<asp:Button ID="btn" runat="server" Text="Button" OnClick="btn_Click" />	 
+										    <label class="col-sm-2 control-label" id="Error" runat="server"> </label>
 										  
 										</form>
                             </div>

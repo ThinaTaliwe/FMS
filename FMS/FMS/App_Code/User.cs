@@ -7,11 +7,11 @@ namespace FMS.App_Code
 {
     public class User
     {
-        private string id { get; }
-        private string name { get; }
-        private string surname { get; }
-        private string email { get; set; }
-        private string type { get; set; }
+        private string id;
+        private string name;
+        private string surname;
+        private string email;
+        private string type;
 
         public User(string id)
         {
@@ -27,10 +27,14 @@ namespace FMS.App_Code
             }
         }
 
-        public string getName()
-        {
-            return name;
-        }
+        public void setEmail(string value) { email = value; }
+        public void setType(string value) { type = value; }
+
+        public string getID() { return id; }
+        public string getName()  { return name;  }
+        public string getSurname() { return surname; }
+        public string getEmail() { return email; }
+        public string getType() { return type; }
     }
     
 }
