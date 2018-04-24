@@ -15,7 +15,7 @@ namespace FMS.App_Code
         {
             var query = "SELECT NAME, COMPANY, ID FROM CLIENTS WHERE COMPANY LIKE '" + company + "';";
             var client = Util.query(query);
-            if(client.Read())
+            if (client.Read())
             {
                 name = Convert.ToString(client.GetString(0));
                 company = Convert.ToString(client.GetString(1));

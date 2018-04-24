@@ -144,12 +144,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="AddDriver.aspx" />
-    <Content Include="AddTruck.aspx" />
-    <Content Include="AddUser.aspx" />
     <Content Include="App_Data\DBDB.mdf" />
     <Content Include="App_Data\DBDB_log.ldf">
       <DependentUpon>DBDB.mdf</DependentUpon>
+    <Content Include="AddDriver.aspx" />
+    <Content Include="AddTruck.aspx" />
+    <Content Include="AddUser.aspx" />
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />

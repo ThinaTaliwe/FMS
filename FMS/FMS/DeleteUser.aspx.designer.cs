@@ -10,6 +10,6 @@
 namespace FMS {
     
     
-    public partial class Login {
+    public partial class DeleteUser {
     }
 }

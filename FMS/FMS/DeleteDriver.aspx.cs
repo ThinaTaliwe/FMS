@@ -7,11 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace FMS
 {
-	public partial class AddDriver : System.Web.UI.Page
-	{
-		protected void Page_Load(object sender, EventArgs e)
-		{
+    public partial class DeleteDriver : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
 
-		}
-	}
+        }
+    }
 }

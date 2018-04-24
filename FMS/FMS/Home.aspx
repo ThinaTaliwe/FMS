@@ -1,12 +1,14 @@
 ﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="FMS.Home" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <section id="main-content">
+
+
             <section class="wrapper">
                 <div class="content-box-large">
-                <h3>Deliveries Done</h3>
+                <h3>Deliveries Pending</h3>
                 <div class="row">
 
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <div class="content-panel">
                             <hr>
                             <table class="table">
@@ -23,7 +25,7 @@
                                     <tr>
                                         <td>1</td>
                                         <td>RMB 332 GP</td>
-                                        <td>Sasolburg</td>
+                                        <td id="place" runat="server">Sasolburg</td>
                                         <td>12h01</td>
                                     </tr>
                                     <tr>

@@ -17,7 +17,7 @@ namespace FMS
                 User u = new User("1234567890123");
                 Session["user"] = u;
                 Session["name"] = u.getName();
-                user.InnerHtml = Convert.ToString(Session["name"]);
+                user.InnerHtml = "Mmeli";
             } else
             {
                 

@@ -147,9 +147,9 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\DBDB.mdf" />
-    <Content Include="App_Data\DBDB_log.ldf">
-      <DependentUpon>DBDB.mdf</DependentUpon>
+    <Content Include="App_Data\FMSDB_1.mdf" />
+    <Content Include="App_Data\FMSDB_1_log.ldf">
+      <DependentUpon>FMSDB_1.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />
@@ -243,7 +243,6 @@
     <Compile Include="AddUser.aspx.designer.cs">
       <DependentUpon>AddUser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Code\Client.cs" />
     <Compile Include="App_Code\Deliver.cs" />
     <Compile Include="App_Code\Delivery.cs" />
     <Compile Include="App_Code\Driver.cs" />

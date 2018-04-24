@@ -20,23 +20,7 @@ namespace FMS
 
         protected void logon(object sender, EventArgs e)
         {
-            Login_Error.InnerText = "Logging in";
-            var name = username.Value;
-            var pass = password.Value;
-            var query = "SELECT PASSWORD, ID FROM USERS WHERE NAME LIKE '" + name + "';";
-            var users = Util.query(query);
-            if(users.HasRows)
-            {
-                while (users.Read())
-                {
-                    if(pass == users.GetString(0))
-                    {
-                        Session["user"] = new User(Convert.ToString(users.GetString(1)));
-                        Session["name"] = name;
-                        Response.Redirect("Home");
-                    }
-                }
-            } 
+
         }
     }
 }

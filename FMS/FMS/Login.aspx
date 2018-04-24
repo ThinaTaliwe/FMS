@@ -21,16 +21,29 @@
 			<div>Fleet Management System</div>
 		</div>
 		<div class="login">
-				<input id="username" type="text" placeholder="username" name="user" runat="server"/><br/>
-				<input id="password" type="password" placeholder="password" name="password" runat="server"/><br/>
-				<input id="btnLogin" type="button" value="Login" onclick="validate()" runat="server" onserverclick="logon"/> <br/> 
-            <div class ="Login_Error"> 
-                <label id="Login_Error" runat="server"> </label>
-            </div>
+				<input id="username" type="text" placeholder="username" name="user" /><br/>
+				<input id="password" type="password" placeholder="password" name="password" /><br/>
+				<input id="btnLogin" type="button" value="Login" onclick="validate()" /> <br/> 
 		</div>
     </div>
 		<br/>
 		</body>
+      <script>
+          function validate() {
+              var username = document.getElementById("username").value;
+              var password = document.getElementById("password").value;
+              if (username == "Mmeli" && password == "Fleet123") {
+                  alert("Login successfully");
+                  window.location = "Home"; // Redirecting to other page.
+                  return false;
+              }
+              else {
+                  alert("Login was unsuccessful, please check your username and password");
+                  document.getElementById("Login_Error").innerHTML = "Login was unsuccessful, please check your username and password";
+              }
+
+          };
+      </script>
       
 </html>
 
