@@ -24,7 +24,7 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
         SET NOEXEC ON;
     END
 
-SET DatabaseName "C:\Users\Khanyisile\Desktop\team43\FMS\FMS\App_Data\FMSDB_1.MDF";
+SET DatabaseName "aspnet-WebSite-FMS";
 
 GO
 USE [$(DatabaseName)];
@@ -90,6 +90,8 @@ CREATE TABLE [dbo].[DELIVERY] (
     [MATERIAL]     VARCHAR (100) NOT NULL,
 	[LOAD] 		   INT 			 NOT NULL,
 	[LOCATION] 		   VARCHAR(100)   NULL,
+	[AUTHORIY]		VARCHAR(13) NOT NULL,
+	[COMPLETED]		INT 	NOT NULL	DEFAULT 1,
     PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 

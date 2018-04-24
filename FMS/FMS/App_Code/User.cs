@@ -26,6 +26,11 @@ namespace FMS.App_Code
                 type = user.GetString(4);
             }
         }
+
+        public string getName()
+        {
+            return name;
+        }
     }
     
 }
