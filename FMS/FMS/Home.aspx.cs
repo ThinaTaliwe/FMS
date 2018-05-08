@@ -10,21 +10,21 @@ namespace FMS
 {
     public partial class Home : System.Web.UI.Page
     {
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            var query = "select * from users where name like 'MMELI'";
-            var rows = Util.query(query);
-           
-            if(rows.HasRows)
-            {
-                while(rows.Read())
-                {
-                    place.InnerText = Convert.ToString(rows.GetString(1));
-                    
-                }
 
+            var query = "select * from Delivery";
+            var rows = Util.query(query);
+            var HTMLStr = "";
+            if (rows.HasRows)
+            {
+                while (rows.Read())
+                {
+
+                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + Convert.ToString(rows.GetString(5)) + "</td> <td> " + Convert.ToString(rows.GetString(6)) + "</td> </tr>";
+                }
+                tables.InnerHtml = HTMLStr;
             }
         }
     }

@@ -147,9 +147,9 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\DBDB.mdf" />
-    <Content Include="App_Data\DBDB_log.ldf">
-      <DependentUpon>DBDB.mdf</DependentUpon>
+    <Content Include="App_Data\mydb.mdf" />
+    <Content Include="App_Data\mydb_log.ldf">
+      <DependentUpon>mydb.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />

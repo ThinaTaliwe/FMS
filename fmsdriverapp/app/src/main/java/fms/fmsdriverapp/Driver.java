@@ -24,7 +24,7 @@ public class Driver {
     public Driver(String address, int port) {
         this.address = address;
         this.port = port;
-        connect(address, port);
+        //connect(address, port);
     }
 
     private void connect(String address, int port) {

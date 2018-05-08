@@ -11,6 +11,7 @@ public class blank extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blank);
         TextView txt = (TextView) findViewById(R.id.text);
-        txt.setText("mmeli");
+        Driver d = new Driver("localhost", 1998);
+        //txt.setText(d.read());
     }
 }

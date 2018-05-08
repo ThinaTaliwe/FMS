@@ -128,7 +128,6 @@
                             <!-- Sub menu -->
                             <ul>
                                 <li><a href="AddDriver">Add Driver</a></li>
-                                <li><a href="UpdateDriver">Update Driver</a></li>
                                 <li><a href="DeleteDriver">Delete Driver</a></li>
                             </ul>
                         </li>

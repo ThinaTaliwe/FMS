@@ -17,29 +17,12 @@
                                     <tr>
                                         <th>Order Number</th>
                                         <th>Truck Plate</th>
+                                        <th>Origin</th>
                                         <th>Destination</th>
-                                        <th>Time Delivered</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>RMB 332 GP</td>
-                                        <td id="place" runat="server">Sasolburg</td>
-                                        <td>12h01</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>RVF 212 GP</td>
-                                        <td>Nelspruit</td>
-                                        <td>11h20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>BGF 212 GP</td>
-                                        <td>Sasolburg</td>
-                                        <td>10h00</td>
-                                    </tr>
+                                <tbody runat="server" id="tables">
+                                    
                                 </tbody>
                             </table>
                         </div><! --/content-panel -->
