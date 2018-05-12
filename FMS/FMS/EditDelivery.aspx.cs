@@ -7,16 +7,12 @@ using System.Web.UI.WebControls;
 
 namespace FMS
 {
-    public partial class EditDelivery1 : System.Web.UI.Page
+    public partial class EditDelivery : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-        }
-
-        protected void btn_Click(object sender, EventArgs e)
-        {
-            
+            string id = Request.QueryString["order"];
+            ordernum.Text = id; 
         }
     }
 }

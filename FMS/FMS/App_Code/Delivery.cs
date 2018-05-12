@@ -24,6 +24,14 @@ namespace FMS.App_Code
             Util.query(query);
         }
 
+        public void save()
+        {
+            var query = "UPDATE DELIVERY WHERE ID LIKE '" + id +
+                "SET TRUCK = '" + truck.getID() + "'" +
+                "SET DRIVER = " + driver.getID() + "';";
+            Util.query(query);
+        }
+
         public static Delivery getInstance(string orderNum)
         {
             var query = "SELECT * FROM DELIVERY WHERE ORDER_NUM LIKE '" + orderNum + "';";
