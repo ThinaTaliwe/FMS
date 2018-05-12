@@ -151,6 +151,10 @@
     <Content Include="App_Data\mydb_log.ldf">
       <DependentUpon>mydb.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\test.mdf" />
+    <Content Include="App_Data\test_log.ldf">
+      <DependentUpon>test.mdf</DependentUpon>
+    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />
     <Content Include="Content\ass\js\calendar.js" />
