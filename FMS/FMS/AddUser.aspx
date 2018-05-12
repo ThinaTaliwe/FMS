@@ -46,7 +46,7 @@
 													<option>Admin</option>
 													<option>Data Handler</option>
 													<option>Supervisor</option>
-													
+													<option>Client</option>
 												</select>
 											</div>
 										</div>

@@ -106,6 +106,7 @@
                             <!-- Sub menu -->
                             <ul>
                                 <li><a href="CreateDelivery">Create Delivery</a></li>
+                                <li><a href="UpdateDelivery">Update Delivery</a></li>
                                 <li><a href="DeliveryDelete">Delete Delivery</a></li>
                             </ul>
                         </li>
