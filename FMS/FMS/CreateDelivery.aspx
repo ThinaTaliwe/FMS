@@ -9,8 +9,10 @@
 	  				<div class="col-md-12 panel-info">
 			  			<div class="content-box-header panel-heading">
 		  					<div class="panel-title ">Create Delivery</div>
-						
+                             <div class="panel-title" ><label id="Error" runat="server"></label></div>
+
 			  			</div>
+                
 
 			  		</div>
 	  			</div>
@@ -107,7 +109,7 @@
 				  							<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()">
 													Cancel
 												</button>		<asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click" />	 
-										    <label class="col-sm-2 control-label" id="Error" runat="server"> </label>	 
+										    	 
 										  
 										</form>
                             </div>

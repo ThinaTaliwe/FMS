@@ -23,7 +23,7 @@ namespace FMS.App_Code
         public void save(string var)
         {
             authority = var;
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORIY) VALUES('" + orderNum + "', '" + truck + "', '" + driver + "', '" + client.getID() + "', '" + from + "', '" + to + "', '" + material + "', '" + load + "', '" + departDay.ToShortDateString() + "', '" + "1234567890123" + "');";
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + orderNum + "', '" + truck + "', '" + driver + "', '" + client.getID() + "', '" + from + "', '" + to + "', '" + material + "', '" + load + "', '" + departDay.ToShortDateString() + "', '" + "1234567890123" + "');";
             System.Diagnostics.Debug.WriteLine(query);
             Util.query(query);
         }

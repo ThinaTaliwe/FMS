@@ -48,7 +48,7 @@ namespace FMS
 
         public void newDelivery(object obj, EventArgs e)
         {
-            Error.InnerText = "Creating delivery";
+            Error.InnerText = "Successfully Created Delivery";
             delivery = new Delivery();
             delivery.setOrderNum(OrderNum.Value);
             delivery.setClient(new Client(Client.Value));
@@ -67,7 +67,7 @@ namespace FMS
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            Error.InnerText = "Creating delivery";
+            Error.InnerText = "Successfully Created Delivery";
             delivery = new Delivery();
             delivery.setOrderNum(OrderNum.Value);
             delivery.setTruck(TruckChosen.Value);
@@ -89,7 +89,18 @@ namespace FMS
             delivery.setFrom(StartRoute.Value);
             delivery.setTo(EndRoute.Value);
             delivery.save((Session["user"] as User).getID());
-            Error.InnerText = "Delivery Created";
+            
+            //Pop Up With Message and Refresh Screen 
+            
+            //Response.Redirect("CreateDelivery");
+            //string message = "Delivery Created";
+            string message = "Order Placed Successfully.";
+            string script = "window.onload = function(){ alert('";
+            script += message;
+            script += "')};";
+            ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
+
+            //ClientScript.RegisterStartupScript(GetType(), "alert", "alert('" + message + "');", true);
         }
     }
 }
