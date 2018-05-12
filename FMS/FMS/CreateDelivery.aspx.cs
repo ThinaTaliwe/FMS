@@ -49,8 +49,7 @@ namespace FMS
         protected void btn_Click(object sender, EventArgs e)
         {
             var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value + "', '" + Client.Value + "', '" + StartRoute.Value + "', '" + EndRoute.Value + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
-            Delivery delivery = Delivery.getInstance(OrderNum.Value);
-            System.Diagnostics.Debug.WriteLine(query + delivery.getDriver().getID() + delivery);
+            Response.Redirect("CreateDelivery");
             Error.InnerText = "Delivery Created";
         }
     }
