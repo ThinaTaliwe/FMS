@@ -16,7 +16,6 @@ namespace FMS
         private Stream stream = null;
         private StreamWriter outStream = null;
         private StreamReader inStream = null;
-        private Delivery delivery = null;
 
         public DriverHandle(TcpClient conn)
         {
@@ -30,8 +29,6 @@ namespace FMS
 
         public void handle()
         {
-            while (delivery == null)
-                verify();
             string text = read();
             string[] request = text.Split(' ');
             switch (request[0])
@@ -49,12 +46,6 @@ namespace FMS
                     send("200 ERR Invalid_Request");
                     break;
             }
-        }
-
-        private void verify()
-        {
-            string[] request = read().Split(' ');
-
         }
 
         private void GET(string request)
