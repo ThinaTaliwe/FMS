@@ -20,11 +20,7 @@ namespace FMS.App_Code
         public void save(Admin var)
         {
             authority = var;
-<<<<<<< HEAD
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + orderNum + "', '" + truck + "', '" + driver + "', '" + client.getID() + "', '" + from + "', '" + to + "', '" + material + "', '" + load + "', '" + departDay.ToShortDateString() + "', '" + "1234567890123" + "');";
-=======
             var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + orderNum + "', '" + truck.getID() + "', '" + driver.getID() + "', '" + client.getID() + "', '" + from + "', '" + to + "', '" + material + "', '" + load + "', '" + departDay.ToShortDateString() + "', '" + "1234567890123" + "');";
->>>>>>> ffdde4ac6847d968b8f8b8c364a93284ff83cc67
             System.Diagnostics.Debug.WriteLine(query);
             Util.query(query);
         }
@@ -35,6 +31,7 @@ namespace FMS.App_Code
             var deliv = Util.query(query);
             if (deliv.HasRows)
             {
+                System.Diagnostics.Debug.WriteLine("mmeli");
                 Delivery delivery = new Delivery();
                 delivery.setOrderNum(deliv.GetString(1));
                 delivery.setTruck(new Truck(deliv.GetString(2)));
@@ -54,7 +51,7 @@ namespace FMS.App_Code
         }
 
         public void setOrderNum(string value) { orderNum = value; }
-        public void setTruck(Truck value) { truck = value;  }
+        public void setTruck(Truck value) { truck = value; }
         public void setDriver(Driver value) { driver = value; }
         public void setClient(Client value) { client = value; }
         public void setFrom(string value) { from = value; }
