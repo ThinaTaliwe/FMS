@@ -13,7 +13,7 @@ namespace FMS.App_Code
         private string email;
         private string type;
 
-        public User(string id)
+        public User (string id)
         {
             var query = "SELECT * FROM USERS WHERE ID LIKE '" + id + "';";
             var user = Util.query(query);

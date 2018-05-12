@@ -61,12 +61,12 @@ namespace FMS
             delivery.setLoad(Convert.ToInt32(Load.Value));
             delivery.setFrom(StartRoute.Value);
             delivery.setFrom(EndRoute.Value);
-            delivery.save((Session["user"] as User).getID());
             Error.InnerText = "Delivery Created";
         }
 
         protected void btn_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             Error.InnerText = "Successfully Created Delivery";
             delivery = new Delivery();
             delivery.setOrderNum(OrderNum.Value);
@@ -101,6 +101,12 @@ namespace FMS
             ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
 
             //ClientScript.RegisterStartupScript(GetType(), "alert", "alert('" + message + "');", true);
+=======
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value + "', '" + Client.Value + "', '" + StartRoute.Value + "', '" + EndRoute.Value + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
+            Delivery delivery = Delivery.getInstance(OrderNum.Value);
+            System.Diagnostics.Debug.WriteLine(query + delivery.getDriver().getID() + delivery);
+            Error.InnerText = "Delivery Created";
+>>>>>>> ffdde4ac6847d968b8f8b8c364a93284ff83cc67
         }
     }
 }

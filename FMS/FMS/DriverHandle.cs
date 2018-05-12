@@ -24,6 +24,7 @@ namespace FMS
             stream = conn.GetStream();
             outStream = new StreamWriter(stream);
             inStream = new StreamReader(outStream.BaseStream);
+            System.Diagnostics.Debug.WriteLine("Connection made");
             send("Hello Driver");
         }
 
