@@ -12,14 +12,18 @@ namespace FMS
 {
     public class Global : HttpApplication
     {
+        DriverREST rest = null;
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            DriverREST rest = new DriverREST(1998);
-            Thread t = new Thread(rest.start);
-            t.Start();
+            if(rest == null)
+            {
+                DriverREST rest = new DriverREST(1998);
+                Thread t = new Thread(rest.start);
+                t.Start();
+            }
         }
     }
 }
