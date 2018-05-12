@@ -16,15 +16,15 @@ namespace FMS
         {
             if (!IsPostBack)
             {
-                string driversQuery = "SELECT NAME FROM USERS WHERE USER_TYPE LIKE 'DRIVER'";
+                string driversQuery = "SELECT NAME, ID FROM USERS WHERE USER_TYPE LIKE 'DRIVER'";
                 string truckQuery = "SELECT ID FROM TRUCKS";
-                string clientQuery = "SELECT COMPANY FROM CLIENTS ";
+                string clientQuery = "SELECT COMPANY, ID FROM CLIENTS ";
                 var drivers = Util.query(driversQuery);
                 if (drivers.HasRows)
                 {
                     while (drivers.Read())
                     {
-                        DriverChosen.Items.Add(new ListItem(drivers.GetString(0)));
+                        DriverChosen.Items.Add(new ListItem(drivers.GetString(0) + " " + drivers.GetString(1)));
                     }
                 }
                 var trucks = Util.query(truckQuery);
@@ -40,7 +40,7 @@ namespace FMS
                 {
                     while (clients.Read())
                     {
-                        Client.Items.Add(new ListItem(clients.GetString(0)));
+                        Client.Items.Add(new ListItem(clients.GetString(0) + " " + clients.GetInt32(1)));
                     }
                 }
             }
@@ -48,8 +48,11 @@ namespace FMS
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value + "', '" + Client.Value + "', '" + StartRoute.Value + "', '" + EndRoute.Value + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
-            Response.Redirect("CreateDelivery");
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value.Split(' ')[1] + "', '" + Client.Value.Split(' ')[1] + "', '" + StartRoute.Value + "', '" + EndRoute.Value + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
+            System.Diagnostics.Debug.WriteLine(query);
+            Util.query(query);
+            Delivery delivery = Delivery.getInstance(OrderNum.Value);
+            System.Diagnostics.Debug.WriteLine(delivery.getDriver().getID() + delivery);
             Error.InnerText = "Delivery Created";
         }
     }

@@ -9,7 +9,8 @@
 			  			<div class="content-box-header panel-heading">
 		  					<div class="panel-title ">Update Delivery</div>
                              <div class="panel-title" ><label id="Error" runat="server"></label></div>
-
+                             <asp:Label ID="label" runat="server"> </asp:Label>
+                             
 			  			</div>
                 
 

@@ -12,6 +12,8 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            User n = (User)Session["user"];
+            System.Diagnostics.Debug.WriteLine(n); 
             if (Session["user"] == null)
             {
                 User u = new Admin("1234567890123");

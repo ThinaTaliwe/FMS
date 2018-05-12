@@ -165,6 +165,7 @@
     <Content Include="DeleteUser.aspx" />
     <Content Include="DeliveryReport.aspx" />
     <Content Include="DriverReport.aspx" />
+    <Content Include="EditDelivery.aspx" />
     <Content Include="EditDelivery1.aspx" />
     <Content Include="Junk2.aspx" />
     <Content Include="DeleteDriver.aspx" />
@@ -311,6 +312,13 @@
     </Compile>
     <Compile Include="DriverReport.aspx.designer.cs">
       <DependentUpon>DriverReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditDelivery.aspx.cs">
+      <DependentUpon>EditDelivery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditDelivery.aspx.designer.cs">
+      <DependentUpon>EditDelivery.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditDelivery1.aspx.cs">
       <DependentUpon>EditDelivery1.aspx</DependentUpon>
