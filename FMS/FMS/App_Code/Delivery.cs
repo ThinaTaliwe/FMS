@@ -31,6 +31,7 @@ namespace FMS.App_Code
             var deliv = Util.query(query);
             if (deliv.HasRows)
             {
+                System.Diagnostics.Debug.WriteLine("mmeli");
                 Delivery delivery = new Delivery();
                 delivery.setOrderNum(deliv.GetString(1));
                 delivery.setTruck(new Truck(deliv.GetString(2)));

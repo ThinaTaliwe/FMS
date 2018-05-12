@@ -46,24 +46,6 @@ namespace FMS
             }
         }
 
-        public void newDelivery(object obj, EventArgs e)
-        {
-            Error.InnerText = "Creating delivery";
-            delivery = new Delivery();
-            delivery.setOrderNum(OrderNum.Value);
-            delivery.setClient(new Client(Client.Value));
-            string[] date = DeliveryDate.Value.Split('/');
-            DateTime delivDate = new DateTime();
-            delivDate.AddYears(Convert.ToInt32(date[0]));
-            delivDate.AddMonths(Convert.ToInt32(date[1]));
-            delivDate.AddDays(Convert.ToInt32(date[2]));
-            delivery.setMaterial(Material.Value);
-            delivery.setLoad(Convert.ToInt32(Load.Value));
-            delivery.setFrom(StartRoute.Value);
-            delivery.setFrom(EndRoute.Value);
-            Error.InnerText = "Delivery Created";
-        }
-
         protected void btn_Click(object sender, EventArgs e)
         {
             var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value + "', '" + Client.Value + "', '" + StartRoute.Value + "', '" + EndRoute.Value + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
