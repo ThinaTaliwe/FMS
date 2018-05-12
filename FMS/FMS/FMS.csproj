@@ -183,6 +183,7 @@
     <Content Include="Home.aspx" />
     <Content Include="Home_Dummy.html" />
     <Content Include="Login.aspx" />
+    <Content Include="Map.html" />
     <Content Include="MonitorTrucks.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

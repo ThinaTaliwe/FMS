@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UpdateDelivery.aspx.cs" Inherits="FMS.UpdateDelivery" %>
+﻿<%@ Page Title="Update Delivery" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UpdateDelivery.aspx.cs" Inherits="FMS.UpdateDelivery" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <section id="main-content">
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditDelivery1.aspx.cs" Inherits="FMS.EditDelivery1" %>
+﻿<%@ Page Title="Edit Delivery" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditDelivery1.aspx.cs" Inherits="FMS.EditDelivery1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
            <div class="page-content">
     	<div class="row">
