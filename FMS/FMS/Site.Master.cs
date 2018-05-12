@@ -14,13 +14,13 @@ namespace FMS
         {
             if (Session["user"] == null)
             {
-                User u = new User("1234567890123");
+                User u = new Admin("1234567890123");
                 Session["user"] = u;
                 Session["name"] = u.getName();
-                user.InnerHtml = "Mmeli";
+                user.InnerText = u.getName();
             } else
             {
-                
+                User u = (User)Session["user"];
             }
         }
     }

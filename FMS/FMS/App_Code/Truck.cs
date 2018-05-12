@@ -17,9 +17,9 @@ namespace FMS.App_Code
             var truck = Util.query(query);
             if (truck.Read())
             {
-                id = Convert.ToString(truck.GetString(0));
-                load = Convert.ToInt32(truck.GetInt32(1));
-                speed = Convert.ToInt32(truck.GetInt32(2));
+                id = truck.GetString(0);
+                load = truck.GetInt32(1);
+                speed = truck.GetInt32(2);
             }
         }
 

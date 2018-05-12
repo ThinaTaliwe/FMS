@@ -11,6 +11,18 @@ namespace FMS.App_Code
         private string name;
         private string company;
 
+        public Client(int id)
+        {
+            var query = "SELECT NAME, COMPANY, ID FROM CLIENTS WHERE ID LIKE '" + id + "';";
+            var client = Util.query(query);
+            if (client.Read())
+            {
+                name = Convert.ToString(client.GetString(0));
+                company = Convert.ToString(client.GetString(1));
+                id = Convert.ToInt32(client.GetInt32(2));
+            }
+        }
+
         public Client(string company)
         {
             var query = "SELECT NAME, COMPANY, ID FROM CLIENTS WHERE COMPANY LIKE '" + company + "';";

@@ -16,24 +16,11 @@ namespace FMS.App_Code
         {
             var query = "SELECT * FROM DRIVERS WHERE ID LIKE '" + id + "'";
             var driver = Util.query(query);
-            if(driver.Read())
-            {
-                code = Convert.ToString(driver.GetString(1));
-                firstIssue = (DateTime)driver.GetDateTime(2);
-                expiry = (DateTime)driver.GetDateTime(3);
-                restriction = Convert.ToInt32(driver.GetInt32(4));
-            }
-        }
-
-        public Driver(string id, bool name) : base(id)
-        {
-            var query = "SELECT * FROM DRIVERS WHERE ID LIKE '" + id + "'";
-            var driver = Util.query(query);
             if (driver.Read())
             {
                 code = Convert.ToString(driver.GetString(1));
-                firstIssue = (DateTime)driver.GetDateTime(2);
-                expiry = (DateTime)driver.GetDateTime(3);
+                firstIssue = driver.GetDateTime(2);
+                expiry = driver.GetDateTime(3);
                 restriction = Convert.ToInt32(driver.GetInt32(4));
             }
         }
