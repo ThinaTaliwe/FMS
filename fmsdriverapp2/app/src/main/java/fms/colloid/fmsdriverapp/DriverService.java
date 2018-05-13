@@ -21,6 +21,31 @@ public class DriverService extends Service {
     private Scanner in = null;
     private PrintWriter out = null;
 
+    public void send(String text) {
+        out.write(text);
+        out.flush();
+    }
+
+    public String read() {
+        return in.nextLine();
+    }
+
+    private void connect(String address, int port) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        setThreadPolicy(policy);
+        try {
+            conn = new Socket(address, port);
+            in = new Scanner(conn.getInputStream());
+            out = new PrintWriter(conn.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void log(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return bound;
@@ -38,22 +63,6 @@ public class DriverService extends Service {
         }
     }
 
-    private void connect(String address, int port) {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        setThreadPolicy(policy);
-        try {
-            conn = new Socket(address, port);
-            in = new Scanner(conn.getInputStream());
-            out = new PrintWriter(conn.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String read() {
-        return in.nextLine();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -68,14 +77,5 @@ public class DriverService extends Service {
     @Override
     public void onRebind(Intent intent) {
         super.onRebind(intent);
-    }
-
-    private void send(String text) {
-        out.write(text);
-        out.flush();
-    }
-
-    public void log(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
