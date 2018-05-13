@@ -32,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button btn = (Button) findViewById(R.id.button2);
+        btn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                if(serviceIsBounded) service.notification("look here", "you smart though");
+            }
+        });
     }
 
     @Override

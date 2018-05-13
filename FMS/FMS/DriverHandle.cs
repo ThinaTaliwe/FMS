@@ -31,6 +31,7 @@ namespace FMS
         {
             string text = read();
             string[] request = text.Split(' ');
+
             switch (request[0])
             {
                 case "GET":
