@@ -53,6 +53,7 @@ namespace FMS
             Util.query(query);
             Delivery delivery = Delivery.getInstance(OrderNum.Value);
             System.Diagnostics.Debug.WriteLine(delivery.getDriver().getID() + delivery);
+            Response.Redirect("CreateDelivery");
             Error.InnerText = "Delivery Created";
         }
     }
