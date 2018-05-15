@@ -52,7 +52,15 @@ namespace FMS
             System.Diagnostics.Debug.WriteLine(query);
             Util.query(query);
             Delivery delivery = Delivery.getInstance(OrderNum.Value);
-            System.Diagnostics.Debug.WriteLine(delivery.getDriver().getID() + delivery);
+            query = "SELECT ADDRESS FROM DRIVERS WHERE ID LIKE '" + DriverChosen.Value.Split(' ')[1] + "';";
+            var addr = Util.query(query);
+            if(addr.Read())
+            {
+                string address = addr.GetString(0);
+                System.Diagnostics.Debug.WriteLine(delivery.toString());
+                var writer = ((Global)this.Context.ApplicationInstance).getServer(address);
+                writer.Write(delivery.toString());
+            }
             Error.InnerText = "Delivery Created";
         }
     }

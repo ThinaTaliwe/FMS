@@ -24,7 +24,15 @@ namespace FMS
             outStream = new StreamWriter(stream);
             inStream = new StreamReader(outStream.BaseStream);
             System.Diagnostics.Debug.WriteLine("Connection made");
-            send("Hello Driver");
+            string id = read();
+            System.Diagnostics.Debug.WriteLine(id);
+            var query = "SELECT * FROM DRIVERS WHERE ID LIKE '" + id + "';";
+            var dr = Util.query(query);
+            if(dr.HasRows)
+            {
+                query = "UPDATE DRIVERS SET ADDRESS = '" + conn.Client.RemoteEndPoint + "' WHERE ID LIKE '" + id + "';";
+                Util.query(query);
+            }
         }
 
         public void handle()
@@ -84,6 +92,10 @@ namespace FMS
                     break;
             }
         }
+
+        public String getAddress() { return conn.Client.RemoteEndPoint.ToString(); }
+
+        public StreamWriter GetWriter() { return outStream; }
 
         private void send(string text)
         {

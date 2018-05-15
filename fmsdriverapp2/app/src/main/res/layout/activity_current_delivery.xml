@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".CurrentDelivery">
 
     <LinearLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
+        android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,31 +17,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView4"
             android:layout_width="match_parent"
-            android:layout_height="82dp"
-            android:fontFamily="serif"
-            android:text="FMS Driver App"
+            android:layout_height="71dp"
+            android:text="Delivery info"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/button2"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:text="View Current Delivery" />
+            android:layout_height="71dp"
+            android:text="Origin: Johannesburg"
+            android:textAlignment="center"
+            android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/button7"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:text="View Upcoming Delivery" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:text="SOS" />
-
+            android:layout_height="71dp"
+            android:text="Destination: Pretoria"
+            android:textAlignment="center"
+            android:textSize="24sp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

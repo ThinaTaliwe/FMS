@@ -16,15 +16,14 @@ CREATE TABLE [dbo].[USERS] (
 )
 
 CREATE TABLE [dbo].[DRIVERS] (
-    [ID]          CHAR (13)   NOT NULL,
-    [CODE]        VARCHAR (3) NOT NULL,
-    [FIRST_ISSUE] DATE        NOT NULL,
-    [EXPIRY]      DATE        NOT NULL,
-    [RESTRICTION] INT         NOT NULL,
-	[ADDRESS] VARCHAR(200) NULL,
-    PRIMARY KEY CLUSTERED ([ID] ASC),
-    FOREIGN KEY ([ID]) REFERENCES [dbo].[USERS] ([ID])
-);
+    [ID]          CHAR (13) NOT NULL,
+    [CODE]        VARCHAR (3)  NOT NULL,
+    [FIRST_ISSUE] DATE         NOT NULL,
+    [EXPIRY] DATE         NOT NULL,
+    [RESTRICTION] INT          NOT NULL,
+    PRIMARY KEY ([ID]),
+	FOREIGN KEY ([ID]) REFERENCES USERS
+)
 
 CREATE TABLE [dbo].[CLIENTS] (
     [ID]        INT           IDENTITY (1, 1) NOT NULL,

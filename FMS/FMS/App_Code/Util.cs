@@ -12,6 +12,12 @@ namespace FMS.App_Code
         /**
          *  Util class will have static utility methods 
          * **/
+
+        public class Conn
+        {
+            
+        }
+
         public static SqlDataReader query(string request)
         {
             /**

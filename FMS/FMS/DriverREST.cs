@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -11,10 +13,13 @@ namespace FMS
          * Driver REST class which will provide a RESTful server to the driver class (android application)
          */
         private TcpListener server = null;
+        private static Dictionary<string, DriverHandle> handles = null;
+        private StreamWriter need = null;
 
         public DriverREST(int port)
         {
             server = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
+            handles = new Dictionary<string, DriverHandle>();
         }
 
         /*
@@ -26,8 +31,24 @@ namespace FMS
             while (true)
             {
                 DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
-                new Thread(new ThreadStart(handle.handle));
+                lock(handle)
+                {
+                    handles.Add(handle.getAddress(), handle);
+                    new Thread(new ThreadStart(handle.handle));
+                    System.Diagnostics.Debug.WriteLine(handles[handle.getAddress()]);
+                    System.Diagnostics.Debug.WriteLine("added");
+                }
             }
+        }
+
+        public StreamWriter getWriter(string address)
+        {
+            StreamWriter x;
+            lock(handles)
+            {
+                x = handles[address].GetWriter(); 
+            }
+            return x;
         }
     }
 }
