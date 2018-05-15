@@ -147,12 +147,17 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
+    <Content Include="App_Data\Kt.mdf" />
+    <Content Include="App_Data\Kt_log.ldf">
+      <DependentUpon>Kt.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\mydb.mdf" />
     <Content Include="App_Data\mydb_log.ldf">
       <DependentUpon>mydb.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\css\login.css" />
+    <Content Include="Content\ass\css\Map.css" />
     <Content Include="Content\ass\js\calendar.js" />
     <Content Include="Content\ass\js\forms.js" />
     <Content Include="Content\ass\js\js.js" />
@@ -164,6 +169,7 @@
     <Content Include="DeleteTruck.aspx" />
     <Content Include="DeleteUser.aspx" />
     <Content Include="DeliveryReport.aspx" />
+    <Content Include="Drag.html" />
     <Content Include="DriverReport.aspx" />
     <Content Include="EditDelivery.aspx" />
     <Content Include="EditDelivery1.aspx" />

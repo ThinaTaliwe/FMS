@@ -16,12 +16,13 @@ namespace FMS
             var query = "select * from Delivery";
             var rows = Util.query(query);
             var HTMLStr = "";
+            var num = 0; 
             if (rows.HasRows)
             {
                 while (rows.Read())
                 {
-
-                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + Convert.ToString(rows.GetString(5)) + "</td> <td> " + Convert.ToString(rows.GetString(6)) + "</td> <td> <a href=" + "EditDelivery?order=" + "1" + "> Edit </a> </tr>";
+                    num++; 
+                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + Convert.ToString(rows.GetString(5)) + "</td> <td> " + Convert.ToString(rows.GetString(6)) + "</td> <td> <a href=" + "EditDelivery?order=" + num + "> Edit </a> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }
