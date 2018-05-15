@@ -148,40 +148,22 @@ namespace FMS {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validLoad;
         
         /// <summary>
-        /// StartRoute control.
+        /// runOrigin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText StartRoute;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText runOrigin;
         
         /// <summary>
-        /// validStartRoute control.
+        /// RequiredFieldValidator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator validStartRoute;
-        
-        /// <summary>
-        /// EndRoute control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText EndRoute;
-        
-        /// <summary>
-        /// validEndRoute control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator validEndRoute;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
         /// btn control.
