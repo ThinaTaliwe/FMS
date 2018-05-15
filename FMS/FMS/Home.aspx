@@ -19,6 +19,7 @@
                                         <th>Truck Plate</th>
                                         <th>Origin</th>
                                         <th>Destination</th>
+                                        <th>Assignment Accepted</th>
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
