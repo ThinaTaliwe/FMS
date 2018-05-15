@@ -33,7 +33,6 @@
               var username = document.getElementById("username").value;
               var password = document.getElementById("password").value;
               if (username == "Mmeli" && password == "Fleet123") {
-                  alert("Login successfully");
                   window.location = "Home"; // Redirecting to other page.
                   return false;
               }

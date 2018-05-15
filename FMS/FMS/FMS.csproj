@@ -147,10 +147,6 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\Kt.mdf" />
-    <Content Include="App_Data\Kt_log.ldf">
-      <DependentUpon>Kt.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\mydb.mdf" />
     <Content Include="App_Data\mydb_log.ldf">
       <DependentUpon>mydb.mdf</DependentUpon>

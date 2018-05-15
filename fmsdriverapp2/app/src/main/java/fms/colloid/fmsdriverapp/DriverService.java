@@ -61,7 +61,6 @@ public class DriverService extends Service {
     }
 
     public String read() {
-
         try {
             System.out.println(conn.getInputStream().available());
             if(conn.getInputStream().available() > 0) {
@@ -99,6 +98,7 @@ public class DriverService extends Service {
             connected = true;
             send("1234567770123");;
             timer.scheduleAtFixedRate(new ServerCheck(), 0, 1000);
+            log("Service started");
         } catch(UnknownHostException e) {
             log("Service not connected");
             e.printStackTrace();

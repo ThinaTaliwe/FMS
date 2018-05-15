@@ -40,14 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 if(serviceIsBounded) service.notification("look here", "you smart though");
             }
         });
-        Button other = (Button) findViewById(R.id.button2);
-        other.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent current = new Intent(MainActivity.this, CurrentDelivery.class);
-                startActivity(current);
-            }
-        });
     }
 
     @Override
