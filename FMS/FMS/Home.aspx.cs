@@ -19,10 +19,20 @@ namespace FMS
             var HTMLStr = "";
             if (rows.HasRows)
             {
+                var assigned = (rows.GetInt32(14));
+                var assignedStr = "";
+                if (assigned == 0)
+                {
+                    assignedStr = "No"; 
+                }
+                else
+                {
+                    assignedStr = "Yes"; 
+                }
                 while (rows.Read())
                 {
 
-                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + Convert.ToString(rows.GetString(5)) + "</td> <td> " + Convert.ToString(rows.GetString(6)) + "</td> </tr>";
+                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + Convert.ToString(rows.GetString(5)) + "</td> <td> " + Convert.ToString(rows.GetString(6)) + "</td> <td> "  + assignedStr + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }
