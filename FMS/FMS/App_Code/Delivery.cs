@@ -17,6 +17,16 @@ namespace FMS.App_Code
         private DateTime arrivalDay;
         private Admin authority;
 
+        public string toString()
+        {
+            string output = "";
+            output += "id=" + id +
+                ";truck=" + truck.getID() + ";driver=" + driver.getName() + ";client=" + client.getCompany() +
+                ";from=" + from + ";to=" + to + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
+            System.Diagnostics.Debug.WriteLine("mmeli   " + output);
+            return output;
+        }
+
         public void save(Admin var)
         {
             authority = var;
@@ -54,7 +64,6 @@ namespace FMS.App_Code
                     delivery.setDepartDay(deliv.GetDateTime(7));
                     delivery.setAuthority(new Admin(deliv.GetString(12)));
                 }
-
                 return delivery;
             }
             else

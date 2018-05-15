@@ -7,6 +7,7 @@ import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
 import android.widget.Toast;
@@ -16,6 +17,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.os.StrictMode.setThreadPolicy;
 
@@ -27,6 +30,22 @@ public class DriverService extends Service {
     private PrintWriter out = null;
     private Delivery delivery = null;
     private boolean connected;
+    private Timer timer = new Timer();
+    private Handler tHandler = new Handler();
+
+    private class ServerCheck extends TimerTask {
+        @Override
+        public void run() {
+            tHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    String text = read();
+                    System.out.println(text);
+                    if(text != null) notification("delivery", text);
+                }
+            });
+        }
+    }
 
     public void GET(String request) {
 
@@ -37,11 +56,23 @@ public class DriverService extends Service {
     }
 
     private void send(String text) {
-        out.write(text);
+        out.write(text + "\n");
         out.flush();
     }
 
-    public String read() { return in.nextLine(); }
+    public String read() {
+
+        try {
+            System.out.println(conn.getInputStream().available());
+            if(conn.getInputStream().available() > 0) {
+                return in.nextLine();
+            }
+            else return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void notification(String title, String content) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -66,6 +97,8 @@ public class DriverService extends Service {
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
             connected = true;
+            send("1234567770123");;
+            timer.scheduleAtFixedRate(new ServerCheck(), 0, 1000);
         } catch(UnknownHostException e) {
             log("Service not connected");
             e.printStackTrace();

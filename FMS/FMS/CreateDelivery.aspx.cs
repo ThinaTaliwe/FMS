@@ -49,12 +49,19 @@ namespace FMS
         protected void btn_Click(object sender, EventArgs e)
         {
             
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value.Split(' ')[1] + "', '" + Client.Value.Split(' ')[1] + "', '" + "Johannesburg" + "', '" + "Midrand" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value.Split(' ')[1] + "', '" + Client.Value.Split(' ')[1] + "', '" + "Johannesburg" + "', '" + "Pretoria" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
             System.Diagnostics.Debug.WriteLine(query);
             Util.query(query);
             Delivery delivery = Delivery.getInstance(OrderNum.Value);
-            System.Diagnostics.Debug.WriteLine(delivery.getDriver().getID() + delivery);
-            Response.Redirect("CreateDelivery");
+            query = "SELECT ADDRESS FROM DRIVERS WHERE ID LIKE '" + DriverChosen.Value.Split(' ')[1] + "';";
+            var addr = Util.query(query);
+            if(addr.Read())
+            {
+                string address = addr.GetString(0);
+                System.Diagnostics.Debug.WriteLine(delivery.toString());
+                var writer = ((Global)this.Context.ApplicationInstance).getServer(address);
+                writer.Write(delivery.toString());
+            }
             Error.InnerText = "Delivery Created";
             
         }
