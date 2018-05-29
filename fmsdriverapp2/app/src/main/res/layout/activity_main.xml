@@ -25,19 +25,19 @@
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/current"
             android:layout_width="match_parent"
             android:layout_height="68dp"
             android:text="View Current Delivery" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/upcoming"
             android:layout_width="match_parent"
             android:layout_height="68dp"
             android:text="View Upcoming Delivery" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/sos"
             android:layout_width="match_parent"
             android:layout_height="68dp"
             android:text="SOS" />

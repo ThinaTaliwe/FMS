@@ -39,5 +39,20 @@
             android:text="Destination: Pretoria"
             android:textAlignment="center"
             android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:text="Material: Coal"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/accept"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Accept Assignment" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

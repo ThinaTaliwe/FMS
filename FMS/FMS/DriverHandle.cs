@@ -37,23 +37,13 @@ namespace FMS
 
         public void handle()
         {
-            string text = read();
-            string[] request = text.Split(' ');
-
-            switch (request[0])
+            while(true)
             {
-                case "GET":
-
-                    break;
-                case "POST":
-
-                    break;
-                case "PUT":
-
-                    break;
-                default:
-                    send("200 ERR Invalid_Request");
-                    break;
+                string text = read();
+                System.Diagnostics.Debug.WriteLine(text);
+                System.Diagnostics.Debug.WriteLine("hey i am here");
+                var query = "update delivery set accepted = '1' where order_num like '" + text + "';";
+                Util.query(query);
             }
         }
 

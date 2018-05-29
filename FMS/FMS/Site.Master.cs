@@ -23,6 +23,7 @@ namespace FMS
             } else
             {
                 User u = (User)Session["user"];
+                user.InnerText = u.getName();
             }
         }
     }

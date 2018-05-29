@@ -32,20 +32,8 @@ public class DriverService extends Service {
     private boolean connected;
     private Timer timer = new Timer();
     private Handler tHandler = new Handler();
-
-    private class ServerCheck extends TimerTask {
-        @Override
-        public void run() {
-            tHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    String text = read();
-                    System.out.println(text);
-                    if(text != null) notification("delivery", text);
-                }
-            });
-        }
-    }
+    private String address = "10.0.2.2";
+    private int port = 1998;
 
     public void GET(String request) {
 
@@ -55,14 +43,14 @@ public class DriverService extends Service {
 
     }
 
-    private void send(String text) {
+    public void send(String text) {
         out.write(text + "\n");
         out.flush();
     }
 
     public String read() {
+        if(!connected) return null;
         try {
-            System.out.println(conn.getInputStream().available());
             if(conn.getInputStream().available() > 0) {
                 return in.nextLine();
             }
@@ -73,8 +61,7 @@ public class DriverService extends Service {
         return null;
     }
 
-    public void notification(String title, String content) {
-        Intent intent = new Intent(this, MainActivity.class);
+    public void notification(String title, String content, Intent intent) {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
         PendingIntent pIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -96,14 +83,31 @@ public class DriverService extends Service {
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
             connected = true;
-            send("1234567770123");;
-            timer.scheduleAtFixedRate(new ServerCheck(), 0, 1000);
-            log("Service started");
+            log("Connected to Server");
+            send("1234567770123");
         } catch(UnknownHostException e) {
             log("Service not connected");
             e.printStackTrace();
         } catch (IOException e) {
+            log("Service not connected");
             e.printStackTrace();
+        }
+    }
+
+    private class ServerCheck extends TimerTask {
+        @Override
+        public void run() {
+            tHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if(!connected) connect(address, port);
+                    String text = read();
+                    if(text != null) {
+                        notification("delivery", text, new Intent(DriverService.this, CurrentDelivery.class));
+                        send("Something");
+                    }
+                }
+            });
         }
     }
 
@@ -120,7 +124,7 @@ public class DriverService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flag, int startID) {
-        connect("10.0.2.2", 1998);
+        timer.scheduleAtFixedRate(new ServerCheck(), 5000, 5000);
         return Service.START_STICKY;
     }
 
@@ -133,7 +137,6 @@ public class DriverService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        log("service stopped");
     }
 
     @Override

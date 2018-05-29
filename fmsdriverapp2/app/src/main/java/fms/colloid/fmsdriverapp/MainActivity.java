@@ -32,12 +32,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btn = (Button) findViewById(R.id.button7);
-        btn.setOnClickListener(new View.OnClickListener(){
-
+        Button current = (Button) findViewById(R.id.current);
+        current.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(serviceIsBounded) service.notification("look here", "you smart though");
+                Intent newInt = new Intent(MainActivity.this, CurrentDelivery.class);
+                unbindService(conn);
+                startActivity(newInt);
             }
         });
     }

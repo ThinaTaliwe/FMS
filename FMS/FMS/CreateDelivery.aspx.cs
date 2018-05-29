@@ -62,7 +62,6 @@ namespace FMS
                 var writer = ((Global)this.Context.ApplicationInstance).getServer(address);
                 writer.WriteLine(delivery.toString());
                 writer.Flush();
-                //System.Diagnostics.Debug.WriteLine("Khanyi" + writer);
             }
             Error.InnerText = "Delivery Created";
             
