@@ -33,14 +33,12 @@ namespace FMS
                 DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
                 lock(handle)
                 {
-                    while (true)
+                    if (!handles.ContainsKey(handle.getAddress()))
                     {
-                        if(!handles.ContainsKey(handle.getAddress()))
-                        {
-                            handles.Add(handle.getAddress(), handle);
-                            new Thread(new ThreadStart(handle.handle));
-                            System.Diagnostics.Debug.WriteLine(handles[handle.getAddress()]);
-                        }
+                        handles.Add(handle.getAddress(), handle);
+                        Thread t = new Thread(handle.handle);
+                        t.Start();
+                        System.Diagnostics.Debug.WriteLine(handles[handle.getAddress()]);
                     }
                 }
             }

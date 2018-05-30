@@ -125,6 +125,7 @@ public class DriverService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flag, int startID) {
         timer.scheduleAtFixedRate(new ServerCheck(), 5000, 5000);
+
         return Service.START_STICKY;
     }
 

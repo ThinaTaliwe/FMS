@@ -39,11 +39,11 @@ namespace FMS
         {
             while(true)
             {
+                System.Diagnostics.Debug.WriteLine("hey i am here handling drivers, you know");
                 string text = read();
                 System.Diagnostics.Debug.WriteLine(text);
-                System.Diagnostics.Debug.WriteLine("hey i am here");
                 var query = "update delivery set accepted = '1' where order_num like '" + text + "';";
-                Util.query(query);
+                Util.query(query); 
             }
         }
 

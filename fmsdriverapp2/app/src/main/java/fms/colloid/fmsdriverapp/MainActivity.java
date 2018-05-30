@@ -44,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(conn);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         Intent intent = new Intent(this, DriverService.class);

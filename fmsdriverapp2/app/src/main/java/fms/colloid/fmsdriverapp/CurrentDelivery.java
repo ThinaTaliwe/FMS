@@ -50,7 +50,7 @@ public class CurrentDelivery extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                if(serviceIsBounded) service.send("abc");
+                if(serviceIsBounded) service.send("sf");
                 else System.out.println("It doesn't work");
             }
         });
