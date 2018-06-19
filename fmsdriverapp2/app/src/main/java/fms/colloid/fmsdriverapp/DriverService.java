@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ConnectException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,6 +29,7 @@ public class DriverService extends Service {
     private Socket conn = null;
     private Scanner in = null;
     private PrintWriter out = null;
+    private String driver = null;
     private Delivery delivery = null;
     private boolean connected;
     private Timer timer = new Timer();
@@ -39,8 +41,8 @@ public class DriverService extends Service {
 
     }
 
-    public void verify() {
-
+    public boolean verified() {
+        return driver != null;
     }
 
     public void send(String text) {
@@ -83,15 +85,29 @@ public class DriverService extends Service {
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
             connected = true;
-            log("Connected to Server");
-            send("1234567770123");
-        } catch(UnknownHostException e) {
-            log("Service not connected");
+            return;
+        } catch(ConnectException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            log("Service not connected");
+            e.printStackTrace();
+        } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isAlive(String host, int port) {
+        boolean alive = true;
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            setThreadPolicy(policy);
+            InetSocketAddress address = new InetSocketAddress(host, port);
+            Socket socket = new Socket();
+            socket.connect(address, 1);
+            socket.close();
+        } catch(IOException ex){
+            alive = false;
+        }
+        return alive;
     }
 
     private class ServerCheck extends TimerTask {
@@ -100,7 +116,7 @@ public class DriverService extends Service {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if(!connected) connect(address, port);
+                    if(!connected && isAlive(address, port)) connect(address, port);
                     String text = read();
                     if(text != null) {
                         notification("delivery", text, new Intent(DriverService.this, CurrentDelivery.class));
@@ -111,12 +127,6 @@ public class DriverService extends Service {
         }
     }
 
-    public void log(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    public boolean connected() { return connected;}
-
     @Override
     public IBinder onBind(Intent intent) {
         return bound;
@@ -124,8 +134,6 @@ public class DriverService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flag, int startID) {
-        timer.scheduleAtFixedRate(new ServerCheck(), 5000, 5000);
-
         return Service.START_STICKY;
     }
 
@@ -148,5 +156,18 @@ public class DriverService extends Service {
     @Override
     public void onRebind(Intent intent) {
         super.onRebind(intent);
+    }
+
+    public void log(String message) {
+        System.out.println(message);
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public boolean connected() { return connected;}
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        timer.scheduleAtFixedRate(new ServerCheck(), 3000, 5000);
     }
 }

@@ -38,7 +38,7 @@ namespace FMS
                 var clients = Util.query(clientQuery);
                 if (clients.HasRows)
                 {
-                    while (clients.Read())
+                    while (clients.Read()) 
                     {
                         Client.Items.Add(new ListItem(clients.GetString(0) + " " + clients.GetInt32(1)));
                     }
