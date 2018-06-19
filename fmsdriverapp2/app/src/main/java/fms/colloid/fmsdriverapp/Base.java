@@ -1,6 +1,5 @@
 package fms.colloid.fmsdriverapp;
 
-import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,6 +9,8 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 
 public class Base extends AppCompatActivity {
+    public static String OK_CODE = "200 OK";
+    public static String ERROR_CODE = "400 ERR";
     protected DriverService service;
     protected boolean serviceIsBounded;
     protected ServiceConnection conn = new ServiceConnection() {

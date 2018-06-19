@@ -37,7 +37,16 @@ public class DriverService extends Service {
     private String address = "10.0.2.2";
     private int port = 1998;
 
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
     public void GET(String request) {
+
 
     }
 
@@ -46,21 +55,15 @@ public class DriverService extends Service {
     }
 
     public void send(String text) {
+        System.out.println("Sending: " + text);
         out.write(text + "\n");
         out.flush();
     }
 
     public String read() {
-        if(!connected) return null;
-        try {
-            if(conn.getInputStream().available() > 0) {
-                return in.nextLine();
-            }
-            else return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        String text = in.nextLine();
+        System.out.println("Read: " + text);
+        return text;
     }
 
     public void notification(String title, String content, Intent intent) {
@@ -85,7 +88,7 @@ public class DriverService extends Service {
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
             connected = true;
-            return;
+            log(read());
         } catch(ConnectException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -110,17 +113,16 @@ public class DriverService extends Service {
         return alive;
     }
 
+    public void reconnect() {connect(address, port);}
+
     private class ServerCheck extends TimerTask {
         @Override
         public void run() {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if(!connected && isAlive(address, port)) connect(address, port);
-                    String text = read();
-                    if(text != null) {
-                        notification("delivery", text, new Intent(DriverService.this, CurrentDelivery.class));
-                        send("Something");
+                    if(verified()) {
+                        System.out.println(driver + " logged in");
                     }
                 }
             });
@@ -168,6 +170,6 @@ public class DriverService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        timer.scheduleAtFixedRate(new ServerCheck(), 3000, 5000);
+        timer.scheduleAtFixedRate(new ServerCheck(), 3000, 10000);
     }
 }

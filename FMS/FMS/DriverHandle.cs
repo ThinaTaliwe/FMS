@@ -16,6 +16,9 @@ namespace FMS
         private Stream stream = null;
         private StreamWriter outStream = null;
         private StreamReader inStream = null;
+        private bool verfied = false;
+        private static string ERROR_CODE = "400 ERR ";
+        private static string OK_CODE = "200 OK ";
 
         public DriverHandle(TcpClient conn)
         {
@@ -24,26 +27,48 @@ namespace FMS
             outStream = new StreamWriter(stream);
             inStream = new StreamReader(outStream.BaseStream);
             System.Diagnostics.Debug.WriteLine("Connection made");
-            string id = read();
-            System.Diagnostics.Debug.WriteLine(id);
-            var query = "SELECT * FROM DRIVERS WHERE ID LIKE '" + id + "';";
-            var dr = Util.query(query);
-            if(dr.HasRows)
-            {
-                query = "UPDATE DRIVERS SET ADDRESS = '" + conn.Client.RemoteEndPoint + "' WHERE ID LIKE '" + id + "';";
-                Util.query(query);
-            }
         }
 
         public void handle()
         {
-            while(true)
+            send("HELLO");
+            string id = read();
+            var query = "SELECT PASSWORD FROM USERS WHERE ID LIKE '" + id + "';";
+            var dr = Util.query(query);
+            if (dr.HasRows)
             {
-                System.Diagnostics.Debug.WriteLine("hey i am here handling drivers, you know");
-                string text = read();
-                System.Diagnostics.Debug.WriteLine(text);
-                var query = "update delivery set accepted = '1' where order_num like '" + text + "';";
-                Util.query(query); 
+                while (dr.Read())
+                {
+                    send(OK_CODE);
+                    string password = read();
+                    verfied = password == dr.GetString(0);
+                    if (verfied)
+                    {
+                        send(OK_CODE);
+                        query = "UPDATE DRIVERS SET ADDRESS = '" + conn.Client.RemoteEndPoint + "' WHERE ID LIKE '" + id + "';";
+                        Util.query(query);
+                    }
+                    else
+                        send(ERROR_CODE);
+                }
+            } else
+            {
+                System.Diagnostics.Debug.WriteLine("oops id = " + id);
+            }
+            System.Diagnostics.Debug.WriteLine("Connection verified: " + verfied);
+            if (verfied)
+            {
+                while (true)
+                {
+                    string text = read();
+                    if(text != null) 
+                        send(text.ToUpper());
+                }
+            }
+            else
+            {
+                conn.Close();
+                return;
             }
         }
 
@@ -87,15 +112,26 @@ namespace FMS
 
         public StreamWriter GetWriter() { return outStream; }
 
+        public bool isVerified() { return verfied; }
+
         private void send(string text)
         {
+            System.Diagnostics.Debug.WriteLine("Sending: " + text);
             outStream.WriteLine(text);
             outStream.Flush();
         }
 
         private string read()
         {
-            return inStream.ReadLine();
+            try
+            {
+                string text = inStream.ReadLine();
+                System.Diagnostics.Debug.WriteLine("Read: " + text);
+                return text;
+            } catch (IOException ex) {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+            }
+            return null;
         }
     }
 }

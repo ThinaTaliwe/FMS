@@ -28,6 +28,7 @@ namespace FMS.App_Code
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString());
                 conn.Open();
                 SqlCommand command = new SqlCommand(request, conn);
+                System.Diagnostics.Debug.WriteLine(request);
                 return command.ExecuteReader();
             } catch(InvalidOperationException e)
             {

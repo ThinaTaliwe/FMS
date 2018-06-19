@@ -1,15 +1,9 @@
 package fms.colloid.fmsdriverapp;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends Base {
     private Button current, ucoming, sos;
@@ -27,7 +21,6 @@ public class MainActivity extends Base {
             @Override
             public void onClick(View view) {
                 Intent newInt = new Intent(MainActivity.this, CurrentDelivery.class);
-                unbindService(conn);
                 startActivity(newInt);
             }
         });
@@ -38,7 +31,6 @@ public class MainActivity extends Base {
             @Override
             public void onClick(View view) {
                 Intent newInt = new Intent(MainActivity.this, Login.class);
-                unbindService(conn);
                 startActivity(newInt);
             }
         });
