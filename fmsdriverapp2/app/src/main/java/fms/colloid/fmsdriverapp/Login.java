@@ -21,6 +21,10 @@ public class Login extends Base {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(service.verified()) {
+                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    startActivity(intent);
+                }
                 String name, pass;
                 EditText txtName, txtPass;
                 txtName = (EditText) findViewById(R.id.id);
@@ -28,15 +32,11 @@ public class Login extends Base {
                 name = txtName.getText().toString();
                 pass = txtPass.getText().toString();
                 service.reconnect();
-                service.send(name);
+                service.send(name + " " + pass);
                 String response = service.read();
-                if(response == OK_CODE) {
-                    service.send(pass);
-                    response = service.read();
-                    if(response == OK_CODE) {
-                        service.setDriver(name);
-                        service.log("login successful");
-                    }
+                if(response.contains(OK_CODE)) {
+                    service.setDriver(name);
+                    service.log("login successful");
                 }
                 if(service.verified()) {
                     Intent intent = new Intent(Login.this, MainActivity.class);

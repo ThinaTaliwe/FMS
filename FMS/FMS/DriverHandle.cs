@@ -32,20 +32,20 @@ namespace FMS
         public void handle()
         {
             send("HELLO");
-            string id = read();
-            var query = "SELECT PASSWORD FROM USERS WHERE ID LIKE '" + id + "';";
+            string text = read();
+            string[] parts = text.Split(' ');
+            var query = "SELECT PASSWORD FROM USERS WHERE ID LIKE '" + parts[0] + "';";
             var dr = Util.query(query);
             if (dr.HasRows)
             {
                 while (dr.Read())
                 {
-                    send(OK_CODE);
-                    string password = read();
+                    string password = parts[1];
                     verfied = password == dr.GetString(0);
                     if (verfied)
                     {
                         send(OK_CODE);
-                        query = "UPDATE DRIVERS SET ADDRESS = '" + conn.Client.RemoteEndPoint + "' WHERE ID LIKE '" + id + "';";
+                        query = "UPDATE DRIVERS SET ADDRESS = '" + conn.Client.RemoteEndPoint + "' WHERE ID LIKE '" + parts[0] + "';";
                         Util.query(query);
                     }
                     else
@@ -53,16 +53,16 @@ namespace FMS
                 }
             } else
             {
-                System.Diagnostics.Debug.WriteLine("oops id = " + id);
+                System.Diagnostics.Debug.WriteLine("oops id = " + text);
             }
             System.Diagnostics.Debug.WriteLine("Connection verified: " + verfied);
             if (verfied)
             {
                 while (true)
                 {
-                    string text = read();
-                    if(text != null) 
-                        send(text.ToUpper());
+                    string foo = read();
+                    if(foo != null) 
+                        send(foo.ToUpper());
                 }
             }
             else
