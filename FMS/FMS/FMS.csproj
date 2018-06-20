@@ -251,9 +251,12 @@
     </Compile>
     <Compile Include="App_Code\Admin.cs" />
     <Compile Include="App_Code\Client.cs" />
+    <Compile Include="App_Code\ConnectionManager.cs" />
     <Compile Include="App_Code\Deliver.cs" />
     <Compile Include="App_Code\Delivery.cs" />
     <Compile Include="App_Code\Driver.cs" />
+    <Compile Include="App_Code\DriverREST.cs" />
+    <Compile Include="App_Code\DriverHandle.cs" />
     <Compile Include="App_Code\Truck.cs" />
     <Compile Include="App_Code\User.cs" />
     <Compile Include="App_Code\Util.cs" />
@@ -357,8 +360,6 @@
     <Compile Include="Junk1.aspx.designer.cs">
       <DependentUpon>Junk1.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DriverHandle.cs" />
-    <Compile Include="DriverREST.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

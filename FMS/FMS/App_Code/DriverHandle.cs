@@ -1,12 +1,14 @@
-﻿using FMS.App_Code;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System;
 using System.IO;
 using System.Net.Sockets;
 
-
-namespace FMS
+namespace FMS.App_Code
 {
-    internal class DriverHandle
+    public class DriverHandle
     {
         /*
          * DriverHandle class handles driver request using RESTful services
@@ -51,25 +53,24 @@ namespace FMS
                     else
                         send(ERROR_CODE);
                 }
-            } else
+            }
+            else
             {
                 System.Diagnostics.Debug.WriteLine("oops id = " + text);
             }
             System.Diagnostics.Debug.WriteLine("Connection verified: " + verfied);
-            if (verfied)
+            while (verfied)
             {
-                while (true)
+                string foo = read();
+                if (foo != null && foo != "kill")
+                    send(foo.ToUpper());
+                else
                 {
-                    string foo = read();
-                    if(foo != null) 
-                        send(foo.ToUpper());
+                    send("BYE");
+                    verfied = false;
                 }
             }
-            else
-            {
-                conn.Close();
-                return;
-            }
+            conn.Close();
         }
 
         private void GET(string request)
@@ -116,9 +117,20 @@ namespace FMS
 
         private void send(string text)
         {
-            System.Diagnostics.Debug.WriteLine("Sending: " + text);
-            outStream.WriteLine(text);
-            outStream.Flush();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("Sending: " + text);
+                outStream.WriteLine(text);
+                outStream.Flush();
+            }
+            catch (ObjectDisposedException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+            }
+            catch (IOException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+            }
         }
 
         private string read()
@@ -128,7 +140,13 @@ namespace FMS
                 string text = inStream.ReadLine();
                 System.Diagnostics.Debug.WriteLine("Read: " + text);
                 return text;
-            } catch (IOException ex) {
+            }
+            catch (ObjectDisposedException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+            }
+            catch (IOException ex)
+            {
                 System.Diagnostics.Debug.WriteLine(ex.StackTrace);
             }
             return null;

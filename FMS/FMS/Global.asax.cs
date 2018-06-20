@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using FMS.App_Code;
 
 namespace FMS{
     public class Global : HttpApplication {
@@ -21,29 +22,6 @@ namespace FMS{
             Thread t = new Thread(rest.start);
             t.Start();
         } 
-
-        private class ConnectionManager  {
-            private List<String> orders;
-
-            public ConnectionManager()  {
-                orders = new List<string>();
-                Thread t = new Thread(process);
-                t.Start();
-            }
-
-            public void process()  {
-                while(true) {
-                    foreach(string order in orders) {
-                        string[] parts = order.Split(' ');
-                    }
-                    Thread.Sleep(5000);
-                }
-            }
-
-            public void addOrder(string order) {
-                orders.Add(order);
-            }
-        }
 
         public void addOrder(string order)  {  connMan.addOrder(order);   }
 

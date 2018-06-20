@@ -17,7 +17,7 @@ namespace FMS.App_Code
         {
             var query = "SELECT * FROM USERS WHERE ID LIKE '" + id + "';";
             var user = Util.query(query);
-            if(user.HasRows)
+            if(user.HasRows && user != null)
             {
                 user.Read();
                 id = user.GetString(0);

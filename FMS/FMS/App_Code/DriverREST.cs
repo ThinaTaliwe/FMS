@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Collections;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace FMS
+namespace FMS.App_Code
 {
-    internal class DriverREST
+    public class DriverREST
     {
         /*
          * Driver REST class which will provide a RESTful server to the driver class (android application)
@@ -47,9 +50,9 @@ namespace FMS
         public StreamWriter getWriter(string address)
         {
             StreamWriter x;
-            lock(handles)
+            lock (handles)
             {
-                x = handles[address].GetWriter(); 
+                x = handles[address].GetWriter();
             }
             return x;
         }
