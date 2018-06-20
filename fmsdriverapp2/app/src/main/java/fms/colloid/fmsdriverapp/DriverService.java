@@ -98,7 +98,7 @@ public class DriverService extends Service {
         }
     }
 
-    public boolean isAlive(String host, int port) {
+    private boolean isAlive(String host, int port) {
         boolean alive = true;
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -113,7 +113,12 @@ public class DriverService extends Service {
         return alive;
     }
 
-    public void reconnect() {connect(address, port);}
+    public boolean isAlive() {return isAlive(address, port);}
+
+    public void connect() {
+       if(isAlive(address, port)) connect(address, port);
+       else log("No internet connection");
+    }
 
     private class ServerCheck extends TimerTask {
         @Override
