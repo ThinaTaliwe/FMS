@@ -170,6 +170,6 @@ public class DriverService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        timer.scheduleAtFixedRate(new ServerCheck(), 3000, 10000);
+        timer.scheduleAtFixedRate(new ServerCheck(), 3000, 5000);
     }
 }

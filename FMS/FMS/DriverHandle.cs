@@ -17,8 +17,8 @@ namespace FMS
         private StreamWriter outStream = null;
         private StreamReader inStream = null;
         private bool verfied = false;
-        private static string ERROR_CODE = "400 ERR ";
-        private static string OK_CODE = "200 OK ";
+        private static string ERROR_CODE = "400 ERR";
+        private static string OK_CODE = "200 OK";
 
         public DriverHandle(TcpClient conn)
         {

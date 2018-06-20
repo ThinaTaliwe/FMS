@@ -21,10 +21,6 @@ public class Login extends Base {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(service.verified()) {
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent);
-                }
                 String name, pass;
                 EditText txtName, txtPass;
                 txtName = (EditText) findViewById(R.id.id);
@@ -39,8 +35,7 @@ public class Login extends Base {
                     service.log("login successful");
                 }
                 if(service.verified()) {
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent);
+                    finish();
                 } else {
                     service.log("login unsuccessful");
                 }

@@ -21,7 +21,7 @@
             android:layout_height="82dp"
             android:fontFamily="serif"
             android:text="FMS Driver App"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textSize="30sp" />
 
         <Button
@@ -41,6 +41,12 @@
             android:layout_width="match_parent"
             android:layout_height="68dp"
             android:text="SOS" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:text="Login" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
