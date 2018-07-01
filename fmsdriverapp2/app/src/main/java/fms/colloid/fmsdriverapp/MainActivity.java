@@ -30,8 +30,7 @@ public class MainActivity extends Base {
 
             @Override
             public void onClick(View view) {
-                Intent newInt = new Intent(MainActivity.this, Login.class);
-                startActivity(newInt);
+                service.connect();
             }
         });
 

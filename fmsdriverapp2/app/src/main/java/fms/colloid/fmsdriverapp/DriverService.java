@@ -31,7 +31,6 @@ public class DriverService extends Service {
     private PrintWriter out = null;
     private String driver = null;
     private Delivery delivery = null;
-    private boolean connected;
     private Timer timer = new Timer();
     private Handler tHandler = new Handler();
     private String address = "10.0.2.2";
@@ -45,25 +44,39 @@ public class DriverService extends Service {
         this.driver = driver;
     }
 
-    public void GET(String request) {
-
-
+    public boolean verified() {
+        return !(driver == null);
     }
 
-    public boolean verified() {
-        return driver != null;
+    public void disconnect() {
+        try {
+            conn.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void send(String text) {
-        System.out.println("Sending: " + text);
-        out.write(text + "\n");
-        out.flush();
+        try {
+            System.out.println("Sending: " + text);
+            out.write(text + "\n");
+            out.flush();
+        } catch(Exception ex) {
+            System.err.println(ex);
+        }
     }
 
     public String read() {
-        String text = in.nextLine();
-        System.out.println("Read: " + text);
-        return text;
+        try {
+            if(conn.getInputStream().available() > 0) {
+                String text = in.nextLine();
+                System.out.println("Read: " + text);
+                return text;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void notification(String title, String content, Intent intent) {
@@ -84,10 +97,9 @@ public class DriverService extends Service {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         setThreadPolicy(policy);
         try {
-            conn = new Socket(address, port);
+            conn.connect(new InetSocketAddress(address, port));
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
-            connected = true;
             log(read());
         } catch(ConnectException e) {
             e.printStackTrace();
@@ -116,8 +128,7 @@ public class DriverService extends Service {
     public boolean isAlive() {return isAlive(address, port);}
 
     public void connect() {
-       if(isAlive(address, port)) connect(address, port);
-       else log("No internet connection");
+       if(isAlive(address, port) && !conn.isConnected()) connect(address, port);
     }
 
     private class ServerCheck extends TimerTask {
@@ -127,7 +138,10 @@ public class DriverService extends Service {
                 @Override
                 public void run() {
                     if(verified()) {
-                        System.out.println(driver + " logged in");
+                        String text = read();
+                        if(text != null) {
+                            notification("delivery", text, new Intent(DriverService.this, CurrentDelivery.class));
+                        }
                     }
                 }
             });
@@ -166,15 +180,14 @@ public class DriverService extends Service {
     }
 
     public void log(String message) {
-        System.out.println(message);
+        System.out.println("log: " + message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
-    public boolean connected() { return connected;}
 
     @Override
     public void onCreate() {
         super.onCreate();
+        conn = new Socket();
         timer.scheduleAtFixedRate(new ServerCheck(), 3000, 5000);
     }
 }

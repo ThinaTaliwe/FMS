@@ -16,7 +16,7 @@ namespace FMS.App_Code
         {
             var query = "SELECT * FROM DRIVERS WHERE ID LIKE '" + id + "'";
             var driver = Util.query(query);
-            if (driver.Read())
+            while (driver.Read())
             {
                 code = Convert.ToString(driver.GetString(1));
                 firstIssue = driver.GetDateTime(2);

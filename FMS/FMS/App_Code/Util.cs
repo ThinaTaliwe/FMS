@@ -13,11 +13,6 @@ namespace FMS.App_Code
          *  Util class will have static utility methods 
          * **/
 
-        public class Conn
-        {
-            
-        }
-
         public static SqlDataReader query(string request)
         {
             /**
@@ -42,6 +37,11 @@ namespace FMS.App_Code
             {
                 System.Diagnostics.Debug.WriteLine(e);
             }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
+            System.Diagnostics.Debug.WriteLine(request);
             return null;
         }
     }

@@ -17,13 +17,13 @@ namespace FMS.App_Code
         private DateTime arrivalDay;
         private Admin authority;
 
-        public string toString()
+        override
+        public string ToString()
+
+
         {
             string output = "";
-            output += "id=" + id +
-                ";truck=" + truck.getID() + ";driver=" + driver.getName() + ";client=" + client.getCompany() +
-                ";from=" + from + ";to=" + to + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
-            System.Diagnostics.Debug.WriteLine("mmeli   " + output);
+            output += "id=" + id + ";orderNum=" + orderNum +  ";truck=" + truck.getID() + ";driver=" + driver.getName() + ";client=" + client.getCompany() +  ";from=" + from + ";to=" + to + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
             return output;
         }
 
@@ -42,9 +42,9 @@ namespace FMS.App_Code
             Util.query(query);
         }
 
-        public static Delivery getInstance(string orderNum)
+        public static Delivery getInstance(int id)
         {
-            var query = "SELECT * FROM DELIVERY WHERE ORDER_NUM LIKE '" + orderNum + "';";
+            var query = "SELECT * FROM DELIVERY WHERE ID LIKE '" + id + "';";
             System.Diagnostics.Debug.WriteLine(query);
             var deliv = Util.query(query);
             if (deliv.HasRows)
@@ -52,7 +52,7 @@ namespace FMS.App_Code
                 Delivery delivery = new Delivery();
                 while (deliv.Read())
                 {
-                    System.Diagnostics.Debug.WriteLine("mmeli" + deliv.ToString());
+                    delivery.id = id;
                     delivery.setOrderNum(deliv.GetString(1));
                     delivery.setTruck(new Truck(deliv.GetString(2)));
                     delivery.setDriver(new Driver(deliv.GetString(3)));

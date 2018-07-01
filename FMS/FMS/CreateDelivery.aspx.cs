@@ -48,23 +48,9 @@ namespace FMS
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value.Split(' ')[1] + "', '" + Client.Value.Split(' ')[1] + "', '" + "Johannesburg" + "', '" + "Pretoria" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
-            System.Diagnostics.Debug.WriteLine(query);
+            string driver = DriverChosen.Value.Split(' ')[1];
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + driver + "', '" + Client.Value.Split(' ')[1] + "', '" + "Johannesburg" + "', '" + "Pretoria" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
             Util.query(query);
-            Delivery delivery = Delivery.getInstance(OrderNum.Value);
-            query = "SELECT ADDRESS FROM DRIVERS WHERE ID LIKE '" + DriverChosen.Value.Split(' ')[1] + "';";
-            var addr = Util.query(query);
-            if(addr.Read())
-            {
-                string address = addr.GetString(0);
-                System.Diagnostics.Debug.WriteLine(delivery.toString());
-                var writer = ((Global)this.Context.ApplicationInstance).getServer(address);
-                writer.WriteLine(delivery.toString());
-                writer.Flush();
-            }
-            Error.InnerText = "Delivery Created";
-            
         }
     }
 }

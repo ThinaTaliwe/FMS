@@ -30,29 +30,47 @@ namespace FMS.App_Code
          * **/
         public void start()
         {
-            server.Start();
-            while (true)
-            {
-                DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
-                lock (handle)
+            try {
+                server.Start();
+                while (true)
                 {
-                    if (!handles.ContainsKey(handle.getAddress()))
+                    DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
+                    lock (handle)
                     {
-                        handles.Add(handle.getAddress(), handle);
-                        Thread t = new Thread(handle.handle);
-                        t.Start();
-                        System.Diagnostics.Debug.WriteLine(handles[handle.getAddress()]);
+                        if (!handles.ContainsKey(handle.getAddress()))
+                        {
+                            handles.Add(handle.getAddress(), handle);
+                            Thread t = new Thread(handle.handle);
+                            t.Start();
+                            System.Diagnostics.Debug.WriteLine(handles[handle.getAddress()]);
+                        }
                     }
                 }
+            } catch (SocketException ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
             }
         }
 
-        public StreamWriter getWriter(string address)
+        public DriverHandle getHandle(string driver) {
+            DriverHandle handle = null;
+            lock(handles) {
+                foreach(var value in handles) {
+                    if(value.Value.getDriver() == driver) {
+                        handle = value.Value;
+                    }
+                }
+            }
+            return handle;
+        }
+
+        public DriverHandle getHandleByAddress(string address)
         {
-            StreamWriter x;
+            DriverHandle x;
             lock (handles)
             {
-                x = handles[address].GetWriter();
+                x = handles[address];
             }
             return x;
         }

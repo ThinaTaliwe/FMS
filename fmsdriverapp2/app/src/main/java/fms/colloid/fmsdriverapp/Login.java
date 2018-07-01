@@ -1,5 +1,6 @@
 package fms.colloid.fmsdriverapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,15 +31,20 @@ public class Login extends Base {
                     service.connect();
                     service.send(name + " " + pass);
                     String response = service.read();
-                    if(response.contains(OK_CODE)) {
+                    if(response != null && response.contains(OK_CODE)) {
                         service.setDriver(name);
                         service.log("login successful");
+                        response = service.read();
+                        if(response != null) {
+                            service.notification("delivery", response, new Intent(Login.this, CurrentDelivery.class));
+                        }
                     }
                 }
                 if(service.verified()) {
                     finish();
                 } else {
                     service.log("login unsuccessful");
+                    service.disconnect();
                 }
             }
         });
