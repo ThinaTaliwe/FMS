@@ -8,7 +8,7 @@ public class Delivery {
     private String truck;
     private String client;
     private String from;
-    private String to;
+    private String to; 
     private String material;
     private int load;
     private DateFormat departDay;

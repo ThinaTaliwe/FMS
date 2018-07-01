@@ -6,9 +6,9 @@ namespace FMS.App_Code
     {
         private int id;
         private string orderNum;
-        private Truck truck;
-        private Driver driver;
-        private Client client;
+        private string truck;
+        private string driver;
+        private int client;
         private string from;
         private string to;
         private string material;
@@ -19,26 +19,24 @@ namespace FMS.App_Code
 
         override
         public string ToString()
-
-
         {
             string output = "";
-            output += "id=" + id + ";orderNum=" + orderNum +  ";truck=" + truck.getID() + ";driver=" + driver.getName() + ";client=" + client.getCompany() +  ";from=" + from + ";to=" + to + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
+            output += "id=" + id + ";orderNum=" + orderNum + ";truck=" + truck + ";client=" + new Client(client).getName() + ";from=" + from + ";to=" + to + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
             return output;
         }
 
         public void save(Admin var)
         {
             authority = var;
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + orderNum + "', '" + truck.getID() + "', '" + driver.getID() + "', '" + client.getID() + "', '" + from + "', '" + to + "', '" + material + "', '" + load + "', '" + departDay.ToShortDateString() + "', '" + "1234567890123" + "');";
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + orderNum + "', '" + truck + "', '" + driver + "', '" + client + "', '" + from + "', '" + to + "', '" + material + "', '" + load + "', '" + departDay.ToShortDateString() + "', '" + "1234567890123" + "');";
             Util.query(query);
         }
 
         public void save()
         {
             var query = "UPDATE DELIVERY WHERE ID LIKE '" + id +
-                "SET TRUCK = '" + truck.getID() + "'" +
-                "SET DRIVER = " + driver.getID() + "';";
+                "SET TRUCK = '" + truck + "'" +
+                "SET DRIVER = " + driver + "';";
             Util.query(query);
         }
 
@@ -54,9 +52,9 @@ namespace FMS.App_Code
                 {
                     delivery.id = id;
                     delivery.setOrderNum(deliv.GetString(1));
-                    delivery.setTruck(new Truck(deliv.GetString(2)));
-                    delivery.setDriver(new Driver(deliv.GetString(3)));
-                    delivery.setClient(new Client(deliv.GetInt32(4)));
+                    delivery.setTruck(deliv.GetString(2));
+                    delivery.setDriver(deliv.GetString(3));
+                    delivery.setClient(deliv.GetInt32(4));
                     delivery.setFrom(deliv.GetString(5));
                     delivery.setTo(deliv.GetString(6));
                     delivery.setMaterial(deliv.GetString(9));
@@ -74,9 +72,9 @@ namespace FMS.App_Code
         }
 
         public void setOrderNum(string value) { orderNum = value; }
-        public void setTruck(Truck value) { truck = value; }
-        public void setDriver(Driver value) { driver = value; }
-        public void setClient(Client value) { client = value; }
+        public void setTruck(string value) { truck = value; }
+        public void setDriver(string value) { driver = value; }
+        public void setClient(int value) { client = value; }
         public void setFrom(string value) { from = value; }
         public void setTo(string value) { to = value; }
         public void setMaterial(string value) { material = value; }
@@ -86,9 +84,9 @@ namespace FMS.App_Code
         public void setAuthority(Admin value) { authority = value; }
 
         public string getOrderNumber() { return orderNum; }
-        public Truck getTruck() { return truck; }
-        public Driver getDriver() { return driver; }
-        public Client getClient() { return client; }
+        public Truck getTruck() { return new Truck(truck); }
+        public Driver getDriver() { return new Driver(driver); }
+        public Client getClient() { return new Client(client); }
         public string getTo() { return to; }
         public string getFrom() { return from; }
         public string geMaterial() { return material; }

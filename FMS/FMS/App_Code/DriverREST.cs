@@ -16,13 +16,13 @@ namespace FMS.App_Code
          * Driver REST class which will provide a RESTful server to the driver class (android application)
          */
         private TcpListener server = null;
-        private static Dictionary<string, DriverHandle> handles = null;
+        private static List<DriverHandle> handles = null;
         private StreamWriter need = null;
 
         public DriverREST(int port)
         {
             server = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
-            handles = new Dictionary<string, DriverHandle>();
+            handles = new List<DriverHandle>();
         }
 
         /*
@@ -32,17 +32,25 @@ namespace FMS.App_Code
         {
             try {
                 server.Start();
-                while (true)
-                {
-                    DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
-                    lock (handle)
+                lock(server) {
+                    while (true)
                     {
-                        if (!handles.ContainsKey(handle.getAddress()))
+                        try
                         {
-                            handles.Add(handle.getAddress(), handle);
-                            Thread t = new Thread(handle.handle);
-                            t.Start();
-                            System.Diagnostics.Debug.WriteLine(handles[handle.getAddress()]);
+                            DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
+                            lock (handle)
+                            {
+                                if (!handles.Contains(handle))
+                                {
+                                    handles.Add(handle);
+                                    Thread t = new Thread(handle.handle);
+                                    t.Start();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine(ex);
                         }
                     }
                 }
@@ -51,28 +59,6 @@ namespace FMS.App_Code
             } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine(ex);
             }
-        }
-
-        public DriverHandle getHandle(string driver) {
-            DriverHandle handle = null;
-            lock(handles) {
-                foreach(var value in handles) {
-                    if(value.Value.getDriver() == driver) {
-                        handle = value.Value;
-                    }
-                }
-            }
-            return handle;
-        }
-
-        public DriverHandle getHandleByAddress(string address)
-        {
-            DriverHandle x;
-            lock (handles)
-            {
-                x = handles[address];
-            }
-            return x;
         }
     }
 }

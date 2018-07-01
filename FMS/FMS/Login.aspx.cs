@@ -25,14 +25,20 @@ namespace FMS
             string name = username.Value;
             string pass = password.Value;
             //hash password here 
-            var query = "select id, password from users where name like '" + name + "';";
+            var query = "select id, password from users where id like '" + name + "';";
             var response = Util.query(query);
             if(response.HasRows) {
-                if(pass == response.GetString(1)) {
-                    Session["user"] = new User(name);
+                while(response.Read()) {
+                    if (pass == response.GetString(1))
+                    {
+                        Session["user"] = response.GetString(0);
+                        Response.Redirect("Home");
+                    }
                 }
-            } else 
+            } else {
                 Response.Write("Login Failed");
+                System.Diagnostics.Debug.WriteLine("login failed");
+            }
         }
     }
 }

@@ -27,24 +27,21 @@ public class Login extends Base {
                 txtPass = (EditText) findViewById(R.id.password);
                 name = txtName.getText().toString();
                 pass = txtPass.getText().toString();
-                if(service.isAlive() && !service.verified()) {
-                    service.connect();
-                    service.send(name + " " + pass);
-                    String response = service.read();
-                    if(response != null && response.contains(OK_CODE)) {
-                        service.setDriver(name);
-                        service.log("login successful");
-                        response = service.read();
-                        if(response != null) {
-                            service.notification("delivery", response, new Intent(Login.this, CurrentDelivery.class));
+                if(!service.verified()) {
+                    if(service.isAlive()) {
+                        service.connect();
+                        service.send(name + " " + pass);
+                        String response = service.read();
+                        if(response != null && response.contains(OK_CODE)) {
+                            service.setDriver(name);
+                            service.log("login successful");
                         }
-                    }
+                    } else service.log("No internet");
                 }
                 if(service.verified()) {
                     finish();
                 } else {
                     service.log("login unsuccessful");
-                    service.disconnect();
                 }
             }
         });

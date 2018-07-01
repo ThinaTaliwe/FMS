@@ -51,11 +51,9 @@ namespace FMS.App_Code
                             if (verfied)
                             {
                                 send(OK_CODE);
-                                query = "UPDATE DRIVERS SET ADDRESS = '" + conn.Client.RemoteEndPoint + "' WHERE ID LIKE '" + parts[0] + "';";
-                                Util.query(query);
                                 driver = parts[0];
-                                time = DateTime.Now;
                                 checkAssignment();
+                                time = DateTime.Now;
                             }
                             else
                                 send(ERROR_CODE);
@@ -63,27 +61,34 @@ namespace FMS.App_Code
                     }
                     else
                     {
-                        System.Diagnostics.Debug.WriteLine("oops id = " + text);
+                        System.Diagnostics.Debug.WriteLine("invalid id = " + text);
                         send(ERROR_CODE);
                     }
                 }
-                System.Diagnostics.Debug.WriteLine("Connection verified: " + verfied);
+                System.Diagnostics.Debug.WriteLine("Driver Verified: " + verfied);
                 while (verfied)
                 {
-                    if(DateTime.Now.Subtract(time).Minutes > 5) {
-                        checkAssignment();
-                        time = DateTime.Now;
-                    }
-                    if(conn.Available > 0) {
-                        string foo = read();
-                        if (foo == "kill")
+                    try {
+                        if (DateTime.Now.Subtract(time).Minutes > 1)
                         {
-                            send("BYE");
-                            verfied = false;
-                        }else
-                        {
-                            send(foo.ToUpper());
+                            checkAssignment();
+                            time = DateTime.Now;
                         }
+                        if (conn.Available > 0)
+                        {
+                            string foo = read();
+                            if (foo == "kill")
+                            {
+                                send("BYE");
+                                verfied = false;
+                            }
+                            else
+                            {
+                                send(foo.ToUpper());
+                            }
+                        }
+                    } catch (Exception ex) {
+                        System.Diagnostics.Debug.WriteLine(ex);
                     }
                 }
                 conn.Close();
@@ -120,7 +125,7 @@ namespace FMS.App_Code
             try
             {
                 System.Diagnostics.Debug.WriteLine("Sending: " + text);
-                outStream.WriteLine(text + "\n");
+                outStream.WriteLine(text);
                 outStream.Flush();
             }
             catch (ObjectDisposedException ex)

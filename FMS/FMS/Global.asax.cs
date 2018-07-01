@@ -19,12 +19,11 @@ namespace FMS{
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Thread server = new Thread(rest.start);
-            server.Start();
-            //Thread assignments = new Thread(assignmentCheck);
-            //assignments.Start();
-        } 
+            lock(server) {
+                server.Start();
+            }
 
-        public DriverHandle getHandle(string address) { return rest.getHandle(address); }
+        } 
     }
 
         

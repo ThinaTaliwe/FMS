@@ -53,6 +53,10 @@ public class DriverService extends Service {
             conn.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            conn = null;
+            in  = null;
+            out = null;
         }
     }
 
@@ -66,13 +70,20 @@ public class DriverService extends Service {
         }
     }
 
+    public boolean availaible() {
+        try {
+            return conn.getInputStream().available() > 0;
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     public String read() {
         try {
-            if(conn.getInputStream().available() > 0) {
-                String text = in.nextLine();
-                System.out.println("Read: " + text);
-                return text;
-            }
+            String text = in.nextLine();
+            System.out.println("Read: " + text);
+            return text;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,7 +108,7 @@ public class DriverService extends Service {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         setThreadPolicy(policy);
         try {
-            conn.connect(new InetSocketAddress(address, port));
+            conn = new Socket(address, port);
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
             log(read());
@@ -128,7 +139,12 @@ public class DriverService extends Service {
     public boolean isAlive() {return isAlive(address, port);}
 
     public void connect() {
-       if(isAlive(address, port) && !conn.isConnected()) connect(address, port);
+        try{
+            if(conn != null && conn.isConnected()) disconnect();
+            if(isAlive(address, port)) connect(address, port);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private class ServerCheck extends TimerTask {
@@ -137,7 +153,7 @@ public class DriverService extends Service {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if(verified()) {
+                    if(verified() && availaible()) {
                         String text = read();
                         if(text != null) {
                             notification("delivery", text, new Intent(DriverService.this, CurrentDelivery.class));
@@ -187,7 +203,6 @@ public class DriverService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        conn = new Socket();
         timer.scheduleAtFixedRate(new ServerCheck(), 3000, 5000);
     }
 }
