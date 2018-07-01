@@ -1,6 +1,7 @@
 package fms.colloid.fmsdriverapp;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Delivery {
     private int id;
@@ -14,84 +15,70 @@ public class Delivery {
     private DateFormat departDay;
     private DateFormat arrivalDay;
 
-    public int getId() {
-        return id;
+    public static Delivery newAssignment(String assignment) {
+        String[] parts = assignment.split(";");
+        Delivery deliv = new Delivery();
+        deliv.id = Integer.parseInt(parts[0].split("=")[1]);
+        deliv.orderNum = parts[1].split("=")[1];
+        deliv.truck = parts[2].split("=")[1];
+        deliv.client = parts[3].split("=")[1];
+        deliv.from = parts[4].split("=")[1];
+        deliv.to = parts[5].split("=")[1];
+        deliv.material = parts[6].split("=")[1];
+        deliv.load = Integer.parseInt(parts[0].split("=")[1]);
+        deliv.departDay = new SimpleDateFormat(parts[0].split("=")[1]);
+        return deliv;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "order num: " + orderNum + "\n" +
+                "truck: " + truck  + "\n" +
+                "client: " + client  + "\n" +
+                "from: " + from  + "\n" +
+                "to: " + to  + "\n" +
+                "material: " + material  + "\n" +
+                "load: " + load  + "\n" +
+                "depart day: " + departDay  + "\n";
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(String orderNum) {
-        this.orderNum = orderNum;
-    }
-
     public String getTruck() {
         return truck;
-    }
-
-    public void setTruck(String truck) {
-        this.truck = truck;
     }
 
     public String getClient() {
         return client;
     }
 
-    public void setClient(String client) {
-        this.client = client;
-    }
-
     public String getFrom() {
         return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
     }
 
     public String getTo() {
         return to;
     }
 
-    public void setTo(String to) {
-        this.to = to;
-    }
-
     public String getMaterial() {
         return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
     }
 
     public int getLoad() {
         return load;
     }
 
-    public void setLoad(int load) {
-        this.load = load;
-    }
-
     public DateFormat getDepartDay() {
         return departDay;
-    }
-
-    public void setDepartDay(DateFormat departDay) {
-        this.departDay = departDay;
     }
 
     public DateFormat getArrivalDay() {
         return arrivalDay;
     }
-
-    public void setArrivalDay(DateFormat arrivalDay) {
-        this.arrivalDay = arrivalDay;
-    }
-
 }

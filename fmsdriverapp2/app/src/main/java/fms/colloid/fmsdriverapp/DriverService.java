@@ -147,17 +147,29 @@ public class DriverService extends Service {
         }
     }
 
+    public Delivery currentDelivery() { return delivery; }
+
     private class ServerCheck extends TimerTask {
         @Override
         public void run() {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if(verified() && availaible()) {
-                        String text = read();
-                        if(text != null) {
-                            notification("delivery", text, new Intent(DriverService.this, CurrentDelivery.class));
+                    try {
+                        if(verified() && availaible()) {
+                            String text = read();
+                            if(text != null) {
+                                String[] parts = text.split(" ");
+                                switch(parts[0]) {
+                                    case "assignment":
+                                        delivery = Delivery.newAssignment(parts[1] + " " + parts[2]);
+                                        notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
+                                        break;
+                                }
+                            }
                         }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
                 }
             });
@@ -197,7 +209,7 @@ public class DriverService extends Service {
 
     public void log(String message) {
         System.out.println("log: " + message);
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

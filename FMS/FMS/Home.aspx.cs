@@ -14,25 +14,17 @@ namespace FMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            var query = "select * from Delivery";
+            var query = "select order_num, truck, driver, client, accepted from Delivery";
             var rows = Util.query(query);
             var HTMLStr = "";
             if (rows.HasRows)
             {
                 var assigned = 0;//(rows.GetInt32(14));
                 var assignedStr = "";
-                if (assigned == 0)
-                {
-                    assignedStr = "No"; 
-                }
-                else
-                {
-                    assignedStr = "Yes"; 
-                }
                 while (rows.Read())
                 {
-
-                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + Convert.ToString(rows.GetString(5)) + "</td> <td> " + Convert.ToString(rows.GetString(6)) + "</td> <td> "  + assignedStr + "</td> </tr>";
+                    assignedStr = rows.GetInt32(4) == 0 ? "No" : "yes";
+                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + new Driver(rows.GetString(2)).getName() + "</td> <td> " + new Client(rows.GetInt32(3)).getName() + "</td> <td> "  + assignedStr + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }

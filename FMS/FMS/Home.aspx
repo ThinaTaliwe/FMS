@@ -17,8 +17,8 @@
                                     <tr>
                                         <th>Order Number</th>
                                         <th>Truck Plate</th>
-                                        <th>Origin</th>
-                                        <th>Destination</th>
+                                        <th>Driver</th>
+                                        <th>Client</th>
                                         <th>Assignment Accepted</th>
                                     </tr>
                                 </thead>

@@ -22,7 +22,6 @@ CREATE TABLE [dbo].[DRIVERS] (
     [FIRST_ISSUE] DATE        NOT NULL,
     [EXPIRY]      DATE        NOT NULL,
     [RESTRICTION] INT         NOT NULL,
-	[MESSAGE] int not null default 0,
     PRIMARY KEY CLUSTERED ([ID] ASC),
     FOREIGN KEY ([ID]) REFERENCES [dbo].[USERS] ([ID])
 );

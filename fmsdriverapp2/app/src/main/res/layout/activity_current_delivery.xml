@@ -16,37 +16,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView4"
+        <EditText
+            android:id="@+id/delivery_info"
             android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:text="Delivery info"
-            android:textAlignment="center"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:text="Origin: Johannesburg"
-            android:textAlignment="center"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:text="Destination: Pretoria"
-            android:textAlignment="center"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:text="Material: Coal"
-            android:textAlignment="center"
-            android:textSize="24sp" />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/accept"

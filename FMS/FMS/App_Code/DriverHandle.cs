@@ -69,22 +69,43 @@ namespace FMS.App_Code
                 while (verfied)
                 {
                     try {
-                        if (DateTime.Now.Subtract(time).Minutes > 1)
+                        if (DateTime.Now.Subtract(time).Minutes > 5)
                         {
                             checkAssignment();
                             time = DateTime.Now;
                         }
                         if (conn.Available > 0)
                         {
-                            string foo = read();
-                            if (foo == "kill")
+                            string response = read();
+                            if (response == "kill")
                             {
                                 send("BYE");
                                 verfied = false;
                             }
                             else
                             {
-                                send(foo.ToUpper());
+                                string[] parts = response.Split(' ');
+                                var query = "";
+                                switch (parts[0]) {
+                                    case "accept":
+                                         query = "update delivery set accepted = '1' where id like '" + parts[1] + "'";
+                                        Util.query(query);
+                                        send(OK_CODE);
+                                        break;
+                                    case "location":
+                                        query = "update delivery set location = '" + parts[2] + "' where id like '" + parts[1] + "'";
+                                        Util.query(query);
+                                        send(OK_CODE);
+                                        break;
+                                    case "message":
+                                        query = "update drivers set message = '" + parts[1] + "' where id like '" + driver + "'";
+                                        Util.query(query);
+                                        send(OK_CODE);
+                                        break;
+                                    default:
+                                        send(ERROR_CODE);
+                                        break;
+                                }
                             }
                         }
                     } catch (Exception ex) {
@@ -109,7 +130,7 @@ namespace FMS.App_Code
                 while (assignment.Read())
                 {
                     Delivery delivery = Delivery.getInstance(assignment.GetInt32(0));
-                    send(delivery.ToString());
+                    send("assignment " + delivery.ToString());
                 }
             }
         }        
