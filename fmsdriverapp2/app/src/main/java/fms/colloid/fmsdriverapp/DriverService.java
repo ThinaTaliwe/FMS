@@ -1,15 +1,24 @@
 package fms.colloid.fmsdriverapp;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.*;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -23,7 +32,7 @@ import java.util.TimerTask;
 
 import static android.os.StrictMode.setThreadPolicy;
 
-public class DriverService extends Service {
+public class DriverService extends Service implements LocationListener {
 
     private IBinder bound = new DriverServiceBound();
     private Socket conn = null;
@@ -35,6 +44,8 @@ public class DriverService extends Service {
     private Handler tHandler = new Handler();
     private String address = "10.0.2.2";
     private int port = 1998;
+    private LocationManager locationManager;
+    private String longitude, latitude;
 
     public String getDriver() {
         return driver;
@@ -55,7 +66,7 @@ public class DriverService extends Service {
             e.printStackTrace();
         } finally {
             conn = null;
-            in  = null;
+            in = null;
             out = null;
         }
     }
@@ -65,7 +76,7 @@ public class DriverService extends Service {
             System.out.println("Sending: " + text);
             out.write(text + "\n");
             out.flush();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             System.err.println(ex);
         }
     }
@@ -73,7 +84,7 @@ public class DriverService extends Service {
     public boolean availaible() {
         try {
             return conn.getInputStream().available() > 0;
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return false;
@@ -112,11 +123,11 @@ public class DriverService extends Service {
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
             log(read());
-        } catch(ConnectException e) {
+        } catch (ConnectException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -130,24 +141,28 @@ public class DriverService extends Service {
             Socket socket = new Socket();
             socket.connect(address, 1);
             socket.close();
-        } catch(IOException ex){
+        } catch (IOException ex) {
             alive = false;
         }
         return alive;
     }
 
-    public boolean isAlive() {return isAlive(address, port);}
+    public boolean isAlive() {
+        return isAlive(address, port);
+    }
 
     public void connect() {
-        try{
-            if(conn != null && conn.isConnected()) disconnect();
-            if(isAlive(address, port)) connect(address, port);
-        }catch (Exception ex) {
+        try {
+            if (conn != null) disconnect();
+            if (isAlive(address, port)) connect(address, port);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public Delivery currentDelivery() { return delivery; }
+    public Delivery currentDelivery() {
+        return delivery;
+    }
 
     private class ServerCheck extends TimerTask {
         @Override
@@ -156,14 +171,19 @@ public class DriverService extends Service {
                 @Override
                 public void run() {
                     try {
-                        if(verified() && availaible()) {
+                        if (verified() && availaible()) {
+                            if(delivery != null) sendLocation(delivery.getId());
+                            else System.out.println("null delivery");
                             String text = read();
-                            if(text != null) {
+                            if (text != null) {
                                 String[] parts = text.split(" ");
-                                switch(parts[0]) {
+                                switch (parts[0]) {
                                     case "assignment":
                                         delivery = Delivery.newAssignment(parts[1] + " " + parts[2]);
                                         notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
+                                        break;
+                                    default:
+                                        log(text);
                                         break;
                                 }
                             }
@@ -174,6 +194,54 @@ public class DriverService extends Service {
                 }
             });
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        longitude = String.valueOf(location.getLongitude());
+        latitude = String.valueOf(location.getLatitude());
+        System.out.println(longitude + ":" + latitude);
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+        System.out.println("status changed: " + s);
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+        System.out.println("provider enabled");
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+        System.out.println("provider disabled");
+    }
+
+    public void sendLocation(int id) {
+        if(longitude != null && latitude != null) {
+            send("location " + id + " " + longitude + ":" + latitude);
+        } else log("location is null");
+    }
+
+    private void showLocationAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Enable Location")
+                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
+                        "use this app")
+                .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
     }
 
     @Override
@@ -216,5 +284,23 @@ public class DriverService extends Service {
     public void onCreate() {
         super.onCreate();
         timer.scheduleAtFixedRate(new ServerCheck(), 3000, 5000);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            showLocationAlert();
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        longitude = String.valueOf(location.getLongitude());
+        latitude = String.valueOf(location.getLatitude());
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }
 }

@@ -16,12 +16,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <TextView
             android:id="@+id/delivery_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine" />
+            android:layout_height="331dp"
+            android:text="Delivery Info" />
 
         <Button
             android:id="@+id/accept"

@@ -42,7 +42,7 @@ namespace FMS.App_Code
 
         public static Delivery getInstance(int id)
         {
-            var query = "SELECT * FROM DELIVERY WHERE ID LIKE '" + id + "';";
+            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority FROM DELIVERY WHERE ID LIKE '" + id + "';";
             System.Diagnostics.Debug.WriteLine(query);
             var deliv = Util.query(query);
             if (deliv.HasRows)
@@ -51,16 +51,16 @@ namespace FMS.App_Code
                 while (deliv.Read())
                 {
                     delivery.id = id;
-                    delivery.setOrderNum(deliv.GetString(1));
-                    delivery.setTruck(deliv.GetString(2));
-                    delivery.setDriver(deliv.GetString(3));
-                    delivery.setClient(deliv.GetInt32(4));
-                    delivery.setFrom(deliv.GetString(5));
-                    delivery.setTo(deliv.GetString(6));
-                    delivery.setMaterial(deliv.GetString(9));
-                    delivery.setLoad(deliv.GetInt32(10));
-                    delivery.setDepartDay(deliv.GetDateTime(7));
-                    delivery.setAuthority(new Admin(deliv.GetString(12)));
+                    delivery.setOrderNum(deliv.GetString(0));
+                    delivery.setTruck(deliv.GetString(1));
+                    delivery.setDriver(deliv.GetString(2));
+                    delivery.setClient(deliv.GetInt32(3));
+                    delivery.setFrom(deliv.GetString(4));
+                    delivery.setTo(deliv.GetString(5));
+                    delivery.setMaterial(deliv.GetString(6));
+                    delivery.setLoad(deliv.GetInt32(7));
+                    delivery.setDepartDay(deliv.GetDateTime(8));
+                    delivery.setAuthority(new Admin(deliv.GetString(9)));
                 }
                 return delivery;
             }

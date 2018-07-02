@@ -49,6 +49,7 @@ CREATE TABLE [dbo].[DELIVERY] (
     [DELIVERY_DAY] DATETIME      NULL,
     [MATERIAL]     VARCHAR (100) NOT NULL,
     [LOAD]         INT           NOT NULL,
+    [LOCATION]     VARCHAR (100) NULL,
     [AUTHORITY]    CHAR (13)     NOT NULL,
     [COMPLETED]    INT           DEFAULT ((0)) NOT NULL,
 	[ACCEPTED] INT DEFAULT((0)) NOT NULL,
@@ -57,13 +58,4 @@ CREATE TABLE [dbo].[DELIVERY] (
     FOREIGN KEY ([DRIVER]) REFERENCES [dbo].[DRIVERS] ([ID]),
     FOREIGN KEY ([DRIVER]) REFERENCES [dbo].[DRIVERS] ([ID]),
     FOREIGN KEY ([AUTHORITY]) REFERENCES [dbo].[USERS] ([ID])
-);
-
-create table locations (
-[delivery] int not null,
-[driver] char(13) not null,
-[location] varchar(255) not null,
-[time] datetime not null,
-foreign key ([delivery]) references delivery,
-foreign key ([driver]) references drivers
 );

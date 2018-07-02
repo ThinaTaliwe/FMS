@@ -88,21 +88,24 @@ namespace FMS.App_Code
                                 var query = "";
                                 switch (parts[0]) {
                                     case "accept":
+                                        //accept [delivery_id]
                                          query = "update delivery set accepted = '1' where id like '" + parts[1] + "'";
                                         Util.query(query);
                                         send(OK_CODE);
                                         break;
                                     case "location":
-                                        query = "update delivery set location = '" + parts[2] + "' where id like '" + parts[1] + "'";
+                                        //location [delivery_id] [longitude:latitude]
+                                        query = "insert into locations values('" + parts[1] + "', '" + driver + "', '" + parts[2] + "', '" + DateTime.Now + "')";
                                         Util.query(query);
                                         send(OK_CODE);
                                         break;
                                     case "message":
+                                        //message [message_code]
                                         query = "update drivers set message = '" + parts[1] + "' where id like '" + driver + "'";
                                         Util.query(query);
                                         send(OK_CODE);
                                         break;
-                                    default:
+                                    default:        
                                         send(ERROR_CODE);
                                         break;
                                 }
