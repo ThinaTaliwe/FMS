@@ -79,7 +79,7 @@ namespace FMS.App_Code
                             string response = read();
                             if (response == "kill")
                             {
-                                send("BYE");
+                                send("BYE"); 
                                 verfied = false;
                             }
                             else
@@ -104,6 +104,20 @@ namespace FMS.App_Code
                                         query = "update drivers set message = '" + parts[1] + "' where id like '" + driver + "'";
                                         Util.query(query);
                                         send(OK_CODE);
+                                        break;
+                                    case "current":
+                                        query = "select id from delivery where driver like '" + driver + "' and accepted like '1' and completed like '0'";
+                                        var current = Util.query(query);
+                                        if (current.HasRows)
+                                        {
+                                            while (current.Read())
+                                            {
+                                                Delivery deliv = Delivery.getInstance(current.GetInt32(0));
+                                                send(deliv.ToString());
+                                            }
+                                        }
+                                        else
+                                            send(ERROR_CODE);
                                         break;
                                     default:        
                                         send(ERROR_CODE);

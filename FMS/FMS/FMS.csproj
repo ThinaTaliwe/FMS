@@ -251,7 +251,6 @@
     </Compile>
     <Compile Include="App_Code\Admin.cs" />
     <Compile Include="App_Code\Client.cs" />
-    <Compile Include="App_Code\Deliver.cs" />
     <Compile Include="App_Code\Delivery.cs" />
     <Compile Include="App_Code\Driver.cs" />
     <Compile Include="App_Code\DriverREST.cs" />

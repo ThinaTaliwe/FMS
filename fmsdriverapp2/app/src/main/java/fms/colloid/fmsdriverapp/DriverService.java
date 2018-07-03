@@ -1,6 +1,7 @@
 package fms.colloid.fmsdriverapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -32,7 +33,7 @@ import java.util.TimerTask;
 
 import static android.os.StrictMode.setThreadPolicy;
 
-public class DriverService extends Service implements LocationListener {
+public class DriverService extends Service {
 
     private IBinder bound = new DriverServiceBound();
     private Socket conn = null;
@@ -46,6 +47,11 @@ public class DriverService extends Service implements LocationListener {
     private int port = 1998;
     private LocationManager locationManager;
     private String longitude, latitude;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
 
     public String getDriver() {
         return driver;
@@ -81,7 +87,7 @@ public class DriverService extends Service implements LocationListener {
         }
     }
 
-    public boolean availaible() {
+    public boolean available() {
         try {
             return conn.getInputStream().available() > 0;
         } catch (Exception ex) {
@@ -165,14 +171,16 @@ public class DriverService extends Service implements LocationListener {
     }
 
     private class ServerCheck extends TimerTask {
+
         @Override
         public void run() {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    System.out.println("servercheck");
                     try {
-                        if (verified() && availaible()) {
-                            if(delivery != null) sendLocation(delivery.getId());
+                        if (verified() && available()) {
+                            if (delivery != null) sendLocation(delivery.getId());
                             else System.out.println("null delivery");
                             String text = read();
                             if (text != null) {
@@ -181,7 +189,7 @@ public class DriverService extends Service implements LocationListener {
                                     case "assignment":
                                         delivery = Delivery.newAssignment(parts[1] + " " + parts[2]);
                                         notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
-                                        break;
+                                        sendLocation(delivery.getId());
                                     default:
                                         log(text);
                                         break;
@@ -196,35 +204,33 @@ public class DriverService extends Service implements LocationListener {
         }
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        longitude = String.valueOf(location.getLongitude());
-        latitude = String.valueOf(location.getLatitude());
-        System.out.println(longitude + ":" + latitude);
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-        System.out.println("status changed: " + s);
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-        System.out.println("provider enabled");
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-        System.out.println("provider disabled");
-    }
-
     public void sendLocation(int id) {
-        if(longitude != null && latitude != null) {
+        if (longitude != null && latitude != null) {
             send("location " + id + " " + longitude + ":" + latitude);
         } else log("location is null");
     }
 
-    private void showLocationAlert() {
+    private LocationListener locationLitener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            longitude = String.valueOf(location.getLongitude());
+            latitude = String.valueOf(location.getLatitude());
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) { }
+
+        @Override
+        public void onProviderEnabled(String s) { }
+
+        @Override
+        public void onProviderDisabled(String s) {
+            showLocationAlert();
+        }
+    };
+
+    public void showLocationAlert() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Enable Location")
                 .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
@@ -244,8 +250,22 @@ public class DriverService extends Service implements LocationListener {
         dialog.show();
     }
 
+    public boolean hasPermissions(Context context) {
+        boolean access = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            access = checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        } else access = true;
+        if(access && locationManager == null) {
+            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationLitener);
+            timer.scheduleAtFixedRate(new ServerCheck(), 3000, 10000);
+        }
+        return access;
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
+        hasPermissions(this);
         return bound;
     }
 
@@ -260,47 +280,9 @@ public class DriverService extends Service implements LocationListener {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        return super.onUnbind(intent);
-    }
-
-    @Override
-    public void onRebind(Intent intent) {
-        super.onRebind(intent);
-    }
-
     public void log(String message) {
         System.out.println("log: " + message);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        timer.scheduleAtFixedRate(new ServerCheck(), 3000, 5000);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            showLocationAlert();
-        }
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        longitude = String.valueOf(location.getLongitude());
-        latitude = String.valueOf(location.getLatitude());
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-    }
 }

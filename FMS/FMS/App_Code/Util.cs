@@ -9,21 +9,25 @@ namespace FMS.App_Code
 {
     public class Util
     {
-        /**
-         *  Util class will have static utility methods 
-         * **/
+
+        public double[] getCoords(String coords) {
+            try {
+                String[] parts = coords.Split(':');
+                return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine("invalid coords given " + coords + ex);
+            }
+            return null;
+        }
 
         public static SqlDataReader query(string request)
         {
-            /**
-             * query method will be used to query database, returns rows matching request
-             * **/
              try
             {
+                System.Diagnostics.Debug.WriteLine(request);
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString());
                 conn.Open();
                 SqlCommand command = new SqlCommand(request, conn);
-                System.Diagnostics.Debug.WriteLine(request);
                 return command.ExecuteReader();
             } catch(InvalidOperationException e)
             {
@@ -41,7 +45,6 @@ namespace FMS.App_Code
             {
                 System.Diagnostics.Debug.WriteLine(e);
             }
-            System.Diagnostics.Debug.WriteLine(request);
             return null;
         }
     }
