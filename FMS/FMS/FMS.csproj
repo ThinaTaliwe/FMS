@@ -162,15 +162,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="CreateDelivery.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="DeleteTruck.aspx" />
-    <Content Include="DeleteUser.aspx" />
     <Content Include="DeliveryReport.aspx" />
     <Content Include="Drag.html" />
     <Content Include="DriverReport.aspx" />
     <Content Include="EditDelivery.aspx" />
     <Content Include="EditDelivery1.aspx" />
     <Content Include="Junk2.aspx" />
-    <Content Include="DeleteDriver.aspx" />
     <Content Include="DeliveryDelete.aspx" />
     <Content Include="Junk1.aspx" />
     <Content Include="favicon.ico" />
@@ -288,20 +285,6 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DeleteTruck.aspx.cs">
-      <DependentUpon>DeleteTruck.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DeleteTruck.aspx.designer.cs">
-      <DependentUpon>DeleteTruck.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DeleteUser.aspx.cs">
-      <DependentUpon>DeleteUser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DeleteUser.aspx.designer.cs">
-      <DependentUpon>DeleteUser.aspx</DependentUpon>
-    </Compile>
     <Compile Include="DeliveryReport.aspx.cs">
       <DependentUpon>DeliveryReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -336,13 +319,6 @@
     </Compile>
     <Compile Include="Junk2.aspx.designer.cs">
       <DependentUpon>Junk2.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DeleteDriver.aspx.cs">
-      <DependentUpon>DeleteDriver.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DeleteDriver.aspx.designer.cs">
-      <DependentUpon>DeleteDriver.aspx</DependentUpon>
     </Compile>
     <Compile Include="DeliveryDelete.aspx.cs">
       <DependentUpon>DeliveryDelete.aspx</DependentUpon>

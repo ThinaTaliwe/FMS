@@ -23,7 +23,13 @@ namespace FMS{
                 server.Start();
             }
 
-        } 
+        }
+
+        void RegisterRoutes(RouteCollection routes)
+        {
+            routes.MapPageRoute("delivery", "delivery/{id}", "~/Delivery.aspx");
+            routes.MapPageRoute("client", "client/{id}", "~client.aspx");
+        }
     }
 
         

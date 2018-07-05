@@ -177,7 +177,6 @@ public class DriverService extends Service {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("servercheck");
                     try {
                         if (verified() && available()) {
                             if (delivery != null) sendLocation(delivery.getId());
@@ -225,30 +224,8 @@ public class DriverService extends Service {
         public void onProviderEnabled(String s) { }
 
         @Override
-        public void onProviderDisabled(String s) {
-            showLocationAlert();
-        }
+        public void onProviderDisabled(String s) { }
     };
-
-    public void showLocationAlert() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Enable Location")
-                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
-                        "use this app")
-                .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(myIntent);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    }
-                });
-        dialog.show();
-    }
 
     public boolean hasPermissions(Context context) {
         boolean access = false;

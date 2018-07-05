@@ -43,7 +43,6 @@ namespace FMS.App_Code
         public static Delivery getInstance(int id)
         {
             var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority FROM DELIVERY WHERE ID LIKE '" + id + "';";
-            System.Diagnostics.Debug.WriteLine(query);
             var deliv = Util.query(query);
             if (deliv.HasRows)
             {
