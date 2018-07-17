@@ -69,7 +69,7 @@ namespace FMS.App_Code
                 while (verfied)
                 {
                     try {
-                        if (DateTime.Now.Subtract(time).Minutes > 5)
+                        if (DateTime.Now.Subtract(time).Minutes > 30)
                         {
                             checkAssignment();
                             time = DateTime.Now;
@@ -103,7 +103,7 @@ namespace FMS.App_Code
                                         //message [message_code]
                                         query = "update drivers set message = '" + parts[1] + "' where id like '" + driver + "'";
                                         Util.query(query);
-                                        send(OK_CODE);
+                                        send("message " + OK_CODE);
                                         break;
                                     case "current":
                                         query = "select id from delivery where driver like '" + driver + "' and accepted like '1' and completed like '0'";
@@ -118,6 +118,18 @@ namespace FMS.App_Code
                                         }
                                         else
                                             send(ERROR_CODE);
+                                        break;
+                                    case "distance":
+                                        //distance [from] [to]
+                                        try {
+                                            var from = Util.getCoords(parts[1]);
+                                            var to = Util.getCoords(parts[2]);
+                                            var distance = Util.distance(from, to);
+                                            send(distance.ToString());
+                                        } catch(Exception ex) {
+                                            System.Diagnostics.Debug.WriteLine(ex);
+                                            send(ERROR_CODE);
+                                        }
                                         break;
                                     default:        
                                         send(ERROR_CODE);

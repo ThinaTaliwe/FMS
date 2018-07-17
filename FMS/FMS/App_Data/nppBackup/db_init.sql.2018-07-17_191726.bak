@@ -52,7 +52,6 @@ CREATE TABLE [dbo].[DELIVERY] (
     [AUTHORITY]    CHAR (13)     NOT NULL,
     [COMPLETED]    INT           DEFAULT ((0)) NOT NULL,
 	[ACCEPTED] INT DEFAULT((0)) NOT NULL,
-	[STARTED] INT DEFAULT((0)) NOT NULL,
     PRIMARY KEY CLUSTERED ([ID] ASC),
     FOREIGN KEY ([TRUCK]) REFERENCES [dbo].[TRUCKS] ([ID]),
     FOREIGN KEY ([DRIVER]) REFERENCES [dbo].[DRIVERS] ([ID]),
@@ -61,10 +60,10 @@ CREATE TABLE [dbo].[DELIVERY] (
 );
 
 create table locations (
-	[delivery] int not null,
-	[driver] char(13) not null,
-	[location] varchar(255) not null,
-	[time] datetime not null,
-	foreign key ([delivery]) references delivery,
-	foreign key ([driver]) references drivers
+[delivery] int not null,
+[driver] char(13) not null,
+[location] varchar(255) not null,
+[time] datetime not null,
+foreign key ([delivery]) references delivery,
+foreign key ([driver]) references drivers
 );

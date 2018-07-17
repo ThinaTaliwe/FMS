@@ -50,20 +50,21 @@ namespace FMS.App_Code
                         }
                         catch (Exception ex)
                         {
-                            System.Diagnostics.Debug.WriteLine(ex + " restarting server");
-                            try{
-                                server.Stop();
-                                server.Start();
-                            } catch (Exception e) {
-                            System.Diagnostics.Debug.WriteLine(e);
-                            }
+                            System.Diagnostics.Debug.WriteLine(ex);
                         }
                     }
                 }
-            } catch (SocketException ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
             } catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
+                System.Diagnostics.Debug.WriteLine(ex + " restarting server");
+                try
+                {
+                    server.Stop();
+                    server.Start();
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e);
+                }
             }
         }
     }

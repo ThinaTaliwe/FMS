@@ -5,6 +5,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.EventListener;
+
 public class CurrentDelivery extends Base {
     private Button accept;
     private TextView delivery_info;
@@ -14,10 +16,15 @@ public class CurrentDelivery extends Base {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_delivery);
-        setControls();
     }
 
-    private void setControls() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void setControls() {
         accept = (Button) findViewById(R.id.accept);
         accept.setOnClickListener(new View.OnClickListener() {
 
@@ -26,15 +33,13 @@ public class CurrentDelivery extends Base {
                 if(service.currentDelivery() != null){
                     service.send("accept " + service.currentDelivery().getId());
                     service.sendLocation(service.currentDelivery().getId());
+                    service.currentDelivery().accept();
                 }
             }
         });
         delivery_info = (TextView) findViewById(R.id.delivery_info);
-//        loading = (ProgressBar) findViewById(R.id.progressBar);
-//        loading.setVisibility(View.VISIBLE);
-//        while (!serviceIsBounded){}
-//        loading.setVisibility(View.GONE);
-//        if(service.currentDelivery() != null) delivery_info.setText(service.currentDelivery().toString());
-//        else delivery_info.setText("No Cuurent delivery");
+        if(serviceIsBounded && service.currentDelivery() != null) {
+            delivery_info.setText(service.currentDelivery().toString());
+        } else delivery_info.setText("No current delivery");
     }
 }

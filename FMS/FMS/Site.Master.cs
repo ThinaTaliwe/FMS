@@ -12,17 +12,17 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*   if (Session["user"] == null)
+               if (Session["user"] == null)
                {
                    Response.Redirect("Login");
                } else
                {
                    string name = Session["user"] as string;
                    user.InnerText = new User(name).getName();
-               } */
+               } 
 
-            if (Session["user"] == null)
-                Session["user"] = "1234567890123";
+            //if (Session["user"] == null)
+              //  Session["user"] = "1234567890123"; 
         }
     }
 }

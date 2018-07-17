@@ -1,15 +1,11 @@
 package fms.colloid.fmsdriverapp;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.app.TaskStackBuilder;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.*;
@@ -18,8 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -35,11 +29,14 @@ import static android.os.StrictMode.setThreadPolicy;
 
 public class DriverService extends Service {
 
+    public static final String OK_CODE = "200 OK";
+    public static final String ERROR_CODE = "400 ERR";
+
     private IBinder bound = new DriverServiceBound();
     private Socket conn = null;
     private Scanner in = null;
     private PrintWriter out = null;
-    private String driver = null;
+    private String[] driver = null;
     private Delivery delivery = null;
     private Timer timer = new Timer();
     private Handler tHandler = new Handler();
@@ -47,6 +44,7 @@ public class DriverService extends Service {
     private int port = 1998;
     private LocationManager locationManager;
     private String longitude, latitude;
+    private ServerCheck serverCheck = new ServerCheck();
 
     @Override
     public void onCreate() {
@@ -54,11 +52,11 @@ public class DriverService extends Service {
     }
 
     public String getDriver() {
-        return driver;
+        return driver[0];
     }
 
-    public void setDriver(String driver) {
-        this.driver = driver;
+    public void setDriver(String driver, String pass) {
+        this.driver = new String[]{driver, pass};
     }
 
     public boolean verified() {
@@ -67,6 +65,7 @@ public class DriverService extends Service {
 
     public void disconnect() {
         try {
+            send("kill");
             conn.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,6 +73,34 @@ public class DriverService extends Service {
             conn = null;
             in = null;
             out = null;
+        }
+    }
+
+    public void logOff() {
+        try {
+            disconnect();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            driver = null;
+        }
+    }
+
+    public void reconnect() {
+        if(isAlive()) {
+            if(verified()) {
+                disconnect();
+                connect();
+                log(read());
+                send(driver[0] + " " + driver[1]);
+                String response = read();
+                if(response.contains(OK_CODE)) {
+                    send("current");
+                    response = read();
+                    if(response != null)
+                        delivery = Delivery.newAssignment(response);
+                }
+            } else log("Login to view current deliveries");
         }
     }
 
@@ -113,7 +140,7 @@ public class DriverService extends Service {
         PendingIntent pIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notif = new Notification.Builder(this)
                 .setContentTitle(title)
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentIntent(pIntent)
                 .setStyle(new Notification.BigTextStyle().bigText(content)).build();
@@ -178,21 +205,33 @@ public class DriverService extends Service {
                 @Override
                 public void run() {
                     try {
-                        if (verified() && available()) {
-                            if (delivery != null) sendLocation(delivery.getId());
-                            else System.out.println("null delivery");
-                            String text = read();
-                            if (text != null) {
-                                String[] parts = text.split(" ");
-                                switch (parts[0]) {
-                                    case "assignment":
-                                        delivery = Delivery.newAssignment(parts[1] + " " + parts[2]);
-                                        notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
-                                        sendLocation(delivery.getId());
-                                    default:
-                                        log(text);
-                                        break;
+                        if(verified()) {
+                            if(!conn.isConnected()) reconnect();
+                            else if (delivery != null) {
+                                sendLocation(delivery.getId());
+                            }
+                            if(available()) {
+                                String text = read();
+                                if (text != null) {
+                                    String[] parts = text.split(" ");
+                                    switch (parts[0]) {
+                                        case "assignment":
+                                            delivery = Delivery.newAssignment(parts[1] + " " + parts[2]);
+                                            notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
+                                            sendLocation(delivery.getId());
+                                            break;
+                                        case OK_CODE:
+                                            System.out.println(OK_CODE);
+                                            break;
+                                        default:
+                                            log(text);
+                                            break;
+                                    }
                                 }
+                            }
+                        } else {
+                            if(isAlive()) {
+                                //("Login into FMS Driver App", "Login to check if have any new deliveries", new Intent(DriverService.this, Login.class));
                             }
                         }
                     } catch (Exception ex) {
@@ -205,11 +244,11 @@ public class DriverService extends Service {
 
     public void sendLocation(int id) {
         if (longitude != null && latitude != null) {
-            send("location " + id + " " + longitude + ":" + latitude);
-        } else log("location is null");
+            send("location " + id + " " + latitude + ":" + longitude);
+        }
     }
 
-    private LocationListener locationLitener = new LocationListener() {
+    private LocationListener locationListener = new LocationListener() {
 
         @Override
         public void onLocationChanged(Location location) {
@@ -227,28 +266,45 @@ public class DriverService extends Service {
         public void onProviderDisabled(String s) { }
     };
 
-    public boolean hasPermissions(Context context) {
-        boolean access = false;
+    public void setLocationTimer(long period) {
+        boolean access;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             access = checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         } else access = true;
-        if(access && locationManager == null) {
-            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationLitener);
-            timer.scheduleAtFixedRate(new ServerCheck(), 3000, 10000);
+        if(access) {
+            if(locationManager == null) {
+                locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 0, locationListener);
         }
-        return access;
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        hasPermissions(this);
+        if(timer == null) setTimer(300000);
         return bound;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flag, int startID) {
         return Service.START_STICKY;
+    }
+
+    public void setTimer(long period) {
+        try {
+            timer = null;
+            timer = new Timer();
+            timer.scheduleAtFixedRate(serverCheck, 5000, period);
+            if(delivery != null) {
+                if(delivery.completed()) return;
+                else if(delivery.started()) period = 20000;
+                else if (delivery.accepted()) period = 600000;
+                else period = 600000;
+                setLocationTimer(period);
+            } else return;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public class DriverServiceBound extends Binder {

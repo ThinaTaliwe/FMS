@@ -17,18 +17,16 @@ namespace FMS{
         void Application_Start(object sender, EventArgs e)  {
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Thread server = new Thread(rest.start);
-            lock(server) {
-                server.Start();
-            }
-
+            server.Start();
+            //Todo timer to restart server
         }
 
         void RegisterRoutes(RouteCollection routes)
         {
-            routes.MapPageRoute("delivery", "delivery/{id}", "~/Delivery.aspx");
-            routes.MapPageRoute("client", "client/{id}", "~client.aspx");
+            routes.MapPageRoute("delivery", "delivery/{id}", "~/EditDelivery.aspx");
         }
     }
 

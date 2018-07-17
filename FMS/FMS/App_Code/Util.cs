@@ -9,13 +9,14 @@ namespace FMS.App_Code
 {
     public class Util
     {
+
 		public static double distance(double[] from, double[] to) {
             try {
                 double lon1, lat1, lon2, lat2;
-                lon1 = from[0];
-                lat1 = from[1];
-                lon2 = to[0];
-                lat2 = to[1];
+                lat1 = from[0];
+                lon1 = from[1];
+                lat2 = to[0];
+                lon2 = to[1];
                 var r = 6371000.0;
                 var phi1 = toRad(lat1);
                 var phi2 = toRad(lat2);
@@ -36,7 +37,7 @@ namespace FMS.App_Code
 
         public static double[] getCoords(String coords) {
             try {
-                String[] parts = coords.Split(':');
+                String[] parts = coords.Replace('.', ',').Split(':');
                 return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
             } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine("invalid coords given " + coords + ex);
@@ -53,21 +54,20 @@ namespace FMS.App_Code
                 conn.Open();
                 SqlCommand command = new SqlCommand(request, conn);
                 return command.ExecuteReader();
-            } catch(InvalidOperationException e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-            }
-            catch (SqlException e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-            }
-            catch (ConfigurationErrorsException e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-            }
+            } 
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
+                try {
+                    System.Diagnostics.Debug.WriteLine("Retrying query: " + request);
+                    SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn2"].ToString());
+                    conn.Open();
+                    SqlCommand command = new SqlCommand(request, conn);
+                    return command.ExecuteReader();
+                } catch(Exception ex) {
+                    System.Diagnostics.Debug.Write(ex);
+                }
+
             }
             return null;
         }

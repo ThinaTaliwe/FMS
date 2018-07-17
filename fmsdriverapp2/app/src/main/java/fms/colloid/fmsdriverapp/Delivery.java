@@ -2,6 +2,7 @@ package fms.colloid.fmsdriverapp;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Delivery {
     private int id;
@@ -12,22 +13,31 @@ public class Delivery {
     private String to; 
     private String material;
     private int load;
-    private DateFormat departDay;
-    private DateFormat arrivalDay;
+    private Date departDay, arrivalDay;
+    private boolean accepted, started, completed;
+    private static final DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    //2018/07/19 00:00:00.000
+
 
     public static Delivery newAssignment(String assignment) {
-        String[] parts = assignment.split(";");
-        Delivery deliv = new Delivery();
-        deliv.id = Integer.parseInt(parts[0].split("=")[1]);
-        deliv.orderNum = parts[1].split("=")[1];
-        deliv.truck = parts[2].split("=")[1];
-        deliv.client = parts[3].split("=")[1];
-        deliv.from = parts[4].split("=")[1];
-        deliv.to = parts[5].split("=")[1];
-        deliv.material = parts[6].split("=")[1];
-        deliv.load = Integer.parseInt(parts[0].split("=")[1]);
-        deliv.departDay = new SimpleDateFormat(parts[0].split("=")[1]);
-        return deliv;
+        try {
+            String[] parts = assignment.split(";");
+            Delivery deliv = new Delivery();
+            deliv.id = Integer.parseInt(parts[0].split("=")[1]);
+            deliv.orderNum = parts[1].split("=")[1];
+            deliv.truck = parts[2].split("=")[1];
+            deliv.client = parts[3].split("=")[1];
+            deliv.from = parts[4].split("=")[1];
+            deliv.to = parts[5].split("=")[1];
+            deliv.material = parts[6].split("=")[1];
+            deliv.load = Integer.parseInt(parts[7].split("=")[1]);
+            deliv.departDay = format.parse(parts[8].split("=")[1]);
+
+            return deliv;
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -39,8 +49,20 @@ public class Delivery {
                 "to: " + to  + "\n" +
                 "material: " + material  + "\n" +
                 "load: " + load  + "\n" +
-                "depart day: " + departDay  + "\n";
+                "depart day: " + departDay.toString()  + "\n";
     }
+
+    public void completeDelivery() { completed = true; }
+
+    public boolean completed() { return completed; }
+
+    public void startDelivery() { started = true; }
+
+    public boolean started() { return started; }
+
+    public void accept() { accepted = true; }
+
+    public boolean accepted() { return accepted; }
 
     public int getId() {
         return id;
@@ -74,11 +96,11 @@ public class Delivery {
         return load;
     }
 
-    public DateFormat getDepartDay() {
+    public Date getDepartDay() {
         return departDay;
     }
 
-    public DateFormat getArrivalDay() {
+    public Date getArrivalDay() {
         return arrivalDay;
     }
 }

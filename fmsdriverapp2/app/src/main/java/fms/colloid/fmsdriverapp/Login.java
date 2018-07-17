@@ -16,7 +16,8 @@ public class Login extends Base {
         setControls();
     }
 
-    private void setControls() {
+    @Override
+    protected void setControls() {
         login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +34,7 @@ public class Login extends Base {
                         service.send(name + " " + pass);
                         String response = service.read();
                         if(response != null && response.contains(OK_CODE)) {
-                            service.setDriver(name);
+                            service.setDriver(name, pass);
                             service.log("login successful");
                         }
                     } else service.log("No internet");

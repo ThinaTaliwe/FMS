@@ -14,7 +14,6 @@ public class MainActivity extends Base {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setControls();
         if(!hasPermissions(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[] {
@@ -24,12 +23,15 @@ public class MainActivity extends Base {
         }
     }
 
-    private void setControls() {
+    @Override
+    protected void setControls() {
         current = (Button) findViewById(R.id.current);
         current.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newInt = new Intent(MainActivity.this, CurrentDelivery.class);
+                Intent newInt = null;
+                if(service.currentDelivery() != null && service.currentDelivery().accepted()) newInt = new Intent(MainActivity.this, Trip.class);
+                else newInt = new Intent(MainActivity.this, CurrentDelivery.class);
                 startActivity(newInt);
             }
         });
