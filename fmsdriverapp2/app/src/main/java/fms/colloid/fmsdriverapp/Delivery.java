@@ -52,11 +52,11 @@ public class Delivery {
                 "depart day: " + departDay.toString()  + "\n";
     }
 
-    public void completeDelivery() { completed = true; }
+    public void complete() { completed = true; }
 
     public boolean completed() { return completed; }
 
-    public void startDelivery() { started = true; }
+    public void start() { started = true; }
 
     public boolean started() { return started; }
 

@@ -30,7 +30,8 @@ public class MainActivity extends Base {
             @Override
             public void onClick(View view) {
                 Intent newInt = null;
-                if(service.currentDelivery() != null && service.currentDelivery().accepted()) newInt = new Intent(MainActivity.this, Trip.class);
+                if(service.currentDelivery() != null && service.currentDelivery().accepted())
+                    newInt = new Intent(MainActivity.this, Trip.class);
                 else newInt = new Intent(MainActivity.this, CurrentDelivery.class);
                 startActivity(newInt);
             }

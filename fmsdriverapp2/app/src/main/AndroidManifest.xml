@@ -25,8 +25,13 @@
         <service android:name=".DriverService" />
 
         <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBATl1thX69cXfwucyQIqUWwqNMuPG_rb0"/>
+
+        <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
 
         <activity android:name=".CurrentDelivery" />
         <activity android:name=".Login" />

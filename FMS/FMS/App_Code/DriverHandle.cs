@@ -131,6 +131,18 @@ namespace FMS.App_Code
                                             send(ERROR_CODE);
                                         }
                                         break;
+                                    case "start":
+                                        //start [delivery_id]
+                                        query = "update delivery set started = '1' where id like " + parts[1];
+                                        Util.query(query);
+                                        send(OK_CODE);
+                                        break;
+                                    case "complete":
+                                        //complete [delivery_id]
+                                        query = "update delivery set completed = '1' where id like " + parts[1];
+                                        Util.query(query);
+                                        send(OK_CODE);
+                                        break;
                                     default:        
                                         send(ERROR_CODE);
                                         break;

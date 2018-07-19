@@ -38,7 +38,7 @@ public class DriverService extends Service {
     private PrintWriter out = null;
     private String[] driver = null;
     private Delivery delivery = null;
-    private Timer timer = new Timer();
+    private Timer timer = null;
     private Handler tHandler = new Handler();
     private String address = "10.0.2.2";
     private int port = 1998;
@@ -219,6 +219,8 @@ public class DriverService extends Service {
                                             delivery = Delivery.newAssignment(parts[1] + " " + parts[2]);
                                             notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
                                             sendLocation(delivery.getId());
+                                            setTimer(5000);
+                                            setLocationTimer(5000);
                                             break;
                                         case OK_CODE:
                                             System.out.println(OK_CODE);
@@ -281,7 +283,7 @@ public class DriverService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        if(timer == null) setTimer(300000);
+        if(timer == null) setTimer(10000);
         return bound;
     }
 
@@ -297,9 +299,9 @@ public class DriverService extends Service {
             timer.scheduleAtFixedRate(serverCheck, 5000, period);
             if(delivery != null) {
                 if(delivery.completed()) return;
-                else if(delivery.started()) period = 20000;
-                else if (delivery.accepted()) period = 600000;
-                else period = 600000;
+                else if(delivery.started()) period = 10000;
+                else if (delivery.accepted()) period = 10000;
+                else period = 10000;
                 setLocationTimer(period);
             } else return;
         } catch (Exception ex) {
@@ -316,6 +318,21 @@ public class DriverService extends Service {
     public void log(String message) {
         System.out.println("log: " + message);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void acceptDelivery(Delivery delivery) {
+        delivery.accept();
+        send("accept " + delivery.getId());
+    }
+
+    public void startDelivery(Delivery delivery) {
+        delivery.start();
+        send("start " + delivery.getId());
+    }
+
+    public void completeDelivery(Delivery delivery) {
+        delivery.complete();
+        send("complete " + delivery.getId());
     }
 
 }
