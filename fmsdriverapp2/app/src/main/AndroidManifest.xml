@@ -26,12 +26,11 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBATl1thX69cXfwucyQIqUWwqNMuPG_rb0"/>
+            android:value="AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw"/>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
 
         <activity android:name=".CurrentDelivery" />
         <activity android:name=".Login" />

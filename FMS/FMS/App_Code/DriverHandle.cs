@@ -143,6 +143,10 @@ namespace FMS.App_Code
                                         Util.query(query);
                                         send(OK_CODE);
                                         break;
+                                    case "route":
+                                        //route [from] [to]
+
+                                        break;
                                     default:        
                                         send(ERROR_CODE);
                                         break;

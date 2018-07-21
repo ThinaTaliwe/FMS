@@ -40,7 +40,7 @@ public class DriverService extends Service {
     private Delivery delivery = null;
     private Timer timer = null;
     private Handler tHandler = new Handler();
-    private String address = "10.0.2.2";
+    private String address = "197.228.215.67"; //10.0.2.2
     private int port = 1998;
     private LocationManager locationManager;
     private String longitude, latitude;
@@ -276,9 +276,24 @@ public class DriverService extends Service {
         if(access) {
             if(locationManager == null) {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                latitude = String.valueOf(location.getLatitude());
+                longitude = String.valueOf(location.getLongitude());
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 0, locationListener);
         }
+    }
+
+    public double[] getLocation() {
+        try {
+            return new double[] {
+                    Double.parseDouble(latitude),
+                    Double.parseDouble(longitude)
+            };
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new double[] {26, 28};
     }
 
     @Override
