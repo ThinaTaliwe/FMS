@@ -69,7 +69,7 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.getUiSettings().setMapToolbarEnabled(true);
         map.getUiSettings().isMyLocationButtonEnabled();
         map.moveCamera(CameraUpdateFactory.newLatLng(delmas));
-        String route = getRoute(new double[]{-26.1403, 28}, new double[]{-26.1403, 28.6787});
+        String route = getRoute(service.getLocation(), new double[]{-26.1403, 28.6787});
         String[] routePoints = getRoutePoints(route);
         addRoute(map, routePoints);
     }
@@ -118,7 +118,7 @@ public class Trip extends Base implements OnMapReadyCallback {
     public String getRoute(double[] from, double[] to) {
         String link = "https://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=";
         link += from[0] + "," + from[1] + "&destination=";
-        link += to[0] + "," + to[1] + "&destination=-26.1403,28.8&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+        link += to[0] + "," + to[1] + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
         try {
             Scanner in = new Scanner(new URL(link).openStream());
             String response = "";

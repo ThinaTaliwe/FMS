@@ -16,8 +16,7 @@ public class Delivery {
     private Date departDay, arrivalDay;
     private boolean accepted, started, completed;
     private static final DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    //2018/07/19 00:00:00.000
-
+    //2018/07/19 00:00:00
 
     public static Delivery newAssignment(String assignment) {
         try {
@@ -38,6 +37,12 @@ public class Delivery {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public long locationTimer() {
+        if(started) return 300000;
+        else if(accepted) return 180000;
+        else return 10800000;
     }
 
     @Override

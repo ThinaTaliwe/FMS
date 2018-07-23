@@ -42,11 +42,25 @@ public class MainActivity extends Base {
 
             @Override
             public void onClick(View view) {
-
+                service.log(String.valueOf(service.isAlive()));
             }
         });
 
         upcoming = (Button) findViewById(R.id.upcoming);
+        upcoming.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                try {
+                    service.send("current");
+                    String response = service.read();
+                    service.setDelivery(Delivery.newAssignment(response));
+                    service.notification("Current delivery", service.currentDelivery().toString(), new Intent(MainActivity.this, Trip.class));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {

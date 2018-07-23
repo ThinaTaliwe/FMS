@@ -40,8 +40,8 @@ public class DriverService extends Service {
     private Delivery delivery = null;
     private Timer timer = null;
     private Handler tHandler = new Handler();
-    private String address = "197.228.215.67"; //10.0.2.2
-    private int port = 1998;
+    private String address = "192.168.43.70"; //10.0.2.2
+    private int port = 8991;
     private LocationManager locationManager;
     private String longitude, latitude;
     private ServerCheck serverCheck = new ServerCheck();
@@ -166,15 +166,17 @@ public class DriverService extends Service {
     }
 
     private boolean isAlive(String host, int port) {
+        System.out.println(address + ":" + port);
         boolean alive = true;
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             setThreadPolicy(policy);
             InetSocketAddress address = new InetSocketAddress(host, port);
             Socket socket = new Socket();
-            socket.connect(address, 1);
+            socket.connect(address, 5000);
             socket.close();
         } catch (IOException ex) {
+            ex.printStackTrace();
             alive = false;
         }
         return alive;
@@ -314,10 +316,7 @@ public class DriverService extends Service {
             timer.scheduleAtFixedRate(serverCheck, 5000, period);
             if(delivery != null) {
                 if(delivery.completed()) return;
-                else if(delivery.started()) period = 10000;
-                else if (delivery.accepted()) period = 10000;
-                else period = 10000;
-                setLocationTimer(period);
+                else setLocationTimer(delivery.locationTimer());
             } else return;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -334,6 +333,8 @@ public class DriverService extends Service {
         System.out.println("log: " + message);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    public void setDelivery(Delivery delivery) { this.delivery = delivery; }
 
     public void acceptDelivery(Delivery delivery) {
         delivery.accept();

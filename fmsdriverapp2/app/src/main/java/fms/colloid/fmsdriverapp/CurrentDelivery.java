@@ -1,4 +1,5 @@
 package fms.colloid.fmsdriverapp;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ public class CurrentDelivery extends Base {
                     service.send("accept " + service.currentDelivery().getId());
                     service.sendLocation(service.currentDelivery().getId());
                     service.currentDelivery().accept();
+                    startActivity(new Intent(CurrentDelivery.this, Trip.class));
                 }
             }
         });
