@@ -213,7 +213,8 @@
             async defer></script>
 				  							<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()">
 													Cancel
-												</button>		<asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click" />	 
+												</button>		
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click" />	 
 										    	 
 										  
 										</form>
