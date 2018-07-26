@@ -48,6 +48,15 @@ namespace FMS
 
         protected void btn_Click(object sender, EventArgs e)
         {
+            string message = Hidden1.Value;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("<script type = 'text/javascript'>");
+            sb.Append("window.onload=function(){");
+            sb.Append("alert('");
+            sb.Append(message);
+            sb.Append("')};");
+            sb.Append("</script>");
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
             string driver = DriverChosen.Value.Split(' ')[1];
             var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + driver + "', '" + Client.Value.Split(' ')[1] + "', '" + "Johannesburg" + "', '" + "Pretoria" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
             Util.query(query);

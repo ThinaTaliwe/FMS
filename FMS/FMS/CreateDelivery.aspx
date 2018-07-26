@@ -90,8 +90,9 @@
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
-                   
-         <input id="origin-input" class="controls" type="text" placeholder="Origin" >
+        
+                                  
+         <input id="origin-input" class="controls" type="text" placeholder="Origin">
 
     <input id="destination-input" class="controls" type="text"
            placeholder="Destination">
@@ -109,6 +110,7 @@
 
     <div id="map"></div>
 
+                                   <input id="Hidden1"  type="hidden" runat="server" />
     <script>
         // This example requires the Places library. Include the libraries=places
         // parameter when you first load the API. For example:
@@ -128,12 +130,14 @@
          * @constructor
         */
         function AutocompleteDirectionsHandler(map) {
+            
             this.map = map;
             this.originPlaceId = null;
             this.destinationPlaceId = null;
             this.travelMode = 'WALKING';
             var originInput = document.getElementById('origin-input');
             //document.getElementById('itemRun') = originInput;
+           
             var destinationInput = document.getElementById('destination-input');
             var modeSelector = document.getElementById('mode-selector');
             this.directionsService = new google.maps.DirectionsService;
@@ -205,16 +209,15 @@
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
-            });
+                });
         };
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
             async defer></script>
-				  							<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()">
-													Cancel
-												</button>		
-                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click" />	 
+
+				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>		
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 
 										    	 
 										  
 										</form>

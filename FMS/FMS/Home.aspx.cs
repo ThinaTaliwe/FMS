@@ -23,7 +23,7 @@ namespace FMS
                 var assignedStr = "";
                 while (rows.Read())
                 {
-                    assignedStr = rows.GetInt32(4) == 0 ? "No" : "yes";
+                    assignedStr = rows.GetInt32(4) == 0 ? "No" : "Yes";
                     HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + new Driver(rows.GetString(2)).getName() + "</td> <td> " + new Client(rows.GetInt32(3)).getName() + "</td> <td> "  + assignedStr + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
