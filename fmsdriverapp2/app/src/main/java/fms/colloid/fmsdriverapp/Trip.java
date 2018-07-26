@@ -8,8 +8,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
 
 import android.Manifest;
+import android.app.Service;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,7 +24,10 @@ import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import static fms.colloid.fmsdriverapp.DriverService.OK_CODE;
 
 public class Trip extends Base implements OnMapReadyCallback {
 
@@ -69,66 +75,48 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.getUiSettings().setMapToolbarEnabled(true);
         map.getUiSettings().isMyLocationButtonEnabled();
         map.moveCamera(CameraUpdateFactory.newLatLng(delmas));
-        String route = getRoute(service.getLocation(), new double[]{-26.1403, 28.6787});
-        String[] routePoints = getRoutePoints(route);
-        addRoute(map, routePoints);
-    }
-
-    public void addRoute(GoogleMap map, String[] route) {
-        if(route == null) return;
-        ArrayList<LatLng> points = new ArrayList<>();
-        for (int c = 1; c < route.length; c++){
-            String[] ss = route[c].split(" ");
-            String[] parts = ss[2].split(":");
-            double lat = Double.parseDouble(parts[0]);
-            double lng = Double.parseDouble(parts[1]);
-            points.add(new LatLng(lat, lng));
-        }
-        PolylineOptions options = new PolylineOptions().width(4).color(Color.BLACK).geodesic(true);
-        Polyline line = map.addPolyline(options);
-        line.setPoints(points);
-    }
-
-    public String[] getRoutePoints(String route) {
-        String[] results = null;
         try {
-            JSONObject obj = new JSONObject(route);
-            JSONArray routes = obj.getJSONArray("routes");
-            JSONArray legs = routes.getJSONObject(0).getJSONArray("legs");
-            JSONObject info = legs.getJSONObject(0);
-            String distance = info.getJSONObject("distance").getString("text");
-            JSONArray steps = info.getJSONArray("steps");
-            results = new String[steps.length() + 1];
-            results[0] = distance;
-            JSONObject mark = null;
-            String strMark = "";
-            for(int c = 1; c <= steps.length(); c++) {
-                mark = steps.getJSONObject(c - 1);
-                strMark += mark.getJSONObject("distance").getString("text") + " ";
-                strMark += mark.getJSONObject("end_location").getDouble("lat") + ":" + mark.getJSONObject("end_location").getDouble("lng");
-                results[c] = strMark;
-                strMark = "";
+            service.send("route -26.2041:28.0473 -26.1403:28.6787");
+            String response = service.read();
+            addRoute(map, getRouteInfo(response));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void addRoute(GoogleMap map, String[][] route) {
+        try {
+            if(route == null) return;
+            ArrayList<LatLng> points = new ArrayList<>();
+            for(int c = 1; c < route.length; c++) {
+                String line = route[c][2];
+                List<LatLng> road = PolyUtil.decode(line);
+                points.addAll(road);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            PolylineOptions options = new PolylineOptions().width(10).color(Color.BLACK).geodesic(true);
+            Polyline line = map.addPolyline(options);
+            line.setPoints(points);
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
-        return results;
     }
 
-    public String getRoute(double[] from, double[] to) {
-        String link = "https://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=";
-        link += from[0] + "," + from[1] + "&destination=";
-        link += to[0] + "," + to[1] + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+    public String[][] getRouteInfo(String route) {
+        String[][] result = null;
         try {
-            Scanner in = new Scanner(new URL(link).openStream());
-            String response = "";
-            while (in.hasNext()) response += in.nextLine() + "\n";
-            return response;
-        } catch (Exception e) {
-            e.printStackTrace();
+            String[] parts = route.split(" ");
+            result = new String[parts.length][3];
+            result[0][0] = unPad(parts[0]);
+            for(int c = 1; c < parts.length; c++) {
+                result[c] = parts[c].split("#");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return null;
+        return result;
     }
+
+    public String unPad(String text) { return text.replace('_', ' ').replace('#',  ' '); }
 
     @Override
     protected void onResume() {

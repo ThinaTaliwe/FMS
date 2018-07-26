@@ -30,10 +30,14 @@ public class MainActivity extends Base {
             @Override
             public void onClick(View view) {
                 Intent newInt = null;
-                if(service.currentDelivery() != null && service.currentDelivery().accepted())
-                    newInt = new Intent(MainActivity.this, Trip.class);
-                else newInt = new Intent(MainActivity.this, CurrentDelivery.class);
-                startActivity(newInt);
+                if(service.currentDelivery() != null && service.currentDelivery().accepted())    {
+                    Helper help = new Helper();
+                    help.execute("trip");
+                }
+                else {
+                    newInt = new Intent(MainActivity.this, CurrentDelivery.class);
+                    startActivity(newInt);
+                }
             }
         });
 
@@ -42,7 +46,7 @@ public class MainActivity extends Base {
 
             @Override
             public void onClick(View view) {
-                service.log(String.valueOf(service.isAlive()));
+                showLoading();
             }
         });
 

@@ -18,10 +18,16 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 
 public class Base extends AppCompatActivity {
-    public static String OK_CODE = "200 OK";
-    public static String ERROR_CODE = "400 ERR";
+
+    private PopupWindow popup;
     protected DriverService service;
     protected boolean serviceIsBounded;
     protected ServiceConnection conn = new ServiceConnection() {
@@ -39,20 +45,60 @@ public class Base extends AppCompatActivity {
         }
     };
 
-    private class Worker extends AsyncTask<String, String, String> {
+    protected class Helper extends AsyncTask<String, String, String> {
+
+        private Intent intent = null;
 
         @Override
-        protected String doInBackground(String... strings) {
-            if(strings[0] == "") {
-
+        protected String doInBackground(String... args) {
+            try {
+                if(args[0] == "login") {
+                    service.send(args[1] + " " + args[2]);
+                    String response = service.read();
+                    if(response.contains(service.OK_CODE)) {
+                        service.setDriver(args[1], args[2]);
+                        intent = new Intent(Base.this, MainActivity.class);
+                        service.log("Login Successful");
+                        startActivity(intent);
+                    } else {
+                        service.log("Login Unsuccessful");
+                        dismiss();
+                    }
+                    return response;
+                } else if(args[0] == "trip") {
+                    intent = new Intent(Base.this, Trip.class);
+                    startActivity(intent);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
         }
+    }
+
+    protected void showLoading() {
+        try {
+            LayoutInflater inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.loading, (ViewGroup) findViewById(R.id.loading_1));
+            popup = new PopupWindow(layout, 300, 370, true);
+            popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void dismiss() {
+        popup.dismiss();
     }
 
     @Override
@@ -89,7 +135,7 @@ public class Base extends AppCompatActivity {
     }
 
     public boolean hasPermissions(Context context) {
-        return ActivityCompat.checkSelfPermission(context, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(context, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     public void showLocationAlert() {

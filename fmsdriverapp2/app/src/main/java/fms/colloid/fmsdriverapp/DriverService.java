@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -87,17 +88,17 @@ public class DriverService extends Service {
     }
 
     public void reconnect() {
-        if(isAlive()) {
-            if(verified()) {
+        if (isAlive()) {
+            if (verified()) {
                 disconnect();
                 connect();
                 log(read());
                 send(driver[0] + " " + driver[1]);
                 String response = read();
-                if(response.contains(OK_CODE)) {
+                if (response.contains(OK_CODE)) {
                     send("current");
                     response = read();
-                    if(response != null)
+                    if (response != null)
                         delivery = Delivery.newAssignment(response);
                 }
             } else log("Login to view current deliveries");
@@ -166,14 +167,13 @@ public class DriverService extends Service {
     }
 
     private boolean isAlive(String host, int port) {
-        System.out.println(address + ":" + port);
         boolean alive = true;
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             setThreadPolicy(policy);
             InetSocketAddress address = new InetSocketAddress(host, port);
             Socket socket = new Socket();
-            socket.connect(address, 5000);
+            socket.connect(address, 2000);
             socket.close();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -207,12 +207,12 @@ public class DriverService extends Service {
                 @Override
                 public void run() {
                     try {
-                        if(verified()) {
-                            if(!conn.isConnected()) reconnect();
+                        if (verified()) {
+                            if (!conn.isConnected()) reconnect();
                             else if (delivery != null) {
                                 sendLocation(delivery.getId());
                             }
-                            if(available()) {
+                            if (available()) {
                                 String text = read();
                                 if (text != null) {
                                     String[] parts = text.split(" ");
@@ -224,9 +224,6 @@ public class DriverService extends Service {
                                             setTimer(5000);
                                             setLocationTimer(5000);
                                             break;
-                                        case OK_CODE:
-                                            System.out.println(OK_CODE);
-                                            break;
                                         default:
                                             log(text);
                                             break;
@@ -234,7 +231,7 @@ public class DriverService extends Service {
                                 }
                             }
                         } else {
-                            if(isAlive()) {
+                            if (isAlive()) {
                                 //("Login into FMS Driver App", "Login to check if have any new deliveries", new Intent(DriverService.this, Login.class));
                             }
                         }
@@ -261,41 +258,57 @@ public class DriverService extends Service {
         }
 
         @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) { }
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+        }
 
         @Override
-        public void onProviderEnabled(String s) { }
+        public void onProviderEnabled(String s) {
+        }
 
         @Override
-        public void onProviderDisabled(String s) { }
+        public void onProviderDisabled(String s) {
+        }
     };
 
     public void setLocationTimer(long period) {
-        boolean access;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            access = checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        } else access = true;
-        if(access) {
-            if(locationManager == null) {
+        try {
+            System.out.println("setLocationTimer()");
+            boolean access;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                access = checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                if (!access) System.err.println("Permissions not granted");
+            }
+            if (locationManager == null) {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                latitude = String.valueOf(location.getLatitude());
-                longitude = String.valueOf(location.getLongitude());
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 0, locationListener);
+            System.out.println(getLocation() + " in loc timer");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    public double[] getLocation() {
+
+    public String getLocation() {
         try {
-            return new double[] {
-                    Double.parseDouble(latitude),
-                    Double.parseDouble(longitude)
-            };
+            System.out.println("getLocation()");
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                System.out.println("Permissions not granted");
+                return null;
+            }
+            if (locationManager == null) {
+                locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            }
+            if(latitude == null || longitude == null)  {
+                Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                latitude = String.valueOf(loc.getLatitude());
+                longitude = String.valueOf(loc.getLongitude());
+            }
+            return latitude + ":" + longitude;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new double[] {26, 28};
+        return null;
     }
 
     @Override
@@ -311,6 +324,7 @@ public class DriverService extends Service {
 
     public void setTimer(long period) {
         try {
+            System.out.println("setTimer()");
             timer = null;
             timer = new Timer();
             timer.scheduleAtFixedRate(serverCheck, 5000, period);

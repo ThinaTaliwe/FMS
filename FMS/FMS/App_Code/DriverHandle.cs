@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using System.Net.Sockets;
+using System.Net;
 
 namespace FMS.App_Code
 {
@@ -20,8 +21,8 @@ namespace FMS.App_Code
         private bool verfied = false;
         private string driver;
         private DateTime time;
-        private static string ERROR_CODE = "400 ERR";
-        private static string OK_CODE = "200 OK";
+        public static string ERROR_CODE = "400 ERR";
+        public static string OK_CODE = "200 OK";
 
         public DriverHandle(TcpClient conn)
         {
@@ -145,7 +146,16 @@ namespace FMS.App_Code
                                         break;
                                     case "route":
                                         //route [from] [to]
-
+                                        try
+                                        {
+                                            var from = Util.getCoords(parts[1]);
+                                            var to = Util.getCoords(parts[2]);
+                                            var route = Util.getRoute(from, to);
+                                            send(Util.getRoutePoints(route));
+                                        } catch (Exception e) {
+                                            System.Diagnostics.Debug.WriteLine(e);
+                                            send(ERROR_CODE);
+                                        }
                                         break;
                                     default:        
                                         send(ERROR_CODE);
@@ -155,11 +165,10 @@ namespace FMS.App_Code
                         }
                     } catch (Exception ex) {
                         System.Diagnostics.Debug.WriteLine(ex);
+                        send(ERROR_CODE);
                     }
                 }
                 conn.Close();
-            } catch(NullReferenceException ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
             } catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex);
@@ -194,11 +203,7 @@ namespace FMS.App_Code
                 outStream.WriteLine(text);
                 outStream.Flush();
             }
-            catch (ObjectDisposedException ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
-            }
-            catch (IOException ex)
+            catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.StackTrace);
             }
@@ -212,11 +217,7 @@ namespace FMS.App_Code
                 System.Diagnostics.Debug.WriteLine("Read: " + text);
                 return text;
             }
-            catch (ObjectDisposedException ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
-            }
-            catch (IOException ex)
+            catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.StackTrace);
             }

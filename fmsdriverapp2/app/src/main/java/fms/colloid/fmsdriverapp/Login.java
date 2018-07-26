@@ -26,23 +26,12 @@ public class Login extends Base {
                 EditText txtName, txtPass;
                 txtName = (EditText) findViewById(R.id.id);
                 txtPass = (EditText) findViewById(R.id.password);
-                name = txtName.getText().toString();
+                name = txtName.getText().toString().trim();
                 pass = txtPass.getText().toString();
                 if(!service.verified()) {
-                    if(service.isAlive()) {
-                        service.connect();
-                        service.send(name + " " + pass);
-                        String response = service.read();
-                        if(response != null && response.contains(OK_CODE)) {
-                            service.setDriver(name, pass);
-                            service.log("login successful");
-                        }
-                    } else service.log("No internet");
-                }
-                if(service.verified()) {
-                    finish();
-                } else {
-                    service.log("login unsuccessful");
+                    service.connect();
+                    Helper help = new Helper();
+                    help.execute("login", name, pass);
                 }
             }
         });

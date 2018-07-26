@@ -3,14 +3,66 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
+using Newtonsoft.Json.Linq;
 
 namespace FMS.App_Code
 {
     public class Util
     {
 
-		public static double distance(double[] from, double[] to) {
+        public static string getRoutePoints(string route)
+        {
+            List<string> info = new List<string>();
+            string result = "";
+            try
+            {
+                JObject obj = JObject.Parse(route);
+                JToken legs = obj["routes"][0]["legs"][0];                
+                info.Add(legs["distance"]["text"].ToString());
+                var steps = legs["steps"];
+                string text = "";
+                string polyline = "";
+                foreach(var step in steps) {
+                    text = step["distance"]["text"].ToString();
+                    text += "#" + step["html_instructions"];
+                    text += "#" + step["polyline"]["points"];
+                    info.Add(text);
+                    text = "";
+                }
+                foreach(var data in info)  result += pad(data) + " ";
+                result += polyline;
+                return result;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
+            return result;
+        }
+
+        public static string pad(string text) { return text.Replace(' ', '_'); }
+
+        public static string getRoute(double[] from, double[] to)
+        {
+            try
+            {
+                String link = "https://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=";
+                link += from[0].ToString().Replace(',', '.') + "," + from[1].ToString().Replace(',', '.') + "&destination=";
+                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                WebClient wc = new WebClient();
+                System.Diagnostics.Debug.WriteLine(link);
+                return wc.DownloadString(link);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+            return null;
+        }
+
+        public static double distance(double[] from, double[] to) {
             try {
                 double lon1, lat1, lon2, lat2;
                 lat1 = from[0];
