@@ -24,7 +24,7 @@
             <form runat="server">
                 <input id="username" type="text" placeholder="username" name="user" runat="server"/><br/>
 				<input id="password" type="password" placeholder="password" name="password" runat="server" /><br/>
-				<input id="btnLogin" type="button" value="Login" runat="server" OnClick="logon"/> <asp:Button ID="Button1" runat="server" Text="Button" OnClick="logon" /><br/> 
+				<input id="btnLogin" type="button" value="Login" runat="server" OnServerClick="logon"/> <br/> 
             </form>
 				
 		</div>
