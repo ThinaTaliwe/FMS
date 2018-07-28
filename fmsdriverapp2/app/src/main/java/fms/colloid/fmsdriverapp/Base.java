@@ -23,11 +23,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 
 public class Base extends AppCompatActivity {
 
     private PopupWindow popup;
+    LayoutInflater inflater;
     protected DriverService service;
     protected boolean serviceIsBounded;
     protected ServiceConnection conn = new ServiceConnection() {
@@ -86,9 +91,23 @@ public class Base extends AppCompatActivity {
         }
     }
 
+    protected void showInfo(String info) {
+        try {
+            System.out.println("viewDeliveryInfo()");
+            if(inflater == null) inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.route_info, null);
+            TextView text = (TextView) layout.findViewById(R.id.routeText);
+            text.setText(info);
+            popup = new PopupWindow(layout, 300, 370, true);
+            popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     protected void showLoading() {
         try {
-            LayoutInflater inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if(inflater == null) inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.loading, (ViewGroup) findViewById(R.id.loading_1));
             popup = new PopupWindow(layout, 300, 370, true);
             popup.showAtLocation(layout, Gravity.CENTER, 0, 0);

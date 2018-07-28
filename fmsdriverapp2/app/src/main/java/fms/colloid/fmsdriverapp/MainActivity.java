@@ -46,7 +46,7 @@ public class MainActivity extends Base {
 
             @Override
             public void onClick(View view) {
-                showLoading();
+                showInfo("Hello Genius");
             }
         });
 

@@ -17,23 +17,18 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
-import static fms.colloid.fmsdriverapp.DriverService.OK_CODE;
 
 public class Trip extends Base implements OnMapReadyCallback {
 
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     private MapView map;
+    private Button info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +112,19 @@ public class Trip extends Base implements OnMapReadyCallback {
     }
 
     public String unPad(String text) { return text.replace('_', ' ').replace('#',  ' '); }
+
+    @Override
+    protected void setControls() {
+        info = (Button) findViewById(R.id.info);
+        info.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                showInfo(service.currentDelivery().toString());
+            }
+        });
+
+    }
 
     @Override
     protected void onResume() {
