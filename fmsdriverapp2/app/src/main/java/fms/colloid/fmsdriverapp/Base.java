@@ -52,7 +52,10 @@ public class Base extends AppCompatActivity {
 
     protected class Helper extends AsyncTask<String, String, String> {
 
-        private Intent intent = null;
+        private Intent intent;
+        private Context context;
+
+        public Helper(Context con) { context = con; }
 
         @Override
         protected String doInBackground(String... args) {
@@ -64,15 +67,12 @@ public class Base extends AppCompatActivity {
                         service.setDriver(args[1], args[2]);
                         intent = new Intent(Base.this, MainActivity.class);
                         service.log("Login Successful");
-                        startActivity(intent);
                     } else {
                         service.log("Login Unsuccessful");
-                        dismiss();
                     }
                     return response;
                 } else if(args[0] == "trip") {
                     intent = new Intent(Base.this, Trip.class);
-                    startActivity(intent);
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -88,6 +88,7 @@ public class Base extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if(intent != null) context.startActivity(intent);
         }
     }
 

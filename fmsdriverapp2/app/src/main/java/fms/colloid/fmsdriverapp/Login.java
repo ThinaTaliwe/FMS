@@ -22,17 +22,30 @@ public class Login extends Base {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name, pass;
-                EditText txtName, txtPass;
-                txtName = (EditText) findViewById(R.id.id);
-                txtPass = (EditText) findViewById(R.id.password);
-                name = txtName.getText().toString().trim();
-                pass = txtPass.getText().toString();
-                if(!service.verified()) {
-                    service.connect();
-                    Helper help = new Helper();
-                    help.execute("login", name, pass);
+                try {
+                    String name, pass;
+                    EditText txtName, txtPass;
+                    txtName = (EditText) findViewById(R.id.id);
+                    txtPass = (EditText) findViewById(R.id.password);
+                    name = txtName.getText().toString().trim();
+                    pass = txtPass.getText().toString();
+                    if(!service.verified()) {
+                        if(service.isAlive()) {
+                            showLoading();
+                            service.connect();
+                            service.send(name + " " + pass);
+                            String response = service.read();
+                            if(response.contains(DriverService.OK_CODE)) {
+                                service.setDriver(name, pass);
+                                service.log("Login Successful");
+                            } else service.log("Login Unsuccessful");
+                            dismiss();
+                        } else service.log("No Internet");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
+                if(service.verified()) startActivity(new Intent(Login.this, MainActivity.class));
             }
         });
 

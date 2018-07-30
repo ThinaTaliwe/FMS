@@ -1,8 +1,13 @@
 package fms.colloid.fmsdriverapp;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.PolyUtil;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Delivery {
     private int id;
@@ -10,7 +15,8 @@ public class Delivery {
     private String truck;
     private String client;
     private String from;
-    private String to; 
+    private String to;
+    private String route;
     private String material;
     private int load;
     private Date departDay, arrivalDay;
@@ -55,6 +61,71 @@ public class Delivery {
                 "material: " + material  + "\n" +
                 "load: " + load  + "\n" +
                 "depart day: " + departDay.toString()  + "\n";
+    }
+
+    public ArrayList<LatLng> getPolylines() {
+        String[][] info = getRouteInfo();
+        ArrayList<LatLng> polyline = new ArrayList<>();
+        for(int c = 1; c < info.length; c++) {
+            try {
+                List<LatLng> list = PolyUtil.decode(info[c][2]);
+                polyline.addAll(list);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return polyline;
+    }
+
+    public String getRouteDirections() {
+        String[][] info = getRouteInfo();
+        String result = "";
+        for(int c = 1; c < info.length; c++) {
+            try {
+                result += unPad(info[c][1]) + "\n";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public String getRouteDistance() {
+        try {
+            String[][] result = getRouteInfo();
+            return unPad(result[0][0]) + "\n";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } return null;
+    }
+
+    public String[][] getRouteInfo() {
+        System.out.println("getRouteInfo()");
+        String[][] result = null;
+        try {
+            String[] parts = route.split(" ");
+            result = new String[parts.length][3];
+            result[0][0] = unPad(parts[0]);
+            for(int c = 1; c < parts.length; c++) {
+                result[c] = parts[c].split("#");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    public String unPad(String text) { return text.replace('_', ' ').replace('#',  ' '); }
+
+    public boolean hasRoute() {return !(route == null); }
+
+    public void setRoute(String route) {
+        if(route.contains(DriverService.ERROR_CODE) || route.contains(DriverService.OK_CODE)){
+            System.out.println("Invalid route given");
+        } else {
+            this.route = route;
+            System.out.println("Route set");
+        }
     }
 
     public void complete() { completed = true; }
