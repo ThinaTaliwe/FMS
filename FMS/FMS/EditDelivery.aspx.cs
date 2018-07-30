@@ -54,7 +54,16 @@ namespace FMS
                 while (row.Read())
                 {
                     //ordernum.Text = Convert.ToString(row.GetString(1));
-                    Text1.Value = Convert.ToString(row.GetString(0));
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                    sb.Append("<script type = 'text/javascript'>");
+                    sb.Append("window.onload=function(){");
+                    sb.Append("alert('");
+                    sb.Append(Convert.ToString(row.GetInt32(0)));
+                    sb.Append("')};");
+                    sb.Append("</script>");
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
+
+                    Text1.Value = Convert.ToString(row.GetInt32(0));
                     ClientSelected.Value = Convert.ToString(row.GetInt32(1));
                     DeliveryDateSelected.Value = Convert.ToString(row.GetDateTime(2));
                     MaterialSelected.Value = row.GetString(3); 
