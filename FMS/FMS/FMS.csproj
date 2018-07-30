@@ -152,8 +152,11 @@
       <DependentUpon>Kha2.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
+    <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />
     <Content Include="Content\ass\css\Map.css" />
+    <Content Include="Content\ass\flatpicker.js" />
+    <Content Include="Content\ass\confirmDate.js" />
     <Content Include="Content\ass\js\calendar.js" />
     <Content Include="Content\ass\js\forms.js" />
     <Content Include="Content\ass\js\js.js" />
@@ -167,6 +170,7 @@
     <Content Include="DriverReport.aspx" />
     <Content Include="EditDelivery.aspx" />
     <Content Include="EditDelivery1.aspx" />
+    <Content Include="Hum.html" />
     <Content Include="Junk2.aspx" />
     <Content Include="DeliveryDelete.aspx" />
     <Content Include="Junk1.aspx" />
@@ -179,6 +183,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\ass\flatpickr.min.css" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Home.aspx" />
     <Content Include="Home_Dummy.html" />

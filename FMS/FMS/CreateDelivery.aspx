@@ -216,11 +216,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
             async defer></script>
 
-				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>		
-                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 
-										    	 
-										  
-										</form>
+				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>
+                                  <input type="reset">
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 </form>
                             </div>
 		  					
 
