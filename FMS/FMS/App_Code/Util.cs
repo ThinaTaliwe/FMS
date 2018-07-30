@@ -19,30 +19,50 @@ namespace FMS.App_Code
             try
             {
                 JObject obj = JObject.Parse(route);
-                JToken legs = obj["routes"][0]["legs"][0];                
-                info.Add(legs["distance"]["text"].ToString());
-                var steps = legs["steps"];
-                string text = "";
-                string polyline = "";
-                foreach(var step in steps) {
-                    text = step["distance"]["text"].ToString();
-                    text += "#" + step["html_instructions"];
-                    text += "#" + step["polyline"]["points"];
-                    info.Add(text);
-                    text = "";
+                if (obj["geocoded_waypoints"][0]["geocoder_status"].ToString().Contains("OK"))
+                {
+                    JToken legs = obj["routes"][0]["legs"][0];
+                    info.Add(legs["distance"]["text"].ToString());
+                    var steps = legs["steps"];
+                    string text = "";
+                    foreach (var step in steps)
+                    {
+                        text = pad(step["distance"]["text"].ToString());
+                        text += "#" + pad(step["html_instructions"].ToString());
+                        text += "#" + step["polyline"]["points"];
+                        info.Add(text);
+                        text = "";
+                    }
+                    foreach (var data in info)
+                        result += data + " ";
+                    return result;
                 }
-                foreach(var data in info)  result += pad(data) + " ";
-                result += polyline;
-                return result;
+                else
+                    result = DriverHandle.ERROR_CODE;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
+                result = DriverHandle.ERROR_CODE;
             }
             return result;
         }
 
-        public static string pad(string text) { return text.Replace(' ', '_'); }
+        public static string pad(string text) {
+            string result = "";
+            bool remove = false;
+            foreach(char c in text) {
+                if (c == '<')
+                    remove = true;
+                if (c == '>') {
+                    remove = false;
+                    continue;
+                }
+                if (!remove)
+                    result += c;
+            }
+            return result.Replace(' ', '_');
+        }
 
         public static string getRoute(double[] from, double[] to)
         {

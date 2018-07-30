@@ -115,6 +115,11 @@ public class DriverService extends Service {
         }
     }
 
+    public void clearInputStream() {
+        while (available()) System.out.println(read());
+        System.out.println("input stream cleared");
+    }
+
     public boolean available() {
         try {
             return conn.getInputStream().available() > 0;
@@ -207,6 +212,7 @@ public class DriverService extends Service {
                 @Override
                 public void run() {
                     try {
+                        if(longitude == null || latitude == null) System.out.println(getLocation());
                         if (verified()) {
                             if (!conn.isConnected()) reconnect();
                             else if (delivery != null) {

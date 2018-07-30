@@ -31,7 +31,7 @@ public class MainActivity extends Base {
             public void onClick(View view) {
                 Intent newInt = null;
                 if(service.currentDelivery() != null && service.currentDelivery().accepted())    {
-                    Helper help = new Helper();
+                    Helper help = new Helper(MainActivity.this);
                     help.execute("trip");
                 }
                 else {
@@ -46,7 +46,7 @@ public class MainActivity extends Base {
 
             @Override
             public void onClick(View view) {
-                showInfo("Hello Genius");
+                showInfo(service.getLocation());
             }
         });
 

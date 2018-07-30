@@ -28,12 +28,13 @@ public class Trip extends Base implements OnMapReadyCallback {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     private MapView map;
-    private Button info;
+    private Button info, getRoute, viewRoute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
+        showLoading();
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -56,11 +57,12 @@ public class Trip extends Base implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap map) {
+        System.out.println("getMapAsync()");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         map.setMyLocationEnabled(true);
-        map.setMinZoomPreference(6);
+        map.setMinZoomPreference(8);
         map.setTrafficEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(true);
         map.getUiSettings().setAllGesturesEnabled(true);
@@ -71,26 +73,22 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.getUiSettings().isMyLocationButtonEnabled();
         map.moveCamera(CameraUpdateFactory.newLatLng(delmas));
         try {
-            service.send("route -26.2041:28.0473 -26.1403:28.6787");
-            String response = service.read();
-            addRoute(map, getRouteInfo(response));
+            Delivery deliv = service.currentDelivery();
+            if(deliv.hasRoute()) {
+                addRoute(map, deliv.getPolylines());
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        dismiss();
     }
 
-    public void addRoute(GoogleMap map, String[][] route) {
+    public void addRoute(GoogleMap map, ArrayList<LatLng> polyline) {
         try {
-            if(route == null) return;
-            ArrayList<LatLng> points = new ArrayList<>();
-            for(int c = 1; c < route.length; c++) {
-                String line = route[c][2];
-                List<LatLng> road = PolyUtil.decode(line);
-                points.addAll(road);
-            }
+            if(polyline == null) return;
             PolylineOptions options = new PolylineOptions().width(10).color(Color.BLACK).geodesic(true);
             Polyline line = map.addPolyline(options);
-            line.setPoints(points);
+            line.setPoints(polyline);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -115,12 +113,48 @@ public class Trip extends Base implements OnMapReadyCallback {
 
     @Override
     protected void setControls() {
+        getRoute = (Button) findViewById(R.id.getRoute);
+        getRoute.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                try {
+                    service.clearInputStream();
+                    service.send("route " + service.getLocation() + " -26.1403:28.6787");
+                    String response = service.read();
+                    if(response.contains(DriverService.OK_CODE)) response = service.read();
+                    service.currentDelivery().setRoute(response);
+                    map.getMapAsync(Trip.this);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        viewRoute = (Button) findViewById(R.id.viewRoute);
+        viewRoute.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                try {
+                    Delivery deliv = service.currentDelivery();
+                    showInfo(deliv.getRouteDistance() + deliv.getRouteDirections());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         info = (Button) findViewById(R.id.info);
         info.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                showInfo(service.currentDelivery().toString());
+                try {
+                    showInfo(service.currentDelivery().toString());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
