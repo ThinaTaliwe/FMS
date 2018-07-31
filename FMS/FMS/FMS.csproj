@@ -147,9 +147,9 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\Kha2.mdf" />
-    <Content Include="App_Data\Kha2_log.ldf">
-      <DependentUpon>Kha2.mdf</DependentUpon>
+    <Content Include="App_Data\Khaa.mdf" />
+    <Content Include="App_Data\Khaa_log.ldf">
+      <DependentUpon>Khaa.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />

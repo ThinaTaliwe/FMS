@@ -10,6 +10,7 @@
 
                     <div class="col-md-10">
                         <div class="content-panel">
+
                             <hr> 
                             <table class="table">
                                 <!-- Heading --> 
