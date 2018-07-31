@@ -40,12 +40,6 @@
                 map: map,
                 draggable: true,
                 title: 'Hello World!',
-                dragend: function (event) {
-                    var lat = event.latLng.lat();
-                    var lng = event.latLng.lng();
-                    alert('draggable ' + lat + " - " + lng);
-                    console.log(lat + ":" + lng);
-                }
             });
 
             google.maps.event.addListener(marker, 'dragend', function (event) {
