@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000" >>
+
+    <Button
+        android:id="@+id/deliv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="delivery info" />
+
+    <Button
+        android:id="@+id/get_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="get route" />
+
+    <Button
+        android:id="@+id/view_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="view route" />
+
+</LinearLayout>

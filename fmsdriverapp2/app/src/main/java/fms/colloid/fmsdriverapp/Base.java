@@ -31,11 +31,14 @@ import android.widget.TextView;
 
 public class Base extends AppCompatActivity {
 
-    private PopupWindow popup;
-    LayoutInflater inflater;
+    protected PopupWindow popup;
+    protected LayoutInflater inflater;
     protected DriverService service;
     protected boolean serviceIsBounded;
     protected ServiceConnection conn = new ServiceConnection() {
+        /**
+         * used to connect to DriverService
+         */
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             DriverService.DriverServiceBound bound = (DriverService.DriverServiceBound) iBinder;
@@ -60,19 +63,19 @@ public class Base extends AppCompatActivity {
         @Override
         protected String doInBackground(String... args) {
             try {
-                if(args[0] == "login") {
-                    service.send(args[1] + " " + args[2]);
-                    String response = service.read();
-                    if(response.contains(service.OK_CODE)) {
-                        service.setDriver(args[1], args[2]);
-                        intent = new Intent(Base.this, MainActivity.class);
-                        service.log("Login Successful");
-                    } else {
-                        service.log("Login Unsuccessful");
-                    }
-                    return response;
-                } else if(args[0] == "trip") {
+                if(args[0] == "trip") {
                     intent = new Intent(Base.this, Trip.class);
+                } else if(args[0] == "route") {
+                    showLoading();
+                    Delivery delivery = service.currentDelivery();
+                    service.clearInputStream();
+                    service.send("route " + service.getLocation() + " -26.1403:28.6787");
+                    String response = service.read();
+                    if(response.contains(DriverService.OK_CODE)) response = service.read();
+                    delivery.setRoute(response);
+                    Trip trip = (Trip) context;
+                    trip.getMap().getMapAsync(trip);
+                    dismiss();
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -93,6 +96,9 @@ public class Base extends AppCompatActivity {
     }
 
     protected void showInfo(String info) {
+        /**
+         * shows information in a popup
+         */
         try {
             System.out.println("viewDeliveryInfo()");
             if(inflater == null) inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -107,6 +113,9 @@ public class Base extends AppCompatActivity {
     }
 
     protected void showLoading() {
+        /**
+         * shows a loading symbol
+         */
         try {
             if(inflater == null) inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.loading, (ViewGroup) findViewById(R.id.loading_1));
@@ -118,6 +127,9 @@ public class Base extends AppCompatActivity {
     }
 
     protected void dismiss() {
+        /**
+         * removes loading symbol
+         */
         popup.dismiss();
     }
 

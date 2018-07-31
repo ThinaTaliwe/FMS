@@ -30,6 +30,10 @@ import static android.os.StrictMode.setThreadPolicy;
 
 public class DriverService extends Service {
 
+    /**
+     * provides functionality to app, works in background and is never killed
+     */
+
     public static final String OK_CODE = "200 OK";
     public static final String ERROR_CODE = "400 ERR";
 
@@ -61,10 +65,16 @@ public class DriverService extends Service {
     }
 
     public boolean verified() {
+        /**
+         * determines whether the driver has been authenticated by the server
+         */
         return !(driver == null);
     }
 
     public void disconnect() {
+        /***
+         * Method used to disconenct app from server
+         */
         try {
             send("kill");
             conn.close();
@@ -78,6 +88,9 @@ public class DriverService extends Service {
     }
 
     public void logOff() {
+        /**
+         * disconnects and deletes driver authentications
+         */
         try {
             disconnect();
         } catch (Exception ex) {
@@ -88,6 +101,9 @@ public class DriverService extends Service {
     }
 
     public void reconnect() {
+        /**
+         * Can be used to reconnect to server if driver service is verified (driver as already logged on)
+         */
         if (isAlive()) {
             if (verified()) {
                 disconnect();
@@ -106,6 +122,9 @@ public class DriverService extends Service {
     }
 
     public void send(String text) {
+        /**
+         * sends text to the server
+         */
         try {
             System.out.println("Sending: " + text);
             out.write(text + "\n");
@@ -116,11 +135,17 @@ public class DriverService extends Service {
     }
 
     public void clearInputStream() {
+        /**
+         * clears input stream, removes all confirmations send by the server
+         */
         while (available()) System.out.println(read());
         System.out.println("input stream cleared");
     }
 
     public boolean available() {
+        /**
+         * determines whether the input stream still has bytes available to be read
+         */
         try {
             return conn.getInputStream().available() > 0;
         } catch (Exception ex) {
@@ -130,6 +155,9 @@ public class DriverService extends Service {
     }
 
     public String read() {
+        /**
+         * reads a sing line from the input stream
+         */
         try {
             String text = in.nextLine();
             System.out.println("Read: " + text);
@@ -141,6 +169,9 @@ public class DriverService extends Service {
     }
 
     public void notification(String title, String content, Intent intent) {
+        /**
+         * Shows notifiction to the user
+         */
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
         PendingIntent pIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -155,6 +186,9 @@ public class DriverService extends Service {
     }
 
     private void connect(String address, int port) {
+        /**
+         * makes a connection to the server
+         */
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         setThreadPolicy(policy);
         try {
@@ -172,6 +206,9 @@ public class DriverService extends Service {
     }
 
     private boolean isAlive(String host, int port) {
+        /**
+         * checks to see whether the server is onlne, determines if there is am internet connection
+         */
         boolean alive = true;
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -188,10 +225,16 @@ public class DriverService extends Service {
     }
 
     public boolean isAlive() {
+        /**
+         * public access to check if server is alive
+         */
         return isAlive(address, port);
     }
 
     public void connect() {
+        /**
+         * public access to serber connection
+         */
         try {
             if (conn != null) disconnect();
             if (isAlive(address, port)) connect(address, port);
@@ -205,6 +248,10 @@ public class DriverService extends Service {
     }
 
     private class ServerCheck extends TimerTask {
+
+        /**
+         * serverCheck class runs periodically and checks if server send an data for the app to process, also send location to the server and.....
+         */
 
         @Override
         public void run() {
@@ -249,13 +296,22 @@ public class DriverService extends Service {
         }
     }
 
+
+
     public void sendLocation(int id) {
+        /**
+         * send location to the server
+         */
         if (longitude != null && latitude != null) {
             send("location " + id + " " + latitude + ":" + longitude);
         }
     }
 
     private LocationListener locationListener = new LocationListener() {
+
+        /**
+         * location listener to account for changes in location
+         */
 
         @Override
         public void onLocationChanged(Location location) {
@@ -277,6 +333,9 @@ public class DriverService extends Service {
     };
 
     public void setLocationTimer(long period) {
+        /**
+         * sets the period which location listener shoud request updates for
+         */
         try {
             System.out.println("setLocationTimer()");
             boolean access;
@@ -287,7 +346,7 @@ public class DriverService extends Service {
             if (locationManager == null) {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 10, locationListener);
             System.out.println(getLocation() + " in loc timer");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -296,6 +355,9 @@ public class DriverService extends Service {
 
 
     public String getLocation() {
+        /**
+         * gets the last known location
+         */
         try {
             System.out.println("getLocation()");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -329,6 +391,9 @@ public class DriverService extends Service {
     }
 
     public void setTimer(long period) {
+        /**
+         * sets interval serverCheck runs in
+         */
         try {
             System.out.println("setTimer()");
             timer = null;
