@@ -33,7 +33,7 @@ public class Trip extends Base implements OnMapReadyCallback {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     private MapView map;
-    private Button info;
+    private Button info, startEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,71 +118,94 @@ public class Trip extends Base implements OnMapReadyCallback {
 
     @Override
     protected void setControls() {
-        info = (Button) findViewById(R.id.info);
-        info.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                try {
-                    if(inflater == null) inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View layout = inflater.inflate(R.layout.trip_control, null);
-
-                    final Button deliv, getRoute, viewRoute;
-                    deliv = (Button) layout.findViewById(R.id.deliv_info);
-                    getRoute = (Button) layout.findViewById(R.id.get_route);
-                    viewRoute = (Button) layout.findViewById(R.id.view_route);
-
-                    deliv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                showInfo(service.currentDelivery().toString());
-                            }
-                            catch(Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    });
-
-                    getRoute.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                showLoading();
-                                Delivery delivery = service.currentDelivery();
-                                service.clearInputStream();
-                                service.send("route " + service.getLocation() + " -26.1403:28.6787");
-                                String response = service.read();
-                                if(response.contains(DriverService.OK_CODE)) response = service.read();
-                                delivery.setRoute(response);
-                                map.getMapAsync(Trip.this);
-                                dismiss();
-                            }
-                            catch(Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    });
-
-                    viewRoute.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            try {
-                                showInfo(service.currentDelivery().getRouteDirections());
-                            }
-                            catch(Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    });
-                    popup = new PopupWindow(layout, 370, 400, true);
-                    popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        try {
+            startEnd = (Button) findViewById(R.id.start_end_trip);
+            String strStart = service.currentDelivery().started() ? "End Trip" : "Start Trip";
+            startEnd.setText(strStart);
+            startEnd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        Delivery deliv = service.currentDelivery();
+                        if(!deliv.started()) {
+                            service.startDelivery(deliv);
+                        } else service.completeDelivery(deliv);
+                        service.sendLocation(deliv.getId());
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
 
+            info = (Button) findViewById(R.id.info);
+            info.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    try {
+                        if(inflater == null) inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View layout = inflater.inflate(R.layout.trip_control, null);
+
+                        final Button deliv, getRoute, viewRoute;
+                        deliv = (Button) layout.findViewById(R.id.deliv_info);
+                        getRoute = (Button) layout.findViewById(R.id.get_route);
+                        viewRoute = (Button) layout.findViewById(R.id.view_route);
+
+                        deliv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    showInfo(service.currentDelivery().toString());
+                                }
+                                catch(Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        });
+
+                        getRoute.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    showLoading();
+                                    Delivery delivery = service.currentDelivery();
+                                    service.clearInputStream();
+                                    service.send("route " + service.getLocation() + " -26.1403:28.6787");
+                                    String response = service.read();
+                                    if(response.contains(DriverService.OK_CODE)) response = service.read();
+                                    delivery.setRoute(response);
+                                    map.getMapAsync(Trip.this);
+                                    service.log("Route Added to Map");
+                                    dismiss();
+                                }
+                                catch(Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        });
+
+                        viewRoute.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    showInfo(service.currentDelivery().getRouteDirections());
+                                }
+                                catch(Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        });
+
+                        popup = new PopupWindow(layout, 370, 400, true);
+                        popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public MapView getMap() {return map; }

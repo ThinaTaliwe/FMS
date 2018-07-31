@@ -150,7 +150,12 @@ public class Base extends AppCompatActivity {
         }
     }
 
-    protected void setControls() {}
+    protected void setControls() {
+        /**
+         * sets controls and has access to service, must be implemented in inherited class
+         */
+        System.err.println("setControls()");
+    }
 
     @Override
     protected void onDestroy() {

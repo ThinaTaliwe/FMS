@@ -30,8 +30,8 @@ public class Login extends Base {
                     name = txtName.getText().toString().trim();
                     pass = txtPass.getText().toString();
                     if(!service.verified()) {
+                        showLoading();
                         if(service.isAlive()) {
-                            showLoading();
                             service.connect();
                             service.send(name + " " + pass);
                             String response = service.read();
@@ -39,8 +39,8 @@ public class Login extends Base {
                                 service.setDriver(name, pass);
                                 service.log("Login Successful");
                             } else service.log("Login Unsuccessful");
-                            dismiss();
                         } else service.log("No Internet");
+                        dismiss();
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();

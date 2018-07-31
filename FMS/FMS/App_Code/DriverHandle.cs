@@ -111,7 +111,7 @@ namespace FMS.App_Code
                                         var current = Util.query(query);
                                         if (current.HasRows)
                                         {
-                                            while (current.Read())
+                                            if (current.Read())
                                             {
                                                 Delivery deliv = Delivery.getInstance(current.GetInt32(0));
                                                 send(deliv.ToString());
