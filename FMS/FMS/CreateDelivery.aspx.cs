@@ -60,7 +60,7 @@ namespace FMS
                 string address = addr.GetString(0);
                 System.Diagnostics.Debug.WriteLine(delivery.toString());
                 var writer = ((Global)this.Context.ApplicationInstance).getServer(address);
-                writer.Write(delivery.toString());
+                writer.WriteLine(delivery.toString());
             }
             Error.InnerText = "Delivery Created";
             

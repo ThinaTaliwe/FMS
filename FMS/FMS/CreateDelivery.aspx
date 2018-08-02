@@ -91,10 +91,13 @@
 										    </div>
 										  </div>
                    
-         <input id="origin-input" class="controls" type="text" placeholder="Origin" >
-
-    <input id="destination-input" class="controls" type="text"
+        
+          <input id="origin" class="controls" type="text" placeholder="Origin"  runat="server">
+                                               <asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
+                                               </asp:RequiredFieldValidator>
+        <input id="destination-input" class="controls" type="text"
            placeholder="Destination">
+
 
     <div id="mode-selector" class="controls" hidden="hidden">
         <input type="radio" name="type" id="changemode-walking" checked="checked">
