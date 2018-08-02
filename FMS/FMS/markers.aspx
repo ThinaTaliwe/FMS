@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="markers.aspx.cs" Inherits="FMS.markers" %>
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,6 +22,21 @@
   </head>
   <body>
     <div id="map"></div>
+    <form runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"/>
+    <script>
+        function something() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState = 4 && this.status = 200) {
+                    document.getElementById("hid") = this.responseText;
+                    console.log("it mus have worked");
+                }
+            }
+            xhttp.open("GET", "markers.aspx/foo", true);
+            xhttp.send();
+        }
+    </script>
     <script>
         var map;
         var marker;
@@ -39,18 +53,25 @@
                 position: myLatLng,
                 map: map,
                 draggable: true,
-                title: 'Hello World!',
+                title: 'Hello World!' <% =foo() %>
             });
 
             google.maps.event.addListener(marker, 'dragend', function (event) {
                 console.log(event.latLng.lat() + ":" + event.latLng.lng());
                 var pos = event.latLng.lat() + ":" + event.latLng.lng();
                 document.getElementById("position").innerHTML = pos;
+                something();
             });
-        }
+
+        } 
+        
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=initMap"
-    async defer></script>
+    async defer></script>   
     <label id="position" runat="server" />
+    <label id="hid" runat="server" />
+    <button id="hidden" style="display: none" onclick="something()" />
+      </form>
   </body>
 </html>

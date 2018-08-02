@@ -13,5 +13,12 @@ namespace FMS
         {
 
         }
+
+        [System.Web.Services.WebMethod]
+        public static string foo()
+        {
+            System.Diagnostics.Debug.WriteLine("Hey genius");
+            return "it worked";
+        }
     }
 }

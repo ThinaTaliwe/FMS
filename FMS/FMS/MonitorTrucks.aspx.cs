@@ -10,7 +10,7 @@ namespace FMS
     public partial class MonitorTrucks : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
+        { 
 
         }
     }
