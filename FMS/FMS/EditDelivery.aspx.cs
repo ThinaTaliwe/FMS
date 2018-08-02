@@ -34,10 +34,17 @@ namespace FMS
                 }
             }
 
+            try {
+                string text ="id=" + Page.RouteData.Values["id"].ToString();
+                Response.Write(text);
+            } catch(Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+
             string id = Request.QueryString["order"];
             //ordernum.Text = id;
             //Display Info regarding the asked order 
-            var query = "SELECT * FROM DELIVERY WHERE ID LIKE " + id;
+            var query = "SELECT id, client, depart_day, material, load FROM DELIVERY WHERE ID LIKE '" + id + "'";
             System.Diagnostics.Debug.WriteLine(query);
             var row = Util.query(query);
 
@@ -47,15 +54,23 @@ namespace FMS
                 while (row.Read())
                 {
                     //ordernum.Text = Convert.ToString(row.GetString(1));
-                    Text1.Value = Convert.ToString(row.GetString(1));
-                    ClientSelected.Value = Convert.ToString(row.GetInt32(4));
-                    DeliveryDateSelected.Value = Convert.ToString(row.GetDateTime(7));
-                    MaterialSelected.Value = row.GetString(9);
-                    //TruckChosen.Value = row.GetString(2);
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                    sb.Append("<script type = 'text/javascript'>");
+                    sb.Append("window.onload=function(){");
+                    sb.Append("alert('");
+                    sb.Append(Convert.ToString(row.GetInt32(0)));
+                    sb.Append("')};");
+                    sb.Append("</script>");
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
+                    Text1.Value = Convert.ToString(row.GetInt32(0));
+                    ClientSelected.Value = Convert.ToString(row.GetInt32(1));
+                    DeliveryDateSelected.Value = Convert.ToString(row.GetDateTime(2));
+                    MaterialSelected.Value = row.GetString(3); 
+                    //TruckChosen.Value = row.GetString(2); 
                     //DriverChosen.Value = row.GetString(3); 
-                    StartRoute.Value = row.GetString(5);
-                    EndRoute.Value = row.GetString(6);
-                    LoadSelected.Value = Convert.ToString(row.GetInt32(10));
+                    //StartRoute.Value = row.GetString(5);
+                    //EndRoute.Value = row.GetString(6);
+                    LoadSelected.Value = Convert.ToString(row.GetInt32(4));
                 }
             }
             //ordernum.Text = "Bye"; 

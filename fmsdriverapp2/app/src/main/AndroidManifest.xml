@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -23,10 +24,16 @@
         <service android:name=".DriverService" />
 
         <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw"/>
+
+        <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".CurrentDelivery"></activity>
+        <activity android:name=".CurrentDelivery" />
+        <activity android:name=".Login" />
+        <activity android:name=".Trip"></activity>
     </application>
 
 </manifest>

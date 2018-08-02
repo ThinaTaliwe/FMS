@@ -15,7 +15,7 @@ namespace FMS.App_Code
         {
             var query = "SELECT ID, [LOAD], SPEED FROM TRUCKS WHERE ID LIKE '" + id + "'";
             var truck = Util.query(query);
-            if (truck.Read())
+            while (truck.Read())
             {
                 id = truck.GetString(0);
                 load = truck.GetInt32(1);
@@ -31,7 +31,6 @@ namespace FMS.App_Code
 
         public string getID()
         {
-            
             return id;
         }
         public int getLoad() { return load; }

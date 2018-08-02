@@ -8,25 +8,28 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using FMS.App_Code;
 
-namespace FMS
-{
-    public class Global : HttpApplication
-    {
+namespace FMS{
+    public class Global : HttpApplication {
         DriverREST rest = new DriverREST(1998);
-        void Application_Start(object sender, EventArgs e)
-        {
+
+        void Application_Start(object sender, EventArgs e)  {
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Thread t = new Thread(rest.start);
-            t.Start();
-        } 
+            Thread server = new Thread(rest.start);
+            server.Start();
+            //Todo timer to restart server
+        }
 
-        public StreamWriter getServer(string address)
+        void RegisterRoutes(RouteCollection routes)
         {
-            return rest.getWriter(address);
+            routes.MapPageRoute("delivery", "delivery/{id}", "~/EditDelivery.aspx");
         }
     }
 
-}
+        
+ }
+ 

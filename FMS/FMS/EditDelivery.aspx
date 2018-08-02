@@ -35,7 +35,7 @@
 										    <label  class="col-sm-2 control-label">Truck</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="TruckChosen" runat="server">
-													<option>Select a truck</option>
+													<option>Select A Truck</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validTruckChosen" runat="server" controlToValidate="TruckChosen" errorMessage="choose truck" display="dynamic">
                                                </asp:RequiredFieldValidator>
@@ -52,7 +52,7 @@
 										    <label  class="col-sm-2 control-label">Driver</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="DriverChosen" runat="server">
-													<option>Select a driver</option>
+													<option>Select A Driver</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validDriver" runat="server" controlToValidate="DriverChosen" errorMessage="Choose driver" display="dynamic">
                                                </asp:RequiredFieldValidator>

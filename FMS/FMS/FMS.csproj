@@ -147,6 +147,7 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
+<<<<<<< HEAD
     <Content Include="App_Data\Kh.mdf" />
     <Content Include="App_Data\Kh_log.ldf">
       <DependentUpon>Kh.mdf</DependentUpon>
@@ -158,10 +159,18 @@
     <Content Include="App_Data\mydb.mdf" />
     <Content Include="App_Data\mydb_log.ldf">
       <DependentUpon>mydb.mdf</DependentUpon>
+=======
+    <Content Include="App_Data\Khaa.mdf" />
+    <Content Include="App_Data\Khaa_log.ldf">
+      <DependentUpon>Khaa.mdf</DependentUpon>
+>>>>>>> cbdc6129275aca83250a09b1be635d3c9cc453fc
     </Content>
     <Content Include="Contact.aspx" />
+    <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />
     <Content Include="Content\ass\css\Map.css" />
+    <Content Include="Content\ass\flatpicker.js" />
+    <Content Include="Content\ass\confirmDate.js" />
     <Content Include="Content\ass\js\calendar.js" />
     <Content Include="Content\ass\js\forms.js" />
     <Content Include="Content\ass\js\js.js" />
@@ -170,15 +179,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="CreateDelivery.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="DeleteTruck.aspx" />
-    <Content Include="DeleteUser.aspx" />
     <Content Include="DeliveryReport.aspx" />
     <Content Include="Drag.html" />
     <Content Include="DriverReport.aspx" />
     <Content Include="EditDelivery.aspx" />
     <Content Include="EditDelivery1.aspx" />
+    <Content Include="Hum.html" />
     <Content Include="Junk2.aspx" />
-    <Content Include="DeleteDriver.aspx" />
     <Content Include="DeliveryDelete.aspx" />
     <Content Include="Junk1.aspx" />
     <Content Include="favicon.ico" />
@@ -190,11 +197,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\ass\flatpickr.min.css" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Home.aspx" />
     <Content Include="Home_Dummy.html" />
     <Content Include="Login.aspx" />
     <Content Include="Map.html" />
+    <Content Include="markers.aspx" />
     <Content Include="MonitorTrucks.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -259,9 +268,10 @@
     </Compile>
     <Compile Include="App_Code\Admin.cs" />
     <Compile Include="App_Code\Client.cs" />
-    <Compile Include="App_Code\Deliver.cs" />
     <Compile Include="App_Code\Delivery.cs" />
     <Compile Include="App_Code\Driver.cs" />
+    <Compile Include="App_Code\DriverREST.cs" />
+    <Compile Include="App_Code\DriverHandle.cs" />
     <Compile Include="App_Code\Truck.cs" />
     <Compile Include="App_Code\User.cs" />
     <Compile Include="App_Code\Util.cs" />
@@ -294,20 +304,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DeleteTruck.aspx.cs">
-      <DependentUpon>DeleteTruck.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DeleteTruck.aspx.designer.cs">
-      <DependentUpon>DeleteTruck.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DeleteUser.aspx.cs">
-      <DependentUpon>DeleteUser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DeleteUser.aspx.designer.cs">
-      <DependentUpon>DeleteUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="DeliveryReport.aspx.cs">
       <DependentUpon>DeliveryReport.aspx</DependentUpon>
@@ -344,13 +340,6 @@
     <Compile Include="Junk2.aspx.designer.cs">
       <DependentUpon>Junk2.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DeleteDriver.aspx.cs">
-      <DependentUpon>DeleteDriver.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DeleteDriver.aspx.designer.cs">
-      <DependentUpon>DeleteDriver.aspx</DependentUpon>
-    </Compile>
     <Compile Include="DeliveryDelete.aspx.cs">
       <DependentUpon>DeliveryDelete.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -365,8 +354,6 @@
     <Compile Include="Junk1.aspx.designer.cs">
       <DependentUpon>Junk1.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DriverHandle.cs" />
-    <Compile Include="DriverREST.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -383,6 +370,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="markers.aspx.cs">
+      <DependentUpon>markers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="markers.aspx.designer.cs">
+      <DependentUpon>markers.aspx</DependentUpon>
     </Compile>
     <Compile Include="MonitorTrucks.aspx.cs">
       <DependentUpon>MonitorTrucks.aspx</DependentUpon>

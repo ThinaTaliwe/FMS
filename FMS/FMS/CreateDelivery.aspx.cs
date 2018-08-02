@@ -38,7 +38,7 @@ namespace FMS
                 var clients = Util.query(clientQuery);
                 if (clients.HasRows)
                 {
-                    while (clients.Read())
+                    while (clients.Read()) 
                     {
                         Client.Items.Add(new ListItem(clients.GetString(0) + " " + clients.GetInt32(1)));
                     }
@@ -48,10 +48,19 @@ namespace FMS
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverChosen.Value.Split(' ')[1] + "', '" + Client.Value.Split(' ')[1] + "', '" + "Johannesburg" + "', '" + "Pretoria" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
-            System.Diagnostics.Debug.WriteLine(query);
+            string message = Hidden1.Value;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("<script type = 'text/javascript'>");
+            sb.Append("window.onload=function(){");
+            sb.Append("alert('");
+            sb.Append(message);
+            sb.Append("')};");
+            sb.Append("</script>");
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
+            string driver = DriverChosen.Value.Split(' ')[1];
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + driver + "', '" + Client.Value.Split(' ')[1] + "', '" + "Location1" + "', '" + "Location2" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
             Util.query(query);
+<<<<<<< HEAD
             Delivery delivery = Delivery.getInstance(OrderNum.Value);
             query = "SELECT ADDRESS FROM DRIVERS WHERE ID LIKE '" + DriverChosen.Value.Split(' ')[1] + "';";
             var addr = Util.query(query);
@@ -64,6 +73,9 @@ namespace FMS
             }
             Error.InnerText = "Delivery Created";
             
+=======
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+>>>>>>> cbdc6129275aca83250a09b1be635d3c9cc453fc
         }
     }
 }

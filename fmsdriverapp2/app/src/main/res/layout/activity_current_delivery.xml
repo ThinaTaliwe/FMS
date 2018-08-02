@@ -17,27 +17,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/info"
             android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:text="Delivery info"
-            android:textAlignment="center"
-            android:textSize="24sp" />
+            android:layout_height="331dp"
+            android:text="Delivery Info" />
 
-        <TextView
-            android:id="@+id/textView2"
+        <Button
+            android:id="@+id/accept"
             android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:text="Origin: Johannesburg"
-            android:textAlignment="center"
-            android:textSize="24sp" />
+            android:layout_height="80dp"
+            android:text="Accept Assignment" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="71dp"
-            android:text="Destination: Pretoria"
-            android:textAlignment="center"
-            android:textSize="24sp" />
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

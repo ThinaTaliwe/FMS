@@ -25,7 +25,7 @@
 										  <div class="form-group">
 										    <label  class="col-sm-2 control-label">Order Number</label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="OrderNum" placeholder="" runat="server">
+										      <input class="form-control" id="OrderNum" placeholder="Enter Order Number" runat="server">
                                                <asp:RequiredFieldValidator id="validOrderNum" runat="server" controlToValidate="OrderNum" errorMessage="Enter order number" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
@@ -34,7 +34,7 @@
 										    <label  class="col-sm-2 control-label">Truck</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="TruckChosen" runat="server">
-													<option>Select a truck</option>
+													<option>Select A Truck</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validTruckChosen" runat="server" controlToValidate="TruckChosen" errorMessage="choose truck" display="dynamic">
                                                </asp:RequiredFieldValidator>
@@ -45,7 +45,7 @@
 										    <label  class="col-sm-2 control-label">Client</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="Client" runat="server">
-													<option>Select a Client</option>
+													<option>Select A Client</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validClient" runat="server" controlToValidate="Client" errorMessage="Choose client" display="dynamic">
                                                </asp:RequiredFieldValidator>
@@ -56,7 +56,7 @@
 										    <label  class="col-sm-2 control-label">Driver</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="DriverChosen" runat="server">
-													<option>Select a driver</option>
+													<option>Select A driver</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validDriver" runat="server" controlToValidate="DriverChosen" errorMessage="Choose driver" display="dynamic">
                                                </asp:RequiredFieldValidator>
@@ -68,7 +68,7 @@
 										    <div class="col-sm-10">
 										     	
 						                    <form action="/action_page.php">
-                                              <input class="form-control" type="date" id="DeliveryDate" runat="server">
+                                              <input class="form-control" type="datetime" id="DeliveryDate" runat="server">
                                                <asp:RequiredFieldValidator id="validDeliveryDate" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
                                                </asp:RequiredFieldValidator>
                                             </form>
@@ -77,7 +77,7 @@
                                    <div class="form-group">
 										    <label class="col-sm-2 control-label">Material</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="Material" placeholder="" runat="server">
+										      <input  class="form-control" id="Material" placeholder="Enter Material" runat="server">
                                                <asp:RequiredFieldValidator id="validMaterial" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
@@ -85,17 +85,25 @@
                                    <div class="form-group">
 										    <label class="col-sm-2 control-label">Load</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="Load" placeholder="" runat="server">
+										      <input  class="form-control" id="Load" placeholder="Enter Load" runat="server">
                                                <asp:RequiredFieldValidator id="validLoad" runat="server" controlToValidate="Load" errorMessage="Enter Load" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
+<<<<<<< HEAD
                    
         
           <input id="origin" class="controls" type="text" placeholder="Origin"  runat="server">
                                                <asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
                                                </asp:RequiredFieldValidator>
         <input id="destination-input" class="controls" type="text"
+=======
+        
+                                  
+         <input id="origin-input" class="controls" type="text" placeholder="Origin">
+
+    <input id="destination-input" class="controls" type="text"
+>>>>>>> cbdc6129275aca83250a09b1be635d3c9cc453fc
            placeholder="Destination">
 
 
@@ -112,6 +120,7 @@
 
     <div id="map"></div>
 
+                                   <input id="Hidden1"  type="hidden" runat="server" />
     <script>
         // This example requires the Places library. Include the libraries=places
         // parameter when you first load the API. For example:
@@ -131,12 +140,14 @@
          * @constructor
         */
         function AutocompleteDirectionsHandler(map) {
+            
             this.map = map;
             this.originPlaceId = null;
             this.destinationPlaceId = null;
             this.travelMode = 'WALKING';
             var originInput = document.getElementById('origin-input');
             //document.getElementById('itemRun') = originInput;
+           
             var destinationInput = document.getElementById('destination-input');
             var modeSelector = document.getElementById('mode-selector');
             this.directionsService = new google.maps.DirectionsService;
@@ -208,18 +219,16 @@
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
-            });
+                });
         };
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
             async defer></script>
-				  							<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()">
-													Cancel
-												</button>		<asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click" />	 
-										    	 
-										  
-										</form>
+
+				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>
+                                  <input type="reset">
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 </form>
                             </div>
 		  					
 

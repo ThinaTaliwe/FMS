@@ -10,16 +10,18 @@
 
                     <div class="col-md-10">
                         <div class="content-panel">
-                            <hr>
+
+                            <hr> 
                             <table class="table">
                                 <!-- Heading --> 
                                 <thead>
                                     <tr>
-                                        <th>Order Number</th>
-                                        <th>Truck Plate</th>
-                                        <th>Origin</th>
-                                        <th>Destination</th>
-                                        <th>Assignment Accepted</th>
+                                        <th>Company</th>
+                                        <th>Address: From</th>
+                                        <th>Address: To</th>
+                                        <th>Driver</th>
+                                        <th>ETA</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
