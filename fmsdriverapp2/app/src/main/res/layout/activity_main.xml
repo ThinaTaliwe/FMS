@@ -8,8 +8,8 @@
 
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,8 +18,8 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="82dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:text="FMS Driver App"
             android:textAlignment="textStart"
@@ -28,25 +28,25 @@
         <Button
             android:id="@+id/current"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="66dp"
             android:text="View Current Delivery" />
 
         <Button
             android:id="@+id/upcoming"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="60dp"
             android:text="View Upcoming Delivery" />
 
         <Button
             android:id="@+id/sos"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="wrap_content"
             android:text="SOS" />
 
         <Button
             android:id="@+id/login"
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="wrap_content"
             android:text="Login" />
 
 
