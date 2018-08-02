@@ -148,6 +148,9 @@
                 }
                 if (mode === 'ORIG') {
                     me.originPlaceId = place.place_id;
+                    var lat = place.geometry.location.lat();
+                    var lng = place.geometry.location.lng();
+                    
                 } else {
                     me.destinationPlaceId = place.place_id;
                 }
