@@ -40,15 +40,16 @@ namespace FMS
                 {
                     while (clients.Read()) 
                     {
-                        Client.Items.Add(new ListItem(clients.GetString(0) + " " + clients.GetInt32(1)));
+                        Client.Items.Add(new ListItem(clients.GetString(0)));
                     }
                 }
+                Client.Items.Add(new ListItem("Other")); 
             }
         }
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            string message = Hidden1.Value;
+            string message = "Hey";
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             sb.Append("<script type = 'text/javascript'>");
             sb.Append("window.onload=function(){");
