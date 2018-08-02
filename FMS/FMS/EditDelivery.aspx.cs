@@ -62,7 +62,6 @@ namespace FMS
                     sb.Append("')};");
                     sb.Append("</script>");
                     ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
-
                     Text1.Value = Convert.ToString(row.GetInt32(0));
                     ClientSelected.Value = Convert.ToString(row.GetInt32(1));
                     DeliveryDateSelected.Value = Convert.ToString(row.GetDateTime(2));

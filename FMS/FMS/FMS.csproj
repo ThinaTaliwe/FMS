@@ -147,6 +147,7 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
+    
     <Content Include="App_Data\Khaa.mdf" />
     <Content Include="App_Data\Khaa_log.ldf">
       <DependentUpon>Khaa.mdf</DependentUpon>
@@ -189,6 +190,7 @@
     <Content Include="Home_Dummy.html" />
     <Content Include="Login.aspx" />
     <Content Include="Map.html" />
+    <Content Include="markers.aspx" />
     <Content Include="MonitorTrucks.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -355,6 +357,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="markers.aspx.cs">
+      <DependentUpon>markers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="markers.aspx.designer.cs">
+      <DependentUpon>markers.aspx</DependentUpon>
     </Compile>
     <Compile Include="MonitorTrucks.aspx.cs">
       <DependentUpon>MonitorTrucks.aspx</DependentUpon>
