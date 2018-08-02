@@ -147,13 +147,17 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\Kha2.mdf" />
-    <Content Include="App_Data\Kha2_log.ldf">
-      <DependentUpon>Kha2.mdf</DependentUpon>
+    
+    <Content Include="App_Data\Khaa.mdf" />
+    <Content Include="App_Data\Khaa_log.ldf">
+      <DependentUpon>Khaa.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
+    <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />
     <Content Include="Content\ass\css\Map.css" />
+    <Content Include="Content\ass\flatpicker.js" />
+    <Content Include="Content\ass\confirmDate.js" />
     <Content Include="Content\ass\js\calendar.js" />
     <Content Include="Content\ass\js\forms.js" />
     <Content Include="Content\ass\js\js.js" />
@@ -167,6 +171,7 @@
     <Content Include="DriverReport.aspx" />
     <Content Include="EditDelivery.aspx" />
     <Content Include="EditDelivery1.aspx" />
+    <Content Include="Hum.html" />
     <Content Include="Junk2.aspx" />
     <Content Include="DeliveryDelete.aspx" />
     <Content Include="Junk1.aspx" />
@@ -179,11 +184,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\ass\flatpickr.min.css" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Home.aspx" />
     <Content Include="Home_Dummy.html" />
     <Content Include="Login.aspx" />
     <Content Include="Map.html" />
+    <Content Include="markers.aspx" />
     <Content Include="MonitorTrucks.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -350,6 +357,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="markers.aspx.cs">
+      <DependentUpon>markers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="markers.aspx.designer.cs">
+      <DependentUpon>markers.aspx</DependentUpon>
     </Compile>
     <Compile Include="MonitorTrucks.aspx.cs">
       <DependentUpon>MonitorTrucks.aspx</DependentUpon>

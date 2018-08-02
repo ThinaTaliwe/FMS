@@ -39,7 +39,7 @@ public class CurrentDelivery extends Base {
                 }
             }
         });
-        delivery_info = (TextView) findViewById(R.id.delivery_info);
+        delivery_info = (TextView) findViewById(R.id.info);
         if(serviceIsBounded && service.currentDelivery() != null) {
             delivery_info.setText(service.currentDelivery().toString());
         } else delivery_info.setText("No current delivery");

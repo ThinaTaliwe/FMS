@@ -25,7 +25,7 @@
 										  <div class="form-group">
 										    <label  class="col-sm-2 control-label">Order Number</label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="OrderNum" placeholder="" runat="server">
+										      <input class="form-control" id="OrderNum" placeholder="Enter Order Number" runat="server">
                                                <asp:RequiredFieldValidator id="validOrderNum" runat="server" controlToValidate="OrderNum" errorMessage="Enter order number" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
@@ -34,7 +34,7 @@
 										    <label  class="col-sm-2 control-label">Truck</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="TruckChosen" runat="server">
-													<option>Select a truck</option>
+													<option>Select A Truck</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validTruckChosen" runat="server" controlToValidate="TruckChosen" errorMessage="choose truck" display="dynamic">
                                                </asp:RequiredFieldValidator>
@@ -42,10 +42,10 @@
 										    </div>
 										  </div>
                                          <div class="form-group">
-										    <label  class="col-sm-2 control-label">Client</label>
+										    <label  class="col-sm-2 control-label">Client</label> 
 										    <div class="col-sm-10">
 										      <select class="form-control" id="Client" runat="server">
-													<option>Select a Client</option>
+													<option>Select A Client</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validClient" runat="server" controlToValidate="Client" errorMessage="Choose client" display="dynamic">
                                                </asp:RequiredFieldValidator>
@@ -56,7 +56,7 @@
 										    <label  class="col-sm-2 control-label">Driver</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="DriverChosen" runat="server">
-													<option>Select a driver</option>
+													<option>Select A driver</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validDriver" runat="server" controlToValidate="DriverChosen" errorMessage="Choose driver" display="dynamic">
                                                </asp:RequiredFieldValidator>
@@ -74,10 +74,19 @@
                                             </form>
 										    </div>
 										  </div>
+                                 <div class="form-group">
+										    <label  class="col-sm-2 control-label">Delivery Time</label>
+										    <div class="col-sm-10">
+										     	
+						                    <form action="/action_page.php">
+                                              <input class="form-control" type="time" id="Time1" runat="server">
+                                            </form>
+										    </div>
+										  </div>
                                    <div class="form-group">
 										    <label class="col-sm-2 control-label">Material</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="Material" placeholder="" runat="server">
+										      <input  class="form-control" id="Material" placeholder="Enter Material" runat="server">
                                                <asp:RequiredFieldValidator id="validMaterial" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
@@ -85,17 +94,113 @@
                                    <div class="form-group">
 										    <label class="col-sm-2 control-label">Load</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="Load" placeholder="" runat="server">
+										      <input  class="form-control" id="Load" placeholder="Enter Load" runat="server">
                                                <asp:RequiredFieldValidator id="validLoad" runat="server" controlToValidate="Load" errorMessage="Enter Load" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
+<<<<<<< HEAD
+<input id="origin-input" class="controls" type="text" placeholder="Origin">
+
+<input id="destination-input" class="controls" type="text"
+       placeholder="Destination">
+
+<div id="mode-selector" class="controls" hidden="hidden">
+    <input type="radio" name="type" id="changemode-walking" checked="checked">
+    <label for="changemode-walking">Walking</label>
+
+    <input type="radio" name="type" id="changemode-transit">
+    <label for="changemode-transit">Transit</label>
+
+    <input type="radio" name="type" id="changemode-driving">
+    <label for="changemode-driving">Driving</label>
+</div>
+
+<div id="map"></div>
+
+<script>
+    // This example requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            mapTypeControl: false,
+            center: { lat: - 26.270760, lng: 28.112268 },
+            zoom: 13
+        });
+
+        new AutocompleteDirectionsHandler(map);
+    }
+
+    /**
+     * @constructor
+    */
+    function AutocompleteDirectionsHandler(map) {
+        this.map = map;
+        this.originPlaceId = null;
+        this.destinationPlaceId = null;
+        this.travelMode = 'WALKING';
+        var originInput = document.getElementById('origin-input');
+        //document.getElementById('itemRun') = originInput;
+        var destinationInput = document.getElementById('destination-input');
+        var modeSelector = document.getElementById('mode-selector');
+        this.directionsService = new google.maps.DirectionsService;
+        this.directionsDisplay = new google.maps.DirectionsRenderer;
+        this.directionsDisplay.setMap(map);
+
+        var originAutocomplete = new google.maps.places.Autocomplete(
+            originInput, { placeIdOnly: true });
+        var destinationAutocomplete = new google.maps.places.Autocomplete(
+            destinationInput, { placeIdOnly: true });
+
+        this.setupClickListener('changemode-walking', 'WALKING');
+        this.setupClickListener('changemode-transit', 'TRANSIT');
+        this.setupClickListener('changemode-driving', 'DRIVING');
+
+        this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+        this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+    }
+
+    // Sets a listener on a radio button to change the filter type on Places
+    // Autocomplete.
+    AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
+        var radioButton = document.getElementById(id);
+        var me = this;
+        radioButton.addEventListener('click', function () {
+            me.travelMode = mode;
+            me.route();
+        });
+    };
+
+    AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
+        var me = this;
+        autocomplete.bindTo('bounds', this.map);
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            if (!place.place_id) {
+                window.alert("Please select an option from the dropdown list.");
+=======
+<<<<<<< HEAD
+                   
+        
+          <input id="origin" class="controls" type="text" placeholder="Origin"  runat="server">
+                                               <asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
+                                               </asp:RequiredFieldValidator>
+        <input id="destination-input" class="controls" type="text"
+=======
         
                                   
          <input id="origin-input" class="controls" type="text" placeholder="Origin">
 
     <input id="destination-input" class="controls" type="text"
+>>>>>>> cbdc6129275aca83250a09b1be635d3c9cc453fc
            placeholder="Destination">
+
 
     <div id="mode-selector" class="controls" hidden="hidden">
         <input type="radio" name="type" id="changemode-walking" checked="checked">
@@ -193,34 +298,47 @@
 
         AutocompleteDirectionsHandler.prototype.route = function () {
             if (!this.originPlaceId || !this.destinationPlaceId) {
+>>>>>>> b6904d5fccf1323c6381454f6b48d3c063634d44
                 return;
             }
-            var me = this;
+            if (mode === 'ORIG') {
+                me.originPlaceId = place.place_id;
+            } else {
+                me.destinationPlaceId = place.place_id;
+            }
+            me.route();
+        });
+        // document.getElementById("run").innerHTML
+    };
 
-            this.directionsService.route({
-                origin: { 'placeId': this.originPlaceId },
-                destination: { 'placeId': this.destinationPlaceId },
-                travelMode: this.travelMode
-            }, function (response, status) {
-                if (status === 'OK') {
-                    me.directionsDisplay.setDirections(response);
-                    //document.getElementById("itemRun").innerText = originInput;
-                    window.alert(originInput);
-                } else {
-                    window.alert('Directions request failed due to ' + status);
-                }
-                });
-        };
+    AutocompleteDirectionsHandler.prototype.route = function () {
+        if (!this.originPlaceId || !this.destinationPlaceId) {
+            return;
+        }
+        var me = this;
 
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
-            async defer></script>
+        this.directionsService.route({
+            origin: { 'placeId': this.originPlaceId },
+            destination: { 'placeId': this.destinationPlaceId },
+            travelMode: this.travelMode
+        }, function (response, status) {
+            if (status === 'OK') {
+                me.directionsDisplay.setDirections(response);
+                //document.getElementById("itemRun").innerText = originInput;
+                window.alert(originInput);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    };
 
-				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>		
-                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 
-										    	 
-										  
-										</form>
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
+        async defer></script>
+
+				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>
+                                  
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 </form>
                             </div>
 		  					
 

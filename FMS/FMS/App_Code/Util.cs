@@ -12,6 +12,21 @@ namespace FMS.App_Code
     public class Util
     {
 
+        public static string getAddress(double[] coords) {
+            try {
+                string link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+                link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                string result = readLink(link);
+                JObject obj = JObject.Parse(result);
+                var addr = obj["results"][0];
+                if(addr != null) {
+                    return addr["formatted_address"].ToString();
+                } 
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+            } return DriverHandle.ERROR_CODE;
+        }
+
         public static string getRoutePoints(string route)
         {
             List<string> info = new List<string>();
@@ -19,30 +34,50 @@ namespace FMS.App_Code
             try
             {
                 JObject obj = JObject.Parse(route);
-                JToken legs = obj["routes"][0]["legs"][0];                
-                info.Add(legs["distance"]["text"].ToString());
-                var steps = legs["steps"];
-                string text = "";
-                string polyline = "";
-                foreach(var step in steps) {
-                    text = step["distance"]["text"].ToString();
-                    text += "#" + step["html_instructions"];
-                    text += "#" + step["polyline"]["points"];
-                    info.Add(text);
-                    text = "";
+                if (obj["geocoded_waypoints"][0]["geocoder_status"].ToString().Contains("OK"))
+                {
+                    JToken legs = obj["routes"][0]["legs"][0];
+                    info.Add(legs["distance"]["text"].ToString());
+                    var steps = legs["steps"];
+                    string text = "";
+                    foreach (var step in steps)
+                    {
+                        text = pad(step["distance"]["text"].ToString());
+                        text += "#" + pad(step["html_instructions"].ToString());
+                        text += "#" + step["polyline"]["points"];
+                        info.Add(text);
+                        text = "";
+                    }
+                    foreach (var data in info)
+                        result += data + " ";
+                    return result;
                 }
-                foreach(var data in info)  result += pad(data) + " ";
-                result += polyline;
-                return result;
+                else
+                    result = DriverHandle.ERROR_CODE;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
+                result = DriverHandle.ERROR_CODE;
             }
             return result;
         }
 
-        public static string pad(string text) { return text.Replace(' ', '_'); }
+        public static string pad(string text) {
+            string result = "";
+            bool remove = false;
+            foreach(char c in text) {
+                if (c == '<')
+                    remove = true;
+                if (c == '>') {
+                    remove = false;
+                    continue;
+                }
+                if (!remove)
+                    result += c;
+            }
+            return result.Replace(' ', '_');
+        }
 
         public static string getRoute(double[] from, double[] to)
         {
@@ -51,15 +86,22 @@ namespace FMS.App_Code
                 String link = "https://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=";
                 link += from[0].ToString().Replace(',', '.') + "," + from[1].ToString().Replace(',', '.') + "&destination=";
                 link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
-                WebClient wc = new WebClient();
-                System.Diagnostics.Debug.WriteLine(link);
-                return wc.DownloadString(link);
+                return readLink(link);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex);
-            }
-            return null;
+            } return DriverHandle.ERROR_CODE;
+        }
+
+        public static string readLink(string url) {
+            try {
+                WebClient wc = new WebClient();
+                System.Diagnostics.Debug.WriteLine(url);
+                return wc.DownloadString(url);
+            } catch(Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+            } return DriverHandle.ERROR_CODE;
         }
 
         public static double distance(double[] from, double[] to) {

@@ -23,14 +23,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 
 public class Base extends AppCompatActivity {
 
-    private PopupWindow popup;
+    protected PopupWindow popup;
+    protected LayoutInflater inflater;
     protected DriverService service;
     protected boolean serviceIsBounded;
     protected ServiceConnection conn = new ServiceConnection() {
+        /**
+         * used to connect to DriverService
+         */
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             DriverService.DriverServiceBound bound = (DriverService.DriverServiceBound) iBinder;
@@ -47,27 +55,27 @@ public class Base extends AppCompatActivity {
 
     protected class Helper extends AsyncTask<String, String, String> {
 
-        private Intent intent = null;
+        private Intent intent;
+        private Context context;
+
+        public Helper(Context con) { context = con; }
 
         @Override
         protected String doInBackground(String... args) {
             try {
-                if(args[0] == "login") {
-                    service.send(args[1] + " " + args[2]);
-                    String response = service.read();
-                    if(response.contains(service.OK_CODE)) {
-                        service.setDriver(args[1], args[2]);
-                        intent = new Intent(Base.this, MainActivity.class);
-                        service.log("Login Successful");
-                        startActivity(intent);
-                    } else {
-                        service.log("Login Unsuccessful");
-                        dismiss();
-                    }
-                    return response;
-                } else if(args[0] == "trip") {
+                if(args[0] == "trip") {
                     intent = new Intent(Base.this, Trip.class);
-                    startActivity(intent);
+                } else if(args[0] == "route") {
+                    showLoading();
+                    Delivery delivery = service.currentDelivery();
+                    service.clearInputStream();
+                    service.send("route " + service.getLocation() + " -26.1403:28.6787");
+                    String response = service.read();
+                    if(response.contains(DriverService.OK_CODE)) response = service.read();
+                    delivery.setRoute(response);
+                    Trip trip = (Trip) context;
+                    trip.getMap().getMapAsync(trip);
+                    dismiss();
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -83,12 +91,33 @@ public class Base extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            if(intent != null) context.startActivity(intent);
+        }
+    }
+
+    protected void showInfo(String info) {
+        /**
+         * shows information in a popup
+         */
+        try {
+            System.out.println("viewDeliveryInfo()");
+            if(inflater == null) inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.route_info, null);
+            TextView text = (TextView) layout.findViewById(R.id.routeText);
+            text.setText(info);
+            popup = new PopupWindow(layout, 300, 370, true);
+            popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     protected void showLoading() {
+        /**
+         * shows a loading symbol
+         */
         try {
-            LayoutInflater inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if(inflater == null) inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.loading, (ViewGroup) findViewById(R.id.loading_1));
             popup = new PopupWindow(layout, 300, 370, true);
             popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
@@ -98,6 +127,9 @@ public class Base extends AppCompatActivity {
     }
 
     protected void dismiss() {
+        /**
+         * removes loading symbol
+         */
         popup.dismiss();
     }
 
@@ -118,7 +150,12 @@ public class Base extends AppCompatActivity {
         }
     }
 
-    protected void setControls() {}
+    protected void setControls() {
+        /**
+         * sets controls and has access to service, must be implemented in inherited class
+         */
+        System.err.println("setControls()");
+    }
 
     @Override
     protected void onDestroy() {

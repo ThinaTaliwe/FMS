@@ -111,7 +111,7 @@ namespace FMS.App_Code
                                         var current = Util.query(query);
                                         if (current.HasRows)
                                         {
-                                            while (current.Read())
+                                            if (current.Read())
                                             {
                                                 Delivery deliv = Delivery.getInstance(current.GetInt32(0));
                                                 send(deliv.ToString());
@@ -154,6 +154,16 @@ namespace FMS.App_Code
                                             send(Util.getRoutePoints(route));
                                         } catch (Exception e) {
                                             System.Diagnostics.Debug.WriteLine(e);
+                                            send(ERROR_CODE);
+                                        }
+                                        break;
+                                    case "address":
+                                        //address [coordinates]
+                                        try {
+                                            var coords = Util.getCoords(parts[1]);
+                                            send(Util.getAddress(coords));
+                                        } catch (Exception ex) {
+                                            System.Diagnostics.Debug.WriteLine(ex);
                                             send(ERROR_CODE);
                                         }
                                         break;

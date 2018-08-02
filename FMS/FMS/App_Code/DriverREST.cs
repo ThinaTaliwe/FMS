@@ -17,7 +17,6 @@ namespace FMS.App_Code
          */
         private TcpListener server = null;
         private static List<DriverHandle> handles = null;
-        private StreamWriter need = null;
 
         public DriverREST(int port)
         {
@@ -38,10 +37,8 @@ namespace FMS.App_Code
                         try
                         {
                             DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
-                            lock (handle)
-                            {
-                                if (!handles.Contains(handle))
-                                {
+                            lock (handle) {
+                                if (!handles.Contains(handle)) {
                                     handles.Add(handle);
                                     Thread t = new Thread(handle.handle);
                                     t.Start();
