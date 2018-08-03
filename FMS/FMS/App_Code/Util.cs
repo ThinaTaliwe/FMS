@@ -12,6 +12,21 @@ namespace FMS.App_Code
     public class Util
     {
 
+        public static string getLatLong(string address) {
+            try {
+                string link = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+');
+                string result = readLink(link);
+                JObject obj = JObject.Parse(result);
+                var results = obj["results"][0];
+                if(results != null) {
+                    var loc = results["geometry"]["location"];
+                    return loc["lat"] + ":" + loc["lng"];
+                }
+            } catch(Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+            } return DriverHandle.ERROR_CODE;
+        }
+
         public static string getAddress(double[] coords) {
             try {
                 string link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";

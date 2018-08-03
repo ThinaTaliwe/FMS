@@ -25,17 +25,7 @@
     <form runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"/>
     <script>
-        function something() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState = 4 && this.status = 200) {
-                    document.getElementById("hid") = this.responseText;
-                    console.log("it mus have worked");
-                }
-            }
-            xhttp.open("GET", "markers.aspx/foo", true);
-            xhttp.send();
-        }
+
     </script>
     <script>
         var map;
@@ -60,7 +50,6 @@
                 console.log(event.latLng.lat() + ":" + event.latLng.lng());
                 var pos = event.latLng.lat() + ":" + event.latLng.lng();
                 document.getElementById("position").innerHTML = pos;
-                something();
             });
 
         } 

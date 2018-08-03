@@ -147,24 +147,10 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-<<<<<<< HEAD
-    <Content Include="App_Data\Kh.mdf" />
-    <Content Include="App_Data\Kh_log.ldf">
-      <DependentUpon>Kh.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\Kt.mdf" />
-    <Content Include="App_Data\Kt_log.ldf">
-      <DependentUpon>Kt.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\mydb.mdf" />
-    <Content Include="App_Data\mydb_log.ldf">
-      <DependentUpon>mydb.mdf</DependentUpon>
-=======
-    <Content Include="App_Data\Khaa.mdf" />
-    <Content Include="App_Data\Khaa_log.ldf">
-      <DependentUpon>Khaa.mdf</DependentUpon>
->>>>>>> cbdc6129275aca83250a09b1be635d3c9cc453fc
-    </Content>
+      <Content Include="App_Data\mydb_log.ldf">
+          <DependentUpon>mydb.mdf</DependentUpon>
+      </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />
