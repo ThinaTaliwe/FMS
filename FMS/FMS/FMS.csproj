@@ -147,10 +147,10 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\Khaaa.mdf" />
-    <Content Include="App_Data\Khaaa_log.ldf">
-      <DependentUpon>Khaaa.mdf</DependentUpon>
-    </Content>
+    <Content Include="App_Data\mydb.mdf" />
+      <Content Include="App_Data\mydb_log.ldf">
+          <DependentUpon>mydb.mdf</DependentUpon>
+      </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />

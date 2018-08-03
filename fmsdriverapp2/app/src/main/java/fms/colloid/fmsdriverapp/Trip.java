@@ -8,12 +8,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.maps.android.PolyUtil;
 
 import android.Manifest;
-import android.app.Service;
 import android.content.Context;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,12 +18,10 @@ import android.support.v4.app.ActivityCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Trip extends Base implements OnMapReadyCallback {
 
@@ -131,6 +126,7 @@ public class Trip extends Base implements OnMapReadyCallback {
                             service.startDelivery(deliv);
                         } else service.completeDelivery(deliv);
                         service.sendLocation(deliv.getId());
+                        startEnd.setEnabled(false);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -175,7 +171,9 @@ public class Trip extends Base implements OnMapReadyCallback {
                                     if(response.contains(DriverService.OK_CODE)) response = service.read();
                                     delivery.setRoute(response);
                                     map.getMapAsync(Trip.this);
-                                    service.log("Route Added to Map");
+                                    if(service.currentDelivery().hasRoute())
+                                        service.log("Route Added to Map");
+                                    else service.log("Route load failed, retry");
                                     dismiss();
                                 }
                                 catch(Exception ex) {
@@ -187,12 +185,11 @@ public class Trip extends Base implements OnMapReadyCallback {
                         viewRoute.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                try {
-                                    showInfo(service.currentDelivery().getRouteDirections());
-                                }
-                                catch(Exception ex) {
-                                    ex.printStackTrace();
-                                }
+                                String text;
+                                if(service.currentDelivery().hasRoute())
+                                    text = service.currentDelivery().getRouteDirections();
+                                else text = "No route, request a route";
+                                showInfo(text);
                             }
                         });
 

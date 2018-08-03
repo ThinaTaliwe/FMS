@@ -20,7 +20,10 @@ namespace FMS
             var HTMLStr = "";
             if (rows.HasRows)
             {
+<<<<<<< HEAD
                 var assigned = 0;//(rows.GetInt32(14));
+=======
+>>>>>>> ce2f36849e6f37500d19be0016a9abbdef50e240
                 var assignedStr = "";
                 while (rows.Read())
                 {

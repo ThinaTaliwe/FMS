@@ -158,10 +158,26 @@ namespace FMS.App_Code
                                         }
                                         break;
                                     case "address":
-                                        //address [coordinates]
+                                        //address [coordinates] 
                                         try {
                                             var coords = Util.getCoords(parts[1]);
                                             send(Util.getAddress(coords));
+                                        } catch (Exception ex) {
+                                            System.Diagnostics.Debug.WriteLine(ex);
+                                            send(ERROR_CODE);
+                                        }
+                                        break;
+                                    case "coords":
+                                        try {
+                                            string address = parts[1];
+                                            if(parts.Length > 2) {
+                                                for (int c = 2; c < parts.Length; c++)
+                                                {
+                                                    address += "+" + parts[c];
+                                                }
+                                            }
+                                            var coords = Util.getLatLong(address);
+                                            send(coords);
                                         } catch (Exception ex) {
                                             System.Diagnostics.Debug.WriteLine(ex);
                                             send(ERROR_CODE);

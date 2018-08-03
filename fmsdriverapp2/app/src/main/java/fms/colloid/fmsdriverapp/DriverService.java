@@ -45,7 +45,7 @@ public class DriverService extends Service {
     private Delivery delivery = null;
     private Timer timer = null;
     private Handler tHandler = new Handler();
-    private String address = "192.168.43.70"; //10.0.2.2 for emulator
+    private String address = "10.0.2.2"; //10.0.2.2 for emulator
     private int port = 8991;
     private LocationManager locationManager;
     private String longitude, latitude;
@@ -138,7 +138,7 @@ public class DriverService extends Service {
         /**
          * clears input stream, removes all confirmations send by the server
          */
-        while (available()) System.out.println(read());
+        while (in.hasNextLine()) System.out.println(read());
         System.out.println("input stream cleared");
     }
 
@@ -147,7 +147,7 @@ public class DriverService extends Service {
          * determines whether the input stream still has bytes available to be read
          */
         try {
-            return conn.getInputStream().available() > 0;
+            return in.hasNextLine();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -196,11 +196,7 @@ public class DriverService extends Service {
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
             log(read());
-        } catch (ConnectException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        }  catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -334,10 +330,11 @@ public class DriverService extends Service {
 
     public void setLocationTimer(long period) {
         /**
-         * sets the period which location listener shoud request updates for
+         * sets the period which location listener should request updates for
          */
         try {
             System.out.println("setLocationTimer()");
+            if(period < 0) return;
             boolean access;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 access = checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -347,7 +344,6 @@ public class DriverService extends Service {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 10, locationListener);
-            System.out.println(getLocation() + " in loc timer");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -368,9 +364,11 @@ public class DriverService extends Service {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             }
             if(latitude == null || longitude == null)  {
+                setLocationTimer(0);
                 Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 latitude = String.valueOf(loc.getLatitude());
                 longitude = String.valueOf(loc.getLongitude());
+                setLocationTimer(-1);
             }
             return latitude + ":" + longitude;
         } catch (Exception e) {
