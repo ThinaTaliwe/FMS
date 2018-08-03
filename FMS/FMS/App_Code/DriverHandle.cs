@@ -169,7 +169,14 @@ namespace FMS.App_Code
                                         break;
                                     case "coords":
                                         try {
-                                            var coords = Util.getLatLong(parts[1]);
+                                            string address = parts[1];
+                                            if(parts.Length > 2) {
+                                                for (int c = 2; c < parts.Length; c++)
+                                                {
+                                                    address += "+" + parts[c];
+                                                }
+                                            }
+                                            var coords = Util.getLatLong(address);
                                             send(coords);
                                         } catch (Exception ex) {
                                             System.Diagnostics.Debug.WriteLine(ex);

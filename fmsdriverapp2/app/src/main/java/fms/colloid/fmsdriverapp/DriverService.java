@@ -138,7 +138,7 @@ public class DriverService extends Service {
         /**
          * clears input stream, removes all confirmations send by the server
          */
-        while (available()) System.out.println(read());
+        while (in.hasNextLine()) System.out.println(read());
         System.out.println("input stream cleared");
     }
 
@@ -147,7 +147,7 @@ public class DriverService extends Service {
          * determines whether the input stream still has bytes available to be read
          */
         try {
-            return conn.getInputStream().available() > 0;
+            return in.hasNextLine();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
