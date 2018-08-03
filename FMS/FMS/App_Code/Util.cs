@@ -14,7 +14,7 @@ namespace FMS.App_Code
 
         public static string getLatLong(string address) {
             try {
-                string link = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+');
+                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var results = obj["results"][0];
@@ -105,17 +105,17 @@ namespace FMS.App_Code
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
+                print(ex.ToString());
             } return DriverHandle.ERROR_CODE;
         }
 
         public static string readLink(string url) {
             try {
                 WebClient wc = new WebClient();
-                System.Diagnostics.Debug.WriteLine(url);
+                print(url);
                 return wc.DownloadString(url);
             } catch(Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
+                print(ex.ToString());
             } return DriverHandle.ERROR_CODE;
         }
 
@@ -135,7 +135,7 @@ namespace FMS.App_Code
                 var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
                 return r * c;
             } catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
+                print(ex.ToString());
             }
             return 0;
 		}
@@ -149,16 +149,18 @@ namespace FMS.App_Code
                 String[] parts = coords.Replace('.', ',').Split(':');
                 return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
             } catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine("invalid coords given " + coords + ex);
+                print("invalid coords given " + coords + ex);
             }
             return null;
         }
+
+        public static void print(string text) { System.Diagnostics.Debug.WriteLine(text); }
 
         public static SqlDataReader query(string request)
         {
              try
             {
-                System.Diagnostics.Debug.WriteLine(request);
+                print(request);
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString());
                 conn.Open();
                 SqlCommand command = new SqlCommand(request, conn);
@@ -168,7 +170,7 @@ namespace FMS.App_Code
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 try {
-                    System.Diagnostics.Debug.WriteLine("Retrying query: " + request);
+                    print("Retrying query: " + request);
                     SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn2"].ToString());
                     conn.Open();
                     SqlCommand command = new SqlCommand(request, conn);

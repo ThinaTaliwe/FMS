@@ -5,12 +5,18 @@
 
             <section class="wrapper">
                 <div class="content-box-large">
-                <h3>Deliveries Pending</h3>
+                <h3>Deliveries Today</h3>
                 <div class="row">
 
                     <div class="col-md-10">
                         <div class="content-panel">
-
+                            <div class="panel-heading">
+							<div class="panel-title"> </div>
+							
+							<div class="panel-options">
+								<a href="CreateDelivery.aspx" data-rel="collapse">Create New Deliveries</a>
+							</div>
+						</div>
                             <hr> 
                             <table class="table">
                                 <!-- Heading --> 
