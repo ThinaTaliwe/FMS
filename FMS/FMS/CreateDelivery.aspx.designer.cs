@@ -112,13 +112,13 @@ namespace FMS {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validDeliveryDate;
         
         /// <summary>
-        /// Time1 control.
+        /// DeliveryTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl Time1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl DeliveryTime;
         
         /// <summary>
         /// Material control.
@@ -146,6 +146,15 @@ namespace FMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText Load;
+        
+        /// <summary>
+        /// here control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden here;
         
         /// <summary>
         /// validLoad control.
