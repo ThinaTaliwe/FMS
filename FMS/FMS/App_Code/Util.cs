@@ -30,7 +30,11 @@ namespace FMS.App_Code
         public static string getAddress(double[] coords) {
             try {
                 string link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
+<<<<<<< HEAD
+                link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE";
+=======
                 link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=AIzaSyBOT0AMRm1rMkyUyKGgn173MN-1EUqoMKw";
+>>>>>>> 79c626f119221d1e445109f4dc84cf2f956d8c3f
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var addr = obj["results"][0];

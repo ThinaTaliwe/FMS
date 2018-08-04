@@ -27,7 +27,7 @@
                                         <th>Address: To</th>
                                         <th>Driver</th>
                                         <th>ETA</th>
-                                        <th>Status</th>
+                                        <th>Accepted</th>
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
