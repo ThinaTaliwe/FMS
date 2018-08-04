@@ -11,7 +11,7 @@ namespace FMS
     public partial class CreateDelivery : System.Web.UI.Page
     {
         private Delivery delivery = null;
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -66,8 +66,16 @@ namespace FMS
                 DriverID = DriverTemp.GetString(0);
                 //reading the drivers table
             }
+            //Time & Date Format 
+            DateTime timeDate = DateTime.Parse(DeliveryDate.Value + " " + DeliveryTime.Value); 
+
+            //setting lat and long
+
+            //origin
+            String origin = here.Value; 
+            
             //string driver = DriverChosen.Value.Split(' ')[1];
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + "Location1" + "', '" + "Location2" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + here.Value + "', '" + there.Value + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + "1234567890123" + "');";
             Util.query(query);
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
