@@ -14,7 +14,7 @@ namespace FMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            var query = "select [TO], [FROM], truck, driver, client, accepted from Delivery WHERE COMPLETED=0 AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate()))";
+            var query = "select [TO], [FROM], truck, driver, client, accepted from Delivery WHERE COMPLETED is null AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate()))";
             var rows = Util.query(query);
             //var client = Util.getClient() 
             var HTMLStr = "";
@@ -23,7 +23,14 @@ namespace FMS
                 var assignedStr = "";
                 while (rows.Read())
                 {
-                    assignedStr = rows.GetInt32(5) == 0 ? "No" : "Yes";
+                    try {
+                        var date = rows.GetDateTime(5);
+                        if (date != null) assignedStr = "Yes";
+                        else assignedStr = "No";
+                    } catch(Exception ex) {
+                        Util.print(ex.ToString());
+                        assignedStr = "No";
+                    }
                     var Driver_MmeliThing = new Driver(rows.GetString(3));
                     HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Driver_MmeliThing.getName() + " " + Driver_MmeliThing.getSurname() + "</td> <td> " + "--" + "</td> <td> "  + assignedStr + "</td> </tr>";
                 }

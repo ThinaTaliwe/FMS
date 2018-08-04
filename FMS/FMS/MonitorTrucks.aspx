@@ -4,11 +4,11 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <script src="http://maps.google.com/maps/api/js?sensor=false"
             type="text/javascript"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=myMap" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE" type="text/javascript"></script>
 </head>
 <body>
     <div id="map" style="width: 100%; height: 500px;"></div>
-
+    <input type="hidden" id="trucks" runat="server" />
     <script type="text/javascript">
         var locations = [
             ['Truck 2', -26.1890, 28.0040, 3, "http://maps.google.com/mapfiles/ms/micons/blue.png"],
