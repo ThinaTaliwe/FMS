@@ -33,6 +33,8 @@ namespace FMS
                     {
                         Session["user"] = response.GetString(0);
                         Response.Redirect("Home");
+                    } else {
+                        //login failed 
                     }
                 }
             } else {

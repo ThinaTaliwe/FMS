@@ -334,7 +334,10 @@ public class DriverService extends Service {
          */
         try {
             System.out.println("setLocationTimer()");
-            if(period < 0) return;
+            if(period < 0) {
+                locationManager.removeUpdates(locationListener);
+                return;
+            }
             boolean access;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 access = checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -364,11 +367,9 @@ public class DriverService extends Service {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             }
             if(latitude == null || longitude == null)  {
-                setLocationTimer(0);
                 Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 latitude = String.valueOf(loc.getLatitude());
                 longitude = String.valueOf(loc.getLongitude());
-                setLocationTimer(-1);
             }
             return latitude + ":" + longitude;
         } catch (Exception e) {

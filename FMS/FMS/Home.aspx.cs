@@ -20,15 +20,11 @@ namespace FMS
             var HTMLStr = "";
             if (rows.HasRows)
             {
-<<<<<<< HEAD
-                var assigned = 0;//(rows.GetInt32(14));
-=======
->>>>>>> ce2f36849e6f37500d19be0016a9abbdef50e240
                 var assignedStr = "";
                 while (rows.Read())
                 {
                     assignedStr = rows.GetInt32(5) == 0 ? "No" : "Yes";
-                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + new Driver(rows.GetString(3)).getName() + "</td> <td> " + "10 Minutes" + "</td> <td> "  + assignedStr + "</td> </tr>";
+                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + new Driver(rows.GetString(3)).getName() + "</td> <td> " + "--" + "</td> <td> "  + assignedStr + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }

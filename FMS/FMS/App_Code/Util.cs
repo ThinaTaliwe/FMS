@@ -14,7 +14,7 @@ namespace FMS.App_Code
 
         public static string getLatLong(string address) {
             try {
-                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyBOT0AMRm1rMkyUyKGgn173MN-1EUqoMKw";
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var results = obj["results"][0];
