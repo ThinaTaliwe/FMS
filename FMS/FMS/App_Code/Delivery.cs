@@ -16,6 +16,7 @@ namespace FMS.App_Code
         private DateTime departDay;
         private DateTime arrivalDay;
         private Admin authority;
+        private bool accepted, started, completed;
 
         override
         public string ToString()
@@ -40,9 +41,23 @@ namespace FMS.App_Code
             Util.query(query);
         }
 
+        public static string LastLocation(int id) {
+            try {
+                string query = "select location from locations where delivery like " + id + " order by time asc";
+                var location = Util.query(query);
+                if(location.HasRows) {
+                    if(location.Read()) { 
+                        return location.GetString(0);
+                    }
+                }
+            } catch (Exception ex) {
+                Util.print(ex.ToString());
+            } return DriverHandle.ERROR_CODE;
+        }
+
         public static Delivery getInstance(int id)
         {
-            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority FROM DELIVERY WHERE ID LIKE '" + id + "';";
+            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed FROM DELIVERY WHERE ID LIKE '" + id + "';";
             var deliv = Util.query(query);
             if (deliv.HasRows)
             {
@@ -60,6 +75,9 @@ namespace FMS.App_Code
                     delivery.setLoad(deliv.GetInt32(7));
                     delivery.setDepartDay(deliv.GetDateTime(8));
                     delivery.setAuthority(new Admin(deliv.GetString(9)));
+                    delivery.accepted = deliv.IsDBNull(10);
+                    delivery.started = deliv.IsDBNull(11);
+                    delivery.completed = deliv.IsDBNull(12);
                 }
                 return delivery;
             }
@@ -93,6 +111,9 @@ namespace FMS.App_Code
         public DateTime getDepartDay() { return departDay; }
         public DateTime getArrivalDay() { return arrivalDay; }
         public Admin getAuthority() { return authority; }
+        public bool getAccepted() { return accepted; }
+        public bool getStarted() { return started; }
+        public bool getCompleted() { return completed; }
 
     }
 }

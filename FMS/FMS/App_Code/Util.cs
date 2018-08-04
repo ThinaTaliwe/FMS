@@ -154,6 +154,8 @@ namespace FMS.App_Code
             return null;
         }
 
+        public static bool isNull(Object obj) { return obj == null; }
+
         public static void print(string text) { System.Diagnostics.Debug.WriteLine(text); }
 
         public static SqlDataReader query(string request)

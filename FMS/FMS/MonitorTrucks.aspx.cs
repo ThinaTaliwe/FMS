@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using FMS.App_Code;
 
 namespace FMS
 {
@@ -11,7 +12,23 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string query = "select id from delivery where accepted like 0";
+            string query = "select id from delivery where accepted is not null";
+            var accept_ids = Util.query(query);
+            List<int> ids = new List<int>();
+            if(accept_ids.HasRows) {
+                while(accept_ids.Read()) {
+                    ids.Add(accept_ids.GetInt32(0));
+                }
+            }
+            string strTruck = "";
+            foreach (int id in ids) { 
+                Delivery deliv = Delivery.getInstance(Convert.ToInt32(id));
+                Util.print(deliv.ToString());
+                string tr = deliv.getDriver().getName() + "*" + deliv.getTruck().getID() + "*" + Delivery.LastLocation(id) + " ";
+                strTruck += tr;
+            }
+            trucks.Value = strTruck;
+            Util.print(strTruck);
         }
     }
 }
