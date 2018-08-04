@@ -68,7 +68,6 @@ public class Base extends AppCompatActivity {
                 } else if(args[0] == "route") {
                     showLoading();
                     Delivery delivery = service.currentDelivery();
-                    service.clearInputStream();
                     service.send("route " + service.getLocation() + " -26.1403:28.6787");
                     String response = service.read();
                     if(response.contains(DriverService.OK_CODE)) response = service.read();

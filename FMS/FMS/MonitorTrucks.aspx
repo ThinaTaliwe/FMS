@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="map" style="width: 100%; height: 500px;"></div>
-
+    <input type="hidden" id="trucks" runat="server" />
     <script type="text/javascript">
         var locations = [
             ['Truck 2', -26.1890, 28.0040, 3, "http://maps.google.com/mapfiles/ms/micons/blue.png"],

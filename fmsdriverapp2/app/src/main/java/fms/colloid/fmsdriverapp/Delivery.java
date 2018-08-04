@@ -48,7 +48,7 @@ public class Delivery {
     public long locationTimer() {
         if(started) return 300000;
         else if(accepted) return 180000;
-        else return 10800000;
+        else return -1;
     }
 
     @Override

@@ -45,7 +45,7 @@ public class DriverService extends Service {
     private Delivery delivery = null;
     private Timer timer = null;
     private Handler tHandler = new Handler();
-    private String address = "10.0.2.2"; //10.0.2.2 for emulator
+    private String address = "192.168.43.70"; //10.0.2.2 for emulator
     private int port = 8991;
     private LocationManager locationManager;
     private String longitude, latitude;
@@ -126,6 +126,7 @@ public class DriverService extends Service {
          * sends text to the server
          */
         try {
+            clearInputStream();
             System.out.println("Sending: " + text);
             out.write(text + "\n");
             out.flush();
@@ -138,7 +139,7 @@ public class DriverService extends Service {
         /**
          * clears input stream, removes all confirmations send by the server
          */
-        while (in.hasNextLine()) System.out.println(read());
+        while (available()) System.out.println(read());
         System.out.println("input stream cleared");
     }
 
@@ -147,7 +148,7 @@ public class DriverService extends Service {
          * determines whether the input stream still has bytes available to be read
          */
         try {
-            return in.hasNextLine();
+            return conn.getInputStream().available() > 0;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -196,7 +197,11 @@ public class DriverService extends Service {
             in = new Scanner(conn.getInputStream());
             out = new PrintWriter(conn.getOutputStream());
             log(read());
-        }  catch (Exception e) {
+        } catch (ConnectException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -271,7 +276,7 @@ public class DriverService extends Service {
                                             notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
                                             sendLocation(delivery.getId());
                                             setTimer(5000);
-                                            setLocationTimer(5000);
+                                            setLocationTimer(2000);
                                             break;
                                         default:
                                             System.out.println(text);
@@ -313,6 +318,7 @@ public class DriverService extends Service {
         public void onLocationChanged(Location location) {
             longitude = String.valueOf(location.getLongitude());
             latitude = String.valueOf(location.getLatitude());
+            System.out.println("Loc change: " + getLocation());
         }
 
         @Override
@@ -330,14 +336,10 @@ public class DriverService extends Service {
 
     public void setLocationTimer(long period) {
         /**
-         * sets the period which location listener should request updates for
+         * sets the period which location listener shoud request updates for
          */
         try {
             System.out.println("setLocationTimer()");
-            if(period < 0) {
-                locationManager.removeUpdates(locationListener);
-                return;
-            }
             boolean access;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 access = checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -347,6 +349,7 @@ public class DriverService extends Service {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 10, locationListener);
+            System.out.println(getLocation() + " in loc timer");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -359,23 +362,15 @@ public class DriverService extends Service {
          */
         try {
             System.out.println("getLocation()");
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                System.out.println("Permissions not granted");
-                return null;
+            if(latitude != null && longitude != null)  {
+                return latitude + ":" + longitude;
+            } else {
+                System.err.println("Location was null");
             }
-            if (locationManager == null) {
-                locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            }
-            if(latitude == null || longitude == null)  {
-                Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                latitude = String.valueOf(loc.getLatitude());
-                longitude = String.valueOf(loc.getLongitude());
-            }
-            return latitude + ":" + longitude;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return "-26.2041028:28.0473051";
     }
 
     @Override
@@ -395,7 +390,9 @@ public class DriverService extends Service {
          */
         try {
             System.out.println("setTimer()");
-            timer = null;
+            if(timer == null) timer = new Timer();
+            try { timer.cancel(); }
+            catch(Exception ex) {ex.printStackTrace();}
             timer = new Timer();
             timer.scheduleAtFixedRate(serverCheck, 5000, period);
             if(delivery != null) {
