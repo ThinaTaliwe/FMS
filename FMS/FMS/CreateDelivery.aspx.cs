@@ -16,7 +16,7 @@ namespace FMS
         {
             if (!IsPostBack)
             {
-                string driversQuery = "SELECT NAME, ID FROM USERS WHERE USER_TYPE LIKE 'DRIVER'";
+                string driversQuery = "SELECT NAME, SURNAME, ID FROM USERS WHERE USER_TYPE LIKE 'DRIVER'";
                 string truckQuery = "SELECT ID FROM TRUCKS";
                 string clientQuery = "SELECT COMPANY, ID FROM CLIENTS ";
                 var drivers = Util.query(driversQuery);
@@ -57,8 +57,17 @@ namespace FMS
                 tempID.Read();
                 IDnow = tempID.GetInt32(0);
             }
-            string driver = DriverChosen.Value.Split(' ')[1];
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + driver + "', '" + IDnow + "', '" + "Location1" + "', '" + "Location2" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
+            string DriverTempQuery = "SELECT ID FROM USERS WHERE NAME LIKE '" + DriverChosen.Value.Split(' ')[0]  + "' AND SURNAME LIKE '" + DriverChosen.Value.Split(' ')[1] + "'";
+            var DriverTemp = Util.query(DriverTempQuery);
+            String DriverID = "";
+            if (DriverTemp.HasRows)
+            {
+                DriverTemp.Read();
+                DriverID = DriverTemp.GetString(0);
+                //reading the drivers table
+            }
+            //string driver = DriverChosen.Value.Split(' ')[1];
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + "Location1" + "', '" + "Location2" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
             Util.query(query);
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }

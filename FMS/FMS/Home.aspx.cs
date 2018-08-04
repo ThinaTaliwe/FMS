@@ -16,7 +16,7 @@ namespace FMS
 
             var query = "select [TO], [FROM], truck, driver, client, accepted from Delivery WHERE COMPLETED=0 AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate()))";
             var rows = Util.query(query);
-            //var client = Util.getClient()
+            //var client = Util.getClient() 
             var HTMLStr = "";
             if (rows.HasRows)
             {
@@ -24,7 +24,8 @@ namespace FMS
                 while (rows.Read())
                 {
                     assignedStr = rows.GetInt32(5) == 0 ? "No" : "Yes";
-                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + new Driver(rows.GetString(3)).getName() + "</td> <td> " + "--" + "</td> <td> "  + assignedStr + "</td> </tr>";
+                    var Driver_MmeliThing = new Driver(rows.GetString(3));
+                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Driver_MmeliThing.getName() + " " + Driver_MmeliThing.getSurname() + "</td> <td> " + "--" + "</td> <td> "  + assignedStr + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }

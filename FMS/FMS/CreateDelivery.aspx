@@ -57,7 +57,7 @@
 										    <label  class="col-sm-2 control-label">Driver</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="DriverChosen" runat="server">
-													<option>Select A driver</option>
+													<option>Select A Driver</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validDriver" runat="server" controlToValidate="DriverChosen" errorMessage="Choose driver" display="dynamic">
                                                </asp:RequiredFieldValidator>
