@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">fmsdriverapp</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="access_token" translatable="false">pk.eyJ1IjoibW1lbGkiLCJhIjoiY2pqdXZsbGJoMGhtMTNrb2N1dGc1MGlwZyJ9.MjLzsJQIh57B4m935DmI8w</string>
-</resources>
