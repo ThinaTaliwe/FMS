@@ -56,7 +56,7 @@
 				  							<button class="btn btn-default" type="submit" onclick="CancelAdduser()">
 													Cancel
 												</button>
-												<button class="btn btn-primary" type="submit" onclick="AddUser()">
+												<button class="btn btn-primary" type="submit" onclick="Add_User()">
 													<i class="fa fa-save" ></i>
 													Add User
 												</button>			 
