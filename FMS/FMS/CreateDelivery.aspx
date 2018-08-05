@@ -68,20 +68,16 @@
 										    <label  class="col-sm-2 control-label">Delivery Date</label>
 										    <div class="col-sm-10">
 										     	
-						                    <form action="/action_page.php">
                                               <input class="form-control" type="date" id="DeliveryDate" runat="server">
                                                <asp:RequiredFieldValidator id="validDeliveryDate" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
                                                </asp:RequiredFieldValidator>
-                                            </form>
 										    </div>
 										  </div>
                                  <div class="form-group">
 										    <label  class="col-sm-2 control-label">Delivery Time</label>
 										    <div class="col-sm-10">
 										     	
-						                    <form action="/action_page.php">
                                               <input class="form-control" type="time" id="DeliveryTime" runat="server">
-                                            </form>
 										    </div>
 										  </div>
                                    <div class="form-group">
@@ -93,11 +89,11 @@
 										    </div>
 										  </div>
                                    <div class="form-group">
-										    <label class="col-sm-2 control-label">Load (ton)</label>
+										    <label class="col-sm-2 control-label">Load (Ton)</label>
 										    <div class="col-sm-10">
 										      <input  class="form-control" id="Load" placeholder="Enter Load" runat="server">
-                                                 <input  class="form-control" type="hidden" id="here" placeholder="Enter Load" runat="server">
-                                                 <input  class="form-control" type="hidden" id="there" placeholder="Enter Load" runat="server">
+                                                 <input  class="form-control" type="hidden" id="here" value="" runat="server">
+                                                 <input  class="form-control" type="hidden" id="there" value="" runat="server">
                                                <asp:RequiredFieldValidator id="validLoad" runat="server" controlToValidate="Load" errorMessage="Enter Load" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
@@ -122,24 +118,21 @@
 <div id="map"></div>
 
 <script>
-    var originInput; 
-    var destinationInput; 
+    var originInput;
+    var destinationInput;
     var originIDs;
-    var destIDs; 
+    var destIDs;
     // This example requires the Places library. Include the libraries=places
     // parameter when you first load the API. For example:
     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
             mapTypeControl: false,
             center: { lat: - 26.270760, lng: 28.112268 },
             zoom: 13
         });
-
         new AutocompleteDirectionsHandler(map);
     }
-
     /**
      * @constructor
     */
@@ -155,24 +148,19 @@
         this.directionsService = new google.maps.DirectionsService;
         this.directionsDisplay = new google.maps.DirectionsRenderer;
         this.directionsDisplay.setMap(map);
-
         var originAutocomplete = new google.maps.places.Autocomplete(
             originInput, { placeIdOnly: true });
         var destinationAutocomplete = new google.maps.places.Autocomplete(
             destinationInput, { placeIdOnly: true });
-
         this.setupClickListener('changemode-walking', 'WALKING');
         this.setupClickListener('changemode-transit', 'TRANSIT');
         this.setupClickListener('changemode-driving', 'DRIVING');
-
         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
     }
-
     // Sets a listener on a radio button to change the filter type on Places
     // Autocomplete.
     AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
@@ -183,7 +171,6 @@
             me.route();
         });
     };
-
     AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
         var me = this;
         //window.alert(place.placeId + place.placeId.value);
@@ -196,26 +183,24 @@
             }
             if (mode === 'ORIG') {
                 me.originPlaceId = place.place_id;
-                originIDs = place.place_id;
-                //document.getElementById("here").value = place.place_id;
-                window.alert(originIDs);
-                txtHidden.value = x;
+                originIDs = place.name;
+                //txtHidden.value = originIDs;
+                window.alert(place.name);
             } else {
                 me.destinationPlaceId = place.place_id;
-                destIDs = place.place_id;
+                destIDs = place.name
                 window.alert(destIDs);
             }
             me.route();
         });
         // document.getElementById("run").innerHTML
     };
-
     AutocompleteDirectionsHandler.prototype.route = function () {
         if (!this.originPlaceId || !this.destinationPlaceId) {
             return;
         }
         var me = this;
-        
+
         this.directionsService.route({
             origin: { 'placeId': this.originPlaceId },
             destination: { 'placeId': this.destinationPlaceId },
@@ -230,22 +215,20 @@
                 window.alert('Directions request failed due to ' + status);
             }
         });
-
-        function getOrigin() {
-            document.getElementById('<%= here.ClientID %>').value = originIDs;
-            document.getElementById('<%= there.ClientID %>').value = destIDs;
-            //window.alert(document.getElementById('<%= here.ClientID %>').value); 
-        }
+    };
+    function getOrigin() {
+        document.getElementById('<%= here.ClientID %>').value = originIDs;
+        document.getElementById('<%= there.ClientID %>').value = destIDs;
+        //window.alert(document.getElementById('<%= here.ClientID %>').value); 
     }
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
         async defer></script>
 
 
 				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>
-                                  
-                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 </form>
+                                
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClientClick ="getOrigin();" OnClick="btn_Click"  />	 </form>
                             </div>
 		  					
 
