@@ -19,28 +19,41 @@
 						<div class="content-box-large">
 		  				<div class="panel-body">
                               <form class="form-horizontal" role="form">
+                                  <div class="form-group">
+                                               <label  class="col-sm-2 control-label"> ID </label>
+										    <div class="col-sm-10">
+										      <input class="form-control" id="DriverID" placeholder="" runat="server">
+										    </div>
+										  </div>
+
 										  <div class="form-group">
                                                <label  class="col-sm-2 control-label"> Name </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="DriverName" placeholder="">
+										      <input class="form-control" id="DriverName" placeholder="" runat="server">
 										    </div>
 										  </div>
                                          <div class="form-group">
                                               <label  class="col-sm-2 control-label"> Surname </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="DriverSurname" placeholder="">
+										      <input class="form-control" id="DriverSurname" placeholder="" runat="server">
 										    </div>
 										  </div>
                                           <div class="form-group">
                                                <label  class="col-sm-2 control-label"> Email </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="DriverEmail" placeholder="">
+										      <input class="form-control" id="DriverEmail" placeholder="" runat="server">
 										    </div>
 										  </div>
                                    <div class="form-group">
                                         <label  class="col-sm-2 control-label"> Licence Code </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="DriverCode" placeholder="">
+										      <input class="form-control" id="DriverCode" placeholder="" runat="server">
+										    </div>
+										  </div>
+                                  <div class="form-group">
+                                        <label  class="col-sm-2 control-label"> Restriction </label>
+										    <div class="col-sm-10">
+										      <input class="form-control" id="Restriction" placeholder="" runat="server">
 										    </div>
 										  </div>
 
@@ -48,18 +61,14 @@
 										    <label  class="col-sm-2 control-label">First Issue</label>
 										    <div class="col-sm-10">
 										     	
-						                    <form action="/action_page.php">
-                                              <input class="form-control" type="date" id="LicenceIssueDate">
-                                            </form>
+                                              <input class="form-control" type="date" id="LicenceIssueDate" runat="server">
 										    </div>
 										  </div>
                                  <div class="form-group">
 										    <label  class="col-sm-2 control-label">Expiry Date</label>
 										    <div class="col-sm-10">
-										     	
-						                    <form action="/action_page.php">
-                                              <input class="form-control" type="date" id="LicenceExpiryDate">
-                                            </form>
+										     
+                                              <input class="form-control" type="date" id="LicenceExpiryDate" runat="server">
 										    </div>
                                      	
 										  </div>
@@ -69,10 +78,8 @@
 				  							<button class="btn btn-default" type="submit" onclick="CancelAddDriver()">
 													Cancel
 												</button>
-												<button class="btn btn-primary" type="submit" onclick="AddDriver()">
-													<i class="fa fa-save" ></i>
-													Add Driver
-												</button>			 
+												  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit"  OnClick="Add_Driver"  />	 </form>
+                        	 
 										  
 										</form>
                             </div>

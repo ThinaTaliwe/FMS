@@ -13,5 +13,10 @@ namespace FMS
         {
 
         }
+
+        protected void Add_User(object sender, EventArgs e)
+        {
+
+        }
     }
 }
