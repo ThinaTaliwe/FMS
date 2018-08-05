@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FMS.App_Code;
+using GoogleMaps.LocationServices;
 
 namespace FMS
 {
@@ -67,15 +68,24 @@ namespace FMS
                 //reading the drivers table
             }
             //Time & Date Format 
-            DateTime timeDate = DateTime.Parse(DeliveryDate.Value + " " + DeliveryTime.Value); 
+            DateTime timeDate = DateTime.Parse(DeliveryDate.Value + " " + DeliveryTime.Value);
 
             //setting lat and long
+            var Originaddress = here.Value; 
+            var locationService = new GoogleLocationService();
+            var point = locationService.GetLatLongFromAddress(Originaddress);
+            var latitude = point.Latitude;
+            var longitude = point.Longitude;
+           
+            String latlngOrigin = latitude + ":" + longitude + "#" + Originaddress;
 
-            //origin
-            string origin = here.Value; 
+            var Destaddress = there.Value;
+            var Destpoint = locationService.GetLatLongFromAddress(Destaddress);
+            var Destlatitude = Destpoint.Latitude;
+            var Destlongitude = Destpoint.Longitude;
+            String latlngDest = Destlatitude + ":" + Destlongitude + "#" + Destaddress;
             
-            //string driver = DriverChosen.Value.Split(' ')[1];
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + here.Value + "', '" + there.Value + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + "1234567890123" + "');";
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + latlngOrigin + "', '" + latlngDest + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + "1234567890123" + "');";
             Util.query(query);
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }

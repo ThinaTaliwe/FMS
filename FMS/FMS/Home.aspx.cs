@@ -14,7 +14,7 @@ namespace FMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            var query = "select [TO], [FROM], truck, driver, client, accepted from Delivery WHERE COMPLETED is null AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate()))";
+            var query = "select [from], [to], truck, driver, client, accepted from Delivery WHERE COMPLETED is null AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate()))";
             var rows = Util.query(query);
             //var client = Util.getClient() 
             var HTMLStr = "";

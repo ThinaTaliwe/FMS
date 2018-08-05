@@ -65,8 +65,8 @@ namespace FMS.App_Code
                     delivery.setTruck(deliv.GetString(1));
                     delivery.setDriver(deliv.GetString(2));
                     delivery.setClient(deliv.GetInt32(3));
-                    delivery.setFrom(getAddress(deliv.GetString(4)));
-                    delivery.setTo(getAddress(deliv.GetString(5)));
+                    delivery.setFrom(getCoords(deliv.GetString(4)));
+                    delivery.setTo(getCoords(deliv.GetString(5)));
                     delivery.setMaterial(deliv.GetString(6));
                     delivery.setLoad(deliv.GetInt32(7));
                     delivery.setDepartDay(deliv.GetDateTime(8));
@@ -123,9 +123,22 @@ namespace FMS.App_Code
             {
                 return text.Split('#')[1];
             }
-            catch
+            catch (Exception ex) 
             {
+                Util.print(ex.ToString());
+            }
+            return DriverHandle.INTERNAL_ERROR;
+        }
 
+        public static string getCoords(string text)
+        {
+            try
+            {
+                return text.Split('#')[0].Replace(',', '.');
+            }
+            catch (Exception ex)
+            {
+                Util.print(ex.ToString());
             }
             return DriverHandle.INTERNAL_ERROR;
         }

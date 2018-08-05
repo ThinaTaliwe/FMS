@@ -183,13 +183,11 @@
             }
             if (mode === 'ORIG') {
                 me.originPlaceId = place.place_id;
-                originIDs = "00:00#" + place.name;
+                originIDs = place.name;
                 //txtHidden.value = originIDs;
-                window.alert(originIDs);
             } else {
                 me.destinationPlaceId = place.place_id;
-                destIDs = "00:00#" + place.name
-                window.alert(destIDs);
+                destIDs = place.name;
             }
             me.route();
         });
@@ -210,7 +208,7 @@
                 me.directionsDisplay.setDirections(response);
                 //document.getElementById("itemRun").innerText = originInput;
                 //originIDs = originPlaceId;
-                //window.alert(originInput.value + "Hey");
+                //window.alert(origin.lat());
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
