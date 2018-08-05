@@ -18,6 +18,17 @@ namespace FMS.App_Code
         private Admin authority;
         private DateTime accepted, started, completed;
 
+        public string getFromCoords() {
+            var coords = Util.getCoords(from);
+            return coords[0] + ":" + coords[1];
+        }
+
+        public string getToCoords()
+        {
+            var coords = Util.getCoords(to);
+            return coords[0] + ":" + coords[1];
+        }
+
         override
         public string ToString()
         {

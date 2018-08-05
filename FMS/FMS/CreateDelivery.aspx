@@ -68,16 +68,20 @@
 										    <label  class="col-sm-2 control-label">Delivery Date</label>
 										    <div class="col-sm-10">
 										     	
+						                    <form action="/action_page.php">
                                               <input class="form-control" type="date" id="DeliveryDate" runat="server">
                                                <asp:RequiredFieldValidator id="validDeliveryDate" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
                                                </asp:RequiredFieldValidator>
+                                            </form>
 										    </div>
 										  </div>
                                  <div class="form-group">
 										    <label  class="col-sm-2 control-label">Delivery Time</label>
 										    <div class="col-sm-10">
 										     	
+						                    <form action="/action_page.php">
                                               <input class="form-control" type="time" id="DeliveryTime" runat="server">
+                                            </form>
 										    </div>
 										  </div>
                                    <div class="form-group">
@@ -89,11 +93,11 @@
 										    </div>
 										  </div>
                                    <div class="form-group">
-										    <label class="col-sm-2 control-label">Load (Ton)</label>
+										    <label class="col-sm-2 control-label">Load (ton)</label>
 										    <div class="col-sm-10">
 										      <input  class="form-control" id="Load" placeholder="Enter Load" runat="server">
-                                                 <input  class="form-control" type="hidden" id="here" value="" runat="server">
-                                                 <input  class="form-control" type="hidden" id="there" value="" runat="server">
+                                                 <input  class="form-control" type="hidden" id="here" placeholder="Enter Load" runat="server">
+                                                 <input  class="form-control" type="hidden" id="there" placeholder="Enter Load" runat="server">
                                                <asp:RequiredFieldValidator id="validLoad" runat="server" controlToValidate="Load" errorMessage="Enter Load" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
@@ -192,12 +196,13 @@
             }
             if (mode === 'ORIG') {
                 me.originPlaceId = place.place_id;
-                originIDs = place.name;
-                //txtHidden.value = originIDs;
-                window.alert(place.name);
+                originIDs = place.place_id;
+                //document.getElementById("here").value = place.place_id;
+                window.alert(originIDs);
+                txtHidden.value = x;
             } else {
                 me.destinationPlaceId = place.place_id;
-                destIDs = place.name
+                destIDs = place.place_id;
                 window.alert(destIDs);
             }
             me.route();
@@ -225,22 +230,22 @@
                 window.alert('Directions request failed due to ' + status);
             }
         });
-    };
 
-    function getOrigin() {
-        document.getElementById('<%= here.ClientID %>').value = originIDs;
-        document.getElementById('<%= there.ClientID %>').value = destIDs;
-        //window.alert(document.getElementById('<%= here.ClientID %>').value); 
-
+        function getOrigin() {
+            document.getElementById('<%= here.ClientID %>').value = originIDs;
+            document.getElementById('<%= there.ClientID %>').value = destIDs;
+            //window.alert(document.getElementById('<%= here.ClientID %>').value); 
+        }
     }
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
         async defer></script>
 
 
 				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>
-                                
-                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClientClick ="getOrigin();" OnClick="btn_Click"  />	 </form>
+                                  
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 </form>
                             </div>
 		  					
 

@@ -72,7 +72,7 @@ namespace FMS
             //setting lat and long
 
             //origin
-            String origin = here.Value; 
+            string origin = here.Value; 
             
             //string driver = DriverChosen.Value.Split(' ')[1];
             var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + here.Value + "', '" + there.Value + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + "1234567890123" + "');";
