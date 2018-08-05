@@ -118,6 +118,7 @@
 <div id="map"></div>
 
 <script>
+    var locationService; 
     var originInput; 
     var destinationInput; 
     var originIDs;
@@ -194,7 +195,7 @@
                 me.originPlaceId = place.place_id;
                 originIDs = place.name;
                 //txtHidden.value = originIDs;
-                window.alert(place.name);
+                window.alert(place.coords);
             } else {
                 me.destinationPlaceId = place.place_id;
                 destIDs = place.name
@@ -220,7 +221,7 @@
                 me.directionsDisplay.setDirections(response);
                 //document.getElementById("itemRun").innerText = originInput;
                 //originIDs = originPlaceId;
-                //window.alert(originInput.value + "Hey");
+                //window.alert(origin.lat());
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
