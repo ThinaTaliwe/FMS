@@ -13,26 +13,19 @@ namespace FMS.App_Code
 
         public Truck(string id)
         {
-            var query = "SELECT ID, [LOAD], SPEED FROM TRUCKS WHERE ID LIKE '" + id + "'";
+            var query = "select id, [load], speed from trucks where id like '" + id + "'";
             var truck = Util.query(query);
-            while (truck.Read())
-            {
-                id = truck.GetString(0);
-                load = truck.GetInt32(1);
-                speed = truck.GetInt32(2);
+            if(truck.HasRows) { 
+                if (truck.Read())
+                {
+                    id = truck.GetString(0);
+                    load = truck.GetInt32(1);
+                    speed = truck.GetInt32(2);
+                }
             }
         }
 
-        public string ID
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-        public string getID()
-        {
-            return id;
-        }
+        public string getID() { return id; }
         public int getLoad() { return load; }
         public int getSpeed() { return speed; }
 

@@ -10,11 +10,11 @@
     <div id="map" style="width: 100%; height: 500px;"></div>
     <input type="hidden" id="trucks" runat="server" />
     <script type="text/javascript">
-        var locations = [
+       /* var locations = [
             ['Truck 2', -26.1890, 28.0040, 3, "http://maps.google.com/mapfiles/ms/micons/blue.png"],
             ['Truck 3', -26.195246, 28.034088, 2, "http://maps.google.com/mapfiles/ms/micons/green.png"],
             ['Truck 1', -26.107567, 28.056702, 1, "http://maps.google.com/mapfiles/ms/micons/yellow.png"],
-        ];
+        ]; */
 
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 10,
@@ -26,11 +26,21 @@
 
         var marker, i;
 
-        for (i = 0; i < locations.length; i++) {
+        var trucks = document.getElementById('<%= trucks.ClientID %>').value;
+        var locations = trucks.split(" ");
+        var icon = "http://maps.google.com/mapfiles/ms/micons/red.png";
+        console.log(trucks);
+
+        for (place in locations) {
+            var mark = locations[place].split("*");
+            var text = "Driver: " + mark[0] + "\n" + "Truck: " + mark[1] + "\n" + "Time: " + mark[3];
+            console.log(mark)
+            var coords = mark[2].split(":");
+            console.log(coords)
             marker = new google.maps.Marker({
-                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                icon: locations[i][4],
-                title: locations[i][0],
+                position: new google.maps.LatLng(parseFloat(coords[0]), parseFloat(coords[1])),
+                icon: icon,
+                title: text,
                 map: map
             });
 
