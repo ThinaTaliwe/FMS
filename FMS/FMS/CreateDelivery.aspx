@@ -118,25 +118,27 @@
 <div id="map"></div>
 
 <script>
+<<<<<<< HEAD
     var locationService; 
     var originInput; 
     var destinationInput; 
+=======
+    var originInput;
+    var destinationInput;
+>>>>>>> 945b3eb5ac2dadf60f90369043cb66b3387be570
     var originIDs;
-    var destIDs; 
+    var destIDs;
     // This example requires the Places library. Include the libraries=places
     // parameter when you first load the API. For example:
     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
             mapTypeControl: false,
             center: { lat: - 26.270760, lng: 28.112268 },
             zoom: 13
         });
-
         new AutocompleteDirectionsHandler(map);
     }
-
     /**
      * @constructor
     */
@@ -152,24 +154,19 @@
         this.directionsService = new google.maps.DirectionsService;
         this.directionsDisplay = new google.maps.DirectionsRenderer;
         this.directionsDisplay.setMap(map);
-
         var originAutocomplete = new google.maps.places.Autocomplete(
             originInput, { placeIdOnly: true });
         var destinationAutocomplete = new google.maps.places.Autocomplete(
             destinationInput, { placeIdOnly: true });
-
         this.setupClickListener('changemode-walking', 'WALKING');
         this.setupClickListener('changemode-transit', 'TRANSIT');
         this.setupClickListener('changemode-driving', 'DRIVING');
-
         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
     }
-
     // Sets a listener on a radio button to change the filter type on Places
     // Autocomplete.
     AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
@@ -180,7 +177,6 @@
             me.route();
         });
     };
-
     AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
         var me = this;
         //window.alert(place.placeId + place.placeId.value);
@@ -205,13 +201,12 @@
         });
         // document.getElementById("run").innerHTML
     };
-
     AutocompleteDirectionsHandler.prototype.route = function () {
         if (!this.originPlaceId || !this.destinationPlaceId) {
             return;
         }
         var me = this;
-        
+
         this.directionsService.route({
             origin: { 'placeId': this.originPlaceId },
             destination: { 'placeId': this.destinationPlaceId },
@@ -227,12 +222,10 @@
             }
         });
     };
-
     function getOrigin() {
         document.getElementById('<%= here.ClientID %>').value = originIDs;
         document.getElementById('<%= there.ClientID %>').value = destIDs;
         //window.alert(document.getElementById('<%= here.ClientID %>').value); 
-
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"

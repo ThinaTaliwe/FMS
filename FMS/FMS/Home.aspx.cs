@@ -23,6 +23,7 @@ namespace FMS
                 var assignedStr = "";
                 while (rows.Read())
                 {
+                    Delivery deliv = Delivery.getInstance(10);
                     try {
                         var date = rows.GetDateTime(5);
                         if (date != null) assignedStr = "Yes";

@@ -144,10 +144,16 @@ namespace FMS.App_Code
             return Math.PI * angle / 180;
         }
 
-        public static double[] getCoords(String coords) {
+        public static double[] getCoords(string coords) {
             try {
-                String[] parts = coords.Replace('.', ',').Split(':');
-                return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
+                string[] parts = coords.Replace('.', ',').Split(':');
+                if(parts.Length != 2) {
+                    string latLng = getLatLong(coords);
+                    string[] prtsLatLng = latLng.Split(':');
+                    if (prtsLatLng.Length == 2)
+                        return getCoords(latLng);
+                }
+                else return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
             } catch (Exception ex) {
                 print("invalid coords given " + coords + ex);
             }
