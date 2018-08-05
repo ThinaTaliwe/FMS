@@ -45,7 +45,7 @@ public class DriverService extends Service {
     private Delivery delivery = null;
     private Timer timer = null;
     private Handler tHandler = new Handler();
-    private String address = "192.168.43.70"; //10.0.2.2 for emulator
+    private String address = "10.0.2.2"; //10.0.2.2 for emulator
     private int port = 8991;
     private LocationManager locationManager;
     private String longitude, latitude;

@@ -33,7 +33,7 @@ namespace FMS
                         assignedStr = "No";
                     }
                     var Driver_MmeliThing = new Driver(rows.GetString(3));
-                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Driver_MmeliThing.getName() + " " + Driver_MmeliThing.getSurname() + "</td> <td> " + "--" + "</td> <td> "  + assignedStr + "</td> </tr>";
+                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Delivery.getAddress(rows.GetString(0)) + "</td> <td> " + Delivery.getAddress(rows.GetString(1)) + "</td> <td> " + Driver_MmeliThing.getName() + " " + Driver_MmeliThing.getSurname() + "</td> <td> " + "--" + "</td> <td> "  + assignedStr + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }

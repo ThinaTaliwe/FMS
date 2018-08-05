@@ -24,7 +24,7 @@ namespace FMS.App_Code
                 }
             } catch(Exception ex) {
                 System.Diagnostics.Debug.WriteLine(ex);
-            } return DriverHandle.ERROR_CODE;
+            } return DriverHandle.INTERNAL_ERROR;
         }
 
         public static string getAddress(double[] coords) {
@@ -39,7 +39,7 @@ namespace FMS.App_Code
                 } 
             } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine(ex);
-            } return DriverHandle.ERROR_CODE;
+            } return DriverHandle.INTERNAL_ERROR;
         }
 
         public static string getRoutePoints(string route)
@@ -68,12 +68,12 @@ namespace FMS.App_Code
                     return result;
                 }
                 else
-                    result = DriverHandle.ERROR_CODE;
+                    result = DriverHandle.INTERNAL_ERROR;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                result = DriverHandle.ERROR_CODE;
+                result = DriverHandle.INTERNAL_ERROR;
             }
             return result;
         }
@@ -106,7 +106,7 @@ namespace FMS.App_Code
             catch (Exception ex)
             {
                 print(ex.ToString());
-            } return DriverHandle.ERROR_CODE;
+            } return DriverHandle.INTERNAL_ERROR;
         }
 
         public static string readLink(string url) {
@@ -116,7 +116,7 @@ namespace FMS.App_Code
                 return wc.DownloadString(url);
             } catch(Exception ex) {
                 print(ex.ToString());
-            } return DriverHandle.ERROR_CODE;
+            } return DriverHandle.INTERNAL_ERROR;
         }
 
         public static double distance(double[] from, double[] to) {

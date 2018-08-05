@@ -183,12 +183,12 @@
             }
             if (mode === 'ORIG') {
                 me.originPlaceId = place.place_id;
-                originIDs = place.name;
+                originIDs = "00:00#" + place.name;
                 //txtHidden.value = originIDs;
-                window.alert(place.name);
+                window.alert(originIDs);
             } else {
                 me.destinationPlaceId = place.place_id;
-                destIDs = place.name
+                destIDs = "00:00#" + place.name
                 window.alert(destIDs);
             }
             me.route();

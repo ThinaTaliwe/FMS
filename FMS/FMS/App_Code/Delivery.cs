@@ -33,25 +33,9 @@ namespace FMS.App_Code
         public string ToString()
         {
             string output = "";
-            output += "id=" + id + ";orderNum=" + orderNum + ";truck=" + truck + ";client=" + new Client(client).getName() + ";from=" + from + ";to=" + to + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
+            output += "id=" + id + ";orderNum=" + orderNum + ";truck=" + truck + ";client=" + new Client(client).getName() + ";from=" + from.Replace(' ', '+') + ";to=" + to.Replace(' ', '+') + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
             return output;
         }
-
-        public void save(Admin var)
-        {
-            authority = var;
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + orderNum + "', '" + truck + "', '" + driver + "', '" + client + "', '" + from + "', '" + to + "', '" + material + "', '" + load + "', '" + departDay.ToShortDateString() + "', '" + "1234567890123" + "');";
-            Util.query(query);
-        }
-
-        public void save()
-        {
-            var query = "UPDATE DELIVERY WHERE ID LIKE '" + id +
-                "SET TRUCK = '" + truck + "'" +
-                "SET DRIVER = " + driver + "';";
-            Util.query(query);
-        }
-
 
         public static string[] LastLocation(int id) {
             try {
@@ -81,8 +65,8 @@ namespace FMS.App_Code
                     delivery.setTruck(deliv.GetString(1));
                     delivery.setDriver(deliv.GetString(2));
                     delivery.setClient(deliv.GetInt32(3));
-                    delivery.setFrom(deliv.GetString(4));
-                    delivery.setTo(deliv.GetString(5));
+                    delivery.setFrom(getAddress(deliv.GetString(4)));
+                    delivery.setTo(getAddress(deliv.GetString(5)));
                     delivery.setMaterial(deliv.GetString(6));
                     delivery.setLoad(deliv.GetInt32(7));
                     delivery.setDepartDay(deliv.GetDateTime(8));
@@ -105,6 +89,45 @@ namespace FMS.App_Code
                 System.Diagnostics.Debug.WriteLine("it never read");
                 return null;
             }
+        }
+
+        public static string[] getDest(int id)
+        {
+            string query = "select [to] from delivery where id like '" + id + "'";
+            var dest = Util.query(query);
+            if (dest.HasRows)
+            {
+                dest.Read();
+                string place = dest.GetString(0);
+                return place.Split('#');
+            }
+            return null;
+        }
+
+        public static string[] getOrigin(int id)
+        {
+            string query = "select [from] from delivery where id like '" + id + "'";
+            var origin = Util.query(query);
+            if (origin.HasRows)
+            {
+                origin.Read();
+                string place = origin.GetString(0);
+                return place.Split('#');
+            }
+            return null;
+        }
+
+        public static string getAddress(string text)
+        {
+            try
+            {
+                return text.Split('#')[1];
+            }
+            catch
+            {
+
+            }
+            return DriverHandle.INTERNAL_ERROR;
         }
 
         public void setOrderNum(string value) { orderNum = value; }

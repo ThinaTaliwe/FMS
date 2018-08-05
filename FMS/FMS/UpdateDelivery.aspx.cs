@@ -22,7 +22,7 @@ namespace FMS
                 while (rows.Read())
                 {
                     num++; 
-                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + Convert.ToString(rows.GetString(5)) + "</td> <td> " + Convert.ToString(rows.GetString(6)) + "</td> <td> <a href=" + "EditDelivery?order=" + num + "> Edit </a> </tr>";
+                    HTMLStr += "<tr> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + Delivery.getAddress(rows.GetString(5)) + "</td> <td> " + Delivery.getAddress(rows.GetString(6)) + "</td> <td> <a href=" + "EditDelivery?order=" + num + "> Edit </a> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }
