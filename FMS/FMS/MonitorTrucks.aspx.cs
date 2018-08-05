@@ -24,7 +24,8 @@ namespace FMS
             foreach (int id in ids) { 
                 Delivery deliv = Delivery.getInstance(Convert.ToInt32(id));
                 Util.print(deliv.ToString());
-                string tr = deliv.getDriver().getName() + "*" + deliv.getTruck().getID() + "*" + Delivery.LastLocation(id) + " ";
+                var loc = Delivery.LastLocation(deliv.getID());
+                string tr = deliv.getDriver().getName() + "*" + deliv.getTruck().getID() + "*" + loc[0] + "*" + loc[1] + " ";
                 strTruck += tr;
             }
             trucks.Value = strTruck;

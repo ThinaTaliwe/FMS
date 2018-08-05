@@ -37,7 +37,6 @@ public class Delivery {
             deliv.material = parts[6].split("=")[1];
             deliv.load = Integer.parseInt(parts[7].split("=")[1]);
             deliv.departDay = format.parse(parts[8].split("=")[1]);
-
             return deliv;
         } catch(Exception ex) {
             ex.printStackTrace();

@@ -16,7 +16,7 @@ namespace FMS.App_Code
         private DateTime departDay;
         private DateTime arrivalDay;
         private Admin authority;
-        private bool accepted, started, completed;
+        private DateTime accepted, started, completed;
 
         override
         public string ToString()
@@ -41,23 +41,24 @@ namespace FMS.App_Code
             Util.query(query);
         }
 
-        public static string LastLocation(int id) {
+
+        public static string[] LastLocation(int id) {
             try {
-                string query = "select location from locations where delivery like " + id + " order by time asc";
+                string query = "select location, time from locations where delivery like " + id + " order by time asc";
                 var location = Util.query(query);
-                if(location.HasRows) {
-                    if(location.Read()) { 
-                        return location.GetString(0);
+                if (location.HasRows) {
+                    if (location.Read()) {
+                        return new string[] { location.GetString(0), location.GetDateTime(1).TimeOfDay.ToString() };
                     }
                 }
             } catch (Exception ex) {
                 Util.print(ex.ToString());
-            } return DriverHandle.ERROR_CODE;
+            } return null;
         }
 
         public static Delivery getInstance(int id)
         {
-            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed FROM DELIVERY WHERE ID LIKE '" + id + "';";
+            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed FROM DELIVERY WHERE ID LIKE '" + id + "'";
             var deliv = Util.query(query);
             if (deliv.HasRows)
             {
@@ -75,9 +76,16 @@ namespace FMS.App_Code
                     delivery.setLoad(deliv.GetInt32(7));
                     delivery.setDepartDay(deliv.GetDateTime(8));
                     delivery.setAuthority(new Admin(deliv.GetString(9)));
-                    delivery.accepted = deliv.IsDBNull(10);
-                    delivery.started = deliv.IsDBNull(11);
-                    delivery.completed = deliv.IsDBNull(12);
+                    if (!deliv.IsDBNull(10))
+                    {
+                        delivery.accepted = deliv.GetDateTime(10);
+                        if (!deliv.IsDBNull(11)) {
+                            delivery.started = deliv.GetDateTime(11);
+                            if (!deliv.IsDBNull(12)) {
+                                delivery.completed = deliv.GetDateTime(12);
+                            }
+                        }
+                    }
                 }
                 return delivery;
             }
@@ -100,6 +108,7 @@ namespace FMS.App_Code
         public void setArrivalDay(DateTime value) { arrivalDay = value; }
         public void setAuthority(Admin value) { authority = value; }
 
+        public int getID() {return id;}
         public string getOrderNumber() { return orderNum; }
         public Truck getTruck() { return new Truck(truck); }
         public Driver getDriver() { return new Driver(driver); }
@@ -111,9 +120,10 @@ namespace FMS.App_Code
         public DateTime getDepartDay() { return departDay; }
         public DateTime getArrivalDay() { return arrivalDay; }
         public Admin getAuthority() { return authority; }
-        public bool getAccepted() { return accepted; }
-        public bool getStarted() { return started; }
-        public bool getCompleted() { return completed; }
+        public DateTime getAccepted() { return accepted; }
+        public DateTime getStarted() { return started; }
+        public DateTime getCompleted() { return completed; }
+        public string getLocation() { return LastLocation(id)[0]; }
 
     }
 }

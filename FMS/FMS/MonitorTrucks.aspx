@@ -28,12 +28,12 @@
 
         var trucks = document.getElementById('<%= trucks.ClientID %>').value;
         var locations = trucks.split(" ");
-        var icon = "http://maps.google.com/mapfiles/ms/micons/blue.png";
+        var icon = "http://maps.google.com/mapfiles/ms/micons/red.png";
         console.log(trucks);
 
         for (place in locations) {
             var mark = locations[place].split("*");
-            var text = "Driver: " + mark[0] + "\n" + "Truck: " + mark[1] + "\n";
+            var text = "Driver: " + mark[0] + "\n" + "Truck: " + mark[1] + "\n" + "Time: " + mark[3];
             console.log(mark)
             var coords = mark[2].split(":");
             console.log(coords)
