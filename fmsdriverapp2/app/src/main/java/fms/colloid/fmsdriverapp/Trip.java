@@ -71,12 +71,13 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.setTrafficEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(true);
         map.getUiSettings().setAllGesturesEnabled(true);
-        LatLng delmas = new LatLng(-26.1403, 28.6787);
-        map.addMarker(new MarkerOptions().position(delmas).title("Delmas"));
+        LatLng dest = service.currentDelivery().getToInLatLong();
+        map.addMarker(new MarkerOptions().position(dest).title("Destination"));
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(delmas, 10));
         map.getUiSettings().setMapToolbarEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().isMyLocationButtonEnabled();
-        map.moveCamera(CameraUpdateFactory.newLatLng(delmas));
+        map.moveCamera(CameraUpdateFactory.newLatLng(dest));
         try {
             Delivery deliv = service.currentDelivery();
             if(deliv.hasRoute()) {
@@ -131,7 +132,7 @@ public class Trip extends Base implements OnMapReadyCallback {
                             service.startDelivery(deliv);
                         } else service.completeDelivery(deliv);
                         service.sendLocation(deliv.getId());
-                        startEnd.setEnabled(false);
+                        startEnd.setText("End Trip");
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -177,7 +178,7 @@ public class Trip extends Base implements OnMapReadyCallback {
                                     map.getMapAsync(Trip.this);
                                     if(delivery.hasRoute()) {
                                         service.log("Route Added to Map");
-                                    }
+                                    } else service.log("Route not added to map, error occurred");
                                     dismiss();
                                 }
                                 catch(Exception ex) {

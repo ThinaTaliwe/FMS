@@ -44,7 +44,23 @@ public class Delivery {
         return null;
     }
 
+    public LatLng getToInLatLong() {
+        try {
+            String[] parts = to.split(":");
+            return new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+        }catch (Exception ex) {
 
+        } return null;
+    }
+
+    public LatLng getFromInLatLong() {
+        try {
+            String[] parts = from.split(":");
+            return new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+        }catch (Exception ex) {
+
+        } return null;
+    }
 
     public long locationTimer() {
         if(started) return 300000;
