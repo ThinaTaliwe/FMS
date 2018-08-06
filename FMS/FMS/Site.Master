@@ -118,7 +118,7 @@
                             <!-- Sub menu -->
                             <ul>
                                 <li><a href="AddTruck">Add Truck</a></li>
-                                <li><a href="DeleteTruck">Delete Truck</a></li>
+                                
                             </ul>
                         </li>
                         <li class="submenu">

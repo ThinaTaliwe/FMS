@@ -22,19 +22,19 @@
 										  <div class="form-group">
                                                <label  class="col-sm-2 control-label"> Number Plate </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="TruckPlate" placeholder="">
+										      <input class="form-control" id="TruckPlate" placeholder="" runat="server">
 										    </div>
 										  </div>
                                          <div class="form-group">
                                               <label  class="col-sm-2 control-label"> Maximum Load </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="TruckMaxLoad" placeholder="">
+										      <input class="form-control" id="TruckMaxLoad" placeholder="" runat="server">
 										    </div>
 										  </div>
                                           <div class="form-group">
                                                <label  class="col-sm-2 control-label"> Maximum Speed </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="TruckMaxSpeed" placeholder="">
+										      <input class="form-control" id="TruckMaxSpeed" placeholder="" runat="server">
 										    </div>
 									
                                    
@@ -43,12 +43,8 @@
 				  							<button class="btn btn-default" type="submit" onclick="CancelAddTruck()">
 													Cancel
 												</button>
-												<button class="btn btn-primary" type="submit" onclick="AddTruck()">
-													<i class="fa fa-save" ></i>
-													Add Truck
-												</button>			 
-										  
-										</form>
+											<asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="Add_Truck"  />	 </form>
+				</form>
                             </div>
 		  					
 		  			</div>
