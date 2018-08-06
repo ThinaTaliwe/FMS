@@ -100,7 +100,6 @@ namespace FMS.App_Code
                                         //location [delivery_id] [longitude:latitude]
                                         query = "insert into locations values('" + parts[1] + "', '" + driver + "', '" + parts[2] + "', '" + now + "')";
                                         Util.query(query);
-                                        send(OK_CODE);
                                         break;
                                     case "message":
                                         //message [message_code]

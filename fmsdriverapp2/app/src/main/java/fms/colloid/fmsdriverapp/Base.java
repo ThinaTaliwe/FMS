@@ -104,7 +104,7 @@ public class Base extends AppCompatActivity {
             View layout = inflater.inflate(R.layout.route_info, null);
             TextView text = (TextView) layout.findViewById(R.id.routeText);
             text.setText(info);
-            popup = new PopupWindow(layout, 300, 370, true);
+            popup = new PopupWindow(layout, 450, 420, true);
             popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
         } catch (Exception ex) {
             ex.printStackTrace();

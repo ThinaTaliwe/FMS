@@ -170,8 +170,7 @@ public class Trip extends Base implements OnMapReadyCallback {
                                 try {
                                     showLoading();
                                     Delivery delivery = service.currentDelivery();
-                                    service.clearInputStream();
-                                    service.send("route " + service.getLocation() + " -26.1403:28.6787");
+                                    service.send(delivery.getRouteRequest(service));
                                     String response = service.read();
                                     if(response.contains(DriverService.OK_CODE)) response = service.read();
                                     delivery.setRoute(response);

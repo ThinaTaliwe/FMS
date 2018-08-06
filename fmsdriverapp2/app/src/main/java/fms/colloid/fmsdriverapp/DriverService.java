@@ -36,6 +36,7 @@ public class DriverService extends Service {
 
     public static final String OK_CODE = "200 OK";
     public static final String ERROR_CODE = "400 ERR";
+    public static final String SERVER_ERROR  = "300 ERR";
 
     private IBinder bound = new DriverServiceBound();
     private Socket conn = null;
@@ -46,7 +47,7 @@ public class DriverService extends Service {
     private Timer timer = null;
     private Handler tHandler = new Handler();
     private String address = "10.0.2.2"; //10.0.2.2 for emulator
-    private int port = 8991;
+    private int port = 1998;
     private LocationManager locationManager;
     private String longitude, latitude;
     private ServerCheck serverCheck = new ServerCheck();
@@ -126,7 +127,6 @@ public class DriverService extends Service {
          * sends text to the server
          */
         try {
-            clearInputStream();
             System.out.println("Sending: " + text);
             out.write(text + "\n");
             out.flush();
@@ -139,8 +139,7 @@ public class DriverService extends Service {
         /**
          * clears input stream, removes all confirmations send by the server
          */
-        while (available()) System.out.println(read());
-        System.out.println("input stream cleared");
+        while (available()) System.out.println("cleared: " + read());
     }
 
     public boolean available() {
@@ -259,6 +258,7 @@ public class DriverService extends Service {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    System.out.println("ServerCheck.run()");
                     try {
                         if(longitude == null || latitude == null) System.out.println(getLocation());
                         if (verified()) {
@@ -276,7 +276,6 @@ public class DriverService extends Service {
                                             notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
                                             sendLocation(delivery.getId());
                                             setTimer(5000);
-                                            setLocationTimer(2000);
                                             break;
                                         default:
                                             System.out.println(text);
@@ -349,7 +348,6 @@ public class DriverService extends Service {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 10, locationListener);
-            System.out.println(getLocation() + " in loc timer");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -361,7 +359,6 @@ public class DriverService extends Service {
          * gets the last known location
          */
         try {
-            System.out.println("getLocation()");
             if(latitude != null && longitude != null)  {
                 return latitude + ":" + longitude;
             } else {
@@ -390,15 +387,14 @@ public class DriverService extends Service {
          */
         try {
             System.out.println("setTimer()");
-            if(timer == null) timer = new Timer();
-            try { timer.cancel(); }
-            catch(Exception ex) {ex.printStackTrace();}
+            timer = null;
             timer = new Timer();
             timer.scheduleAtFixedRate(serverCheck, 5000, period);
-            if(delivery != null) {
-                if(delivery.completed()) return;
-                else setLocationTimer(delivery.locationTimer());
-            } else return;
+            setLocationTimer(period);
+//            if(delivery != null) {
+//                if(delivery.completed()) return;
+//                else setLocationTimer(delivery.locationTimer());
+//            } else return;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

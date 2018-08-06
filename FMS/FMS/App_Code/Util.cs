@@ -14,7 +14,7 @@ namespace FMS.App_Code
 
         public static string getLatLong(string address) {
             try {
-                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyBOT0AMRm1rMkyUyKGgn173MN-1EUqoMKw";
+                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var results = obj["results"][0];
@@ -30,7 +30,7 @@ namespace FMS.App_Code
         public static string getAddress(double[] coords) {
             try {
                 string link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
-                link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=AIzaSyBOT0AMRm1rMkyUyKGgn173MN-1EUqoMKw";
+                link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var addr = obj["results"][0];
@@ -100,7 +100,7 @@ namespace FMS.App_Code
             {
                 String link = "https://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=";
                 link += from[0].ToString().Replace(',', '.') + "," + from[1].ToString().Replace(',', '.') + "&destination=";
-                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.') + "&key=AIzaSyBOT0AMRm1rMkyUyKGgn173MN-1EUqoMKw";
+                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
                 return readLink(link);
             }
             catch (Exception ex)
