@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.App_Code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,14 @@ namespace FMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
+        }
+
+        protected void Add_Truck(object sender, EventArgs e)
+        {
+            //Query for Adding the truck
+            var query = "INSERT INTO TRUCKS(ID, LOAD, SPEED) VALUES('" + TruckPlate.Value + "', '" + TruckMaxLoad.Value + "', '" + TruckMaxSpeed.Value  + "');";
+            Util.query(query);
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
     }
 }

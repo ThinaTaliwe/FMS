@@ -76,7 +76,6 @@ namespace FMS
             var point = locationService.GetLatLongFromAddress(Originaddress);
             var latitude = point.Latitude;
             var longitude = point.Longitude;
-           
             String latlngOrigin = latitude + ":" + longitude + "#" + Originaddress;
 
             var Destaddress = there.Value;
@@ -85,6 +84,7 @@ namespace FMS
             var Destlongitude = Destpoint.Longitude;
             String latlngDest = Destlatitude + ":" + Destlongitude + "#" + Destaddress;
             
+            //string driver = DriverChosen.Value.Split(' ')[1];
             var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + latlngOrigin + "', '" + latlngDest + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + "1234567890123" + "');";
             Util.query(query);
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
