@@ -107,7 +107,7 @@
                             <!-- Sub menu -->
                             <ul>
                                 <li><a href="CreateDelivery">Create Delivery</a></li>
-                                <li><a href="UpdateDelivery">Update Delivery</a></li>
+                                <li><a href="UpdateDelivery">All Delivery</a></li>
                             </ul>
                         </li>
                         <li class="submenu">

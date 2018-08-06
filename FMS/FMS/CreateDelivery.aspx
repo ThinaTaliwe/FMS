@@ -118,14 +118,8 @@
 <div id="map"></div>
 
 <script>
-<<<<<<< HEAD
-    var locationService; 
-    var originInput; 
-    var destinationInput; 
-=======
     var originInput;
     var destinationInput;
->>>>>>> 945b3eb5ac2dadf60f90369043cb66b3387be570
     var originIDs;
     var destIDs;
     // This example requires the Places library. Include the libraries=places
@@ -191,11 +185,11 @@
                 me.originPlaceId = place.place_id;
                 originIDs = place.name;
                 //txtHidden.value = originIDs;
-                window.alert(place.coords);
+                //window.alert(place.coords);
             } else {
                 me.destinationPlaceId = place.place_id;
                 destIDs = place.name
-                window.alert(destIDs);
+                //window.alert(destIDs);
             }
             me.route();
         });
