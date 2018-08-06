@@ -21,6 +21,7 @@ namespace FMS.App_Code
         private bool verfied = false;
         private string driver;
         private DateTime time;
+        public static string INTERNAL_ERROR = "300 ERR";
         public static string ERROR_CODE = "400 ERR";
         public static string OK_CODE = "200 OK";
 
