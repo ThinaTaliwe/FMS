@@ -5,18 +5,19 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FMS.App_Code;
+using GoogleMaps.LocationServices;
 
 namespace FMS
 {
     public partial class CreateDelivery : System.Web.UI.Page
     {
         private Delivery delivery = null;
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                string driversQuery = "SELECT NAME, ID FROM USERS WHERE USER_TYPE LIKE 'DRIVER'";
+                string driversQuery = "SELECT NAME, SURNAME, ID FROM USERS WHERE USER_TYPE LIKE 'DRIVER'";
                 string truckQuery = "SELECT ID FROM TRUCKS";
                 string clientQuery = "SELECT COMPANY, ID FROM CLIENTS ";
                 var drivers = Util.query(driversQuery);
@@ -49,34 +50,44 @@ namespace FMS
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            string message = "Hey";
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            sb.Append("<script type = 'text/javascript'>");
-            sb.Append("window.onload=function(){");
-            sb.Append("alert('");
-            sb.Append(message);
-            sb.Append("')};");
-            sb.Append("</script>");
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "alert", sb.ToString());
-            string driver = DriverChosen.Value.Split(' ')[1];
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + driver + "', '" + Client.Value.Split(' ')[1] + "', '" + "Location1" + "', '" + "Location2" + "', '" + Material.Value + "', '" + Load.Value + "', '" + DeliveryDate.Value + "', '" + "1234567890123" + "');";
-            Util.query(query);
-<<<<<<< HEAD
-            Delivery delivery = Delivery.getInstance(OrderNum.Value);
-            query = "SELECT ADDRESS FROM DRIVERS WHERE ID LIKE '" + DriverChosen.Value.Split(' ')[1] + "';";
-            var addr = Util.query(query);
-            if(addr.Read())
+            string tempIDquery = "SELECT ID FROM CLIENTS WHERE COMPANY LIKE '" + Client.Value + "'";
+            var tempID = Util.query(tempIDquery);
+            int IDnow = 0; 
+            if (tempID.HasRows)
             {
-                string address = addr.GetString(0);
-                System.Diagnostics.Debug.WriteLine(delivery.toString());
-                var writer = ((Global)this.Context.ApplicationInstance).getServer(address);
-                writer.WriteLine(delivery.toString());
+                tempID.Read();
+                IDnow = tempID.GetInt32(0);
             }
-            Error.InnerText = "Delivery Created";
+            string DriverTempQuery = "SELECT ID FROM USERS WHERE NAME LIKE '" + DriverChosen.Value.Split(' ')[0]  + "' AND SURNAME LIKE '" + DriverChosen.Value.Split(' ')[1] + "'";
+            var DriverTemp = Util.query(DriverTempQuery);
+            String DriverID = "";
+            if (DriverTemp.HasRows)
+            {
+                DriverTemp.Read();
+                DriverID = DriverTemp.GetString(0);
+                //reading the drivers table
+            }
+            //Time & Date Format 
+            DateTime timeDate = DateTime.Parse(DeliveryDate.Value + " " + DeliveryTime.Value);
+
+            //setting lat and long
+            var Originaddress = here.Value; 
+            var locationService = new GoogleLocationService();
+            var point = locationService.GetLatLongFromAddress(Originaddress);
+            var latitude = point.Latitude;
+            var longitude = point.Longitude;
+            String latlngOrigin = latitude + ":" + longitude + "#" + Originaddress;
+
+            var Destaddress = there.Value;
+            var Destpoint = locationService.GetLatLongFromAddress(Destaddress);
+            var Destlatitude = Destpoint.Latitude;
+            var Destlongitude = Destpoint.Longitude;
+            String latlngDest = Destlatitude + ":" + Destlongitude + "#" + Destaddress;
             
-=======
+            //string driver = DriverChosen.Value.Split(' ')[1];
+            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + latlngOrigin + "', '" + latlngDest + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + "1234567890123" + "');";
+            Util.query(query);
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
->>>>>>> cbdc6129275aca83250a09b1be635d3c9cc453fc
         }
     }
 }

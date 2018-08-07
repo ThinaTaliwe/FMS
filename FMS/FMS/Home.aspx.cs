@@ -14,22 +14,26 @@ namespace FMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            var query = "select [TO], [FROM], truck, driver, client, accepted from Delivery WHERE COMPLETED=0 AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate()))";
+            var query = "select [from], [to], truck, driver, client, accepted from Delivery WHERE COMPLETED is null AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate()))";
             var rows = Util.query(query);
-            //var client = Util.getClient()
+            //var client = Util.getClient() 
             var HTMLStr = "";
             if (rows.HasRows)
             {
-<<<<<<< HEAD
-                var assigned = 0;
-=======
-                var assigned = 0;//(rows.GetInt32(14));
->>>>>>> cbdc6129275aca83250a09b1be635d3c9cc453fc
                 var assignedStr = "";
                 while (rows.Read())
                 {
-                    assignedStr = rows.GetInt32(4) == 0 ? "No" : "Yes";
-                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(0)) + "</td> <td> " + Convert.ToString(rows.GetString(1)) + "</td> <td> " + new Driver(rows.GetString(3)).getName() + "</td> <td> " + "10 Minutes" + "</td> <td> "  + assignedStr + "</td> </tr>";
+                    Delivery deliv = Delivery.getInstance(10);
+                    try {
+                        var date = rows.GetDateTime(5);
+                        if (date != null) assignedStr = "Yes";
+                        else assignedStr = "No";
+                    } catch(Exception ex) {
+                        Util.print(ex.ToString());
+                        assignedStr = "No";
+                    }
+                    var Driver_MmeliThing = new Driver(rows.GetString(3));
+                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Delivery.getAddress(rows.GetString(0)) + "</td> <td> " + Delivery.getAddress(rows.GetString(1)) + "</td> <td> " + Driver_MmeliThing.getName() + " " + Driver_MmeliThing.getSurname() + "</td> <td> " + "--" + "</td> <td> "  + assignedStr + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }

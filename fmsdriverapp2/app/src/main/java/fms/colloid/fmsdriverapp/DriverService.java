@@ -36,6 +36,7 @@ public class DriverService extends Service {
 
     public static final String OK_CODE = "200 OK";
     public static final String ERROR_CODE = "400 ERR";
+    public static final String SERVER_ERROR  = "300 ERR";
 
     private IBinder bound = new DriverServiceBound();
     private Socket conn = null;
@@ -45,8 +46,8 @@ public class DriverService extends Service {
     private Delivery delivery = null;
     private Timer timer = null;
     private Handler tHandler = new Handler();
-    private String address = "192.168.43.70"; //10.0.2.2 for emulator
-    private int port = 8991;
+    private String address = "10.0.2.2"; //10.0.2.2 for emulator
+    private int port = 1998;
     private LocationManager locationManager;
     private String longitude, latitude;
     private ServerCheck serverCheck = new ServerCheck();
@@ -138,8 +139,7 @@ public class DriverService extends Service {
         /**
          * clears input stream, removes all confirmations send by the server
          */
-        while (available()) System.out.println(read());
-        System.out.println("input stream cleared");
+        while (available()) System.out.println("cleared: " + read());
     }
 
     public boolean available() {
@@ -258,6 +258,7 @@ public class DriverService extends Service {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    System.out.println("ServerCheck.run()");
                     try {
                         if(longitude == null || latitude == null) System.out.println(getLocation());
                         if (verified()) {
@@ -275,7 +276,6 @@ public class DriverService extends Service {
                                             notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
                                             sendLocation(delivery.getId());
                                             setTimer(5000);
-                                            setLocationTimer(5000);
                                             break;
                                         default:
                                             System.out.println(text);
@@ -317,6 +317,7 @@ public class DriverService extends Service {
         public void onLocationChanged(Location location) {
             longitude = String.valueOf(location.getLongitude());
             latitude = String.valueOf(location.getLatitude());
+            System.out.println("Loc change: " + getLocation());
         }
 
         @Override
@@ -347,7 +348,6 @@ public class DriverService extends Service {
                 locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, period, 10, locationListener);
-            System.out.println(getLocation() + " in loc timer");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -359,24 +359,15 @@ public class DriverService extends Service {
          * gets the last known location
          */
         try {
-            System.out.println("getLocation()");
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                System.out.println("Permissions not granted");
-                return null;
+            if(latitude != null && longitude != null)  {
+                return latitude + ":" + longitude;
+            } else {
+                System.err.println("Location was null");
             }
-            if (locationManager == null) {
-                locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            }
-            if(latitude == null || longitude == null)  {
-                Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                latitude = String.valueOf(loc.getLatitude());
-                longitude = String.valueOf(loc.getLongitude());
-            }
-            return latitude + ":" + longitude;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return "-26.2041028:28.0473051";
     }
 
     @Override
@@ -399,10 +390,11 @@ public class DriverService extends Service {
             timer = null;
             timer = new Timer();
             timer.scheduleAtFixedRate(serverCheck, 5000, period);
-            if(delivery != null) {
-                if(delivery.completed()) return;
-                else setLocationTimer(delivery.locationTimer());
-            } else return;
+            setLocationTimer(period);
+//            if(delivery != null) {
+//                if(delivery.completed()) return;
+//                else setLocationTimer(delivery.locationTimer());
+//            } else return;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

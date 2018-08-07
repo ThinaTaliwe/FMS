@@ -21,6 +21,7 @@
 					<div class="col-md-12">
 						<div class="content-box-large">
 		  				<div class="panel-body">
+                             
                               <form class="form-horizontal" role="form">
 										  <div class="form-group">
 										    <label  class="col-sm-2 control-label">Order Number</label>
@@ -56,7 +57,7 @@
 										    <label  class="col-sm-2 control-label">Driver</label>
 										    <div class="col-sm-10">
 										      <select class="form-control" id="DriverChosen" runat="server">
-													<option>Select A driver</option>
+													<option>Select A Driver</option>
 												</select> 
                                                <asp:RequiredFieldValidator id="validDriver" runat="server" controlToValidate="DriverChosen" errorMessage="Choose driver" display="dynamic">
                                                </asp:RequiredFieldValidator>
@@ -67,20 +68,16 @@
 										    <label  class="col-sm-2 control-label">Delivery Date</label>
 										    <div class="col-sm-10">
 										     	
-						                    <form action="/action_page.php">
                                               <input class="form-control" type="date" id="DeliveryDate" runat="server">
                                                <asp:RequiredFieldValidator id="validDeliveryDate" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
                                                </asp:RequiredFieldValidator>
-                                            </form>
 										    </div>
 										  </div>
                                  <div class="form-group">
 										    <label  class="col-sm-2 control-label">Delivery Time</label>
 										    <div class="col-sm-10">
 										     	
-						                    <form action="/action_page.php">
-                                              <input class="form-control" type="time" id="Time1" runat="server">
-                                            </form>
+                                              <input class="form-control" type="time" id="DeliveryTime" runat="server">
 										    </div>
 										  </div>
                                    <div class="form-group">
@@ -92,14 +89,16 @@
 										    </div>
 										  </div>
                                    <div class="form-group">
-										    <label class="col-sm-2 control-label">Load</label>
+										    <label class="col-sm-2 control-label">Load (Ton)</label>
 										    <div class="col-sm-10">
 										      <input  class="form-control" id="Load" placeholder="Enter Load" runat="server">
+                                                 <input  class="form-control" type="hidden" id="here" value="" runat="server">
+                                                 <input  class="form-control" type="hidden" id="there" value="" runat="server">
                                                <asp:RequiredFieldValidator id="validLoad" runat="server" controlToValidate="Load" errorMessage="Enter Load" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
-<<<<<<< HEAD
+                                  
 <input id="origin-input" class="controls" type="text" placeholder="Origin">
 
 <input id="destination-input" class="controls" type="text"
@@ -119,20 +118,21 @@
 <div id="map"></div>
 
 <script>
+    var originInput;
+    var destinationInput;
+    var originIDs;
+    var destIDs;
     // This example requires the Places library. Include the libraries=places
     // parameter when you first load the API. For example:
     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
             mapTypeControl: false,
             center: { lat: - 26.270760, lng: 28.112268 },
             zoom: 13
         });
-
         new AutocompleteDirectionsHandler(map);
     }
-
     /**
      * @constructor
     */
@@ -141,31 +141,26 @@
         this.originPlaceId = null;
         this.destinationPlaceId = null;
         this.travelMode = 'WALKING';
-        var originInput = document.getElementById('origin-input');
+        originInput = document.getElementById('origin-input');
         //document.getElementById('itemRun') = originInput;
-        var destinationInput = document.getElementById('destination-input');
+        destinationInput = document.getElementById('destination-input');
         var modeSelector = document.getElementById('mode-selector');
         this.directionsService = new google.maps.DirectionsService;
         this.directionsDisplay = new google.maps.DirectionsRenderer;
         this.directionsDisplay.setMap(map);
-
         var originAutocomplete = new google.maps.places.Autocomplete(
             originInput, { placeIdOnly: true });
         var destinationAutocomplete = new google.maps.places.Autocomplete(
             destinationInput, { placeIdOnly: true });
-
         this.setupClickListener('changemode-walking', 'WALKING');
         this.setupClickListener('changemode-transit', 'TRANSIT');
         this.setupClickListener('changemode-driving', 'DRIVING');
-
         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
     }
-
     // Sets a listener on a radio button to change the filter type on Places
     // Autocomplete.
     AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
@@ -176,141 +171,36 @@
             me.route();
         });
     };
-
     AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
         var me = this;
+        //window.alert(place.placeId + place.placeId.value);
         autocomplete.bindTo('bounds', this.map);
         autocomplete.addListener('place_changed', function () {
             var place = autocomplete.getPlace();
             if (!place.place_id) {
                 window.alert("Please select an option from the dropdown list.");
-=======
-<<<<<<< HEAD
-                   
-        
-          <input id="origin" class="controls" type="text" placeholder="Origin"  runat="server">
-                                               <asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
-                                               </asp:RequiredFieldValidator>
-        <input id="destination-input" class="controls" type="text"
-=======
-        
-                                  
-         <input id="origin-input" class="controls" type="text" placeholder="Origin">
-
-    <input id="destination-input" class="controls" type="text"
->>>>>>> cbdc6129275aca83250a09b1be635d3c9cc453fc
-           placeholder="Destination">
-
-
-    <div id="mode-selector" class="controls" hidden="hidden">
-        <input type="radio" name="type" id="changemode-walking" checked="checked">
-        <label for="changemode-walking">Walking</label>
-
-        <input type="radio" name="type" id="changemode-transit">
-        <label for="changemode-transit">Transit</label>
-
-        <input type="radio" name="type" id="changemode-driving">
-        <label for="changemode-driving">Driving</label>
-    </div>
-
-    <div id="map"></div>
-
-                                   <input id="Hidden1"  type="hidden" runat="server" />
-    <script>
-        // This example requires the Places library. Include the libraries=places
-        // parameter when you first load the API. For example:
-        // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                mapTypeControl: false,
-                center: { lat: - 26.270760, lng: 28.112268 },
-                zoom: 13
-            });
-
-            new AutocompleteDirectionsHandler(map);
-        }
-
-        /**
-         * @constructor
-        */
-        function AutocompleteDirectionsHandler(map) {
-            
-            this.map = map;
-            this.originPlaceId = null;
-            this.destinationPlaceId = null;
-            this.travelMode = 'WALKING';
-            var originInput = document.getElementById('origin-input');
-            //document.getElementById('itemRun') = originInput;
-           
-            var destinationInput = document.getElementById('destination-input');
-            var modeSelector = document.getElementById('mode-selector');
-            this.directionsService = new google.maps.DirectionsService;
-            this.directionsDisplay = new google.maps.DirectionsRenderer;
-            this.directionsDisplay.setMap(map);
-
-            var originAutocomplete = new google.maps.places.Autocomplete(
-                originInput, { placeIdOnly: true });
-            var destinationAutocomplete = new google.maps.places.Autocomplete(
-                destinationInput, { placeIdOnly: true });
-
-            this.setupClickListener('changemode-walking', 'WALKING');
-            this.setupClickListener('changemode-transit', 'TRANSIT');
-            this.setupClickListener('changemode-driving', 'DRIVING');
-
-            this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
-            this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
-            this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-            this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-            this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
-        }
-
-        // Sets a listener on a radio button to change the filter type on Places
-        // Autocomplete.
-        AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
-            var radioButton = document.getElementById(id);
-            var me = this;
-            radioButton.addEventListener('click', function () {
-                me.travelMode = mode;
-                me.route();
-            });
-        };
-
-        AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
-            var me = this;
-            autocomplete.bindTo('bounds', this.map);
-            autocomplete.addListener('place_changed', function () {
-                var place = autocomplete.getPlace();
-                if (!place.place_id) {
-                    window.alert("Please select an option from the dropdown list.");
-                    return;
-                }
-                if (mode === 'ORIG') {
-                    me.originPlaceId = place.place_id;
-                } else {
-                    me.destinationPlaceId = place.place_id;
-                }
-                me.route();
-            });
-           // document.getElementById("run").innerHTML
-        };
-
-        AutocompleteDirectionsHandler.prototype.route = function () {
-            if (!this.originPlaceId || !this.destinationPlaceId) {
->>>>>>> b6904d5fccf1323c6381454f6b48d3c063634d44
                 return;
             }
             if (mode === 'ORIG') {
                 me.originPlaceId = place.place_id;
+                originIDs = place.name;
+                //txtHidden.value = originIDs;
+<<<<<<< HEAD
+                //window.alert(place.coords);
             } else {
                 me.destinationPlaceId = place.place_id;
+                destIDs = place.name
+                //window.alert(destIDs);
+=======
+            } else {
+                me.destinationPlaceId = place.place_id;
+                destIDs = place.name;
+>>>>>>> 7662c6602f7e0f26dfa102cdb4d54852fe52d94c
             }
             me.route();
         });
         // document.getElementById("run").innerHTML
     };
-
     AutocompleteDirectionsHandler.prototype.route = function () {
         if (!this.originPlaceId || !this.destinationPlaceId) {
             return;
@@ -325,20 +215,26 @@
             if (status === 'OK') {
                 me.directionsDisplay.setDirections(response);
                 //document.getElementById("itemRun").innerText = originInput;
-                window.alert(originInput);
+                //originIDs = originPlaceId;
+                //window.alert(origin.lat());
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
         });
     };
-
+    function getOrigin() {
+        document.getElementById('<%= here.ClientID %>').value = originIDs;
+        document.getElementById('<%= there.ClientID %>').value = destIDs;
+        //window.alert(document.getElementById('<%= here.ClientID %>').value); 
+    }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
         async defer></script>
 
+
 				  		<button class="btn btn-default" type="submit" onclick="CancelCreateDelivery()"> Cancel </button>
-                                  
-                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="btn_Click"  />	 </form>
+                                
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClientClick ="getOrigin();" OnClick="btn_Click"  />	 </form>
                             </div>
 		  					
 

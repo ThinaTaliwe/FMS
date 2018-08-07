@@ -5,7 +5,7 @@
 
             <section class="wrapper">
                 <div class="content-box-large">
-                <h3>Upcoming Deliveries</h3>
+                <h3>Deliveries</h3>
                 <div class="row">
 
                     <div class="col-md-10">
@@ -15,10 +15,12 @@
                                 <!-- Heading --> 
                                 <thead>
                                     <tr>
-                                        <th>Order Number</th>
+                                        <th>Client</th>
                                         <th>Truck Plate</th>
                                         <th>Origin</th>
                                         <th>Destination</th>
+                                        <th>Start</th>
+                                        <th>End</th>
                                         <th>Update</th>
                                     </tr>
                                 </thead>

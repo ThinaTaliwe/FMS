@@ -12,6 +12,21 @@ namespace FMS.App_Code
     public class Util
     {
 
+        public static string getLatLong(string address) {
+            try {
+                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                string result = readLink(link);
+                JObject obj = JObject.Parse(result);
+                var results = obj["results"][0];
+                if(results != null) {
+                    var loc = results["geometry"]["location"];
+                    return loc["lat"] + ":" + loc["lng"];
+                }
+            } catch(Exception ex) {
+                System.Diagnostics.Debug.WriteLine(ex);
+            } return DriverHandle.INTERNAL_ERROR;
+        }
+
         public static string getAddress(double[] coords) {
             try {
                 string link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
@@ -24,7 +39,7 @@ namespace FMS.App_Code
                 } 
             } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine(ex);
-            } return DriverHandle.ERROR_CODE;
+            } return DriverHandle.INTERNAL_ERROR;
         }
 
         public static string getRoutePoints(string route)
@@ -53,12 +68,12 @@ namespace FMS.App_Code
                     return result;
                 }
                 else
-                    result = DriverHandle.ERROR_CODE;
+                    result = DriverHandle.INTERNAL_ERROR;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                result = DriverHandle.ERROR_CODE;
+                result = DriverHandle.INTERNAL_ERROR;
             }
             return result;
         }
@@ -90,18 +105,18 @@ namespace FMS.App_Code
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
-            } return DriverHandle.ERROR_CODE;
+                print(ex.ToString());
+            } return DriverHandle.INTERNAL_ERROR;
         }
 
         public static string readLink(string url) {
             try {
                 WebClient wc = new WebClient();
-                System.Diagnostics.Debug.WriteLine(url);
+                print(url);
                 return wc.DownloadString(url);
             } catch(Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
-            } return DriverHandle.ERROR_CODE;
+                print(ex.ToString());
+            } return DriverHandle.INTERNAL_ERROR;
         }
 
         public static double distance(double[] from, double[] to) {
@@ -120,7 +135,7 @@ namespace FMS.App_Code
                 var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
                 return r * c;
             } catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
+                print(ex.ToString());
             }
             return 0;
 		}
@@ -129,21 +144,31 @@ namespace FMS.App_Code
             return Math.PI * angle / 180;
         }
 
-        public static double[] getCoords(String coords) {
+        public static double[] getCoords(string coords) {
             try {
-                String[] parts = coords.Replace('.', ',').Split(':');
-                return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
+                string[] parts = coords.Replace('.', ',').Split(':');
+                if(parts.Length != 2) {
+                    string latLng = getLatLong(coords);
+                    string[] prtsLatLng = latLng.Split(':');
+                    if (prtsLatLng.Length == 2)
+                        return getCoords(latLng);
+                }
+                else return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
             } catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine("invalid coords given " + coords + ex);
+                print("invalid coords given " + coords + ex);
             }
             return null;
         }
+
+        public static bool isNull(Object obj) { return obj == null; }
+
+        public static void print(string text) { System.Diagnostics.Debug.WriteLine(text); }
 
         public static SqlDataReader query(string request)
         {
              try
             {
-                System.Diagnostics.Debug.WriteLine(request);
+                print(request);
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString());
                 conn.Open();
                 SqlCommand command = new SqlCommand(request, conn);
@@ -153,7 +178,7 @@ namespace FMS.App_Code
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 try {
-                    System.Diagnostics.Debug.WriteLine("Retrying query: " + request);
+                    print("Retrying query: " + request);
                     SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn2"].ToString());
                     conn.Open();
                     SqlCommand command = new SqlCommand(request, conn);

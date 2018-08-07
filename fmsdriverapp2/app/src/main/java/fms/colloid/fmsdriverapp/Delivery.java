@@ -37,7 +37,6 @@ public class Delivery {
             deliv.material = parts[6].split("=")[1];
             deliv.load = Integer.parseInt(parts[7].split("=")[1]);
             deliv.departDay = format.parse(parts[8].split("=")[1]);
-
             return deliv;
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -45,10 +44,28 @@ public class Delivery {
         return null;
     }
 
+    public LatLng getToInLatLong() {
+        try {
+            String[] parts = to.split(":");
+            return new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+        }catch (Exception ex) {
+
+        } return null;
+    }
+
+    public LatLng getFromInLatLong() {
+        try {
+            String[] parts = from.split(":");
+            return new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
+        }catch (Exception ex) {
+
+        } return null;
+    }
+
     public long locationTimer() {
         if(started) return 300000;
         else if(accepted) return 180000;
-        else return 10800000;
+        else return -1;
     }
 
     @Override
@@ -61,6 +78,14 @@ public class Delivery {
                 "material: " + material  + "\n" +
                 "load: " + load  + "\n" +
                 "depart day: " + departDay.toString()  + "\n";
+    }
+
+    public String getRouteRequest(DriverService service) {
+        service.clearInputStream();
+        String request = "route " + service.getLocation() + " ";
+        if(accepted && !started)  request += from;
+        else  request += to;
+        return request;
     }
 
     public ArrayList<LatLng> getPolylines() {
@@ -120,7 +145,7 @@ public class Delivery {
     public boolean hasRoute() {return !(route == null); }
 
     public void setRoute(String route) {
-        if(route.contains(DriverService.ERROR_CODE) || route.contains(DriverService.OK_CODE)){
+        if(route.contains(DriverService.ERROR_CODE) || route.contains(DriverService.OK_CODE) || route.contains(DriverService.SERVER_ERROR)){
             System.out.println("Invalid route given");
         } else {
             this.route = route;

@@ -21,6 +21,7 @@ namespace FMS.App_Code
         private bool verfied = false;
         private string driver;
         private DateTime time;
+        public static string INTERNAL_ERROR = "300 ERR";
         public static string ERROR_CODE = "400 ERR";
         public static string OK_CODE = "200 OK";
 
@@ -87,18 +88,18 @@ namespace FMS.App_Code
                             {
                                 string[] parts = response.Split(' ');
                                 var query = "";
+                                var now = DateTime.Now;
                                 switch (parts[0]) {
                                     case "accept":
                                         //accept [delivery_id]
-                                         query = "update delivery set accepted = '1' where id like '" + parts[1] + "'";
+                                         query = "update delivery set accepted = '" + now + "' where id like '" + parts[1] + "'";
                                         Util.query(query);
                                         send(OK_CODE);
                                         break;
                                     case "location":
                                         //location [delivery_id] [longitude:latitude]
-                                        query = "insert into locations values('" + parts[1] + "', '" + driver + "', '" + parts[2] + "', '" + DateTime.Now + "')";
+                                        query = "insert into locations values('" + parts[1] + "', '" + driver + "', '" + parts[2] + "', '" + now + "')";
                                         Util.query(query);
-                                        send(OK_CODE);
                                         break;
                                     case "message":
                                         //message [message_code]
@@ -107,7 +108,7 @@ namespace FMS.App_Code
                                         send("message " + OK_CODE);
                                         break;
                                     case "current":
-                                        query = "select id from delivery where driver like '" + driver + "' and accepted like '1' and completed like '0'";
+                                        query = "select id from delivery where driver like '" + driver + "' and accepted is not null and completed is null";
                                         var current = Util.query(query);
                                         if (current.HasRows)
                                         {
@@ -134,13 +135,13 @@ namespace FMS.App_Code
                                         break;
                                     case "start":
                                         //start [delivery_id]
-                                        query = "update delivery set started = '1' where id like " + parts[1];
+                                        query = "update delivery set started = '" + now + "' where id like " + parts[1];
                                         Util.query(query);
                                         send(OK_CODE);
                                         break;
                                     case "complete":
                                         //complete [delivery_id]
-                                        query = "update delivery set completed = '1' where id like " + parts[1];
+                                        query = "update delivery set completed = '" + now + "' where id like " + parts[1];
                                         Util.query(query);
                                         send(OK_CODE);
                                         break;
@@ -158,10 +159,26 @@ namespace FMS.App_Code
                                         }
                                         break;
                                     case "address":
-                                        //address [coordinates]
+                                        //address [coordinates] 
                                         try {
                                             var coords = Util.getCoords(parts[1]);
                                             send(Util.getAddress(coords));
+                                        } catch (Exception ex) {
+                                            System.Diagnostics.Debug.WriteLine(ex);
+                                            send(ERROR_CODE);
+                                        }
+                                        break;
+                                    case "coords":
+                                        try {
+                                            string address = parts[1];
+                                            if(parts.Length > 2) {
+                                                for (int c = 2; c < parts.Length; c++)
+                                                {
+                                                    address += "+" + parts[c];
+                                                }
+                                            }
+                                            var coords = Util.getLatLong(address);
+                                            send(coords);
                                         } catch (Exception ex) {
                                             System.Diagnostics.Debug.WriteLine(ex);
                                             send(ERROR_CODE);
@@ -187,7 +204,7 @@ namespace FMS.App_Code
         }
 
         private void checkAssignment() {
-            string query = "select id from delivery where driver like '" + driver + "' and accepted like '0'";
+            string query = "select id from delivery where driver like '" + driver + "' and accepted is null";
             var assignment = Util.query(query);
             if (assignment.HasRows)
             {

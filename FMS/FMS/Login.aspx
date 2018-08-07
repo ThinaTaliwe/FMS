@@ -22,8 +22,8 @@
 		</div>
 		<div class="login">
             <form runat="server">
-                <input id="username" type="text" placeholder="username" name="user" runat="server"/><br/>
-				<input id="password" type="password" placeholder="password" name="password" runat="server" /><br/>
+                <input id="username" type="text" placeholder="Username" name="user" runat="server"/><br/>
+				<input id="password" type="password" placeholder="Password" name="password" runat="server" /><br/>
 				<input id="btnLogin" type="button" value="Login" runat="server" OnServerClick="logon"/> <br/> 
                <p>  <a href="Login.aspx" style="color:white"> Forgot Password?</a> </p>
             </form>

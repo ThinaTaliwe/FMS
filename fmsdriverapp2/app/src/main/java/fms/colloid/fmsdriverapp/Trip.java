@@ -71,12 +71,13 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.setTrafficEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(true);
         map.getUiSettings().setAllGesturesEnabled(true);
-        LatLng delmas = new LatLng(-26.1403, 28.6787);
-        map.addMarker(new MarkerOptions().position(delmas).title("Delmas"));
+        LatLng dest = service.currentDelivery().getToInLatLong();
+        map.addMarker(new MarkerOptions().position(dest).title("Destination"));
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(delmas, 10));
         map.getUiSettings().setMapToolbarEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().isMyLocationButtonEnabled();
-        map.moveCamera(CameraUpdateFactory.newLatLng(delmas));
+        map.moveCamera(CameraUpdateFactory.newLatLng(dest));
         try {
             Delivery deliv = service.currentDelivery();
             if(deliv.hasRoute()) {
@@ -120,7 +121,7 @@ public class Trip extends Base implements OnMapReadyCallback {
     protected void setControls() {
         try {
             startEnd = (Button) findViewById(R.id.start_end_trip);
-            String strStart = service.currentDelivery().started() ? "End Trip" : "Start Trip";
+            final String strStart = service.currentDelivery().started() ? "End Trip" : "Start Trip";
             startEnd.setText(strStart);
             startEnd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,6 +132,7 @@ public class Trip extends Base implements OnMapReadyCallback {
                             service.startDelivery(deliv);
                         } else service.completeDelivery(deliv);
                         service.sendLocation(deliv.getId());
+                        startEnd.setText("End Trip");
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -169,13 +171,14 @@ public class Trip extends Base implements OnMapReadyCallback {
                                 try {
                                     showLoading();
                                     Delivery delivery = service.currentDelivery();
-                                    service.clearInputStream();
-                                    service.send("route " + service.getLocation() + " -26.1403:28.6787");
+                                    service.send(delivery.getRouteRequest(service));
                                     String response = service.read();
                                     if(response.contains(DriverService.OK_CODE)) response = service.read();
                                     delivery.setRoute(response);
                                     map.getMapAsync(Trip.this);
-                                    service.log("Route Added to Map");
+                                    if(delivery.hasRoute()) {
+                                        service.log("Route Added to Map");
+                                    } else service.log("Route not added to map, error occurred");
                                     dismiss();
                                 }
                                 catch(Exception ex) {
@@ -188,7 +191,10 @@ public class Trip extends Base implements OnMapReadyCallback {
                             @Override
                             public void onClick(View view) {
                                 try {
-                                    showInfo(service.currentDelivery().getRouteDirections());
+                                    String text;
+                                    if(service.currentDelivery().hasRoute()) text = service.currentDelivery().getRouteDirections();
+                                    else text = "No current delivery\n Click Get Route to request a route";
+                                    showInfo(text);
                                 }
                                 catch(Exception ex) {
                                     ex.printStackTrace();

@@ -68,7 +68,6 @@ public class Base extends AppCompatActivity {
                 } else if(args[0] == "route") {
                     showLoading();
                     Delivery delivery = service.currentDelivery();
-                    service.clearInputStream();
                     service.send("route " + service.getLocation() + " -26.1403:28.6787");
                     String response = service.read();
                     if(response.contains(DriverService.OK_CODE)) response = service.read();
@@ -105,7 +104,7 @@ public class Base extends AppCompatActivity {
             View layout = inflater.inflate(R.layout.route_info, null);
             TextView text = (TextView) layout.findViewById(R.id.routeText);
             text.setText(info);
-            popup = new PopupWindow(layout, 300, 370, true);
+            popup = new PopupWindow(layout, 450, 420, true);
             popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
         } catch (Exception ex) {
             ex.printStackTrace();
