@@ -150,12 +150,9 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\theDB.mdf" />
-    <Content Include="App_Data\theDB.mdf">
-      <DependentUpon>theDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\theDB_log.ldf">
-      <DependentUpon>theDB.mdf</DependentUpon>
+    <Content Include="App_Data\Maitso.mdf" />
+    <Content Include="App_Data\Maitso_log.ldf">
+      <DependentUpon>Maitso.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
@@ -171,7 +168,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="CreateDelivery.aspx" />
     <Content Include="Default.aspx" />
-    <Content Include="deliv.aspx" />
     <Content Include="DeliveryReport.aspx" />
     <Content Include="Drag.html" />
     <Content Include="DriverReport.aspx" />
@@ -192,7 +188,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ass\flatpickr.min.css" />
-    <Content Include="global.json" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -300,13 +295,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="deliv.aspx.cs">
-      <DependentUpon>deliv.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="deliv.aspx.designer.cs">
-      <DependentUpon>deliv.aspx</DependentUpon>
     </Compile>
     <Compile Include="DeliveryReport.aspx.cs">
       <DependentUpon>DeliveryReport.aspx</DependentUpon>

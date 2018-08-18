@@ -15,21 +15,33 @@ namespace FMS
             string query = "select id from delivery where accepted is not null";
             var accept_ids = Util.query(query);
             List<int> ids = new List<int>();
+            var count = 0;
             if(accept_ids.HasRows) {
                 while(accept_ids.Read()) {
                     ids.Add(accept_ids.GetInt32(0));
+                    count++;
                 }
             }
-            string strTruck = "";
-            foreach (int id in ids) { 
-                Delivery deliv = Delivery.getInstance(Convert.ToInt32(id));
-                Util.print(deliv.ToString());
-                var loc = Delivery.LastLocation(deliv.getID());
-                string tr = deliv.getDriver().getName() + "*" + deliv.getTruck().getID() + "*" + loc[0] + "*" + loc[1] + " ";
-                strTruck += tr;
+
+            if(count > 0)
+            {
+                string strTruck = "";
+                foreach (int id in ids)
+                {
+                    try {
+
+                        Delivery deliv = Delivery.getInstance(Convert.ToInt32(id));
+                        Util.print(deliv.ToString());
+                        var loc = Delivery.LastLocation(deliv.getID());
+                        string tr = deliv.getDriver().getName() + "*" + deliv.getTruck().getID() + "*" + loc[0] + "*" + loc[1] + " ";
+                        strTruck += tr;
+                    } catch (Exception ex) {
+                        Util.print(ex.ToString());
+                    }
+                }
+                trucks.Value = strTruck;
+                Util.print(strTruck);
             }
-            trucks.Value = strTruck;
-            Util.print(strTruck);
         }
     }
 }

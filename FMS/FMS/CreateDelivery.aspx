@@ -31,6 +31,22 @@
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
+                                  <div class="form-group">
+										    <label  class="col-sm-2 control-label">Delivery Date</label>
+										    <div class="col-sm-10">
+										     	
+                                              <input class="form-control" type="date" id="DeliveryDate" runat="server">
+                                               <asp:RequiredFieldValidator id="validDeliveryDate" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
+                                               </asp:RequiredFieldValidator>
+										    </div>
+										  </div>
+                                 <div class="form-group">
+										    <label  class="col-sm-2 control-label">Delivery Time</label>
+										    <div class="col-sm-10">
+										     	
+                                              <input class="form-control" type="time" id="DeliveryTime" runat="server">
+										    </div>
+										  </div>
                                          <div class="form-group">
 										    <label  class="col-sm-2 control-label">Truck</label>
 										    <div class="col-sm-10">
@@ -64,22 +80,7 @@
 			
 										    </div>
 										  </div>
-                                   <div class="form-group">
-										    <label  class="col-sm-2 control-label">Delivery Date</label>
-										    <div class="col-sm-10">
-										     	
-                                              <input class="form-control" type="date" id="DeliveryDate" runat="server">
-                                               <asp:RequiredFieldValidator id="validDeliveryDate" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
-                                               </asp:RequiredFieldValidator>
-										    </div>
-										  </div>
-                                 <div class="form-group">
-										    <label  class="col-sm-2 control-label">Delivery Time</label>
-										    <div class="col-sm-10">
-										     	
-                                              <input class="form-control" type="time" id="DeliveryTime" runat="server">
-										    </div>
-										  </div>
+                                   
                                    <div class="form-group">
 										    <label class="col-sm-2 control-label">Material</label>
 										    <div class="col-sm-10">
@@ -185,17 +186,11 @@
                 me.originPlaceId = place.place_id;
                 originIDs = place.name;
                 //txtHidden.value = originIDs;
-<<<<<<< HEAD
                 //window.alert(place.coords);
             } else {
                 me.destinationPlaceId = place.place_id;
                 destIDs = place.name
                 //window.alert(destIDs);
-=======
-            } else {
-                me.destinationPlaceId = place.place_id;
-                destIDs = place.name;
->>>>>>> 7662c6602f7e0f26dfa102cdb4d54852fe52d94c
             }
             me.route();
         });

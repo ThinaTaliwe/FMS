@@ -258,7 +258,6 @@ public class DriverService extends Service {
             tHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("ServerCheck.run()");
                     try {
                         if(longitude == null || latitude == null) System.out.println(getLocation());
                         if (verified()) {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Newtonsoft.Json.Linq;
+using System.Web.UI;
 
 namespace FMS.App_Code
 {
@@ -100,7 +101,7 @@ namespace FMS.App_Code
             {
                 String link = "https://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=";
                 link += from[0].ToString().Replace(',', '.') + "," + from[1].ToString().Replace(',', '.') + "&destination=";
-                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.');// + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
                 return readLink(link);
             }
             catch (Exception ex)

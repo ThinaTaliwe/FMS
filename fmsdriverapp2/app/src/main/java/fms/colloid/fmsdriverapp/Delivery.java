@@ -9,13 +9,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONObject;
+
 public class Delivery {
     private int id;
     private String orderNum;
     private String truck;
     private String client;
-    private String from;
-    private String to;
+    private String fromCoords, fromAddress;
+    private String toCoords, toAddress;
     private String route;
     private String material;
     private int load;
@@ -24,19 +26,21 @@ public class Delivery {
     private static final DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     //2018/07/19 00:00:00
 
-    public static Delivery newAssignment(String assignment) {
+    public static Delivery newAssignment(String delivery) {
         try {
-            String[] parts = assignment.split(";");
+            JSONObject json = new JSONObject(delivery);
             Delivery deliv = new Delivery();
-            deliv.id = Integer.parseInt(parts[0].split("=")[1]);
-            deliv.orderNum = parts[1].split("=")[1];
-            deliv.truck = parts[2].split("=")[1];
-            deliv.client = parts[3].split("=")[1];
-            deliv.from = parts[4].split("=")[1];
-            deliv.to = parts[5].split("=")[1];
-            deliv.material = parts[6].split("=")[1];
-            deliv.load = Integer.parseInt(parts[7].split("=")[1]);
-            deliv.departDay = format.parse(parts[8].split("=")[1]);
+            deliv.id = json.getInt("id");
+            deliv.orderNum = json.getString("orderNum");
+            deliv.truck = json.getString("truck");
+            deliv.client = json.getString("client");
+            deliv.fromCoords = json.getString("fromCoords");
+            deliv.fromAddress = json.getString("fromAddress");
+            deliv.toCoords = json.getString("toCoords");
+            deliv.toAddress = json.getString("toAddress");
+            deliv.material = json.getString("material");
+            deliv.load = json.getInt("load");
+            deliv.departDay = format.parse(json.getString("departDay"));
             return deliv;
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -44,9 +48,9 @@ public class Delivery {
         return null;
     }
 
-    public LatLng getToInLatLong() {
+    public LatLng getToCoords() {
         try {
-            String[] parts = to.split(":");
+            String[] parts = toCoords.split(":");
             return new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
         }catch (Exception ex) {
 
@@ -55,7 +59,7 @@ public class Delivery {
 
     public LatLng getFromInLatLong() {
         try {
-            String[] parts = from.split(":");
+            String[] parts = fromCoords.split(":");
             return new LatLng(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
         }catch (Exception ex) {
 
@@ -73,8 +77,8 @@ public class Delivery {
         return "order num: " + orderNum + "\n" +
                 "truck: " + truck  + "\n" +
                 "client: " + client  + "\n" +
-                "from: " + from  + "\n" +
-                "to: " + to  + "\n" +
+                "from: " + fromAddress  + "\n" +
+                "to: " + toAddress  + "\n" +
                 "material: " + material  + "\n" +
                 "load: " + load  + "\n" +
                 "depart day: " + departDay.toString()  + "\n";
@@ -83,8 +87,8 @@ public class Delivery {
     public String getRouteRequest(DriverService service) {
         service.clearInputStream();
         String request = "route " + service.getLocation() + " ";
-        if(accepted && !started)  request += from;
-        else  request += to;
+        if(accepted && !started)  request += fromCoords;
+        else  request += toCoords;
         return request;
     }
 
@@ -182,11 +186,11 @@ public class Delivery {
     }
 
     public String getFrom() {
-        return from;
+        return fromAddress;
     }
 
     public String getTo() {
-        return to;
+        return toAddress;
     }
 
     public String getMaterial() {

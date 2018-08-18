@@ -24,7 +24,7 @@ namespace FMS
             Util.query(query);
             var query2 = "INSERT INTO DRIVERS(ID, CODE, FIRST_ISSUE, EXPIRY, RESTRICTION, MESSAGE) VALUES('" + DriverID.Value + "', '" + DriverCode.Value + "', '" + LicenceIssueDate.Value + "', '" + LicenceExpiryDate.Value + "', '" + Restriction.Value + "', '" + Message + "');";
             Util.query(query2);
-            //Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
     }
 }

@@ -18,7 +18,7 @@
 <div class="log_page"></div>
 		<div class="grad">
 		<div class="header">
-			<div>Fleet Management System</div>
+			<div>Delivery Manager System</div>
 		</div>
 		<div class="login">
             <form runat="server">
