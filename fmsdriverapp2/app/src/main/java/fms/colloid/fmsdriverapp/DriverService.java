@@ -65,17 +65,17 @@ public class DriverService extends Service {
         this.driver = new String[]{driver, pass};
     }
 
+    /**
+     * determines whether the driver has been authenticated by the server
+     */
     public boolean verified() {
-        /**
-         * determines whether the driver has been authenticated by the server
-         */
         return !(driver == null);
     }
 
+    /***
+     * Method used to disconenct app from server
+     */
     public void disconnect() {
-        /***
-         * Method used to disconenct app from server
-         */
         try {
             send("kill");
             conn.close();
@@ -101,10 +101,10 @@ public class DriverService extends Service {
         }
     }
 
+    /**
+     * Can be used to reconnect to server if driver service is verified (driver as already logged on)
+     */
     public void reconnect() {
-        /**
-         * Can be used to reconnect to server if driver service is verified (driver as already logged on)
-         */
         if (isAlive()) {
             if (verified()) {
                 disconnect();
@@ -122,10 +122,11 @@ public class DriverService extends Service {
         }
     }
 
+    /**
+     * sends text to the server
+     * @param text -text to be sent
+     */
     public void send(String text) {
-        /**
-         * sends text to the server
-         */
         try {
             System.out.println("Sending: " + text);
             out.write(text + "\n");
@@ -135,17 +136,17 @@ public class DriverService extends Service {
         }
     }
 
+    /**
+     * clears input stream, removes all confirmations send by the server
+     */
     public void clearInputStream() {
-        /**
-         * clears input stream, removes all confirmations send by the server
-         */
         while (available()) System.out.println("cleared: " + read());
     }
 
+    /**
+     * determines whether the input stream still has bytes available to be read
+     */
     public boolean available() {
-        /**
-         * determines whether the input stream still has bytes available to be read
-         */
         try {
             return conn.getInputStream().available() > 0;
         } catch (Exception ex) {
@@ -154,10 +155,12 @@ public class DriverService extends Service {
         return false;
     }
 
+    
+
+    /**
+     * reads a sing line from the input stream
+     */
     public String read() {
-        /**
-         * reads a sing line from the input stream
-         */
         try {
             String text = in.nextLine();
             System.out.println("Read: " + text);
@@ -168,10 +171,13 @@ public class DriverService extends Service {
         return null;
     }
 
+    /**
+     * Shows notifiction to the user
+     * @param title -title of the notification
+     * @param content -content of the notification
+     * @param intent -activity to be launched when notification is clicked
+     */
     public void notification(String title, String content, Intent intent) {
-        /**
-         * Shows notifiction to the user
-         */
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntentWithParentStack(intent);
         PendingIntent pIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -185,10 +191,12 @@ public class DriverService extends Service {
         notificationManager.notify(0, notif);
     }
 
+    /**
+     *
+     * @param address -server address
+     * @param port -server listening port
+     */
     private void connect(String address, int port) {
-        /**
-         * makes a connection to the server
-         */
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         setThreadPolicy(policy);
         try {
@@ -205,10 +213,13 @@ public class DriverService extends Service {
         }
     }
 
+    /**
+     * checks to see whether the server is onlne, determines if there is am internet connection
+     * @param host -host to check
+     * @param port -port to check
+     * @return alive or not
+     */
     private boolean isAlive(String host, int port) {
-        /**
-         * checks to see whether the server is onlne, determines if there is am internet connection
-         */
         boolean alive = true;
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -224,17 +235,19 @@ public class DriverService extends Service {
         return alive;
     }
 
+    /**
+     * public access to check if server is alive
+     * @return
+     */
     public boolean isAlive() {
-        /**
-         * public access to check if server is alive
-         */
         return isAlive(address, port);
     }
 
+
+    /**
+     * public access to server connection
+     */
     public void connect() {
-        /**
-         * public access to server connection
-         */
         try {
             if (conn != null) disconnect();
             if (isAlive(address, port)) connect(address, port);
@@ -247,11 +260,11 @@ public class DriverService extends Service {
         return delivery;
     }
 
-    private class ServerCheck extends TimerTask {
 
-        /**
-         * serverCheck class runs periodically and checks if server send an data for the app to process, also send location to the server and.....
-         */
+    /**
+     * serverCheck class runs periodically and checks if server send an data for the app to process, also send location to the server and.....
+     */
+    private class ServerCheck extends TimerTask {
 
         @Override
         public void run() {
@@ -296,21 +309,20 @@ public class DriverService extends Service {
     }
 
 
-
+    /**
+     * send location to the server
+     * @param id -delivery id
+     */
     public void sendLocation(int id) {
-        /**
-         * send location to the server
-         */
         if (longitude != null && latitude != null) {
             send("location " + id + " " + latitude + ":" + longitude);
         }
     }
 
+    /**
+     * location listener to account for changes in location
+     */
     private LocationListener locationListener = new LocationListener() {
-
-        /**
-         * location listener to account for changes in location
-         */
 
         @Override
         public void onLocationChanged(Location location) {
@@ -352,11 +364,10 @@ public class DriverService extends Service {
         }
     }
 
-
+    /**
+     * gets the last known location
+     */
     public String getLocation() {
-        /**
-         * gets the last known location
-         */
         try {
             if(latitude != null && longitude != null)  {
                 return latitude + ":" + longitude;
@@ -380,10 +391,11 @@ public class DriverService extends Service {
         return Service.START_STICKY;
     }
 
+    /**
+     * sets interval serverCheck runs in
+     * @param period
+     */
     public void setTimer(long period) {
-        /**
-         * sets interval serverCheck runs in
-         */
         try {
             System.out.println("setTimer()");
             timer = null;

@@ -47,6 +47,7 @@ namespace FMS.App_Code
         {
             List<string> info = new List<string>();
             string result = "";
+            JObject json = new JObject();
             try
             {
                 JObject obj = JObject.Parse(route);
