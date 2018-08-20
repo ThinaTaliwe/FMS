@@ -1,13 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddUser.aspx.cs" Inherits="FMS.AddUser" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddClient.aspx.cs" Inherits="FMS.AddClient" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-      <div class="page-content">
+    <div class="page-content">
     	<div class="row">
 		  <div class="col-md-10">
 
 	  			<div class="row">
 	  				<div class="col-md-12 panel-info">
 			  			<div class="content-box-header panel-heading">
-		  					<div class="panel-title ">Add User</div>
+		  					<div class="panel-title ">Add Client</div>
 						
 			  			</div>
 
@@ -20,19 +20,19 @@
 		  				<div class="panel-body">
                               <form class="form-horizontal" role="form">
 										   <div class="form-group">
-										    <label  class="col-sm-2 control-label">Name </label>
+										    <label  class="col-sm-2 control-label">Contact Name </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="UserName" placeholder="Enter User Name" runat="server">
+										      <input class="form-control" id="UserName" placeholder="Enter Contact Name" runat="server">
 										    </div>
 										  </div>
                                   	<div class="form-group">
-										    <label  class="col-sm-2 control-label">Surname </label>
+										    <label  class="col-sm-2 control-label">Company Name </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="Surname" placeholder="Enter User Surname" runat="server">
+										      <input class="form-control" id="Surname" placeholder="Enter Company Name" runat="server">
 										    </div>
 										  </div>
                                         <div class="form-group">
-										    <label  class="col-sm-2 control-label">Email </label>
+										    <label  class="col-sm-2 control-label">Telephone </label>
 										    <div class="col-sm-10">
 										      <input class="form-control" id="Email" placeholder="Enter User Email Address" runat="server">
 										    </div>

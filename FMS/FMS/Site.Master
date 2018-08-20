@@ -139,9 +139,8 @@
                             </a>
                             <!-- Sub menu -->
                             <ul>
-                                <li><a href="AddUser">Add User</a></li>
-                                <li><a href="Update User">Update User</a></li>
-                                <li><a href="DeleteUser">Delete User</a></li>
+                                <li><a href="AddUser">Add Employee</a></li>
+                                <li><a href="AddClient">Add Client</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
