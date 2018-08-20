@@ -22,11 +22,25 @@ namespace FMS{
             Thread server = new Thread(rest.start);
             server.Start();
             //Todo timer to restart server
+
+            SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
         }
 
         void RegisterRoutes(RouteCollection routes)
         {
             routes.MapPageRoute("delivery", "delivery/{id}", "~/EditDelivery.aspx");
+        }
+            
+        // Handle Http errors.
+        void Application_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+
+            if (exc is HttpUnhandledException)
+            {
+                // Pass the error on to the error page.
+                Server.Transfer("ErrorPage.aspx?handler=Application_Error%20-%20Global.asax", true);
+            }
         }
     }
 

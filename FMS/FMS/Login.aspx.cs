@@ -22,8 +22,9 @@ namespace FMS
 
         protected void logon(object sender, EventArgs e)
         {
-            string name = username.Value;
-            string pass = password.Value;
+
+            String name = "1234567890123";//Username.Value;
+            String pass = "MMELI"; //password.Value;
             //hash password here 
             var query = "select id, password from users where id like '" + name + "';";
             var response = Util.query(query);

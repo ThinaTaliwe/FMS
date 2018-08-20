@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="da895a981e55493a810c0ff410f19658" Name="Diagram1">
+        <EntityTypeShape EntityType="MaitsoModel.CLIENT" Width="2.375" PointX="0.75" PointY="0.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="MaitsoModel.DELIVERY" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaitsoModel.DRIVER" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaitsoModel.TRUCK" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaitsoModel.USER" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MaitsoModel.location" Width="1.5" PointX="7.5" PointY="8.25" IsExpanded="true" />
+        <AssociationConnector Association="MaitsoModel.FK__DELIVERY__AUTHOR__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="MaitsoModel.FK__DELIVERY__DRIVER__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="MaitsoModel.FK__DELIVERY__DRIVER__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="MaitsoModel.FK__DELIVERY__TRUCK__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="MaitsoModel.FK__locations__deliv__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="MaitsoModel.FK__DRIVERS__ID__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="MaitsoModel.FK__locations__drive__32E0915F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MaitsoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CLIENTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="COMPANY" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="TELEPHONE" Type="char" MaxLength="12" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LOCATION" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DELIVERY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORDER_NUM" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TRUCK" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DRIVER" Type="char" MaxLength="13" Nullable="false" />
+          <Property Name="CLIENT" Type="int" />
+          <Property Name="FROM" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="TO" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DEPART_DAY" Type="datetime" Nullable="false" />
+          <Property Name="DELIVERY_DAY" Type="datetime" />
+          <Property Name="MATERIAL" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LOAD" Type="int" Nullable="false" />
+          <Property Name="AUTHORITY" Type="char" MaxLength="13" Nullable="false" />
+          <Property Name="COMPLETED" Type="datetime" />
+          <Property Name="ACCEPTED" Type="datetime" />
+          <Property Name="STARTED" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DRIVERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="char" MaxLength="13" Nullable="false" />
+          <Property Name="CODE" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="FIRST_ISSUE" Type="date" Nullable="false" />
+          <Property Name="EXPIRY" Type="date" Nullable="false" />
+          <Property Name="RESTRICTION" Type="int" Nullable="false" />
+          <Property Name="MESSAGE" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\TT\TEAM43\FMS\FMS\APP_DATA\MAITSO.MDF.dbo.locations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="locations">
+          <Key>
+            <PropertyRef Name="delivery" />
+            <PropertyRef Name="driver" />
+            <PropertyRef Name="location" />
+            <PropertyRef Name="time" />
+          </Key>
+          <Property Name="delivery" Type="int" Nullable="false" />
+          <Property Name="driver" Type="char" MaxLength="13" Nullable="false" />
+          <Property Name="location" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRUCKS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="LOAD" Type="int" Nullable="false" />
+          <Property Name="SPEED" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="char" MaxLength="13" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="SURNAME" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="255" />
+          <Property Name="USER_TYPE" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="SALT" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__DELIVERY__AUTHOR__300424B4">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DELIVERY">
+              <PropertyRef Name="AUTHORITY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DELIVERY__DRIVER__2E1BDC42">
+          <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="1" />
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRIVERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DELIVERY">
+              <PropertyRef Name="DRIVER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DELIVERY__DRIVER__2F10007B">
+          <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="1" />
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRIVERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DELIVERY">
+              <PropertyRef Name="DRIVER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DELIVERY__TRUCK__2D27B809">
+          <End Role="TRUCKS" Type="Self.TRUCKS" Multiplicity="1" />
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRUCKS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DELIVERY">
+              <PropertyRef Name="TRUCK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DRIVERS__ID__286302EC">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DRIVERS">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__locations__deliv__31EC6D26">
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="1" />
+          <End Role="locations" Type="Self.locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DELIVERY">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="locations">
+              <PropertyRef Name="delivery" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__locations__drive__32E0915F">
+          <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="1" />
+          <End Role="locations" Type="Self.locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRIVERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="locations">
+              <PropertyRef Name="driver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MaitsoModelStoreContainer">
+          <EntitySet Name="CLIENTS" EntityType="Self.CLIENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DELIVERY" EntityType="Self.DELIVERY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DRIVERS" EntityType="Self.DRIVERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRUCKS" EntityType="Self.TRUCKS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="locations" EntityType="Self.locations" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [locations].[delivery] AS [delivery], 
+    [locations].[driver] AS [driver], 
+    [locations].[location] AS [location], 
+    [locations].[time] AS [time]
+    FROM [dbo].[locations] AS [locations]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__DELIVERY__AUTHOR__300424B4" Association="Self.FK__DELIVERY__AUTHOR__300424B4">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="DELIVERY" EntitySet="DELIVERY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DELIVERY__DRIVER__2E1BDC42" Association="Self.FK__DELIVERY__DRIVER__2E1BDC42">
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+            <End Role="DELIVERY" EntitySet="DELIVERY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DELIVERY__DRIVER__2F10007B" Association="Self.FK__DELIVERY__DRIVER__2F10007B">
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+            <End Role="DELIVERY" EntitySet="DELIVERY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DELIVERY__TRUCK__2D27B809" Association="Self.FK__DELIVERY__TRUCK__2D27B809">
+            <End Role="TRUCKS" EntitySet="TRUCKS" />
+            <End Role="DELIVERY" EntitySet="DELIVERY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DRIVERS__ID__286302EC" Association="Self.FK__DRIVERS__ID__286302EC">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__locations__deliv__31EC6D26" Association="Self.FK__locations__deliv__31EC6D26">
+            <End Role="DELIVERY" EntitySet="DELIVERY" />
+            <End Role="locations" EntitySet="locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__locations__drive__32E0915F" Association="Self.FK__locations__drive__32E0915F">
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+            <End Role="locations" EntitySet="locations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MaitsoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CLIENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COMPANY" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TELEPHONE" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LOCATION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DELIVERY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORDER_NUM" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TRUCK" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DRIVER" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CLIENT" Type="Int32" />
+          <Property Name="FROM" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DEPART_DAY" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DELIVERY_DAY" Type="DateTime" Precision="3" />
+          <Property Name="MATERIAL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LOAD" Type="Int32" Nullable="false" />
+          <Property Name="AUTHORITY" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="COMPLETED" Type="DateTime" Precision="3" />
+          <Property Name="ACCEPTED" Type="DateTime" Precision="3" />
+          <Property Name="STARTED" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__DELIVERY__AUTHOR__300424B4" FromRole="DELIVERY" ToRole="USERS" />
+          <NavigationProperty Name="DRIVER1" Relationship="Self.FK__DELIVERY__DRIVER__2E1BDC42" FromRole="DELIVERY" ToRole="DRIVERS" />
+          <NavigationProperty Name="DRIVER2" Relationship="Self.FK__DELIVERY__DRIVER__2F10007B" FromRole="DELIVERY" ToRole="DRIVERS" />
+          <NavigationProperty Name="TRUCK1" Relationship="Self.FK__DELIVERY__TRUCK__2D27B809" FromRole="DELIVERY" ToRole="TRUCKS" />
+          <NavigationProperty Name="locations" Relationship="Self.FK__locations__deliv__31EC6D26" FromRole="DELIVERY" ToRole="locations" />
+        </EntityType>
+        <EntityType Name="DRIVER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CODE" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FIRST_ISSUE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EXPIRY" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RESTRICTION" Type="Int32" Nullable="false" />
+          <Property Name="MESSAGE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DELIVERies" Relationship="Self.FK__DELIVERY__DRIVER__2E1BDC42" FromRole="DRIVERS" ToRole="DELIVERY" />
+          <NavigationProperty Name="DELIVERies1" Relationship="Self.FK__DELIVERY__DRIVER__2F10007B" FromRole="DRIVERS" ToRole="DELIVERY" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__DRIVERS__ID__286302EC" FromRole="DRIVERS" ToRole="USERS" />
+          <NavigationProperty Name="locations" Relationship="Self.FK__locations__drive__32E0915F" FromRole="DRIVERS" ToRole="locations" />
+        </EntityType>
+        <EntityType Name="TRUCK">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LOAD" Type="Int32" Nullable="false" />
+          <Property Name="SPEED" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DELIVERies" Relationship="Self.FK__DELIVERY__TRUCK__2D27B809" FromRole="TRUCKS" ToRole="DELIVERY" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SURNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="USER_TYPE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SALT" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DELIVERies" Relationship="Self.FK__DELIVERY__AUTHOR__300424B4" FromRole="USERS" ToRole="DELIVERY" />
+          <NavigationProperty Name="DRIVER" Relationship="Self.FK__DRIVERS__ID__286302EC" FromRole="USERS" ToRole="DRIVERS" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="delivery" />
+            <PropertyRef Name="driver" />
+            <PropertyRef Name="location1" />
+            <PropertyRef Name="time" />
+          </Key>
+          <Property Name="delivery" Type="Int32" Nullable="false" />
+          <Property Name="driver" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="location1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="DELIVERY1" Relationship="Self.FK__locations__deliv__31EC6D26" FromRole="locations" ToRole="DELIVERY" />
+          <NavigationProperty Name="DRIVER1" Relationship="Self.FK__locations__drive__32E0915F" FromRole="locations" ToRole="DRIVERS" />
+        </EntityType>
+        <Association Name="FK__DELIVERY__AUTHOR__300424B4">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DELIVERY">
+              <PropertyRef Name="AUTHORITY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DELIVERY__DRIVER__2E1BDC42">
+          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="1" />
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRIVERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DELIVERY">
+              <PropertyRef Name="DRIVER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DELIVERY__DRIVER__2F10007B">
+          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="1" />
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRIVERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DELIVERY">
+              <PropertyRef Name="DRIVER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DELIVERY__TRUCK__2D27B809">
+          <End Role="TRUCKS" Type="Self.TRUCK" Multiplicity="1" />
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRUCKS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DELIVERY">
+              <PropertyRef Name="TRUCK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__locations__deliv__31EC6D26">
+          <End Role="DELIVERY" Type="Self.DELIVERY" Multiplicity="1" />
+          <End Role="locations" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DELIVERY">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="locations">
+              <PropertyRef Name="delivery" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DRIVERS__ID__286302EC">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DRIVERS">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__locations__drive__32E0915F">
+          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="1" />
+          <End Role="locations" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRIVERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="locations">
+              <PropertyRef Name="driver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MaitsoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CLIENTS" EntityType="Self.CLIENT" />
+          <EntitySet Name="DELIVERies" EntityType="Self.DELIVERY" />
+          <EntitySet Name="DRIVERS" EntityType="Self.DRIVER" />
+          <EntitySet Name="TRUCKS" EntityType="Self.TRUCK" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <EntitySet Name="locations" EntityType="Self.location" />
+          <AssociationSet Name="FK__DELIVERY__AUTHOR__300424B4" Association="Self.FK__DELIVERY__AUTHOR__300424B4">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="DELIVERY" EntitySet="DELIVERies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DELIVERY__DRIVER__2E1BDC42" Association="Self.FK__DELIVERY__DRIVER__2E1BDC42">
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+            <End Role="DELIVERY" EntitySet="DELIVERies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DELIVERY__DRIVER__2F10007B" Association="Self.FK__DELIVERY__DRIVER__2F10007B">
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+            <End Role="DELIVERY" EntitySet="DELIVERies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DELIVERY__TRUCK__2D27B809" Association="Self.FK__DELIVERY__TRUCK__2D27B809">
+            <End Role="TRUCKS" EntitySet="TRUCKS" />
+            <End Role="DELIVERY" EntitySet="DELIVERies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__locations__deliv__31EC6D26" Association="Self.FK__locations__deliv__31EC6D26">
+            <End Role="DELIVERY" EntitySet="DELIVERies" />
+            <End Role="locations" EntitySet="locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DRIVERS__ID__286302EC" Association="Self.FK__DRIVERS__ID__286302EC">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__locations__drive__32E0915F" Association="Self.FK__locations__drive__32E0915F">
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+            <End Role="locations" EntitySet="locations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MaitsoModelStoreContainer" CdmEntityContainer="MaitsoEntities">
+          <EntitySetMapping Name="CLIENTS">
+            <EntityTypeMapping TypeName="MaitsoModel.CLIENT">
+              <MappingFragment StoreEntitySet="CLIENTS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="COMPANY" ColumnName="COMPANY" />
+                <ScalarProperty Name="TELEPHONE" ColumnName="TELEPHONE" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DELIVERies">
+            <EntityTypeMapping TypeName="MaitsoModel.DELIVERY">
+              <MappingFragment StoreEntitySet="DELIVERY">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ORDER_NUM" ColumnName="ORDER_NUM" />
+                <ScalarProperty Name="TRUCK" ColumnName="TRUCK" />
+                <ScalarProperty Name="DRIVER" ColumnName="DRIVER" />
+                <ScalarProperty Name="CLIENT" ColumnName="CLIENT" />
+                <ScalarProperty Name="FROM" ColumnName="FROM" />
+                <ScalarProperty Name="TO" ColumnName="TO" />
+                <ScalarProperty Name="DEPART_DAY" ColumnName="DEPART_DAY" />
+                <ScalarProperty Name="DELIVERY_DAY" ColumnName="DELIVERY_DAY" />
+                <ScalarProperty Name="MATERIAL" ColumnName="MATERIAL" />
+                <ScalarProperty Name="LOAD" ColumnName="LOAD" />
+                <ScalarProperty Name="AUTHORITY" ColumnName="AUTHORITY" />
+                <ScalarProperty Name="COMPLETED" ColumnName="COMPLETED" />
+                <ScalarProperty Name="ACCEPTED" ColumnName="ACCEPTED" />
+                <ScalarProperty Name="STARTED" ColumnName="STARTED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DRIVERS">
+            <EntityTypeMapping TypeName="MaitsoModel.DRIVER">
+              <MappingFragment StoreEntitySet="DRIVERS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+                <ScalarProperty Name="FIRST_ISSUE" ColumnName="FIRST_ISSUE" />
+                <ScalarProperty Name="EXPIRY" ColumnName="EXPIRY" />
+                <ScalarProperty Name="RESTRICTION" ColumnName="RESTRICTION" />
+                <ScalarProperty Name="MESSAGE" ColumnName="MESSAGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRUCKS">
+            <EntityTypeMapping TypeName="MaitsoModel.TRUCK">
+              <MappingFragment StoreEntitySet="TRUCKS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LOAD" ColumnName="LOAD" />
+                <ScalarProperty Name="SPEED" ColumnName="SPEED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="MaitsoModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="SURNAME" ColumnName="SURNAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="USER_TYPE" ColumnName="USER_TYPE" />
+                <ScalarProperty Name="SALT" ColumnName="SALT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="locations">
+            <EntityTypeMapping TypeName="MaitsoModel.location">
+              <MappingFragment StoreEntitySet="locations">
+                <ScalarProperty Name="delivery" ColumnName="delivery" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="location1" ColumnName="location" />
+                <ScalarProperty Name="time" ColumnName="time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

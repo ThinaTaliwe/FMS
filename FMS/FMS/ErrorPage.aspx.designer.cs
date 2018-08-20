@@ -13,57 +13,57 @@ namespace FMS {
     public partial class ErrorPage {
         
         /// <summary>
-        /// FriendlyErrorMsg control.
+        /// FMSFriendlyErrorMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FriendlyErrorMsg;
+        protected global::System.Web.UI.WebControls.Label FMSFriendlyErrorMsg;
         
         /// <summary>
-        /// DetailedErrorPanel control.
+        /// FMSDetailedErrorPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel DetailedErrorPanel;
+        protected global::System.Web.UI.WebControls.Panel FMSDetailedErrorPanel;
         
         /// <summary>
-        /// ErrorDetailedMsg control.
+        /// FMSErrorDetailedMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorDetailedMsg;
+        protected global::System.Web.UI.WebControls.Label FMSErrorDetailedMsg;
         
         /// <summary>
-        /// ErrorHandler control.
+        /// FMSErrorHandler control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorHandler;
+        protected global::System.Web.UI.WebControls.Label FMSErrorHandler;
         
         /// <summary>
-        /// InnerMessage control.
+        /// FMSInnerMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label InnerMessage;
+        protected global::System.Web.UI.WebControls.Label FMSInnerMessage;
         
         /// <summary>
-        /// InnerTrace control.
+        /// FMSInnerTrace control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label InnerTrace;
+        protected global::System.Web.UI.WebControls.Label FMSInnerTrace;
     }
 }
