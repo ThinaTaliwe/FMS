@@ -1,0 +1,78 @@
+﻿<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ACSSE Project Admin</title>
+    <!-- Yes, it's bootstrap. Got a problem with that? Now get out of here! -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/ifm3.css" rel="stylesheet">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="./">Project Admin</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav"><li class=""><a href="./"><span class="glyphicon glyphicon-home"></span> Home</a></li><li class="active"><a href="./?a=meetings"><span class="glyphicon glyphicon-comment"></span> Meetings</a></li><li class=""><a href="./?a=deliverables"><span class="glyphicon glyphicon-book"></span> Deliverables</a></li><li class=""><a href="./?a=teaminfo"><span class="glyphicon glyphicon-info-sign"></span> Team Info</a></li></ul><ul class="nav navbar-nav navbar-right"><li class="dropdown-toggle"><a>Logged in as <strong>MORUDU, KZ</strong> (Team #<strong>43</strong>)</a></li><li><a href="./?a=logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li></ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="introframe"><h1>Log New Mentor Meeting</h1><p class="lead">Complete the form below to log a new meeting that you had with your mentor.</p></div><form method="post" action="./?a=meetings" onsubmit="return postForm()">
+            <input type="hidden" name="meeting" value="save"><input type="hidden" name="comments"><div class="form-group"><h3>Team Name</h3>Colloid</div><div class="form-group"><h3>Mentor Name</h3>Mr HJC van der Westhuizen</div><div class="form-group">
+                <h3>Meeting date &amp; time</h3><small class="form-text text-muted">Select the date and time the meeting took place</small><br />	<link rel="stylesheet" href="../Content/ass/flatpickr.min.css">
+                <script src="../Content/ass/flatpickr.js"></script>
+
+                <link rel="stylesheet" href="../Content/ass/confirmDate.css">
+                <script src="../Content/ass/confirmDate.js"></script>
+                <input class=flatpickr type="text" placeholder="Select date &amp; time..." name="meetingtime"></p>
+                <script>
+                    $(".flatpickr").flatpickr({
+                        enableTime: true,
+                        altFormat: "Y-m-d H:i",
+                        altInput: true,
+                        dateFormat: "U",
+                        time_24hr: true,
+                        minuteIncrement: 5,
+                        "plugins": [new confirmDatePlugin({})],
+                        inline: false
+                    });
+                </script>
+
+            </div><div class="form-group"><h3>Members Present</h3><small class="form-text text-muted">Tick all the team members that were present at the meeting</small><br /><input type="checkbox" class="form-check-input" name="student[216090091]" id="216090091"> <label class="form-check-label" for="216090091">Khanyisile Morudu</label><br /><input type="checkbox" class="form-check-input" name="student[216009615]" id="216009615"> <label class="form-check-label" for="216009615">Thina Taliwe</label><br /><input type="checkbox" class="form-check-input" name="student[216016565]" id="216016565"> <label class="form-check-label" for="216016565">Mmeli Mavuso</label><br /><input type="checkbox" class="form-check-input" name="student[201302881]" id="201302881"> <label class="form-check-label" for="201302881">MP MOTUBA</label><br /></div><div class="form-group">
+                <h3>Meeting Comments</h3><link href="summernote/summernote.css" rel="stylesheet">
+                <script src="summernote/summernote.js"></script>
+
+<textarea name="comments" id="summernote"></textarea>
+                <script>
+                    $(document).ready(function () {
+                        $('#summernote').summernote({
+                            height: 200,
+                            placeholder: 'Write your comments here...',
+                            toolbar: [
+                                // [groupName, [list of button]]
+                                ['style', ['bold', 'italic', 'underline', 'clear']],
+                                ['font', ['strikethrough', 'superscript', 'subscript']],
+                                ['color', ['color']],
+                                ['para', ['ul', 'ol', 'paragraph']],
+                            ]
+                        });
+                    });
+                </script>
+            </div><button class="btn btn-lg btn-primary btn-block" type="submit">Log Meeting</button>
+        </form>
+    </div>
+</body>
+</html>
