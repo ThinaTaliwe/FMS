@@ -36,7 +36,7 @@ namespace FMS
       if (errorMsg == "404")
       {
         ex = new HttpException(404, httpErrorMsg, ex);
-        FriendlyErrorMsg.Text = ex.Message;
+        FMSFriendlyErrorMsg.Text = ex.Message;
       }
 
       // If the exception no longer exists, create a generic exception.
@@ -59,16 +59,16 @@ namespace FMS
 
         if (ex.InnerException != null)
         {
-          InnerMessage.Text = ex.GetType().ToString() + "<br/>" +
+          FMSInnerMessage.Text = ex.GetType().ToString() + "<br/>" +
               ex.InnerException.Message;
-          InnerTrace.Text = ex.InnerException.StackTrace;
+          FMSInnerTrace.Text = ex.InnerException.StackTrace;
         }
         else
         {
-          InnerMessage.Text = ex.GetType().ToString();
+          FMSInnerMessage.Text = ex.GetType().ToString();
           if (ex.StackTrace != null)
           {
-            InnerTrace.Text = ex.StackTrace.ToString().TrimStart();
+            FMSInnerTrace.Text = ex.StackTrace.ToString().TrimStart();
           }
         }
       }

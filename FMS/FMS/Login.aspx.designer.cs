@@ -10,60 +10,51 @@
 namespace FMS {
     
     
-    public partial class ErrorPage {
+    public partial class Login {
         
         /// <summary>
-        /// FriendlyErrorMsg control.
+        /// username control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FriendlyErrorMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText username;
         
         /// <summary>
-        /// DetailedErrorPanel control.
+        /// valdUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel DetailedErrorPanel;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator valdUser;
         
         /// <summary>
-        /// ErrorDetailedMsg control.
+        /// password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorDetailedMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword password;
         
         /// <summary>
-        /// ErrorHandler control.
+        /// valdPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorHandler;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator valdPass;
         
         /// <summary>
-        /// InnerMessage control.
+        /// btnLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label InnerMessage;
-        
-        /// <summary>
-        /// InnerTrace control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label InnerTrace;
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton btnLogin;
     }
 }
