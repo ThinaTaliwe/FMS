@@ -5,6 +5,7 @@ using System.Web;
 using System.IO;
 using System.Net.Sockets;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace FMS.App_Code
 {
@@ -115,7 +116,11 @@ namespace FMS.App_Code
                                             if (current.Read())
                                             {
                                                 Delivery deliv = Delivery.getInstance(current.GetInt32(0));
-                                                send(deliv.ToString());
+                                                var message = sendInfoTemplate();
+                                                message["response"] = deliv.jsonDelivery();
+                                                message["status"] = OK_CODE;
+                                                message["action"] = "current";
+                                                sendInfo(message);
                                             }
                                         }
                                         else
@@ -208,10 +213,14 @@ namespace FMS.App_Code
             var assignment = Util.query(query);
             if (assignment.HasRows)
             {
-                while (assignment.Read())
+                if (assignment.Read())
                 {
                     Delivery delivery = Delivery.getInstance(assignment.GetInt32(0));
-                    send("assignment " + delivery.ToString());
+                    JObject message = sendInfoTemplate();
+                    message["response"] = delivery.jsonDelivery();
+                    message["status"] = OK_CODE;
+                    message["action"] = "asignment";
+                    sendInfo(message);
                 }
             }
         }        
@@ -221,6 +230,20 @@ namespace FMS.App_Code
         public bool isVerified() { return verfied; }
 
         public string getDriver() { return driver; }
+
+        private JObject sendInfoTemplate() {
+            JObject json = new JObject();
+            json["response"] = "";
+            json["status"] = "";
+            json["action"] = "";
+            return json;
+        }
+
+        public void sendInfo(JObject json) {
+            send("json");
+            send(json.ToString());
+            send(OK_CODE);
+        }
 
         public void send(string text)
         {

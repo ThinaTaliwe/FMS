@@ -17,6 +17,8 @@ import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ConnectException;
@@ -155,16 +157,28 @@ public class DriverService extends Service {
         return false;
     }
 
-    
+    public String readUntilOK() {
+        try {
+            String text = "", part;
+            while (available()) {
+                part = read();
+                if(!(part.contains(OK_CODE) || part.contains(ERROR_CODE) || part.contains(SERVER_ERROR)))  text += part;
+                else return text;
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        } return null;
+    }
 
     /**
-     * reads a sing line from the input stream
+     * reads a single line from the input stream
      */
     public String read() {
         try {
             String text = in.nextLine();
             System.out.println("Read: " + text);
-            return text;
+            if(!text.contains("json")) return text;
+            else return readUntilOK();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -281,17 +295,25 @@ public class DriverService extends Service {
                             if (available()) {
                                 String text = read();
                                 if (text != null) {
-                                    String[] parts = text.split(" ");
-                                    switch (parts[0]) {
-                                        case "assignment":
-                                            delivery = Delivery.newAssignment(parts[1] + " " + parts[2]);
-                                            notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
-                                            sendLocation(delivery.getId());
-                                            setTimer(5000);
-                                            break;
-                                        default:
-                                            System.out.println(text);
-                                            break;
+                                    if(text.startsWith("{")) {
+                                        JSONObject json = new JSONObject(text);
+                                        String action = json.getString("action");
+                                        switch (action) {
+                                            case "assignment":
+                                                delivery = Delivery.newAssignment(text);
+                                                notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
+                                                sendLocation(delivery.getId());
+                                                setTimer(5000);
+                                                break;
+                                            default:
+                                                System.out.println(text);
+                                                break;
+                                        }
+                                    } else {
+                                        String[] parts = text.split(" ");
+                                        switch (parts[0]) {
+
+                                        }
                                     }
                                 }
                             }

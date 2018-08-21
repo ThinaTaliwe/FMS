@@ -30,8 +30,7 @@ namespace FMS.App_Code
             return getCoords(to);
         }
 
-        override
-        public string ToString()
+        public JObject jsonDelivery()
         {
             JObject deliv = new JObject();
             deliv["id"] = id;
@@ -45,9 +44,16 @@ namespace FMS.App_Code
             deliv["material"] = material;
             deliv["load"] = load;
             deliv["departDay"] = departDay;
+            return deliv;
+        }
+
+        override
+        public string ToString()
+        {
+
             //string output = "";
             //output += "id=" + id + ";orderNum=" + orderNum + ";truck=" + truck + ";client=" + new Client(client).getName() + ";from=" + from.Replace(' ', '+') + ";to=" + to.Replace(' ', '+') + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
-            return deliv.ToString();
+            return jsonDelivery().ToString();
         }
 
         public static string[] LastLocation(int id) {
