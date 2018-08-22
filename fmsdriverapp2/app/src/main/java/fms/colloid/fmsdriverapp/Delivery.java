@@ -44,6 +44,7 @@ public class Delivery {
             return deliv;
         } catch(Exception ex) {
             ex.printStackTrace();
+            System.err.println("Invalid delivery " + delivery);
         }
         return null;
     }

@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class Trip extends Base implements OnMapReadyCallback {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     private MapView map;
-    private Button info, startEnd;
+    private Button info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,24 +121,6 @@ public class Trip extends Base implements OnMapReadyCallback {
     @Override
     protected void setControls() {
         try {
-            startEnd = (Button) findViewById(R.id.start_end_trip);
-            final String strStart = service.currentDelivery().started() ? "End Trip" : "Start Trip";
-            startEnd.setText(strStart);
-            startEnd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        Delivery deliv = service.currentDelivery();
-                        if(!deliv.started()) {
-                            service.startDelivery(deliv);
-                        } else service.completeDelivery(deliv);
-                        service.sendLocation(deliv.getId());
-                        startEnd.setText("End Trip");
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            });
 
             info = (Button) findViewById(R.id.info);
             info.setOnClickListener(new View.OnClickListener() {
@@ -148,22 +131,13 @@ public class Trip extends Base implements OnMapReadyCallback {
                         if(inflater == null) inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View layout = inflater.inflate(R.layout.trip_control, null);
 
-                        final Button deliv, getRoute, viewRoute;
-                        deliv = (Button) layout.findViewById(R.id.deliv_info);
+                        Delivery delivery = service.currentDelivery();
+                        final EditText delivInfo = (EditText) layout.findViewById(R.id.deliv_info);
+                        delivInfo.setText(delivery.toString());
+                        final Button getRoute, viewRoute, startEnd;
                         getRoute = (Button) layout.findViewById(R.id.get_route);
                         viewRoute = (Button) layout.findViewById(R.id.view_route);
-
-                        deliv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                    showInfo(service.currentDelivery().toString());
-                                }
-                                catch(Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        });
+                        startEnd = (Button) layout.findViewById(R.id.start_end);
 
                         getRoute.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -199,6 +173,14 @@ public class Trip extends Base implements OnMapReadyCallback {
                                 catch(Exception ex) {
                                     ex.printStackTrace();
                                 }
+                            }
+                        });
+
+                        startEnd.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
                             }
                         });
 

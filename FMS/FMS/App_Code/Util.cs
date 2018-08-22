@@ -13,6 +13,26 @@ namespace FMS.App_Code
     public class Util
     {
 
+        public static double totalDistance(List<string> coords) {
+            double[] current;
+            string prev = "";
+            double total = 0;
+            foreach(var coord in coords) {
+                if (coord == prev)
+                    continue;
+                else {
+                   try {
+                        current = getCoords(coord);
+                        total += distance(current, getCoords(prev));
+                        prev = coord;
+                   } catch (Exception ex) {
+                        Util.print(ex.ToString() + "invalid coords: " + coord);
+                   } 
+                }
+            }
+            return total;
+        }
+
         public static string getLatLong(string address) {
             try {
                 string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";

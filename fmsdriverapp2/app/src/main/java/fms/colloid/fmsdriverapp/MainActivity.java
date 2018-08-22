@@ -56,8 +56,12 @@ public class MainActivity extends Base {
             @Override
             public void onClick(View view) {
                 try {
-                    service.send("current");
+                    service.connect();
+                    service.send("1234567770123 MMELI");
                     String response = service.read();
+                    service.clearInputStream();
+                    service.send("current");
+                    response = service.read();
                     service.setDelivery(Delivery.newAssignment(response));
                     service.notification("Current delivery", service.currentDelivery().toString(), new Intent(MainActivity.this, Trip.class));
                 } catch (Exception e) {

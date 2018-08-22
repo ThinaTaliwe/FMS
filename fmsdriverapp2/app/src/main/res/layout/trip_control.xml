@@ -4,13 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#000" >>
+    android:background="#000" ><![CDATA[>
 
-    <Button
+    ]]>
+
+    <EditText
         android:id="@+id/deliv_info"
         android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/start_end"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="delivery info" />
+        android:text="Start trip" />
 
     <Button
         android:id="@+id/view_route"

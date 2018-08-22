@@ -116,11 +116,7 @@ namespace FMS.App_Code
                                             if (current.Read())
                                             {
                                                 Delivery deliv = Delivery.getInstance(current.GetInt32(0));
-                                                var message = sendInfoTemplate();
-                                                message["response"] = deliv.jsonDelivery();
-                                                message["status"] = OK_CODE;
-                                                message["action"] = "current";
-                                                sendInfo(message);
+                                                send(deliv.ToString());
                                             }
                                         }
                                         else
@@ -215,12 +211,8 @@ namespace FMS.App_Code
             {
                 if (assignment.Read())
                 {
-                    Delivery delivery = Delivery.getInstance(assignment.GetInt32(0));
-                    JObject message = sendInfoTemplate();
-                    message["response"] = delivery.jsonDelivery();
-                    message["status"] = OK_CODE;
-                    message["action"] = "asignment";
-                    sendInfo(message);
+                    Delivery delivery = Delivery.getInstance(assignment.GetInt32(0));;
+                    send(delivery.ToString());
                 }
             }
         }        
@@ -231,26 +223,12 @@ namespace FMS.App_Code
 
         public string getDriver() { return driver; }
 
-        private JObject sendInfoTemplate() {
-            JObject json = new JObject();
-            json["response"] = "";
-            json["status"] = "";
-            json["action"] = "";
-            return json;
-        }
-
-        public void sendInfo(JObject json) {
-            send("json");
-            send(json.ToString());
-            send(OK_CODE);
-        }
-
         public void send(string text)
         {
             try
             {
                 System.Diagnostics.Debug.WriteLine("Sending: " + text);
-                outStream.WriteLine(text);
+                outStream.WriteLine(text.Replace("\r\n", ""));
                 outStream.Flush();
             }
             catch (Exception ex)

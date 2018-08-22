@@ -157,19 +157,6 @@ public class DriverService extends Service {
         return false;
     }
 
-    public String readUntilOK() {
-        try {
-            String text = "", part;
-            while (available()) {
-                part = read();
-                if(!(part.contains(OK_CODE) || part.contains(ERROR_CODE) || part.contains(SERVER_ERROR)))  text += part;
-                else return text;
-            }
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        } return null;
-    }
-
     /**
      * reads a single line from the input stream
      */
@@ -177,8 +164,7 @@ public class DriverService extends Service {
         try {
             String text = in.nextLine();
             System.out.println("Read: " + text);
-            if(!text.contains("json")) return text;
-            else return readUntilOK();
+            return text;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -288,6 +274,7 @@ public class DriverService extends Service {
                     try {
                         if(longitude == null || latitude == null) System.out.println(getLocation());
                         if (verified()) {
+                            sendLocation(delivery.getId());
                             if (!conn.isConnected()) reconnect();
                             else if (delivery != null) {
                                 sendLocation(delivery.getId());

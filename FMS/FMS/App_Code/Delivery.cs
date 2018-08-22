@@ -43,7 +43,7 @@ namespace FMS.App_Code
             deliv["toAddress"] = getAddress(to);
             deliv["material"] = material;
             deliv["load"] = load;
-            deliv["departDay"] = departDay;
+            deliv["departDay"] = departDay.ToString();
             return deliv;
         }
 
