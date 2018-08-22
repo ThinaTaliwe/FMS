@@ -256,6 +256,21 @@ public class DriverService extends Service {
         }
     }
 
+    public boolean login(String name, String pass) {
+        try {
+            connect();
+            send(name + " " + pass);
+            String response;
+            response = read();
+            if(response.contains(OK_CODE)) {
+                setDriver(name, pass);
+                return true;
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        } return false;
+    }
+
     public Delivery currentDelivery() {
         return delivery;
     }
@@ -274,7 +289,6 @@ public class DriverService extends Service {
                     try {
                         if(longitude == null || latitude == null) System.out.println(getLocation());
                         if (verified()) {
-                            sendLocation(delivery.getId());
                             if (!conn.isConnected()) reconnect();
                             else if (delivery != null) {
                                 sendLocation(delivery.getId());

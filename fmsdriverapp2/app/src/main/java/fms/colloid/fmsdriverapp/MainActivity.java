@@ -58,6 +58,7 @@ public class MainActivity extends Base {
                 try {
                     service.connect();
                     service.send("1234567770123 MMELI");
+                    service.setDriver("1234567770123", "MMELI");
                     String response = service.read();
                     service.clearInputStream();
                     service.send("current");

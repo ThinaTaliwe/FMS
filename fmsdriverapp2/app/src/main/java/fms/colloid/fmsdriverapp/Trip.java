@@ -40,7 +40,6 @@ public class Trip extends Base implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
-        showLoading();
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -48,6 +47,7 @@ public class Trip extends Base implements OnMapReadyCallback {
         map = (MapView) findViewById(R.id.map);
         map.onCreate(mapViewBundle);
         map.getMapAsync(this);
+        showLoading();
     }
 
     @Override
@@ -64,6 +64,7 @@ public class Trip extends Base implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         System.out.println("getMapAsync()");
+        dismiss();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
