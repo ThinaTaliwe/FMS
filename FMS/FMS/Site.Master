@@ -107,7 +107,9 @@
                             <!-- Sub menu -->
                             <ul>
                                 <li><a href="CreateDelivery">Create Delivery</a></li>
-                                <li><a href="UpdateDelivery">All Delivery</a></li>
+                                <li><a href="UpdateDelivery">Upcoming Deliveries</a></li>
+                                <li><a href="PreviousDelivery">Previous Delivery</a></li>
+                                
                             </ul>
                         </li>
                         <li class="submenu">
@@ -117,31 +119,45 @@
                             </a>
                             <!-- Sub menu -->
                             <ul>
+                                <li><a href="View Trucks">View Trucks</a></li>
                                 <li><a href="AddTruck">Add Truck</a></li>
-                                
+                                <li><a href="DeleteTruck">Delete Truck</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
                             <a href="#">
-                                <i class="glyphicon glyphicon-user"></i> Drivers
+                                <i class="glyphicon glyphicon-phone"></i> Drivers
                                 <span class="caret pull-right"></span>
                             </a>
                             <!-- Sub menu -->
                             <ul>
+                                <li><a href="ViewDrivers">View Drivers</a></li>
                                 <li><a href="AddDriver">Add Driver</a></li>
                                 <li><a href="DeleteDriver">Delete Driver</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
                             <a href="#">
-                                <i class="glyphicon glyphicon-user"></i> User
+                                <i class="glyphicon glyphicon-dashboard"></i> Client
                                 <span class="caret pull-right"></span>
                             </a>
                             <!-- Sub menu -->
                             <ul>
-                                <li><a href="AddUser">Add User</a></li>
-                                <li><a href="Update User">Update User</a></li>
-                                <li><a href="DeleteUser">Delete User</a></li>
+                                <li><a href="ViewClients">View Clients</a></li>
+                                <li><a href="AddClient">Add Client</a></li>
+                                <li><a href="DeleteClient">Delete Client</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-user"></i> Employee
+                                <span class="caret pull-right"></span>
+                            </a>
+                            <!-- Sub menu -->
+                            <ul>
+                                <li><a href="ViewEmployees">View Employee</a></li>
+                                <li><a href="AddUser">Add Employee</a></li>
+                                <li><a href="DeleteUser">Delete Employee</a></li>
                             </ul>
                         </li>
                         <li class="submenu">

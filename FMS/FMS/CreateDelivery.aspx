@@ -123,6 +123,7 @@
     var destinationInput;
     var originIDs;
     var destIDs;
+    var tester;
     // This example requires the Places library. Include the libraries=places
     // parameter when you first load the API. For example:
     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
@@ -186,12 +187,21 @@
                 me.originPlaceId = place.place_id;
                 originIDs = place.name;
                 //txtHidden.value = originIDs;
+<<<<<<< HEAD
                 //window.alert(place.coords);
+=======
+                
+                 
+>>>>>>> b972f54f60ec26641b361691918197606442e9fa
             } else {
                 me.destinationPlaceId = place.place_id;
                 destIDs = place.name
                 //window.alert(destIDs);
+<<<<<<< HEAD
             }
+=======
+            } 
+>>>>>>> b972f54f60ec26641b361691918197606442e9fa
             me.route();
         });
         // document.getElementById("run").innerHTML
@@ -212,6 +222,7 @@
                 //document.getElementById("itemRun").innerText = originInput;
                 //originIDs = originPlaceId;
                 //window.alert(origin.lat());
+
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
