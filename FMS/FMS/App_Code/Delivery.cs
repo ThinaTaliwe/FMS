@@ -16,7 +16,7 @@ namespace FMS.App_Code
         private int load { get; set; }
         private DateTime departDay { get; set; }
         private DateTime arrivalDay { get; set; }
-        private Admin authority { get; set; }
+        private string authority { get; set; }
         private DateTime accepted { get; set; }
         private DateTime started { get; set; }
         private DateTime completed { get; set; }
@@ -89,7 +89,7 @@ namespace FMS.App_Code
                     delivery.material = deliv.GetString(6);
                     delivery.load = deliv.GetInt32(7);
                     delivery.departDay = deliv.GetDateTime(8);
-                    delivery.authority = new Admin(deliv.GetString(9));
+                    delivery.authority = deliv.GetString(9);
                     if (!deliv.IsDBNull(10))
                     {
                         delivery.accepted = deliv.GetDateTime(10);
@@ -172,7 +172,7 @@ namespace FMS.App_Code
         public void setLoad(int value) { load = value; }
         public void setDepartDay(DateTime value) { departDay = value; }
         public void setArrivalDay(DateTime value) { arrivalDay = value; }
-        public void setAuthority(Admin value) { authority = value; }
+        public void setAuthority(string value) { authority = value; }
 
         public int getID() {return id;}
         public string getOrderNumber() { return orderNum; }
@@ -185,7 +185,7 @@ namespace FMS.App_Code
         public int getLoad() { return load; }
         public DateTime getDepartDay() { return departDay; }
         public DateTime getArrivalDay() { return arrivalDay; }
-        public Admin getAuthority() { return authority; }
+        public Admin getAuthority() { return new Admin(authority); }
         public DateTime getAccepted() { return accepted; }
         public DateTime getStarted() { return started; }
         public DateTime getCompleted() { return completed; }

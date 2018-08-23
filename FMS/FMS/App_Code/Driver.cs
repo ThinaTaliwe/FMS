@@ -14,14 +14,14 @@ namespace FMS.App_Code
 
         public Driver(string id) : base(id)
         {
-            var query = "SELECT * FROM DRIVERS WHERE ID LIKE '" + id + "'";
+            var query = "SELECT code, first_issue, expiry, restriction FROM DRIVERS WHERE ID LIKE '" + id + "'";
             var driver = Util.query(query);
             while (driver.Read())
             {
-                code = Convert.ToString(driver.GetString(1));
-                firstIssue = driver.GetDateTime(2);
-                expiry = driver.GetDateTime(3);
-                restriction = Convert.ToInt32(driver.GetInt32(4));
+                code = Convert.ToString(driver.GetString(0));
+                firstIssue = driver.GetDateTime(1);
+                expiry = driver.GetDateTime(2);
+                restriction = Convert.ToInt32(driver.GetInt32(3));
             }
         }
 

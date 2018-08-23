@@ -56,10 +56,8 @@ public class MainActivity extends Base {
             @Override
             public void onClick(View view) {
                 try {
-                    service.connect();
-                    service.send("1234567770123 MMELI");
-                    service.setDriver("1234567770123", "MMELI");
-                    String response = service.read();
+                    service.login("1234567770123", "MMELI");
+                    String response;
                     service.clearInputStream();
                     service.send("current");
                     response = service.read();

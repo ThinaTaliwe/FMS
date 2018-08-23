@@ -19,17 +19,34 @@ namespace FMS
                 {
                     while (delivs.Read())
                     {
-                        list.Items.Add(new ListItem(Convert.ToString(delivs.GetInt32(0))));
+                        delivery.Items.Add(new ListItem(Convert.ToString(delivs.GetInt32(0))));
                     }
+                }
+                query = "select id from users where user_type like 'driver'";
+                var dr = Util.query(query);
+                if(dr.HasRows) {
+                    while (dr.Read())
+                        driver.Items.Add(new ListItem(dr.GetString(0)));
+                }
+                query = "select id from trucks";
+                var tr = Util.query(query);
+                if(tr.HasRows) {
+                    while (tr.Read())
+                        truck.Items.Add(new ListItem(tr.GetString(0)));
                 }
             }
         }
 
         protected void getDeliv(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(list.SelectedValue);
-            Delivery delivery = Delivery.getInstance(id);
-            text.Text = delivery.ToString() + delivery.getTruck().getID();
+            int id = Convert.ToInt32(delivery.SelectedValue);
+            string tr, dr;
+            tr = truck.SelectedValue;
+            dr = driver.SelectedValue;
+            Delivery d = Delivery.getInstance(id);
+            Truck t = new Truck(tr);
+            Driver dri = new Driver(dr);
+            text.Text = t.getID() + "  " + dri.getName() + d.ToString();
         }
     }
 }

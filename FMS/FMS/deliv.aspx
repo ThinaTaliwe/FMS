@@ -9,9 +9,10 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:DropDownList ID="list" runat="server">
-            </asp:DropDownList>
-            <asp:Button ID="button" runat="server" OnClick="getDeliv" Text="View Delivery" />
+            <asp:DropDownList ID="delivery" runat="server"></asp:DropDownList>
+            <asp:DropDownList ID="driver" runat="server"></asp:DropDownList>
+            <asp:DropDownList ID="truck" runat="server"></asp:DropDownList>
+            <asp:Button ID="button" runat="server" OnClick="getDeliv" Text="View" />
         </div>
         <asp:Label ID="text" runat="server" Text="" ></asp:Label>
     </form>
