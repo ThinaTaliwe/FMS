@@ -150,9 +150,9 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\Maitso.mdf" />
-    <Content Include="App_Data\Maitso_log.ldf">
-      <DependentUpon>Maitso.mdf</DependentUpon>
+    <Content Include="App_Data\Maitso2.mdf" />
+    <Content Include="App_Data\Maitso2_log.ldf">
+      <DependentUpon>Maitso2.mdf</DependentUpon>
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
