@@ -7,9 +7,9 @@ namespace FMS.App_Code
 {
     public class Truck
     {
-        private string id;
-        private int load;
-        private int speed;
+        private string id{ get; set; }
+        private int load { get; set; }
+        private int speed { get; set; }
 
         public Truck(string id)
         {
@@ -18,7 +18,7 @@ namespace FMS.App_Code
             if(truck.HasRows) {
                 if (truck.Read())
                 {
-                    id = truck.GetString(0);
+                    this.id = truck.GetString(0);
                     load = truck.GetInt32(1);
                     speed = truck.GetInt32(2);
                 }

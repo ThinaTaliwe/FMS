@@ -23,7 +23,9 @@ namespace FMS.App_Code
                 else {
                    try {
                         current = getCoords(coord);
-                        total += distance(current, getCoords(prev));
+                        double dis = distance(current, getCoords(prev));
+                        Util.print(dis.ToString() + " " + prev + " " + coord);
+                        total += dis;
                         prev = coord;
                    } catch (Exception ex) {
                         Util.print(ex.ToString() + "invalid coords: " + coord);

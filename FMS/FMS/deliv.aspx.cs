@@ -46,7 +46,15 @@ namespace FMS
             Delivery d = Delivery.getInstance(id);
             Truck t = new Truck(tr);
             Driver dri = new Driver(dr);
-            text.Text = t.getID() + "  " + dri.getName() + d.ToString();
+            string query = "select location from locations where delivery like '" + delivery.SelectedValue + "' order by time asc";
+            var reader = Util.query(query);
+            List<string> list = new List<string>();
+            if(reader.HasRows) {
+                while (reader.Read())
+                    list.Add(reader.GetString(0));
+            }
+
+            text.Text = t.getID() + "  " + dri.getName() + Util.totalDistance(list);// + d.ToString();
         }
     }
 }

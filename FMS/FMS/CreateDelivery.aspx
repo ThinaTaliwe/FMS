@@ -187,21 +187,12 @@
                 me.originPlaceId = place.place_id;
                 originIDs = place.name;
                 //txtHidden.value = originIDs;
-<<<<<<< HEAD
                 //window.alert(place.coords);
-=======
-                
-                 
->>>>>>> b972f54f60ec26641b361691918197606442e9fa
             } else {
                 me.destinationPlaceId = place.place_id;
                 destIDs = place.name
                 //window.alert(destIDs);
-<<<<<<< HEAD
             }
-=======
-            } 
->>>>>>> b972f54f60ec26641b361691918197606442e9fa
             me.route();
         });
         // document.getElementById("run").innerHTML
