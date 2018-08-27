@@ -12,8 +12,9 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack) {
-                string query = "select id from delivery";
+            string query;
+            if (!IsPostBack) {
+                query = "select id from delivery";
                 var delivs = Util.query(query);
                 if (delivs.HasRows)
                 {
@@ -34,6 +35,15 @@ namespace FMS
                     while (tr.Read())
                         truck.Items.Add(new ListItem(tr.GetString(0)));
                 }
+
+            }
+            query = "select location from locations where delivery like 12";
+            var locs = Util.query(query);
+            if(locs.HasRows) {
+                string strLocs = "";
+                while (locs.Read())
+                    strLocs += locs.GetString(0) + "*";
+                locations.Value = strLocs;
             }
         }
 

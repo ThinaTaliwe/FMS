@@ -27,6 +27,32 @@ namespace FMS.App_Code
             }
         }
 
+        public double totalDistance(int deliveyID) {
+            double distance = 0;
+            try {
+                var query = "select id from delivery where truck like '" + id  + "'";
+                var ids = Util.query(query);
+                if(ids.HasRows) {
+                    List<string> strIDS = new List<string>();
+                    while (ids.Read())
+                        strIDS.Add(ids.GetString(0));
+                    foreach(string deliv in strIDS) {
+                        query = "select location from locations where delivery like '" + deliv + "' order by time asc";
+                        var locations = Util.query(query);
+                        if(locations.HasRows)
+                        {
+                            List<string> coords = new List<string>();
+                            while (locations.Read())
+                                coords.Add(locations.GetString(0));
+                            distance += Util.totalDistance(coords);
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                Util.print(ex.ToString());
+            } return distance;
+        }
+
         public string getID() { return id; }
         public int getLoad() { return load; }
         public int getSpeed() { return speed; }

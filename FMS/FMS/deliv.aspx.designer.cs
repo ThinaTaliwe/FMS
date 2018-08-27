@@ -58,6 +58,15 @@ namespace FMS {
         protected global::System.Web.UI.WebControls.Button button;
         
         /// <summary>
+        /// locations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden locations;
+        
+        /// <summary>
         /// text control.
         /// </summary>
         /// <remarks>
