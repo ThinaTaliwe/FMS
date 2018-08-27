@@ -13,6 +13,34 @@ namespace FMS.App_Code
     public class Util
     {
 
+        public static JObject averageSpeed(List<string> coords, List<DateTime> times) {
+            JObject json = new JObject();
+            if (coords.Capacity == times.Capacity)
+            {
+                double distance = 0;
+                string currentCoords, prevCoords = coords[0];
+                DateTime currentTime, prevTime = times[0];
+                JArray marks = new JArray();
+                for (int c = 1; c < coords.Capacity; c++) {
+                    JToken jsonMark = new JObject();
+                    currentCoords = coords[c];
+                    currentTime = times[c];
+                    var disChange = Util.distance(getCoords(prevCoords), getCoords(currentCoords));
+                    var timeChange = currentTime.Subtract(prevTime);
+                    distance += disChange;
+                    jsonMark["distance"] = distance;
+                    jsonMark["speed"] = disChange / (timeChange.TotalSeconds / 3600.0);
+                    jsonMark["time"] = currentTime;
+                    jsonMark["coords"] = currentCoords;
+                    marks.Insert(c, jsonMark);
+                    prevCoords = currentCoords;
+                }
+            }
+            else
+                return null;
+            return json;
+        }
+
         public static double totalDistance(List<string> coords) {
             double[] current;
             string prev = "";
@@ -150,7 +178,7 @@ namespace FMS.App_Code
                 lon1 = from[1];
                 lat2 = to[0];
                 lon2 = to[1];
-                var r = 6371000.0;
+                var r = 6371.0;
                 var phi1 = toRad(lat1);
                 var phi2 = toRad(lat2);
                 var deltaPhi = toRad(lat2 - lat1);
