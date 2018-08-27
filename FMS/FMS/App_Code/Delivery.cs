@@ -83,9 +83,12 @@ namespace FMS.App_Code
             deliv.departDay = DateTime.Now;
             deliv.authority = authority;
             deliv.to = getCoords(home.getLocation());
+            deliv.from = new Driver(driver).lastLocation();
             Delivery.save(deliv);
             return deliv;
         }
+
+        public void save() { Delivery.save(this); }
 
         public static void save(Delivery deliv) {
             var query = "insert into delivery(order_num, truck, driver, client, [load], material, depary_day, authority, [from], [to])";
@@ -99,8 +102,9 @@ namespace FMS.App_Code
             query += "'" + deliv.departDay + "', ";
             query += "'" + deliv.authority + "', ";
             query += "'" + deliv.from + "', ";
-            query += "'" + deliv.to + "', ";
+            query += "'" + deliv.to + "'";
             query += ");";
+            Util.query(query);
         }
 
         public static Delivery getInstance(int id)

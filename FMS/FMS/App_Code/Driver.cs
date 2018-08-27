@@ -25,6 +25,13 @@ namespace FMS.App_Code
             }
         }
 
+        public string lastLocation() {
+            var query = "select location from location where driver like '" + id + "' order by time desc";
+            var location = Util.query(query);
+            location.Read();
+            return location.GetString(0);
+        }
+
         public void setCode(string value) { code = value; }
         public void setExpiry(DateTime value) { expiry = value; }
         public void setRestriction(int value) { restriction = value; }

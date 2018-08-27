@@ -47,6 +47,9 @@ namespace FMS{
         void RegisterRoutes(RouteCollection routes)
         {
             routes.MapPageRoute("delivery", "delivery/{id}", "~/EditDelivery.aspx");
+            routes.MapPageRoute("driver", "driver/{id}", "~/drivers.aspx");
+            routes.MapPageRoute("clients", "clients/{id}", "~/clients.aspx");
+            routes.MapPageRoute("trucks", "trucks/{id}", "~/trucks.aspx");
         }
     }
 
