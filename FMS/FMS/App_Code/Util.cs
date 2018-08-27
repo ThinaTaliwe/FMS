@@ -17,7 +17,7 @@ namespace FMS.App_Code
             JObject json = new JObject();
             if (coords.Capacity == times.Capacity)
             {
-                double distance = 0;
+                double distance = 0, hours = 0;
                 string currentCoords, prevCoords = coords[0];
                 DateTime currentTime, prevTime = times[0];
                 JArray marks = new JArray();
@@ -26,15 +26,20 @@ namespace FMS.App_Code
                     currentCoords = coords[c];
                     currentTime = times[c];
                     var disChange = Util.distance(getCoords(prevCoords), getCoords(currentCoords));
-                    var timeChange = currentTime.Subtract(prevTime);
+                    var timeChange = currentTime.Subtract(prevTime).TotalSeconds / 3600.0;
                     distance += disChange;
+                    hours += timeChange;
                     jsonMark["distance"] = distance;
-                    jsonMark["speed"] = disChange / (timeChange.TotalSeconds / 3600.0);
+                    jsonMark["speed"] = disChange / timeChange;
                     jsonMark["time"] = currentTime;
                     jsonMark["coords"] = currentCoords;
-                    marks.Insert(c, jsonMark);
+                    marks.Add(jsonMark);
                     prevCoords = currentCoords;
                 }
+                json["info"] = marks;
+                json["distance"] = distance;
+                json["speed"] = distance / hours;
+                json["time"] = hours;
             }
             else
                 return null;

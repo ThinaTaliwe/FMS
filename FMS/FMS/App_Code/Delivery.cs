@@ -50,9 +50,6 @@ namespace FMS.App_Code
         override
         public string ToString()
         {
-
-            //string output = "";
-            //output += "id=" + id + ";orderNum=" + orderNum + ";truck=" + truck + ";client=" + new Client(client).getName() + ";from=" + from.Replace(' ', '+') + ";to=" + to.Replace(' ', '+') + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
             return jsonDelivery().ToString();
         }
 
@@ -68,6 +65,19 @@ namespace FMS.App_Code
             } catch (Exception ex) {
                 Util.print(ex.ToString());
             } return null;
+        }
+
+        public static Delivery homeRun(string driver, string truck) {
+            var query = "select id from clients where name like 'mmeli'";
+            var id = Util.query(query);
+            Delivery deliv = new Delivery();
+            deliv.orderNum = "home";
+            deliv.truck = truck;
+            deliv.driver = driver;
+            id.Read();
+            deliv.client = id.GetInt32(0);
+
+            return deliv;
         }
 
         public static Delivery getInstance(int id)

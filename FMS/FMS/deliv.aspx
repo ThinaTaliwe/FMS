@@ -55,31 +55,8 @@
                     map: map
                 });
             }
-            //marker = new google.maps.marker({
-            //    position: mylatlng,
-            //    map: map,
-            //    draggable: true,
-            //    title: 'hello world!',
-            //    dragend: function (event) {
-            //        var lat = event.latlng.lat();
-            //        var lng = event.latlng.lng();
-            //        alert('draggable ' + lat + ":" + lng);
-            //        console.log(lat + ":" + lng);
-            //    }
-            //});
         }
-
-        //for(var loc in arrPlaces) {
-        //    var place = arrPlaces[loc];
-        //    var mark = place.split(":");
-        //    console.log(mark);
-        //    var theMarker = new google.maps.Marker({
-        //        position: new google.maps.LatLng(parseFloat(mark[0]), parseFloat(mark[1])),
-        //        icon: icon,
-        //        title: loc,
-        //        map: map
-        //    });
-        //}
+        
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=initMap"
