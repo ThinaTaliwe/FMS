@@ -67,17 +67,40 @@ namespace FMS.App_Code
             } return null;
         }
 
-        public static Delivery homeRun(string driver, string truck) {
+        public static Delivery homeRun(string driver, string truck, string authority) {
             var query = "select id from clients where name like 'mmeli'";
             var id = Util.query(query);
+            id.Read();
+            Client home = new Client(id.GetInt32(0));
             Delivery deliv = new Delivery();
             deliv.orderNum = "home";
             deliv.truck = truck;
             deliv.driver = driver;
             id.Read();
-            deliv.client = id.GetInt32(0);
-
+            deliv.client = home.getID();
+            deliv.load = 0;
+            deliv.material = "empty";
+            deliv.departDay = DateTime.Now;
+            deliv.authority = authority;
+            deliv.to = getCoords(home.getLocation());
+            Delivery.save(deliv);
             return deliv;
+        }
+
+        public static void save(Delivery deliv) {
+            var query = "insert into delivery(order_num, truck, driver, client, [load], material, depary_day, authority, [from], [to])";
+            query += "values(";
+            query += "'" + deliv.orderNum + "', ";
+            query += "'" + deliv.truck + "', ";
+            query += "'" + deliv.driver + "', ";
+            query += "'" + deliv.client + "', ";
+            query += "'" + deliv.load + "', ";
+            query += "'" + deliv.material + "', ";
+            query += "'" + deliv.departDay + "', ";
+            query += "'" + deliv.authority + "', ";
+            query += "'" + deliv.from + "', ";
+            query += "'" + deliv.to + "', ";
+            query += ");";
         }
 
         public static Delivery getInstance(int id)
@@ -158,7 +181,7 @@ namespace FMS.App_Code
             }
             return DriverHandle.INTERNAL_ERROR;
         }
-
+           
         public static string getCoords(string text)
         {
             try
