@@ -90,10 +90,12 @@ namespace FMS.App_Code
 
         public void save() { Delivery.save(this); }
 
-        public static void save(Delivery deliv) {
+        public static void save(Delivery deliv)
+        {
             var query = "select * from delivery where id like " + deliv.id;
             var isValid = Util.query(query);
-            if(!isValid.HasRows){
+            if (!isValid.HasRows)
+            {
                 query = "insert into delivery(order_num, truck, driver, client, [load], material, depary_day, authority, [from], [to])";
                 query += "values(";
                 query += "'" + deliv.orderNum + "', ";
@@ -107,7 +109,9 @@ namespace FMS.App_Code
                 query += "'" + deliv.from + "', ";
                 query += "'" + deliv.to + "'";
                 query += ");";
-            } else {
+            }
+            else
+            {
                 query = "update delivery where id like " + deliv.id;
                 query += "set order_num = '" + deliv.orderNum + "',";
                 query += "truck = '" + deliv.truck + "',";
