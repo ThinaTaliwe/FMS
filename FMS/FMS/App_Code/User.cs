@@ -7,11 +7,11 @@ namespace FMS.App_Code
 {
     public class User
     {
-        private string id;
-        private string name;
-        private string surname;
-        private string email;
-        private string type;
+        protected string id;
+        protected string name;
+        protected string surname;
+        protected string email;
+        protected string type;
 
         public User (string id)
         {

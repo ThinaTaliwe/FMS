@@ -91,19 +91,36 @@ namespace FMS.App_Code
         public void save() { Delivery.save(this); }
 
         public static void save(Delivery deliv) {
-            var query = "insert into delivery(order_num, truck, driver, client, [load], material, depary_day, authority, [from], [to])";
-            query += "values(";
-            query += "'" + deliv.orderNum + "', ";
-            query += "'" + deliv.truck + "', ";
-            query += "'" + deliv.driver + "', ";
-            query += "'" + deliv.client + "', ";
-            query += "'" + deliv.load + "', ";
-            query += "'" + deliv.material + "', ";
-            query += "'" + deliv.departDay + "', ";
-            query += "'" + deliv.authority + "', ";
-            query += "'" + deliv.from + "', ";
-            query += "'" + deliv.to + "'";
-            query += ");";
+            var query = "select * from delivery where id like " + deliv.id;
+            var isValid = Util.query(query);
+            if(!isValid.HasRows){
+                query = "insert into delivery(order_num, truck, driver, client, [load], material, depary_day, authority, [from], [to])";
+                query += "values(";
+                query += "'" + deliv.orderNum + "', ";
+                query += "'" + deliv.truck + "', ";
+                query += "'" + deliv.driver + "', ";
+                query += "'" + deliv.client + "', ";
+                query += "'" + deliv.load + "', ";
+                query += "'" + deliv.material + "', ";
+                query += "'" + deliv.departDay + "', ";
+                query += "'" + deliv.authority + "', ";
+                query += "'" + deliv.from + "', ";
+                query += "'" + deliv.to + "'";
+                query += ");";
+            } else {
+                query = "update delivery where id like " + deliv.id;
+                query += "set order_num = '" + deliv.orderNum + "',";
+                query += "truck = '" + deliv.truck + "',";
+                query += "driver = '" + deliv.driver + "',";
+                query += "client = '" + deliv.client + "',";
+                query += "[load] = '" + deliv.load + "',";
+                query += "material = '" + deliv.material + "',";
+                query += "depart_day = '" + deliv.departDay + "',";
+                query += "authority = '" + deliv.authority + "',";
+                query += "[from] = '" + deliv.from + "',";
+                query += "[to] = '" + deliv.to + "'";
+                query += "where id like " + deliv.id + ";";
+            }
             Util.query(query);
         }
 

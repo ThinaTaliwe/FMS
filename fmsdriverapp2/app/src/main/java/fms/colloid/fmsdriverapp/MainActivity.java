@@ -67,7 +67,7 @@ public class MainActivity extends Base {
                     e.printStackTrace();
                 }
             }
-        });       
+        });
 
         login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {

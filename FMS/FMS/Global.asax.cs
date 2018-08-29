@@ -35,7 +35,7 @@ namespace FMS{
             }
         }
 
-       private void startServer(int port) {
+        private void startServer(int port) {
             Util.print("Starting server");
             if (rest != null)
                 rest = null;
