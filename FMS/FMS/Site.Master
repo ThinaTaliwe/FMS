@@ -16,6 +16,8 @@
     <webopt:bundlereference runat="server" path="~/Content/ass" />
     <webopt:bundlereference runat="server" path="~/Content/ass/css/styles.css" />
     <webopt:bundlereference runat="server" path="~/Content/ass/css/Map.css" />
+    <webopt:bundlereference runat="server" path="~/Content/ass/css/stats.css" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- Image for favicon -->
        <link href="~/fav.jpg" rel="shortcut icon" type="image/x-icon" />
@@ -28,6 +30,26 @@
          <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="Content/ass/js/forms.js"></script>
      <script src="Content/ass/js/calender.js"></script>
+    <link href="https://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" rel="stylesheet" media="screen">
+
+    <link rel="stylesheet" href="vendors/morris/morris.css">
+
+
+    <script src="vendors/jquery.knob.js"></script>
+    <script src="vendors/raphael-min.js"></script>
+    <script src="vendors/morris/morris.min.js"></script>
+
+    <script src="vendors/flot/jquery.flot.js"></script>
+    <script src="vendors/flot/jquery.flot.categories.js"></script>
+    <script src="vendors/flot/jquery.flot.pie.js"></script>
+    <script src="vendors/flot/jquery.flot.time.js"></script>
+    <script src="vendors/flot/jquery.flot.stack.js"></script>
+    <script src="vendors/flot/jquery.flot.resize.js"></script>
+
+    <script src="js/custom.js"></script>
+    <script src="js/stats.js"></script>
+
+  
 </head>
 <body>
     <form runat="server">
@@ -119,7 +141,7 @@
                             </a>
                             <!-- Sub menu -->
                             <ul>
-                                <li><a href="View Trucks">View Trucks</a></li>
+                                <li><a href="ViewAllTrucks">View Trucks</a></li>
                                 <li><a href="AddTruck">Add Truck</a></li>
                                 <li><a href="DeleteTruck">Delete Truck</a></li>
                             </ul>
@@ -169,7 +191,7 @@
                             <ul>
                                 <li><a href="TruckReport">Truck Report</a></li>
                                 <li><a href="DriverReport">Driver Report</a></li>
-                                <li><a href="DeliveryReport">Delivery Report</a></li>
+                                <li><a href="DeliveryReport">Client Report</a></li>
                             </ul>
                         </li>
                     </ul>

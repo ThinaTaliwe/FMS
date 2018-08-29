@@ -7,7 +7,7 @@
 	  			<div class="row">
 	  				<div class="col-md-12 panel-info">
 			  			<div class="content-box-header panel-heading">
-		  					<div class="panel-title ">Truck Report</div>
+		  					<div class="panel-title ">Truck Report </div>
 						
 			  			</div>
 
@@ -18,59 +18,29 @@
 					<div class="col-md-12">
 						<div class="content-box-large">
 		  				<div class="panel-body">
-                              <form class="form-horizontal" role="form">
-
-                                   <div class="form-group">
-												<label class="control-label col-md-2">Select Truck</label>
-											<div class="col-md-10">
-												<select class="form-control">
-													<option>ABC123GP</option>
-													<option>DEF456GP</option>
-													<option>GHI789GP</option>
-													
-												</select>
-											</div>
-										</div>
-
-                                   <div class="form-group">
-										    <label  class="col-sm-2 control-label">From</label>
-										    <div class="col-sm-10">
-										     	
-						                    <form action="/action_page.php">
-                                              <input class="form-control" type="date" id="TruckReportFrom">
-                                            </form>
-										    </div>
-										  </div>
-                                 <div class="form-group">
-										    <label  class="col-sm-2 control-label">To</label>
-										    <div class="col-sm-10">
-										     	
-						                    <form action="/action_page.php">
-                                              <input class="form-control" type="date" id="TruckReportTo">
-                                            </form>
-										    </div>
-                                     	
-										  </div>
-                                   
-                                   <div class="form-group">
-												<label class="control-label col-md-2">Select Graph Type</label>
-											<div class="col-md-10">
-												<select class="form-control">
-													<option>Table</option>
-													<option>Graph</option>
-													
-												</select>
-											</div>
-										</div>
-                               
-                                  
-				  						
-												<button class="btn btn-primary" type="submit" onclick="TruckReport()">
-													<i class="fa fa-save" ></i>
-													Search
-												</button>			 
-										  
-										</form>
+                                			<div class="content-box-large">
+  				<div class="panel-heading">
+					<div class="panel-title">This Month</div>
+					
+					<div class="panel-options">
+						<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+						<a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+					</div>
+				</div>
+  				<div class="panel-body">
+  					<div class="row">
+  						<div class="col-md-6">
+  							<div id="hero-bar" style="height: 230px;"></div>
+  						</div>
+  						<div class="col-md-3">
+  							<div id="hero-donut" style="height: 230px;"></div>
+  						</div>
+  						<div class="col-md-3">
+  							<div id="hero-donut2" style="height: 230px;"></div>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
                             </div>
 		  					
 		  			</div>
