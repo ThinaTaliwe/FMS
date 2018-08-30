@@ -132,22 +132,6 @@ namespace FMS.App_Code
             return DriverHandle.INTERNAL_ERROR;
         }
 
-        public static string pad(string text) {
-            string result = "";
-            bool remove = false;
-            foreach(char c in text) {
-                if (c == '<')
-                    remove = true;
-                if (c == '>') {
-                    remove = false;
-                    continue;
-                }
-                if (!remove)
-                    result += c;
-            }
-            return result.Replace(' ', '_');
-        }
-
         public static string getRoute(double[] from, double[] to)
         {
             try

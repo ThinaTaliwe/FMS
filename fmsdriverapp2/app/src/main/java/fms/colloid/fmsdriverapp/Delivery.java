@@ -1,5 +1,7 @@
 package fms.colloid.fmsdriverapp;
 
+import android.util.JsonReader;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Delivery {
@@ -18,7 +21,7 @@ public class Delivery {
     private String client;
     private String fromCoords, fromAddress;
     private String toCoords, toAddress;
-    private String route;
+    private JSONObject route;
     private String material;
     private int load;
     private Date departDay, arrivalDay;
@@ -94,58 +97,45 @@ public class Delivery {
     }
 
     public ArrayList<LatLng> getPolylines() {
-        String[][] info = getRouteInfo();
-        ArrayList<LatLng> polyline = new ArrayList<>();
-        for(int c = 1; c < info.length; c++) {
-            try {
-                List<LatLng> list = PolyUtil.decode(info[c][2]);
-                polyline.addAll(list);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        ArrayList<LatLng> points = null;
+        try {
+            JSONArray steps = route.getJSONArray("route");
+            JSONObject step;
+            for(int c = 0; c < steps.length(); c++) {
+                step = steps.getJSONObject(c);
+                List<LatLng> coords = PolyUtil.decode(step.getString("polyline"));
+                points.addAll(coords);
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return polyline;
+        return points;
     }
 
     public String getRouteDirections() {
-        String[][] info = getRouteInfo();
-        String result = "";
-        for(int c = 1; c < info.length; c++) {
-            try {
-                result += unPad(info[c][1]) + "\n";
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        String directions = "";
+        try {
+            JSONArray steps = route.getJSONArray("route");
+            JSONObject step;
+            for(int c = 0; c < steps.length(); c++) {
+                step = steps.getJSONObject(c);
+                directions += step.getString("instruction");
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return result;
+        return directions;
     }
 
     public String getRouteDistance() {
+        String distance = "";
         try {
-            String[][] result = getRouteInfo();
-            return unPad(result[0][0]) + "\n";
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } return null;
-    }
-
-    public String[][] getRouteInfo() {
-        System.out.println("getRouteInfo()");
-        String[][] result = null;
-        try {
-            String[] parts = route.split(" ");
-            result = new String[parts.length][3];
-            result[0][0] = unPad(parts[0]);
-            for(int c = 1; c < parts.length; c++) {
-                result[c] = parts[c].split("#");
-            }
-        } catch (Exception ex) {
+            distance = route.getString("distance");
+        } catch(Exception ex) {
             ex.printStackTrace();
         }
-        return result;
+        return distance;
     }
-
-    public String unPad(String text) { return text.replace('_', ' ').replace('#',  ' '); }
 
     public boolean hasRoute() {return !(route == null); }
 
@@ -153,8 +143,14 @@ public class Delivery {
         if(route.contains(DriverService.ERROR_CODE) || route.contains(DriverService.OK_CODE) || route.contains(DriverService.SERVER_ERROR)){
             System.out.println("Invalid route given");
         } else {
-            this.route = route;
-            System.out.println("Route set");
+            try {
+                this.route = new JSONObject(route);
+                System.out.println("Route set");
+                return;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            System.out.println("Route invalid");
         }
     }
 
