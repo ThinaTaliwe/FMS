@@ -12,6 +12,7 @@ namespace FMS.App_Code
 {
     public class Util
     {
+        public static string key = "AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
 
         public static JObject averageSpeed(List<string> coords, List<DateTime> times) {
             JObject json = new JObject();
@@ -70,7 +71,7 @@ namespace FMS.App_Code
 
         public static string getLatLong(string address) {
             try {
-                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=" + key;
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var results = obj["results"][0];
@@ -86,7 +87,7 @@ namespace FMS.App_Code
         public static string getAddress(double[] coords) {
             try {
                 string link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
-                link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=" + key;
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var addr = obj["results"][0];
@@ -157,7 +158,7 @@ namespace FMS.App_Code
             {
                 String link = "https://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=";
                 link += from[0].ToString().Replace(',', '.') + "," + from[1].ToString().Replace(',', '.') + "&destination=";
-                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.');// + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.') + "&key=" + key;
                 return readLink(link);
             }
             catch (Exception ex)
