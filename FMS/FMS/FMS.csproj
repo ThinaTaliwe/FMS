@@ -256,6 +256,7 @@
     <Content Include="TableTest.aspx" />
     <Content Include="TruckReport.aspx" />
     <Content Include="UpdateDelivery.aspx" />
+    <Content Include="ViewAllTrucks.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -439,6 +440,13 @@
     </Compile>
     <Compile Include="UpdateDelivery.aspx.designer.cs">
       <DependentUpon>UpdateDelivery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewAllTrucks.aspx.cs">
+      <DependentUpon>ViewAllTrucks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewAllTrucks.aspx.designer.cs">
+      <DependentUpon>ViewAllTrucks.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
