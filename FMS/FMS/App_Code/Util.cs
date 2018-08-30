@@ -101,8 +101,6 @@ namespace FMS.App_Code
 
         public static string getRoutePoints(string route)
         {
-            List<string> info = new List<string>();
-            string result = "";
             JObject json = new JObject();
             try
             {
@@ -110,30 +108,28 @@ namespace FMS.App_Code
                 if (obj["geocoded_waypoints"][0]["geocoder_status"].ToString().Contains("OK"))
                 {
                     JToken legs = obj["routes"][0]["legs"][0];
-                    info.Add(legs["distance"]["text"].ToString());
+                    json["distance"] = legs["distance"]["text"].ToString();
                     var steps = legs["steps"];
                     string text = "";
+                    JToken token;
+                    JArray jsonSteps = new JArray();
                     foreach (var step in steps)
                     {
-                        text = pad(step["distance"]["text"].ToString());
-                        text += "#" + pad(step["html_instructions"].ToString());
-                        text += "#" + step["polyline"]["points"];
-                        info.Add(text);
-                        text = "";
+                        token = new JObject();
+                        token["distance"] = step["distance"]["text"];
+                        token["instruction"] = step["html_instructions"];
+                        token["polyline"] = step["polyline"]["points"];
+                        jsonSteps.Add(token);
                     }
-                    foreach (var data in info)
-                        result += data + " ";
-                    return result;
+                    json["route"] = jsonSteps;
+                    return json.ToString();
                 }
-                else
-                    result = DriverHandle.INTERNAL_ERROR;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                result = DriverHandle.INTERNAL_ERROR;
             }
-            return result;
+            return DriverHandle.INTERNAL_ERROR;
         }
 
         public static string pad(string text) {

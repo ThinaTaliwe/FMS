@@ -38,7 +38,10 @@ namespace FMS{
         private void startServer(int port) {
             Util.print("Starting server");
             if (rest != null)
+            {
                 rest = null;
+                Thread.Sleep(3000);
+            }
             rest = new DriverREST(1998);
             Thread server = new Thread(rest.start);
             server.Start();
