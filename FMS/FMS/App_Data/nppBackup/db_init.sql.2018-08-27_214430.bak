@@ -60,6 +60,8 @@ CREATE TABLE [dbo].[DELIVERY] (
     FOREIGN KEY ([AUTHORITY]) REFERENCES [dbo].[USERS] ([ID])
 );
 
+
+
 create table locations (
 	[delivery] int not null,
 	[driver] char(13) not null,

@@ -17,11 +17,14 @@ namespace FMS.App_Code
          */
         private TcpListener server = null;
         private static List<DriverHandle> handles = null;
+        private bool running = false;
+        
 
         public DriverREST(int port)
         {
             server = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
             handles = new List<DriverHandle>();
+            running = true;
         }
 
         /*
@@ -31,38 +34,32 @@ namespace FMS.App_Code
         {
             try {
                 server.Start();
-                lock(server) {
-                    while (true)
+                while (running)
+                {
+                    try
                     {
-                        try
+                        DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
+                        lock (handle)
                         {
-                            DriverHandle handle = new DriverHandle(server.AcceptTcpClient());
-                            lock (handle) {
-                                if (!handles.Contains(handle)) {
-                                    handles.Add(handle);
-                                    Thread t = new Thread(handle.handle);
-                                    t.Start();
-                                }
+                            if (!handles.Contains(handle))
+                            {
+                                handles.Add(handle);
+                                Thread t = new Thread(handle.handle);
+                                t.Start();
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Debug.WriteLine(ex);
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex);
                     }
                 }
             } catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex + " restarting server");
-                try
-                {
-                    server.Stop();
-                    server.Start();
-                }
-                catch (Exception e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e);
-                }
+                System.Diagnostics.Debug.WriteLine(ex + "server crashed");
+                running = false;
             }
         }
+
+        public bool isRunning() { return running; }
     }
 }

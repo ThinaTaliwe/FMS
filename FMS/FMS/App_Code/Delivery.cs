@@ -1,40 +1,56 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 
 namespace FMS.App_Code
 {
     public class Delivery
     {
-        private int id;
-        private string orderNum;
-        private string truck;
-        private string driver;
-        private int client;
-        private string from;
-        private string to;
-        private string material;
-        private int load;
-        private DateTime departDay;
-        private DateTime arrivalDay;
-        private Admin authority;
-        private DateTime accepted, started, completed;
+        private int id { get; set; }
+        private string orderNum { get; set; }
+        private string truck { get; set; }
+        private string driver { get; set; }
+        private int client { get; set; }
+        private string from { get; set; }
+        private string to { get; set; }
+        private string material { get; set; }
+        private int load { get; set; }
+        private DateTime departDay { get; set; }
+        private DateTime arrivalDay { get; set; }
+        private string authority { get; set; }
+        private DateTime accepted { get; set; }
+        private DateTime started { get; set; }
+        private DateTime completed { get; set; }
 
         public string getFromCoords() {
-            var coords = Util.getCoords(from);
-            return coords[0] + ":" + coords[1];
+            return getCoords(from);
         }
 
         public string getToCoords()
         {
-            var coords = Util.getCoords(to);
-            return coords[0] + ":" + coords[1];
+            return getCoords(to);
+        }
+
+        public JObject jsonDelivery()
+        {
+            JObject deliv = new JObject();
+            deliv["id"] = id;
+            deliv["orderNum"] = orderNum;
+            deliv["truck"] = truck;
+            deliv["client"] = new Client(client).getCompany();
+            deliv["fromCoords"] = getCoords(from);
+            deliv["fromAddress"] = getAddress(from);
+            deliv["toCoords"] = getCoords(to);
+            deliv["toAddress"] = getAddress(to);
+            deliv["material"] = material;
+            deliv["load"] = load;
+            deliv["departDay"] = departDay.ToString();
+            return deliv;
         }
 
         override
         public string ToString()
         {
-            string output = "";
-            output += "id=" + id + ";orderNum=" + orderNum + ";truck=" + truck + ";client=" + new Client(client).getName() + ";from=" + from.Replace(' ', '+') + ";to=" + to.Replace(' ', '+') + ";material=" + material + ";load=" + load + ";departday=" + departDay.ToString();
-            return output;
+            return jsonDelivery().ToString();
         }
 
         public static string[] LastLocation(int id) {
@@ -51,6 +67,19 @@ namespace FMS.App_Code
             } return null;
         }
 
+        public static Delivery homeRun(string driver, string truck) {
+            var query = "select id from clients where name like 'mmeli'";
+            var id = Util.query(query);
+            Delivery deliv = new Delivery();
+            deliv.orderNum = "home";
+            deliv.truck = truck;
+            deliv.driver = driver;
+            id.Read();
+            deliv.client = id.GetInt32(0);
+
+            return deliv;
+        }
+
         public static Delivery getInstance(int id)
         {
             var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed FROM DELIVERY WHERE ID LIKE '" + id + "'";
@@ -61,16 +90,16 @@ namespace FMS.App_Code
                 while (deliv.Read())
                 {
                     delivery.id = id;
-                    delivery.setOrderNum(deliv.GetString(0));
-                    delivery.setTruck(deliv.GetString(1));
-                    delivery.setDriver(deliv.GetString(2));
-                    delivery.setClient(deliv.GetInt32(3));
-                    delivery.setFrom(getCoords(deliv.GetString(4)));
-                    delivery.setTo(getCoords(deliv.GetString(5)));
-                    delivery.setMaterial(deliv.GetString(6));
-                    delivery.setLoad(deliv.GetInt32(7));
-                    delivery.setDepartDay(deliv.GetDateTime(8));
-                    delivery.setAuthority(new Admin(deliv.GetString(9)));
+                    delivery.orderNum = deliv.GetString(0);
+                    delivery.truck = deliv.GetString(1);
+                    delivery.driver = deliv.GetString(2);
+                    delivery.client = deliv.GetInt32(3);
+                    delivery.from = deliv.GetString(4);
+                    delivery.to = deliv.GetString(5);
+                    delivery.material = deliv.GetString(6);
+                    delivery.load = deliv.GetInt32(7);
+                    delivery.departDay = deliv.GetDateTime(8);
+                    delivery.authority = deliv.GetString(9);
                     if (!deliv.IsDBNull(10))
                     {
                         delivery.accepted = deliv.GetDateTime(10);
@@ -153,20 +182,20 @@ namespace FMS.App_Code
         public void setLoad(int value) { load = value; }
         public void setDepartDay(DateTime value) { departDay = value; }
         public void setArrivalDay(DateTime value) { arrivalDay = value; }
-        public void setAuthority(Admin value) { authority = value; }
+        public void setAuthority(string value) { authority = value; }
 
         public int getID() {return id;}
         public string getOrderNumber() { return orderNum; }
         public Truck getTruck() { return new Truck(truck); }
         public Driver getDriver() { return new Driver(driver); }
         public Client getClient() { return new Client(client); }
-        public string getTo() { return to; }
-        public string getFrom() { return from; }
+        public string getToAddress() { return getAddress(to); }
+        public string getFromAddress() { return getAddress(from); ; }
         public string geMaterial() { return material; }
         public int getLoad() { return load; }
         public DateTime getDepartDay() { return departDay; }
         public DateTime getArrivalDay() { return arrivalDay; }
-        public Admin getAuthority() { return authority; }
+        public Admin getAuthority() { return new Admin(authority); }
         public DateTime getAccepted() { return accepted; }
         public DateTime getStarted() { return started; }
         public DateTime getCompleted() { return completed; }

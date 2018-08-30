@@ -5,10 +5,11 @@ using System.Web;
 using System.IO;
 using System.Net.Sockets;
 using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace FMS.App_Code
 {
-    public class DriverHandle
+    public class DriverHandle 
     {
         /*
          * DriverHandle class handles driver request using RESTful services
@@ -208,10 +209,10 @@ namespace FMS.App_Code
             var assignment = Util.query(query);
             if (assignment.HasRows)
             {
-                while (assignment.Read())
+                if (assignment.Read())
                 {
-                    Delivery delivery = Delivery.getInstance(assignment.GetInt32(0));
-                    send("assignment " + delivery.ToString());
+                    Delivery delivery = Delivery.getInstance(assignment.GetInt32(0));;
+                    send(delivery.ToString());
                 }
             }
         }        
@@ -227,7 +228,7 @@ namespace FMS.App_Code
             try
             {
                 System.Diagnostics.Debug.WriteLine("Sending: " + text);
-                outStream.WriteLine(text);
+                outStream.WriteLine(text.Replace("\r\n", ""));
                 outStream.Flush();
             }
             catch (Exception ex)

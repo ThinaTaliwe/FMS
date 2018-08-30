@@ -1,0 +1,6 @@
+{
+  "projects": ["list", "of", "projects" ],
+  "sdk": {
+    "version": "<dotnet sdk version>"
+  }
+}

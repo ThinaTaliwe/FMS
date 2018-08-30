@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import java.util.ArrayList;
@@ -33,13 +34,12 @@ public class Trip extends Base implements OnMapReadyCallback {
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     private MapView map;
-    private Button info, startEnd;
+    private Button info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip);
-        showLoading();
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
@@ -47,6 +47,7 @@ public class Trip extends Base implements OnMapReadyCallback {
         map = (MapView) findViewById(R.id.map);
         map.onCreate(mapViewBundle);
         map.getMapAsync(this);
+        showLoading();
     }
 
     @Override
@@ -63,6 +64,7 @@ public class Trip extends Base implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         System.out.println("getMapAsync()");
+        dismiss();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -71,7 +73,7 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.setTrafficEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(true);
         map.getUiSettings().setAllGesturesEnabled(true);
-        LatLng dest = service.currentDelivery().getToInLatLong();
+        LatLng dest = service.currentDelivery().getToCoords();
         map.addMarker(new MarkerOptions().position(dest).title("Destination"));
         //map.moveCamera(CameraUpdateFactory.newLatLngZoom(delmas, 10));
         map.getUiSettings().setMapToolbarEnabled(true);
@@ -120,24 +122,6 @@ public class Trip extends Base implements OnMapReadyCallback {
     @Override
     protected void setControls() {
         try {
-            startEnd = (Button) findViewById(R.id.start_end_trip);
-            final String strStart = service.currentDelivery().started() ? "End Trip" : "Start Trip";
-            startEnd.setText(strStart);
-            startEnd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        Delivery deliv = service.currentDelivery();
-                        if(!deliv.started()) {
-                            service.startDelivery(deliv);
-                        } else service.completeDelivery(deliv);
-                        service.sendLocation(deliv.getId());
-                        startEnd.setText("End Trip");
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            });
 
             info = (Button) findViewById(R.id.info);
             info.setOnClickListener(new View.OnClickListener() {
@@ -148,22 +132,13 @@ public class Trip extends Base implements OnMapReadyCallback {
                         if(inflater == null) inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View layout = inflater.inflate(R.layout.trip_control, null);
 
-                        final Button deliv, getRoute, viewRoute;
-                        deliv = (Button) layout.findViewById(R.id.deliv_info);
+                        Delivery delivery = service.currentDelivery();
+                        final EditText delivInfo = (EditText) layout.findViewById(R.id.deliv_info);
+                        delivInfo.setText(delivery.toString());
+                        final Button getRoute, viewRoute, startEnd;
                         getRoute = (Button) layout.findViewById(R.id.get_route);
                         viewRoute = (Button) layout.findViewById(R.id.view_route);
-
-                        deliv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                    showInfo(service.currentDelivery().toString());
-                                }
-                                catch(Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        });
+                        startEnd = (Button) layout.findViewById(R.id.start_end);
 
                         getRoute.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -199,6 +174,14 @@ public class Trip extends Base implements OnMapReadyCallback {
                                 catch(Exception ex) {
                                     ex.printStackTrace();
                                 }
+                            }
+                        });
+
+                        startEnd.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
                             }
                         });
 

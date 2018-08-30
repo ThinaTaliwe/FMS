@@ -56,15 +56,18 @@ public class MainActivity extends Base {
             @Override
             public void onClick(View view) {
                 try {
+                    service.login("1234567770123", "MMELI");
+                    String response;
+                    service.clearInputStream();
                     service.send("current");
-                    String response = service.read();
+                    response = service.read();
                     service.setDelivery(Delivery.newAssignment(response));
                     service.notification("Current delivery", service.currentDelivery().toString(), new Intent(MainActivity.this, Trip.class));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
+        });       
 
         login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {

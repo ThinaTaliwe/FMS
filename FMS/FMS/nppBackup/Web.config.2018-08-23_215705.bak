@@ -4,13 +4,14 @@
   https://go.microsoft.com/fwlink/?LinkId=169433
   -->
 <configuration>
-  <appSettings>
-    <!-- Azure Storage: colloid -->
-    <add key="colloid_AzureStorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=colloid;AccountKey=CznTPihuAWMFrpbGICgHuFOF5PorKTKb0Jl2QQEAF6Mkg+UrFZMa5ibeOcPV7pVvQoonXZREGWXz3HWcW2SWQg==" />
-  </appSettings>
   <connectionStrings>
+<<<<<<< HEAD
     <add name="conn" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\theDB.mdf;Integrated Security=SSPI" providerName="System.Data.SqlClient" />
     <add name="conn2" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\theDB.mdf;Integrated Security=SSPI" providerName="System.Data.SqlClient" />
+=======
+    <add name="conn" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Maitso2.mdf;Integrated Security=SSPI" providerName="System.Data.SqlClient" />
+    <add name="conn2" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Maitso2.mdf;Integrated Security=SSPI" providerName="System.Data.SqlClient" />
+>>>>>>> b972f54f60ec26641b361691918197606442e9fa
   </connectionStrings>
   <system.web>
     <sessionState timeout="60" />
