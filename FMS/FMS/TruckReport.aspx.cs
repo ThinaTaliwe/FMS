@@ -21,7 +21,7 @@ namespace FMS
             if(tr.HasRows) {
                 tr.Read();
                 Truck theTruck = new Truck(tr.GetString(0));
-                return new string [] {truck, Convert.ToString(theTruck.totalDistance())}
+                return new string[] { truck, Convert.ToString(theTruck.totalDistance()) };
             }
             return null;
         }
