@@ -172,13 +172,11 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
+    <Content Include="App_Data\No.mdf" />
+    <Content Include="App_Data\No_log.ldf">
+      <DependentUpon>No.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\theDB.mdf" />
-    <Content Include="App_Data\theDB.mdf">
-      <DependentUpon>theDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\theDB_log.ldf">
-      <DependentUpon>theDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />
