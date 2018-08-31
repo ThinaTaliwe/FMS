@@ -27,7 +27,7 @@ namespace FMS.App_Code
             }
         }
 
-        public double totalDistance(int deliveyID) {
+        public double totalDistance() {
             double distance = 0;
             try {
                 var query = "select id from delivery where truck like '" + id  + "'";
