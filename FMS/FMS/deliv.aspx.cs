@@ -64,7 +64,10 @@ namespace FMS
                     list.Add(reader.GetString(0));
             }
 
-            text.Text = t.getID() + "  " + dri.getName() + Util.totalDistance(list);// + d.ToString();
+            text.Text = t.getID() + "  " + dri.getName() + Util.totalDistance(list);
+            if(d.speedInfo() != null) {
+                text.Text += d.speedInfo().ToString();
+            }
         }
     }
 }

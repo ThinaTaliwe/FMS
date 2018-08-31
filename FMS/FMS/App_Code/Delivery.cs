@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace FMS.App_Code
 {
@@ -65,6 +66,21 @@ namespace FMS.App_Code
             } catch (Exception ex) {
                 Util.print(ex.ToString());
             } return null;
+        }
+
+        public JObject speedInfo() {
+            var query = "select location, time from locations where delivery like " + id;
+            var points = Util.query(query);
+            if(points.HasRows) {
+                List<string> coords = new List<string>();
+                List<DateTime> times = new List<DateTime>();
+                while(points.Read()) {
+                    coords.Add(points.GetString(0));
+                    times.Add(points.GetDateTime(1));
+                }
+                return Util.averageSpeed(coords, times);
+            }
+            return null;
         }
 
         public static Delivery homeRun(string driver, string truck, string authority) {
