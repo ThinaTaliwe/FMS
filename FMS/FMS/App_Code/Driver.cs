@@ -25,6 +25,26 @@ namespace FMS.App_Code
             }
         }
 
+        public double hoursWorked(DateTime time) {
+            var query = "select started, completed from delivery where completed > " + time;
+            var reader = Util.query(query);
+            double hours = 0;
+            if(reader.HasRows) {
+                while(reader.Read()) {
+                    var diff = reader.GetDateTime(1).Minute - reader.GetDateTime(0).Minute;
+                    hours += diff;
+                }
+            }
+            return hours / 60.0;
+        }
+
+        public string lastLocation() {
+            var query = "select location from location where driver like '" + id + "' order by time desc";
+            var location = Util.query(query);
+            location.Read();
+            return location.GetString(0);
+        }
+
         public void setCode(string value) { code = value; }
         public void setExpiry(DateTime value) { expiry = value; }
         public void setRestriction(int value) { restriction = value; }

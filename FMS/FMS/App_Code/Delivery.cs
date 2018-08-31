@@ -67,17 +67,65 @@ namespace FMS.App_Code
             } return null;
         }
 
-        public static Delivery homeRun(string driver, string truck) {
+        public static Delivery homeRun(string driver, string truck, string authority) {
             var query = "select id from clients where name like 'mmeli'";
             var id = Util.query(query);
+            id.Read();
+            Client home = new Client(id.GetInt32(0));
             Delivery deliv = new Delivery();
             deliv.orderNum = "home";
             deliv.truck = truck;
             deliv.driver = driver;
             id.Read();
-            deliv.client = id.GetInt32(0);
-
+            deliv.client = home.getID();
+            deliv.load = 0;
+            deliv.material = "empty";
+            deliv.departDay = DateTime.Now;
+            deliv.authority = authority;
+            deliv.to = getCoords(home.getLocation());
+            deliv.from = new Driver(driver).lastLocation();
+            Delivery.save(deliv);
             return deliv;
+        }
+
+        public void save() { Delivery.save(this); }
+
+        public static void save(Delivery deliv)
+        {
+            var query = "select * from delivery where id like " + deliv.id;
+            var isValid = Util.query(query);
+            if (!isValid.HasRows)
+            {
+                query = "insert into delivery(order_num, truck, driver, client, [load], material, depary_day, authority, [from], [to])";
+                query += "values(";
+                query += "'" + deliv.orderNum + "', ";
+                query += "'" + deliv.truck + "', ";
+                query += "'" + deliv.driver + "', ";
+                query += "'" + deliv.client + "', ";
+                query += "'" + deliv.load + "', ";
+                query += "'" + deliv.material + "', ";
+                query += "'" + deliv.departDay + "', ";
+                query += "'" + deliv.authority + "', ";
+                query += "'" + deliv.from + "', ";
+                query += "'" + deliv.to + "'";
+                query += ");";
+            }
+            else
+            {
+                query = "update delivery where id like " + deliv.id;
+                query += "set order_num = '" + deliv.orderNum + "',";
+                query += "truck = '" + deliv.truck + "',";
+                query += "driver = '" + deliv.driver + "',";
+                query += "client = '" + deliv.client + "',";
+                query += "[load] = '" + deliv.load + "',";
+                query += "material = '" + deliv.material + "',";
+                query += "depart_day = '" + deliv.departDay + "',";
+                query += "authority = '" + deliv.authority + "',";
+                query += "[from] = '" + deliv.from + "',";
+                query += "[to] = '" + deliv.to + "'";
+                query += "where id like " + deliv.id + ";";
+            }
+            Util.query(query);
         }
 
         public static Delivery getInstance(int id)
@@ -158,7 +206,7 @@ namespace FMS.App_Code
             }
             return DriverHandle.INTERNAL_ERROR;
         }
-
+           
         public static string getCoords(string text)
         {
             try

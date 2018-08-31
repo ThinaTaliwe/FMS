@@ -35,10 +35,13 @@ namespace FMS{
             }
         }
 
-       private void startServer(int port) {
+        private void startServer(int port) {
             Util.print("Starting server");
             if (rest != null)
+            {
                 rest = null;
+                Thread.Sleep(3000);
+            }
             rest = new DriverREST(1998);
             Thread server = new Thread(rest.start);
             server.Start();
@@ -47,6 +50,9 @@ namespace FMS{
         void RegisterRoutes(RouteCollection routes)
         {
             routes.MapPageRoute("delivery", "delivery/{id}", "~/EditDelivery.aspx");
+            routes.MapPageRoute("driver", "driver/{id}", "~/drivers.aspx");
+            routes.MapPageRoute("clients", "clients/{id}", "~/clients.aspx");
+            routes.MapPageRoute("trucks", "trucks/{id}", "~/trucks.aspx");
         }
     }
 
