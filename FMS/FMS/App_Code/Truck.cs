@@ -33,10 +33,10 @@ namespace FMS.App_Code
                 var query = "select id from delivery where truck like '" + id  + "'";
                 var ids = Util.query(query);
                 if(ids.HasRows) {
-                    List<string> strIDS = new List<string>();
+                    List<int> strIDS = new List<int>();
                     while (ids.Read())
-                        strIDS.Add(ids.GetString(0));
-                    foreach(string deliv in strIDS) {
+                        strIDS.Add(ids.GetInt32(0));
+                    foreach(int deliv in strIDS) {
                         query = "select location from locations where delivery like '" + deliv + "' order by time asc";
                         var locations = Util.query(query);
                         if(locations.HasRows)
@@ -44,7 +44,9 @@ namespace FMS.App_Code
                             List<string> coords = new List<string>();
                             while (locations.Read())
                                 coords.Add(locations.GetString(0));
-                            distance += Util.totalDistance(coords);
+                            var diff = Util.totalDistance(coords);
+                            distance += diff;
+                            Util.print("distance: " + diff + " delivery: " + deliv);
                         }
                     }
                 }

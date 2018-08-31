@@ -12,7 +12,8 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            var report = truckReport("ADC123GP");
+            Response.Write(report[0] + " " + report[1]);
         }
 
         public string[] truckReport(string truck) {
