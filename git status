@@ -1,0 +1,259 @@
+[33mcommit 2188c3bcab29c1bcc7db71b42c55de67e013d133[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 57fcc4b e053d1a
+Author: Maitso <khamorudu@gmail.com>
+Date:   Fri Aug 31 10:44:09 2018 +0200
+
+    Merge branch 'master' of https://github.com/IFMTYP/team43
+
+[33mcommit 57fcc4b77a24f69a1d4490074e5de6328dbac52b[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Fri Aug 31 10:43:54 2018 +0200
+
+    Graphs
+
+[33mcommit e053d1ab29c4a28fa4ac0cdfdcacdcd26aebf200[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Fri Aug 31 04:17:21 2018 +0200
+
+    fixed
+
+[33mcommit 944fa6b90c2225b2f4ad66215ffe284aa14ee19b[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Fri Aug 31 04:16:41 2018 +0200
+
+    added truckreport() to truckreport.aspx
+
+[33mcommit 9d815337e84fb4224723b7d75d6a195bcf2d3c12[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Thu Aug 30 18:38:37 2018 +0200
+
+    made delivery on app receive json
+
+[33mcommit ad8986725512cd5f6b9b9b29a19a69b0060511ee[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Thu Aug 30 18:17:53 2018 +0200
+
+    made Util.getRoutePoints() return a json string
+
+[33mcommit b56a6ca1481d03aeb5def55bd8be58528f31571e[m
+Merge: 8b48bf7 4d148fd
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Thu Aug 30 18:07:44 2018 +0200
+
+    Merge branch 'master' of https://github.com/IFMTYP/team43
+
+[33mcommit 4d148fdc8a478d0d07e703ad44738d10fe05155b[m
+Merge: 069b0f5 cd519e5
+Author: Maitso <khamorudu@gmail.com>
+Date:   Thu Aug 30 18:06:23 2018 +0200
+
+    Merge branch 'master' of https://github.com/IFMTYP/team43
+
+[33mcommit 8b48bf7eba7a0ece50745882f5bcc90d88396116[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Thu Aug 30 17:46:57 2018 +0200
+
+    saved api key variable
+
+[33mcommit 069b0f5f15d235dc76ff853a81021cbceea4dc4c[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Thu Aug 30 17:46:03 2018 +0200
+
+    Truck Report
+
+[33mcommit e5cfdac4d89e45b12d79f3b7445900062ab3b651[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Wed Aug 29 14:36:12 2018 +0200
+
+    whatever i put in there
+
+[33mcommit 08f46b0c58af56024435a1fce05eaddae582f282[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Wed Aug 29 06:18:27 2018 +0200
+
+    added hoursWorked to drivers
+
+[33mcommit 9044c477ff5f09cfda3a13a2219649ed270cc9ef[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Wed Aug 29 05:07:43 2018 +0200
+
+    updated delivery save()
+
+[33mcommit 9ee2acfb5a9427f9cfe365d927195579f555a6b9[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Wed Aug 29 05:06:13 2018 +0200
+
+    added more routing to global.asax
+
+[33mcommit 087027d362c484cec917e63facac58197f5860dd[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Tue Aug 28 00:30:26 2018 +0200
+
+    added more routing to global.asax
+
+[33mcommit fe1c1d56ae5e616b46af7219c71c58d7bd35cb3b[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Tue Aug 28 00:09:04 2018 +0200
+
+    made Delivery save() function
+
+[33mcommit cd519e57c1e9fca64c35212b4dfe0a0e779a9308[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Mon Aug 27 22:29:15 2018 +0200
+
+    updated insert_data.sql, started blank delivery
+
+[33mcommit 2d0742ffe70894a22e8909f5630a17411fab07b9[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Mon Aug 27 20:38:42 2018 +0200
+
+    made averageSpeed() in util
+
+[33mcommit 61876b47c1b50898ecb7a0880873fd7d4aae0e90[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Mon Aug 27 17:21:14 2018 +0200
+
+    calculate total distance truck travelled
+
+[33mcommit aecab3d143622e5605ec0f64d1679bdbfec96be6[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Sun Aug 26 13:10:08 2018 +0200
+
+    started truck total distance calculation
+
+[33mcommit 2917d4db707831c24da44a246829c6adada6d347[m
+Merge: abd5c0a b972f54
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Thu Aug 23 22:01:10 2018 +0200
+
+    fixed conflicts
+
+[33mcommit abd5c0a478d4802d1e75a7f880a5d98f6779cef6[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Thu Aug 23 21:33:01 2018 +0200
+
+    fixed user base class
+
+[33mcommit b972f54f60ec26641b361691918197606442e9fa[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Thu Aug 23 12:01:09 2018 +0200
+
+    Fixed site master
+
+[33mcommit d2582f563ac314594251c1b1bbb871bd934b6b63[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Wed Aug 22 23:08:22 2018 +0200
+
+    made login function for app
+
+[33mcommit b512def44bf39f90d7267e13f4cf4e87f71a140a[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Wed Aug 22 22:34:00 2018 +0200
+
+    added calculate total distance using coords
+
+[33mcommit 5f9b7445a1f31617c0d731ea9d7b70ad339df282[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Tue Aug 21 17:13:27 2018 +0200
+
+    redid fms.csproj
+
+[33mcommit 2e5e11d34a0a8e3dda40bbd4643e93a7136eb050[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Tue Aug 21 17:12:43 2018 +0200
+
+    removed mistake
+
+[33mcommit d8e6076ee981e76f42885ffa81ae7f60512436cd[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Tue Aug 21 15:49:42 2018 +0200
+
+    made server respond with json when info is requested
+
+[33mcommit 3002a2d76d092a1cb40994719b145ad82f74df17[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Mon Aug 20 22:51:30 2018 +0200
+
+    Added Add Client
+
+[33mcommit 44384f3f42c2f0aebebf8a73bff15f7003abfddd[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Mon Aug 20 09:06:33 2018 +0200
+
+    Fixed Add User
+
+[33mcommit 1fd3893537b1daeeb1125f933d80406458aea355[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Sun Aug 19 17:46:30 2018 +0200
+
+    updated commenting in driverservice.java
+
+[33mcommit 627c3fb1ec221e33d54a2f76846c22528f231fc2[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Sat Aug 18 19:46:37 2018 +0200
+
+    made delivery.tostring() use json
+
+[33mcommit 1fb0c8b1ee517a4e16731b4d92c965f31fef1495[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Mon Aug 6 15:25:06 2018 +0200
+
+    integrated started and ended trip
+
+[33mcommit 222edac00ec1bd3abd17edb38914c77c88832b8c[m
+Merge: 8040af8 f072477
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Mon Aug 6 14:35:39 2018 +0200
+
+    Merge branch 'master' of https://github.com/IFMTYP/team43
+
+[33mcommit 8040af87ed395e18fadde9995d3a4cdb78e23804[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Mon Aug 6 13:22:16 2018 +0200
+
+    redid presentation
+
+[33mcommit f0724774d74b7273a86df97970d308f818ec460f[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Mon Aug 6 13:15:47 2018 +0200
+
+    Added started and completed to all deliveries
+
+[33mcommit 2207bade128924a406a2b747fd32398b5decb622[m
+Merge: 87f8c99 7662c66
+Author: Maitso <khamorudu@gmail.com>
+Date:   Mon Aug 6 12:44:52 2018 +0200
+
+    Fixed
+
+[33mcommit 87f8c99269761369b9753c07947310a9d4395597[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Mon Aug 6 12:40:04 2018 +0200
+
+    Fixed
+
+[33mcommit 53a4317cd39f30f6cafa44cf75a7194aeb7c215a[m
+Author: Maitso <khamorudu@gmail.com>
+Date:   Mon Aug 6 12:26:13 2018 +0200
+
+    Create Delivery Fixed
+
+[33mcommit 7662c6602f7e0f26dfa102cdb4d54852fe52d94c[m
+Merge: 2d59bb1 60cd113
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Sun Aug 5 18:01:19 2018 +0200
+
+    integrated latlong#address to site and server
+
+[33mcommit 2d59bb12c661b85d62c5083c9e0a73e69206c166[m
+Author: @Mmeli-B <mmeli.b.mavuso@gmail.com>
+Date:   Sun Aug 5 17:17:42 2018 +0200
+
+    changed how location is saved in delivery
+
+[33mcommit 60cd113a64ccf0bd5f9b95934dd6e2d4ef168647[m
+Merge: db11f37 945b3eb
+Author: Maitso <khamorudu@gmail.com>
+Date:   Sun Aug 5 17:16:47 2018 +0200
+
+    Fixed what Marley said I should
