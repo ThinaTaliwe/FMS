@@ -37,10 +37,10 @@ namespace FMS.App_Code
                     marks.Add(jsonMark);
                     prevCoords = currentCoords;
                 }
-                json["info"] = marks;
                 json["distance"] = distance;
                 json["speed"] = distance / hours;
                 json["time"] = hours;
+                json["info"] = marks;
             }
             else
                 return null;
