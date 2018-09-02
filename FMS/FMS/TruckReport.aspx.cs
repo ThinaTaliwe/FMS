@@ -12,19 +12,28 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var report = truckReport("ADC123GP");
-            Response.Write(report[0] + " " + report[1]);
+            var query = "select id from trucks";
+            var trucks = Util.query(query);
+            if (trucks.HasRows)
+            {
+                List<string> strTrucks = new List<string>();
+                while (trucks.Read())
+                {
+                    strTrucks.Add(trucks.GetString(0));
+                }
+                foreach(var tr in strTrucks) {
+                    var report = truckReport(tr);
+                    var rep = report[0] + "*" + report[1] + "#";
+                    Util.print(rep);
+                    truckData.Value += rep;
+                }
+            }
         }
 
-        public string[] truckReport(string truck) {
-            var query = "select id from trucks where id like '" + truck + "'";
-            var tr = Util.query(query);
-            if(tr.HasRows) {
-                tr.Read();
-                Truck theTruck = new Truck(tr.GetString(0));
-                return new string[] { truck, Convert.ToString(theTruck.totalDistance()) };
-            }
-            return null;
+        public string[] truckReport(string truck)
+        {
+            Truck theTruck = new Truck(truck);
+            return new string[] { truck, Convert.ToString(theTruck.totalDistance()) };
         }
     }
 }

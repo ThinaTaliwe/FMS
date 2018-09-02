@@ -215,16 +215,6 @@ namespace FMS.App_Code
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                try {
-                    print("Retrying query: " + request);
-                    SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn2"].ToString());
-                    conn.Open();
-                    SqlCommand command = new SqlCommand(request, conn);
-                    return command.ExecuteReader();
-                } catch(Exception ex) {
-                    System.Diagnostics.Debug.Write(ex);
-                }
-
             }
             return null;
         }

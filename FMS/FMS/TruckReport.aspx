@@ -45,9 +45,17 @@
 		  </div>
 		</div>
     </div>
-
+    <input type="hidden" id="truckData" runat="server" />
     <script>
         window.onload = function () {
+            var input = document.getElementById('<%= truckData.ClientID %>').value.split("#");
+            console.log(input);
+            var data = [];
+            for (var c in input) {
+                var truck = input[c].split("*");
+                console.log(truck);
+                data.push({ y: parseFloat(truck[1]), label: truck[0] });
+            }
 
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
@@ -63,16 +71,7 @@
                     showInLegend: true,
                     legendMarkerColor: "grey",
                     legendText: "Individual Trucks",
-                    dataPoints: [
-                        { y: 300878, label: "AA00BBGP" },
-                        { y: 266455, label: "AA00BBGP" },
-                        { y: 169709, label: "AA00BBGP" },
-                        { y: 158400, label: "AA00BBGP" },
-                        { y: 142503, label: "AA00BBGP" },
-                        { y: 101500, label: "AA00BBGP" },
-                        { y: 97800, label: "AA00BBGP" },
-                        { y: 80000, label: "AA00BBGP" }
-                    ]
+                    dataPoints: data
                 }]
             });
             chart.render();
