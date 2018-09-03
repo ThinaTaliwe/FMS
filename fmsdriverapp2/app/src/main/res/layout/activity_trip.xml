@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Trip">
 
-<<<<<<< HEAD
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-=======
->>>>>>> c3c4ddbf7713f7cc264bfac74ba7d94a496080a9
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:name="com.google.android.gms.maps.MapFragment"
         android:id="@+id/mapFrag"
