@@ -19,22 +19,22 @@
 						<div class="content-box-large">
 		  				<div class="panel-body">
                               <form class="form-horizontal" role="form">
-										  <div class="form-group">
-                                               <label  class="col-sm-2 control-label"> Name </label>
+										   <div class="form-group">
+										    <label  class="col-sm-2 control-label">Name </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="UserName" placeholder="">
+										      <input class="form-control" id="UserName" placeholder="Enter User Name" runat="server">
 										    </div>
 										  </div>
-                                         <div class="form-group">
-                                              <label  class="col-sm-2 control-label"> Surname </label>
+                                  	<div class="form-group">
+										    <label  class="col-sm-2 control-label">Surname </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="UserSurname" placeholder="">
+										      <input class="form-control" id="Surname" placeholder="Enter User Surname" runat="server">
 										    </div>
 										  </div>
-                                          <div class="form-group">
-                                               <label  class="col-sm-2 control-label"> Email </label>
+                                        <div class="form-group">
+										    <label  class="col-sm-2 control-label">Email </label>
 										    <div class="col-sm-10">
-										      <input class="form-control" id="UserEmail" placeholder="">
+										      <input class="form-control" id="Email" placeholder="Enter User Email Address" runat="server">
 										    </div>
 										  </div>
                                    

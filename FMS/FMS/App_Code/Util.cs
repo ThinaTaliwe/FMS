@@ -6,15 +6,72 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Newtonsoft.Json.Linq;
+using System.Web.UI;
 
 namespace FMS.App_Code
 {
     public class Util
     {
+        public static string key = "AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+
+        public static JObject averageSpeed(List<string> coords, List<DateTime> times) {
+            JObject json = new JObject();
+            if (coords.Capacity == times.Capacity)
+            {
+                double distance = 0, hours = 0;
+                string currentCoords, prevCoords = coords[0];
+                DateTime currentTime, prevTime = times[0];
+                JArray marks = new JArray();
+                for (int c = 1; c < coords.Count; c++) {
+                    JToken jsonMark = new JObject();
+                    currentCoords = coords[c];
+                    currentTime = times[c];
+                    var disChange = Util.distance(getCoords(prevCoords), getCoords(currentCoords));
+                    var timeChange = currentTime.Subtract(prevTime).TotalSeconds / 3600.0;
+                    distance += disChange;
+                    hours += timeChange;
+                    jsonMark["distance"] = distance;
+                    jsonMark["speed"] = disChange / timeChange;
+                    jsonMark["time"] = currentTime;
+                    jsonMark["coords"] = currentCoords;
+                    marks.Add(jsonMark);
+                    prevCoords = currentCoords;
+                }
+                json["distance"] = distance;
+                json["speed"] = distance / hours;
+                json["time"] = hours;
+                json["info"] = marks;
+            }
+            else
+                return null;
+            return json;
+        }
+
+        public static double totalDistance(List<string> coords) {
+            double[] current;
+            string prev = "";
+            double total = 0;
+            foreach(var coord in coords) {
+                if (coord == prev)
+                    continue;
+                else {
+                   try {
+                        current = getCoords(coord);
+                        double dis = distance(current, getCoords(prev));
+                        Util.print(dis.ToString() + " " + prev + " " + coord);
+                        total += dis;
+                        prev = coord;
+                   } catch (Exception ex) {
+                        Util.print(ex.ToString() + "invalid coords: " + coord);
+                   } 
+                }
+            }
+            return total;
+        }
 
         public static string getLatLong(string address) {
             try {
-                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                string link = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address.Replace(' ', '+') + "&key=" + key;
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var results = obj["results"][0];
@@ -30,7 +87,7 @@ namespace FMS.App_Code
         public static string getAddress(double[] coords) {
             try {
                 string link = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
-                link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                link += coords[0].ToString().Replace(',', '.') + "," + coords[1].ToString().Replace(',', '.') + "&key=" + key;
                 string result = readLink(link);
                 JObject obj = JObject.Parse(result);
                 var addr = obj["results"][0];
@@ -44,54 +101,35 @@ namespace FMS.App_Code
 
         public static string getRoutePoints(string route)
         {
-            List<string> info = new List<string>();
-            string result = "";
+            JObject json = new JObject();
             try
             {
                 JObject obj = JObject.Parse(route);
                 if (obj["geocoded_waypoints"][0]["geocoder_status"].ToString().Contains("OK"))
                 {
                     JToken legs = obj["routes"][0]["legs"][0];
-                    info.Add(legs["distance"]["text"].ToString());
+                    json["distance"] = legs["distance"]["text"].ToString();
                     var steps = legs["steps"];
                     string text = "";
+                    JToken token;
+                    JArray jsonSteps = new JArray();
                     foreach (var step in steps)
                     {
-                        text = pad(step["distance"]["text"].ToString());
-                        text += "#" + pad(step["html_instructions"].ToString());
-                        text += "#" + step["polyline"]["points"];
-                        info.Add(text);
-                        text = "";
+                        token = new JObject();
+                        token["distance"] = step["distance"]["text"];
+                        token["instruction"] = step["html_instructions"];
+                        token["polyline"] = step["polyline"]["points"];
+                        jsonSteps.Add(token);
                     }
-                    foreach (var data in info)
-                        result += data + " ";
-                    return result;
+                    json["route"] = jsonSteps;
+                    return json.ToString();
                 }
-                else
-                    result = DriverHandle.INTERNAL_ERROR;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                result = DriverHandle.INTERNAL_ERROR;
             }
-            return result;
-        }
-
-        public static string pad(string text) {
-            string result = "";
-            bool remove = false;
-            foreach(char c in text) {
-                if (c == '<')
-                    remove = true;
-                if (c == '>') {
-                    remove = false;
-                    continue;
-                }
-                if (!remove)
-                    result += c;
-            }
-            return result.Replace(' ', '_');
+            return DriverHandle.INTERNAL_ERROR;
         }
 
         public static string getRoute(double[] from, double[] to)
@@ -100,7 +138,7 @@ namespace FMS.App_Code
             {
                 String link = "https://maps.googleapis.com/maps/api/directions/json?mode=driving&origin=";
                 link += from[0].ToString().Replace(',', '.') + "," + from[1].ToString().Replace(',', '.') + "&destination=";
-                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.') + "&key=AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+                link += to[0].ToString().Replace(',', '.') + "," + to[1].ToString().Replace(',', '.') + "&key=" + key;
                 return readLink(link);
             }
             catch (Exception ex)
@@ -126,7 +164,7 @@ namespace FMS.App_Code
                 lon1 = from[1];
                 lat2 = to[0];
                 lon2 = to[1];
-                var r = 6371000.0;
+                var r = 6371.0;
                 var phi1 = toRad(lat1);
                 var phi2 = toRad(lat2);
                 var deltaPhi = toRad(lat2 - lat1);

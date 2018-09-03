@@ -21,7 +21,7 @@
             center: new google.maps.LatLng(-26.1890, 28.0040),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-
+        
         var infowindow = new google.maps.InfoWindow();
 
         var marker, i;

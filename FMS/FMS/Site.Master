@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Fleet Management System</title>
+    <title><%: Page.Title %> - Delivery Manager System</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -16,6 +16,8 @@
     <webopt:bundlereference runat="server" path="~/Content/ass" />
     <webopt:bundlereference runat="server" path="~/Content/ass/css/styles.css" />
     <webopt:bundlereference runat="server" path="~/Content/ass/css/Map.css" />
+    <webopt:bundlereference runat="server" path="~/Content/ass/css/stats.css" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- Image for favicon -->
        <link href="~/fav.jpg" rel="shortcut icon" type="image/x-icon" />
@@ -28,6 +30,26 @@
          <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="Content/ass/js/forms.js"></script>
      <script src="Content/ass/js/calender.js"></script>
+    <link href="https://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" rel="stylesheet" media="screen">
+
+    <link rel="stylesheet" href="vendors/morris/morris.css">
+
+
+    <script src="vendors/jquery.knob.js"></script>
+    <script src="vendors/raphael-min.js"></script>
+    <script src="vendors/morris/morris.min.js"></script>
+
+    <script src="vendors/flot/jquery.flot.js"></script>
+    <script src="vendors/flot/jquery.flot.categories.js"></script>
+    <script src="vendors/flot/jquery.flot.pie.js"></script>
+    <script src="vendors/flot/jquery.flot.time.js"></script>
+    <script src="vendors/flot/jquery.flot.stack.js"></script>
+    <script src="vendors/flot/jquery.flot.resize.js"></script>
+
+    <script src="js/custom.js"></script>
+    <script src="js/stats.js"></script>
+
+  
 </head>
 <body>
     <form runat="server">
@@ -107,7 +129,9 @@
                             <!-- Sub menu -->
                             <ul>
                                 <li><a href="CreateDelivery">Create Delivery</a></li>
-                                <li><a href="UpdateDelivery">All Delivery</a></li>
+                                <li><a href="UpdateDelivery">Upcoming Deliveries</a></li>
+                                <li><a href="PreviousDelivery">Previous Delivery</a></li>
+                                
                             </ul>
                         </li>
                         <li class="submenu">
@@ -117,31 +141,45 @@
                             </a>
                             <!-- Sub menu -->
                             <ul>
+                                <li><a href="ViewAllTrucks">View Trucks</a></li>
                                 <li><a href="AddTruck">Add Truck</a></li>
-                                
+                                <li><a href="DeleteTruck">Delete Truck</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
                             <a href="#">
-                                <i class="glyphicon glyphicon-user"></i> Drivers
+                                <i class="glyphicon glyphicon-phone"></i> Drivers
                                 <span class="caret pull-right"></span>
                             </a>
                             <!-- Sub menu -->
                             <ul>
+                                <li><a href="ViewDrivers">View Drivers</a></li>
                                 <li><a href="AddDriver">Add Driver</a></li>
                                 <li><a href="DeleteDriver">Delete Driver</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
                             <a href="#">
-                                <i class="glyphicon glyphicon-user"></i> User
+                                <i class="glyphicon glyphicon-dashboard"></i> Client
                                 <span class="caret pull-right"></span>
                             </a>
                             <!-- Sub menu -->
                             <ul>
-                                <li><a href="AddUser">Add User</a></li>
-                                <li><a href="Update User">Update User</a></li>
-                                <li><a href="DeleteUser">Delete User</a></li>
+                                <li><a href="ViewClients">View Clients</a></li>
+                                <li><a href="AddClient">Add Client</a></li>
+                                <li><a href="DeleteClient">Delete Client</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-user"></i> Employee
+                                <span class="caret pull-right"></span>
+                            </a>
+                            <!-- Sub menu -->
+                            <ul>
+                                <li><a href="ViewEmployees">View Employee</a></li>
+                                <li><a href="AddUser">Add Employee</a></li>
+                                <li><a href="DeleteUser">Delete Employee</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
@@ -153,7 +191,7 @@
                             <ul>
                                 <li><a href="TruckReport">Truck Report</a></li>
                                 <li><a href="DriverReport">Driver Report</a></li>
-                                <li><a href="DeliveryReport">Delivery Report</a></li>
+                                <li><a href="DeliveryReport">Client Report</a></li>
                             </ul>
                         </li>
                     </ul>

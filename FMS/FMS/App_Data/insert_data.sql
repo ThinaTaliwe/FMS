@@ -26,3 +26,5 @@ INSERT INTO CLIENTS([NAME], COMPANY, TELEPHONE, EMAIL, [LOCATION])
 VALUES('Ben', 'Sasol', '0113337777', 'Ben@mail.com', 'Nelspruit');
 INSERT INTO CLIENTS([NAME], COMPANY, TELEPHONE, EMAIL, [LOCATION])
 VALUES('Thato', 'T-pozzsand', '0113338877', 'Ben@mail.com', 'Nelspruit');
+INSERT INTO CLIENTS([NAME], COMPANY, TELEPHONE, EMAIL, [LOCATION])
+VALUES('Mmeli', 'New Era Commerce', '0113337887', 'nec@mail.com', 'Delmas#-26.1403:28.6787');
