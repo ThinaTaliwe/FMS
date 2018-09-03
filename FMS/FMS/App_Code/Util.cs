@@ -22,6 +22,7 @@ namespace FMS.App_Code
                 string currentCoords, prevCoords = coords[0];
                 DateTime currentTime, prevTime = times[0];
                 JArray marks = new JArray();
+                var overSpeed = 0;
                 for (int c = 1; c < coords.Count; c++) {
                     JToken jsonMark = new JObject();
                     currentCoords = coords[c];
@@ -31,9 +32,12 @@ namespace FMS.App_Code
                     distance += disChange;
                     hours += timeChange;
                     jsonMark["distance"] = distance;
-                    jsonMark["speed"] = disChange / timeChange;
                     jsonMark["time"] = currentTime;
                     jsonMark["coords"] = currentCoords;
+                    var speed = disChange / timeChange;
+                    jsonMark["speed"] = speed;
+                    if (speed > 80)
+                        overSpeed++;
                     marks.Add(jsonMark);
                     prevCoords = currentCoords;
                 }
@@ -41,6 +45,7 @@ namespace FMS.App_Code
                 json["speed"] = distance / hours;
                 json["time"] = hours;
                 json["info"] = marks;
+                json["overspeed_ratio"] = overSpeed / coords.Count;
             }
             else
                 return null;
