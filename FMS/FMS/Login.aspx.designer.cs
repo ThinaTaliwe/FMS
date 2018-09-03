@@ -22,15 +22,6 @@ namespace FMS {
         protected global::System.Web.UI.HtmlControls.HtmlInputText username;
         
         /// <summary>
-        /// valdUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator valdUser;
-        
-        /// <summary>
         /// password control.
         /// </summary>
         /// <remarks>
@@ -38,15 +29,6 @@ namespace FMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputPassword password;
-        
-        /// <summary>
-        /// valdPass control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator valdPass;
         
         /// <summary>
         /// btnLogin control.

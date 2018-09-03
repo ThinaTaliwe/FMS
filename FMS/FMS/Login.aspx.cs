@@ -22,22 +22,11 @@ namespace FMS
 
         protected void logon(object sender, EventArgs e)
         {
-
-            String name = "1234567890123";//Username.Value;
-            String pass = "MMELI"; //password.Value;
+            string name = username.Value;
+            string pass = password.Value;
             //hash password here 
             var query = "select id, password from users where id like '" + name + "';";
             var response = Util.query(query);
-
-            if (username.Value == string.Empty)
-            {
-                valdUser.Text = "Enter a username";
-            }
-            if (password.Value == string.Empty)
-            {
-                valdPass.Text = "Enter a password";
-            }
-
             if(response.HasRows) {
                 while(response.Read()) {
                     if (pass == response.GetString(1))

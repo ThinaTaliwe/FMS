@@ -79,6 +79,7 @@ namespace FMS
             String latlngOrigin = latitude + ":" + longitude + "#" + Originaddress;
 
             var Destaddress = there.Value;
+            locationService = new GoogleLocationService();
             var Destpoint = locationService.GetLatLongFromAddress(Destaddress);
             var Destlatitude = Destpoint.Latitude;
             var Destlongitude = Destpoint.Longitude;

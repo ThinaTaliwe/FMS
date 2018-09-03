@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Trip">
 
-<<<<<<< HEAD
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-=======
->>>>>>> c3c4ddbf7713f7cc264bfac74ba7d94a496080a9
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:name="com.google.android.gms.maps.MapFragment"
         android:id="@+id/mapFrag"
@@ -45,19 +33,7 @@
         android:text="info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapFrag"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/start_end_trip"
-        android:layout_width="200dp"
-        android:layout_height="47dp"
-        android:text="Start Trip"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapFrag"
         app:layout_constraintVertical_bias="1.0" />

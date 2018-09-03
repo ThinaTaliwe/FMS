@@ -40,6 +40,33 @@ namespace FMS {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validOrderNum;
         
         /// <summary>
+        /// DeliveryDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl DeliveryDate;
+        
+        /// <summary>
+        /// validDeliveryDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validDeliveryDate;
+        
+        /// <summary>
+        /// DeliveryTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl DeliveryTime;
+        
+        /// <summary>
         /// TruckChosen control.
         /// </summary>
         /// <remarks>
@@ -92,33 +119,6 @@ namespace FMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validDriver;
-        
-        /// <summary>
-        /// DeliveryDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl DeliveryDate;
-        
-        /// <summary>
-        /// validDeliveryDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator validDeliveryDate;
-        
-        /// <summary>
-        /// DeliveryTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl DeliveryTime;
         
         /// <summary>
         /// Material control.

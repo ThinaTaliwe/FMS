@@ -10,60 +10,69 @@
 namespace FMS {
     
     
-    public partial class ErrorPage {
+    public partial class deliv {
         
         /// <summary>
-        /// FMSFriendlyErrorMsg control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FMSFriendlyErrorMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// FMSDetailedErrorPanel control.
+        /// delivery control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel FMSDetailedErrorPanel;
+        protected global::System.Web.UI.WebControls.DropDownList delivery;
         
         /// <summary>
-        /// FMSErrorDetailedMsg control.
+        /// driver control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FMSErrorDetailedMsg;
+        protected global::System.Web.UI.WebControls.DropDownList driver;
         
         /// <summary>
-        /// FMSErrorHandler control.
+        /// truck control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FMSErrorHandler;
+        protected global::System.Web.UI.WebControls.DropDownList truck;
         
         /// <summary>
-        /// FMSInnerMessage control.
+        /// button control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FMSInnerMessage;
+        protected global::System.Web.UI.WebControls.Button button;
         
         /// <summary>
-        /// FMSInnerTrace control.
+        /// locations control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FMSInnerTrace;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden locations;
+        
+        /// <summary>
+        /// text control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label text;
     }
 }

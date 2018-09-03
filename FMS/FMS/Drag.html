@@ -1,120 +1,62 @@
-﻿'<input id="origin-input" class="controls" type="text" placeholder="Origin">
+﻿<html>
 
-<input id="destination-input" class="controls" type="text"
-       placeholder="Destination">
+<head>
+    
+</head>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"> </script>
 
-<div id="mode-selector" class="controls" hidden="hidden">
-    <input type="radio" name="type" id="changemode-walking" checked="checked">
-    <label for="changemode-walking">Walking</label>
+    <body>
+        <!-- To use Geocoding from Google Maps V3 you need to link https://maps.googleapis.com/maps/api/js?sensor=false -->
+    <div>
+            <h3> Enter an adress and press the button</h3>
 
-    <input type="radio" name="type" id="changemode-transit">
-    <label for="changemode-transit">Transit</label>
-
-    <input type="radio" name="type" id="changemode-driving">
-    <label for="changemode-driving">Driving</label>
-</div>
-
-<div id="map"></div>
-
-<script>
-    // This example requires the Places library. Include the libraries=places
-    // parameter when you first load the API. For example:
-    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            mapTypeControl: false,
-            center: { lat: - 26.270760, lng: 28.112268 },
-            zoom: 13
-        });
-
-        new AutocompleteDirectionsHandler(map);
-    }
-
-    /**
-     * @constructor
-    */
-    function AutocompleteDirectionsHandler(map) {
-        this.map = map;
-        this.originPlaceId = null;
-        this.destinationPlaceId = null;
-        this.travelMode = 'WALKING';
-        var originInput = document.getElementById('origin-input');
-        //document.getElementById('itemRun') = originInput;
-        var destinationInput = document.getElementById('destination-input');
-        var modeSelector = document.getElementById('mode-selector');
-        this.directionsService = new google.maps.DirectionsService;
-        this.directionsDisplay = new google.maps.DirectionsRenderer;
-        this.directionsDisplay.setMap(map);
-
-        var originAutocomplete = new google.maps.places.Autocomplete(
-            originInput, { placeIdOnly: true });
-        var destinationAutocomplete = new google.maps.places.Autocomplete(
-            destinationInput, { placeIdOnly: true });
-
-        this.setupClickListener('changemode-walking', 'WALKING');
-        this.setupClickListener('changemode-transit', 'TRANSIT');
-        this.setupClickListener('changemode-driving', 'DRIVING');
-
-        this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
-        this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
-    }
-
-    // Sets a listener on a radio button to change the filter type on Places
-    // Autocomplete.
-    AutocompleteDirectionsHandler.prototype.setupClickListener = function (id, mode) {
-        var radioButton = document.getElementById(id);
-        var me = this;
-        radioButton.addEventListener('click', function () {
-            me.travelMode = mode;
-            me.route();
-        });
-    };
-
-    AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (autocomplete, mode) {
-        var me = this;
-        autocomplete.bindTo('bounds', this.map);
-        autocomplete.addListener('place_changed', function () {
-            var place = autocomplete.getPlace();
-            if (!place.place_id) {
-                window.alert("Please select an option from the dropdown list.");
-                return;
-            }
-            if (mode === 'ORIG') {
-                me.originPlaceId = place.place_id;
-            } else {
-                me.destinationPlaceId = place.place_id;
-            }
-            me.route();
-        });
-        // document.getElementById("run").innerHTML
-    };
-
-    AutocompleteDirectionsHandler.prototype.route = function () {
-        if (!this.originPlaceId || !this.destinationPlaceId) {
-            return;
+            <input id="address" type="text" placeholder="Enter address here" />
+            <button id="btn">Get LatLong</button>
+            <div>
+                <p>
+                    Latitude:
+                <input type="text" id="latitude" readonly />
+                </p>
+                <p>
+                    Longitude:
+                <input type="text" id="longitude" readonly />
+                </p>
+            </div>
+        </div>
+        <script>
+            function showResult(result) {
+                document.getElementById('latitude').value = result.geometry.location.lat();
+            document.getElementById('longitude').value = result.geometry.location.lng();
         }
-        var me = this;
 
-        this.directionsService.route({
-            origin: { 'placeId': this.originPlaceId },
-            destination: { 'placeId': this.destinationPlaceId },
-            travelMode: this.travelMode
-        }, function (response, status) {
-            if (status === 'OK') {
-                me.directionsDisplay.setDirections(response);
-                //document.getElementById("itemRun").innerText = originInput;
-                window.alert(originInput);
-            } else {
-                window.alert('Directions request failed due to ' + status);
+        function getLatitudeLongitude(callback, address) {
+                // If adress is not supplied, use default value 'Ferrol, Galicia, Spain'
+                address = address || 'Ferrol, Galicia, Spain';
+            // Initialize the Geocoder
+
+            geocoder = new google.maps.Geocoder();
+            
+            if (geocoder) {
+                
+                geocoder.geocode({
+                    'address': address
+                }, function (results, status) {
+                    alert(status);
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        alert("Hey2");
+                        callback(results[0]);
+                    }
+                });
             }
+        }
+
+        var button = document.getElementById('btn');
+
+        button.addEventListener("click", function () {
+            var address = document.getElementById('address').value;
+            getLatitudeLongitude(showResult, address)
         });
-    };
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&libraries=places&callback=initMap"
-        async defer></script>
+</body>
+</html>
