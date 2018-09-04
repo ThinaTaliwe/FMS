@@ -29,6 +29,10 @@
 				</div>
   				<div class="panel-body">
   					<div class="row">
+                        <div>
+                            From: <input class="form-control" type="date" id="fromDate" runat="server"> <br />
+                            To: <input class="form-control" type="date" id="toDate" runat="server"> <br />
+                        </div> <asp:Button ID="view" runat="server" Text="View Hours Driven" OnClick="view_Click" /><asp:Button ID="Button1" runat="server" Text="View Kms Driven" OnClick="view_Click" />
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   					</div>

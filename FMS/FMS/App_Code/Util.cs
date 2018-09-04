@@ -209,17 +209,18 @@ namespace FMS.App_Code
 
         public static SqlDataReader query(string request)
         {
-             try
+            try
             {
                 print(request);
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString());
-                conn.Open();
+        conn.Open();
                 SqlCommand command = new SqlCommand(request, conn);
                 return command.ExecuteReader();
             } 
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
+                print("Failed: " + request);
             }
             return null;
         }

@@ -13,6 +13,33 @@ namespace FMS {
     public partial class TruckReport {
         
         /// <summary>
+        /// fromDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl fromDate;
+        
+        /// <summary>
+        /// toDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl toDate;
+        
+        /// <summary>
+        /// view control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button view;
+        
+        /// <summary>
         /// truckData control.
         /// </summary>
         /// <remarks>

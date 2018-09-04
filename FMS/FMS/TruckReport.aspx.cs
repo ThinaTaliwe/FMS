@@ -12,6 +12,35 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            viewTruckRepot();
+        }
+
+        public string[] truckReport(string truck)
+        {
+            try {
+                Truck theTruck = new Truck(truck);
+                DateTime from, to;
+                if (String.IsNullOrWhiteSpace(fromDate.Value)|| String.IsNullOrWhiteSpace(toDate.Value))
+                {
+                    to = DateTime.Now;
+                    from = to.AddMonths(-1);
+                } else {
+                    Util.print(fromDate.Value + toDate.Value);
+                    from = DateTime.Parse(fromDate.Value);
+                    to = DateTime.Parse(toDate.Value);
+                }
+                return new string[] { truck, Convert.ToString(theTruck.totalDistance(from, to)) };
+            } catch(Exception ex) {
+                Util.print(ex.ToString());
+            } return null;
+        }
+
+        protected void view_Click(object sender, EventArgs e)
+        {
+            viewTruckRepot();
+        }
+
+        private void viewTruckRepot() {
             var query = "select id from trucks";
             var trucks = Util.query(query);
             if (trucks.HasRows)
@@ -21,19 +50,17 @@ namespace FMS
                 {
                     strTrucks.Add(trucks.GetString(0));
                 }
-                foreach(var tr in strTrucks) {
+                truckData.Value = "";
+                foreach (var tr in strTrucks)
+                {
                     var report = truckReport(tr);
-                    var rep = report[0] + "*" + report[1] + "#";
-                    Util.print(rep);
-                    truckData.Value += rep;
+                    if(report != null) {
+                        var rep = report[0] + "*" + report[1] + "#";
+                        Util.print(rep);
+                        truckData.Value += rep;
+                    }
                 }
             }
-        }
-
-        public string[] truckReport(string truck)
-        {
-            Truck theTruck = new Truck(truck);
-            return new string[] { truck, Convert.ToString(theTruck.totalDistance()) };
         }
     }
 }

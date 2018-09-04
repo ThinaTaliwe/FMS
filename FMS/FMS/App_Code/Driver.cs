@@ -25,8 +25,8 @@ namespace FMS.App_Code
             }
         }
 
-        public double hoursWorked(DateTime time) {
-            var query = "select started, completed from delivery where completed > " + time;
+        public double hoursWorked(DateTime from, DateTime to) {
+            var query = "select started, completed from delivery where completed > '" + from + "' and completed < '" + to + "'";
             var reader = Util.query(query);
             double hours = 0;
             if(reader.HasRows) {
