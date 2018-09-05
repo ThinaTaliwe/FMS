@@ -23,14 +23,27 @@ namespace FMS
                         delivery.Items.Add(new ListItem(Convert.ToString(delivs.GetInt32(0))));
                     }
                 }
+                try
+                {
+                    string id = Page.RouteData.Values["id"].ToString();
+                    viewDelivery(Convert.ToInt32(id));
+                }
+                catch (Exception ex)
+                {
+                    Util.print(ex.ToString());
+                }
             }
         }
 
         protected void viewReport(object sender, EventArgs e) {
             var id = Convert.ToInt32(delivery.SelectedValue);
-            Delivery deliv = Delivery.getInstance(id);
-            if(deliv != null) {
-                var json = deliv.speedInfo();
+            viewDelivery(id);
+        }
+
+        private void viewDelivery(int id) {
+            Delivery delivery = Delivery.getInstance(id);
+            if(delivery != null) {
+                var json = delivery.speedInfo();
                 if (json != null)
                 {
                     JArray info = (JArray)json["info"];
@@ -44,9 +57,13 @@ namespace FMS
                         locations.Value += location + "#";
                         location = "";
                     }
+                    text.Text += "Distance: " + json["distance"] + "\n";
+                    text.Text += "Average Speed: " + json["speed"] + "\n";
+                    text.Text += "Time (in hours): " + json["time"] + "\n";
+                    text.Text += "Overspeeding Ratio: " + json["overspeed_ratio"];
                 }
                 else
-                    text.Text = "something else happened";           
+                    text.Text = "something else happened";
             }
         }
     }

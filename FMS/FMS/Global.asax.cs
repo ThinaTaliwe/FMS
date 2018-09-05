@@ -51,8 +51,9 @@ namespace FMS{
         {
             routes.MapPageRoute("delivery", "delivery/{id}", "~/EditDelivery.aspx");
             routes.MapPageRoute("driver", "driver/{id}", "~/drivers.aspx");
-            routes.MapPageRoute("clients", "clients/{id}", "~/clients.aspx");
-            routes.MapPageRoute("trucks", "trucks/{id}", "~/trucks.aspx");
+            routes.MapPageRoute("client", "client/{id}", "~/clients.aspx");
+            routes.MapPageRoute("truck", "truck/{id}", "~/trucks.aspx");
+            routes.MapPageRoute("report", "report/{id}", "~/deliveryreport.aspx");
         }
     }
 

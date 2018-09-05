@@ -1,18 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DeliveryReport.aspx.cs" Inherits="FMS.DeliveryReport" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 80%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
      <div class="page-content">
     	<div class="row">
 		  <div class="col-md-10">
@@ -38,7 +25,7 @@
                                 <asp:Button ID="button" runat="server" OnClick="viewReport" Text="View" />
                             </div>
                         <input type="hidden" id="locations" runat="server" />
-                        <div id="map"></div>
+                        <div id="map" style="width: 100%; height: 500px;"></div>
                         <script>
                             var map;
                             var redIcon = "http://maps.google.com/mapfiles/ms/micons/red.png";
@@ -70,6 +57,8 @@
                                 }
                             }
                         </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=initMap"
+    async defer></script>
         <asp:Label ID="text" runat="server" Text="" ></asp:Label>
                             </div>
 		  			</div>

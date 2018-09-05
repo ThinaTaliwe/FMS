@@ -45,7 +45,7 @@ namespace FMS.App_Code
                 json["speed"] = distance / hours;
                 json["time"] = hours;
                 json["info"] = marks;
-                json["overspeed_ratio"] = overSpeed / coords.Count;
+                json["overspeed_ratio"] = (Convert.ToDouble(overSpeed) / coords.Count) * 100.0;
             }
             else
                 return null;

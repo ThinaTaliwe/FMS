@@ -32,7 +32,8 @@
                         <div>
                             From: <input class="form-control" type="date" id="fromDate" runat="server"> <br />
                             To: <input class="form-control" type="date" id="toDate" runat="server"> <br />
-                        </div> <asp:Button ID="view" runat="server" Text="View Hours Driven" OnClick="view_Click" /><asp:Button ID="Button1" runat="server" Text="View Kms Driven" OnClick="view_Click" />
+                        </div> <asp:Button ID="view" runat="server" Text="View Kms Driven" /><asp:Button ID="Button1" runat="server" Text="View Hours Driven" OnClick="ViewHours" />
+                        <input type="hidden" runat="server" id="driverData" />
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   					</div>
@@ -53,6 +54,15 @@
     <script>
         window.onload = function () {
 
+            var lstDrivers = document.getElementById('<%= driverData.ClientID %>').value.split("#");
+            console.log(lstDrivers);
+            var bars = [];
+            for (var c in lstDrivers) {
+                var bar = lstDrivers[c].split("*");
+                console.log(bar)
+                if (bar.length == 2) bars.push({ y: bar[1], label: bar[0] });
+            }
+
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",
@@ -67,12 +77,7 @@
                     showInLegend: true,
                     legendMarkerColor: "grey",
                     legendText: "Individual Trucks",
-                    dataPoints: [
-                        { y: 20, label: "Thina" },
-                        { y: 50, label: "Khanyi" },
-                        { y: 20, label: "Mmeli" },
-                        { y: 30, label: "Carl" },
-                    ]
+                    dataPoints: bars
                 }]
             });
             chart.render();

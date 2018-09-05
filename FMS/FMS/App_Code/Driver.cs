@@ -26,13 +26,17 @@ namespace FMS.App_Code
         }
 
         public double hoursWorked(DateTime from, DateTime to) {
-            var query = "select started, completed from delivery where completed > '" + from + "' and completed < '" + to + "'";
+            var query = "select started, completed from delivery where started > '" + from + "' and started < '" + to + "'";
             var reader = Util.query(query);
             double hours = 0;
             if(reader.HasRows) {
                 while(reader.Read()) {
-                    var diff = reader.GetDateTime(1).Minute - reader.GetDateTime(0).Minute;
-                    hours += diff;
+                    try {
+                        var diff = reader.GetDateTime(1).Minute - reader.GetDateTime(0).Minute;
+                        hours += diff;
+                    } catch (Exception ex) {
+                        
+                    }
                 }
             }
             return hours / 60.0;
