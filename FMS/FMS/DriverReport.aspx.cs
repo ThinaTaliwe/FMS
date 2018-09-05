@@ -38,7 +38,7 @@ namespace FMS
                 driverData.Value = "";
                 foreach(string id in lstDrivers) {
                     Driver driver = new Driver(id);
-                    var hours = driver.hoursWorked(from, to);
+                    var hours = driver.KmsDriven(from, to);
                     driverData.Value += driver.getName() + "*" + hours + "#";
                 }
             }

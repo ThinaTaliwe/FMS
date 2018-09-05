@@ -60,7 +60,7 @@
             for (var c in lstDrivers) {
                 var bar = lstDrivers[c].split("*");
                 console.log(bar)
-                if (bar.length == 2) bars.push({ y: bar[1], label: bar[0] });
+                if (bar.length == 2) bars.push({ y: parseFloat(bar[1]), label: bar[0] });
             }
 
             var chart = new CanvasJS.Chart("chartContainer", {

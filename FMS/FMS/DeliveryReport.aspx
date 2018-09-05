@@ -19,7 +19,6 @@
 					<div class="col-md-12">
 						<div class="content-box-large">
 		  				<div class="panel-body">
-                              <p> Leave Blank if Filter Does Not Apply</p>
                             <div>
                                 <asp:DropDownList ID="delivery" runat="server"></asp:DropDownList>
                                 <asp:Button ID="button" runat="server" OnClick="viewReport" Text="View" />

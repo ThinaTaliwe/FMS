@@ -30,9 +30,13 @@ namespace FMS{
 
         private void serverCheck(object source, ElapsedEventArgs a) {
             Util.print("Checking if server is online");
-            if(!rest.isRunning()) {
+            if (!rest.isRunning())
+            {
+                Util.print("Not running");
                 startServer(1998);
             }
+            else
+                Util.print("server running");
         }
 
         private void startServer(int port) {

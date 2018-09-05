@@ -57,10 +57,11 @@ namespace FMS
                         locations.Value += location + "#";
                         location = "";
                     }
-                    text.Text += "Distance: " + json["distance"] + "\n";
-                    text.Text += "Average Speed: " + json["speed"] + "\n";
-                    text.Text += "Time (in hours): " + json["time"] + "\n";
-                    text.Text += "Overspeeding Ratio: " + json["overspeed_ratio"];
+                    var strInfo = "Distance: " + json["distance"] + "<br/>";
+                    strInfo += "Average Speed: " + json["speed"] + "<br/>";
+                    strInfo += "Time (in hours): " + json["time"] + "<br/>";
+                    strInfo += "Overspeeding Ratio: " + json["overspeed_ratio"];
+                    text.Text = strInfo;
                 }
                 else
                     text.Text = "something else happened";

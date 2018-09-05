@@ -21,7 +21,7 @@ namespace FMS.App_Code
             {
                 if (user.Read())
                 {
-                    id = user.GetString(0);
+                    this.id = user.GetString(0);
                     name = user.GetString(1);
                     surname = user.GetString(2);
                     email = user.GetString(3);
