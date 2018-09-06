@@ -11,6 +11,7 @@ namespace FMS
     public partial class DriverReport : System.Web.UI.Page
     {
         private DateTime from, to;
+        private List<string> lstDrivers;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,7 +33,7 @@ namespace FMS
             string query = "select id from users where user_type like 'driver'";
             var drivers = Util.query(query);
             if(drivers.HasRows) {
-                List<string> lstDrivers = new List<string>();
+                lstDrivers = new List<string>();
                 while (drivers.Read())
                     lstDrivers.Add(drivers.GetString(0));
                 driverData.Value = "";

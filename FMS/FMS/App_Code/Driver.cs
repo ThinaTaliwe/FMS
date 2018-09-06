@@ -25,6 +25,12 @@ namespace FMS.App_Code
             }
         }
 
+        public List<Delivery> deliveriesMade(DateTime from, DateTime to)
+        {
+            var query = "select id from delivery where started > '" + from +  "' and started < '" + to + "' and driver like '" + id + "'";
+            return null;
+        }
+
         public double KmsDriven(DateTime from, DateTime to) {
             var query = "select id from delivery where started > '" + from + "' and started < '" + to + "' and driver like '" + id + "'";
             var reader = Util.query(query);

@@ -215,6 +215,7 @@ namespace FMS.App_Code
                 SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conn"].ToString());
         conn.Open();
                 SqlCommand command = new SqlCommand(request, conn);
+                command.CommandTimeout = 0;
                 return command.ExecuteReader();
             } 
             catch (Exception e)

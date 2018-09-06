@@ -58,7 +58,7 @@
             for (var c in input) {
                 var truck = input[c].split("*");
                 console.log(truck);
-                if(truck.length == 2) data.push({ y: parseFloat(truck[1]), label: truck[0] });
+                if (truck.length == 2 && parseFloat(truck[1]) > 0) data.push({ y: parseFloat(truck[1]), label: truck[0] });
             }
 
             var chart = new CanvasJS.Chart("chartContainer", {

@@ -20,7 +20,6 @@
 		  				<div class="panel-body">
                                 			<div class="content-box-large">
   				<div class="panel-heading">
-					<div class="panel-title">Last Month</div>
 					
 					<div class="panel-options">
 						<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
@@ -35,6 +34,7 @@
                         </div> <asp:Button ID="view" runat="server" Text="View Kms Driven" /><asp:Button ID="Button1" runat="server" Text="View Hours Driven" OnClick="ViewHours" />
                         <input type="hidden" runat="server" id="driverData" />
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <asp:Label ID="text" runat="server" Text="" ></asp:Label>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   					</div>
   				</div>
@@ -60,7 +60,7 @@
             for (var c in lstDrivers) {
                 var bar = lstDrivers[c].split("*");
                 console.log(bar)
-                if (bar.length == 2) bars.push({ y: parseFloat(bar[1]), label: bar[0] });
+                if (bar.length == 2 && parseFloat(bar[1]) > 0) bars.push({ y: parseFloat(bar[1]), label: bar[0] });
             }
 
             var chart = new CanvasJS.Chart("chartContainer", {
