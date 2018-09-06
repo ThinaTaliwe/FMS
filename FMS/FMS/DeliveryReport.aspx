@@ -18,12 +18,7 @@
 
 					<div class="col-md-12">
 						<div class="content-box-large">
-		  				<div class="panel-body">
-                            <div>
-                                <asp:DropDownList ID="delivery" runat="server"></asp:DropDownList>
-                                <asp:Button ID="button" runat="server" OnClick="viewReport" Text="View" />
-                            </div>
-                        <input type="hidden" id="locations" runat="server" />
+		  				<div class="panel-body"><input type="hidden" id="locations" runat="server" />
                         <div id="map" style="width: 100%; height: 500px;"></div>
                         <script>
                             var map;

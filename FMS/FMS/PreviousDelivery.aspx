@@ -1,11 +1,11 @@
-﻿<%@ Page Title="Update Delivery" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UpdateDelivery.aspx.cs" Inherits="FMS.UpdateDelivery" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PreviousDelivery.aspx.cs" Inherits="FMS.PreviousDelivery" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<section id="main-content">
+    <section id="main-content">
 
 
             <section class="wrapper">
                 <div class="content-box-large">
-                <h3>Upcoming Deliveries</h3>
+                <h3>Previous Deliveries</h3>
                 <div class="row">
 
                     <div class="col-md-10">
@@ -21,7 +21,7 @@
                                         <th>Destination</th>
                                         <th>Start</th>
                                         <th>End</th>
-                                        <th>Update</th>
+                                        <th>Report</th>
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">

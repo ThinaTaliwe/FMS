@@ -13,40 +13,8 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                string id = Request.QueryString["order"];
-                Response.Write(text);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
-            if (!IsPostBack) {
-                string query = "select id from delivery";
-                var delivs = Util.query(query);
-                if (delivs.HasRows)
-                {
-                    while (delivs.Read())
-                    {
-                        delivery.Items.Add(new ListItem(Convert.ToString(delivs.GetInt32(0))));
-                    }
-                }
-                try
-                {
-                    string id = Page.RouteData.Values["id"].ToString();
-                    viewDelivery(Convert.ToInt32(id));
-                }
-                catch (Exception ex)
-                {
-                    Util.print(ex.ToString());
-                }
-            }
-        }
-
-        protected void viewReport(object sender, EventArgs e) {
-            var id = Convert.ToInt32(delivery.SelectedValue);
-            viewDelivery(id);
+            string check = Request.QueryString["orderNumID"];
+            viewDelivery(Convert.ToInt32(check));
         }
 
         private void viewDelivery(int id) {
