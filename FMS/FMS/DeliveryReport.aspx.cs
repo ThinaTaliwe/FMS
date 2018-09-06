@@ -73,7 +73,7 @@ namespace FMS
                     text.Text = strInfo;
                 }
                 else
-                    text.Text = "something else happened";
+                    text.Text = "Delivery doesn't have speed information";
             }
         }
     }
