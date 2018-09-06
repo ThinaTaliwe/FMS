@@ -191,7 +191,6 @@
                             <ul>
                                 <li><a href="TruckReport">Truck Report</a></li>
                                 <li><a href="DriverReport">Driver Report</a></li>
-                                <li><a href="DeliveryReport">Client Report</a></li>
                             </ul>
                         </li>
                     </ul>
