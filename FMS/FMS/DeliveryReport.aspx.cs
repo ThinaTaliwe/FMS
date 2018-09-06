@@ -13,7 +13,16 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack) {
+            try
+            {
+                string id = Request.QueryString["order"];
+                Response.Write(text);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+            if (!IsPostBack) {
                 string query = "select id from delivery";
                 var delivs = Util.query(query);
                 if (delivs.HasRows)

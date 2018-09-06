@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using FMS.App_Code;
 using GoogleMaps.LocationServices;
+using FMS.App_Code;
+
 
 namespace FMS
 {
@@ -71,19 +73,12 @@ namespace FMS
             DateTime timeDate = DateTime.Parse(DeliveryDate.Value + " " + DeliveryTime.Value);
 
             //setting lat and long
-            var Originaddress = here.Value; 
-            var locationService = new GoogleLocationService();
-            var point = locationService.GetLatLongFromAddress(Originaddress);
-            var latitude = point.Latitude;
-            var longitude = point.Longitude;
-            String latlngOrigin = latitude + ":" + longitude + "#" + Originaddress;
+            var Originaddress = here.Value;
+
+            String latlngOrigin = Util.getLatLong(Originaddress) + "#" + Originaddress;
 
             var Destaddress = there.Value;
-            locationService = new GoogleLocationService();
-            var Destpoint = locationService.GetLatLongFromAddress(Destaddress);
-            var Destlatitude = Destpoint.Latitude;
-            var Destlongitude = Destpoint.Longitude;
-            String latlngDest = Destlatitude + ":" + Destlongitude + "#" + Destaddress;
+            String latlngDest = Util.getLatLong(Destaddress) + "#" + Destaddress;
             
             //string driver = DriverChosen.Value.Split(' ')[1];
             var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + latlngOrigin + "', '" + latlngDest + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + "1234567890123" + "');";
