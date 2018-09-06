@@ -31,7 +31,7 @@
                         <div>
                             From: <input class="form-control" type="date" id="fromDate" runat="server"> <br />
                             To: <input class="form-control" type="date" id="toDate" runat="server"> <br />
-                        </div> <asp:Button ID="view" runat="server" Text="View Kms Driven" /><asp:Button ID="Button1" runat="server" Text="View Hours Driven" OnClick="ViewHours" />
+                        </div><asp:Button ID="Button1" runat="server" Text="View Hours Driven" OnClick="ViewHours" />
                         <input type="hidden" runat="server" id="driverData" />
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
         <asp:Label ID="text" runat="server" Text="" ></asp:Label>

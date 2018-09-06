@@ -172,9 +172,15 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
+<<<<<<< HEAD
     <Content Include="App_Data\theDB.mdf" />
     <Content Include="App_Data\theDB_log.ldf">
       <DependentUpon>theDB.mdf</DependentUpon>
+=======
+    <Content Include="App_Data\Noo.mdf" />
+    <Content Include="App_Data\Noo_log.ldf">
+      <DependentUpon>Noo.mdf</DependentUpon>
+>>>>>>> 47ee72d46783e42ca3bccbe5e3aea0f16dfd7530
     </Content>
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
@@ -221,7 +227,6 @@
     <Content Include="Login.aspx" />
     <Content Include="Map.html" />
     <Content Include="MonitorTrucks.aspx" />
-    <Content Include="PreviousDelivery.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dms_script.js" />
@@ -403,13 +408,6 @@
     </Compile>
     <Compile Include="MonitorTrucks.aspx.designer.cs">
       <DependentUpon>MonitorTrucks.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="PreviousDelivery.aspx.cs">
-      <DependentUpon>PreviousDelivery.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PreviousDelivery.aspx.designer.cs">
-      <DependentUpon>PreviousDelivery.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
