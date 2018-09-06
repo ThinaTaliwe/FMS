@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FMS.App_Code;
+using Newtonsoft.Json.Linq;
 
 namespace FMS
 {
@@ -37,14 +38,14 @@ namespace FMS
                 }
 
             }
-            query = "select location from locations where delivery like 12";
-            var locs = Util.query(query);
-            if(locs.HasRows) {
-                string strLocs = "";
-                while (locs.Read())
-                    strLocs += locs.GetString(0) + "*";
-                locations.Value = strLocs;
-            }
+            //query = "select location from locations where delivery like 12";
+            //var locs = Util.query(query);
+            //if(locs.HasRows) {
+            //    string strLocs = "";
+            //    while (locs.Read())
+            //        strLocs += locs.GetString(0) + "*";
+            //    locations.Value = strLocs;
+            //}
         }
 
         protected void getDeliv(object sender, EventArgs e)
@@ -66,7 +67,18 @@ namespace FMS
 
             text.Text = t.getID() + "  " + dri.getName() + Util.totalDistance(list);
             if(d.speedInfo() != null) {
-                text.Text += d.speedInfo().ToString();
+                var json = d.speedInfo();
+                text.Text += json.ToString();
+                JArray info = (JArray) json["info"];
+                string location;
+                foreach (JObject token in info) {
+                    location = token["distance"] + "*";
+                    location += token["speed"] + "*";
+                    location += token["time"] + "*";
+                    location += token["coords"];
+                    locations.Value += location + "#";
+                    location = "";
+                }
             }
         }
     }

@@ -34,10 +34,10 @@
     <div id="map"></div>
     <script>
         var map;
-        var marker;
-        var icon = "http://maps.google.com/mapfiles/ms/micons/red.png";
+        var redIcon = "http://maps.google.com/mapfiles/ms/micons/red.png";
+        var greenIcon = "http://maps.google.com/mapfiles/ms/micons/green.png";
         var places = document.getElementById("locations").value;
-        var arrPlaces = places.split("*");
+        var arrPlaces = places.split("#");
         function initMap() {
             var myLatLng = { lat: -26.02, lng: 28.56 };
             map = new google.maps.Map(document.getElementById('map'), {
@@ -45,15 +45,31 @@
                 center: myLatLng
             });
             for (var loc in arrPlaces) {
-                var place = arrPlaces[loc];
-                var mark = place.split(":");
-                console.log(mark);
+                console.log(arrPlaces[loc]);
+                var info = arrPlaces[loc].split("*");
+                var speed = parseFloat(info[1])
+                var icon = speed > 80 ? redIcon : greenIcon;
+                var coords = info[3].split(":");
+                var text = "Distance: " + info[0] + "\n";
+                text += "Speed: " + info[1] + "\n";
+                text += "Coordinates: " + info[3] + "\n";
+                text += "Time: " + info[2];
                 var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(parseFloat(mark[0]), parseFloat(mark[1])),
+                    position: new google.maps.LatLng(parseFloat(coords[0]), parseFloat(coords[1])),
                     icon: icon,
-                    title: arrPlaces[loc],
+                    title: text,
                     map: map
-                });
+                })
+
+                //var place = arrPlaces[loc];
+                //var mark = place.split(":");
+                //console.log(mark);
+                //var marker = new google.maps.Marker({
+                //    position: new google.maps.LatLng(parseFloat(mark[0]), parseFloat(mark[1])),
+                //    icon: icon,
+                //    title: arrPlaces[loc],
+                //    map: map
+                //});
             }
         }
         
