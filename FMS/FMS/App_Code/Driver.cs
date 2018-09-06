@@ -25,17 +25,29 @@ namespace FMS.App_Code
             }
         }
 
-        public double hoursWorked(DateTime time) {
-            var query = "select started, completed from delivery where completed > " + time;
+        public List<Delivery> deliveriesMade(DateTime from, DateTime to)
+        {
+            var query = "select id from delivery where started > '" + from +  "' and started < '" + to + "' and driver like '" + id + "'";
+            return null;
+        }
+
+        public double KmsDriven(DateTime from, DateTime to) {
+            var query = "select id from delivery where started > '" + from + "' and started < '" + to + "' and driver like '" + id + "'";
             var reader = Util.query(query);
-            double hours = 0;
+            double km = 0.0;
             if(reader.HasRows) {
-                while(reader.Read()) {
-                    var diff = reader.GetDateTime(1).Minute - reader.GetDateTime(0).Minute;
-                    hours += diff;
+                List<int> lstDelivs = new List<int>();
+                while (reader.Read())
+                    lstDelivs.Add(reader.GetInt32(0));
+                foreach(var id in lstDelivs) {
+                    Delivery delivery = Delivery.getInstance(id);
+                    var json = delivery.speedInfo();
+                    if(json != null) {
+                        km += Convert.ToDouble(json["distance"]);
+                    }
                 }
             }
-            return hours / 60.0;
+            return km;
         }
 
         public string lastLocation() {

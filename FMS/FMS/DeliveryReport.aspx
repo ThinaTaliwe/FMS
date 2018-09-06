@@ -19,73 +19,47 @@
 					<div class="col-md-12">
 						<div class="content-box-large">
 		  				<div class="panel-body">
-                              <p> Leave Blank if Filter Does Not Apply</p>
-                              <form class="form-horizontal" role="form">
-                                   <div class="form-group">
-                                               <label  class="col-sm-2 control-label"> Destination </label>
-										    <div class="col-sm-10">
-										      <input class="form-control" id="Destination" placeholder="">
-										    </div>
-										  </div>
-                                   <div class="form-group">
-                                               <label  class="col-sm-2 control-label"> Origin </label>
-										    <div class="col-sm-10">
-										      <input class="form-control" id="Origin" placeholder="">
-										    </div>
-										  </div>
-                                   <div class="form-group">
-												<label class="control-label col-md-2">Material</label>
-											<div class="col-md-10">
-												<select class="form-control">
-                                                    <option>None</option>
-													<option>Coal</option>
-													<option>Clinkers</option>
-													<option>Pozzsand</option>
-												</select>
-											</div>
-										</div>
-
-                                   <div class="form-group">
-										    <label  class="col-sm-2 control-label">From*</label>
-										    <div class="col-sm-10">
-										     	
-						                    <form action="/action_page.php">
-                                              <input class="form-control" type="date" id="DeliveryReportFrom">
-                                            </form>
-										    </div>
-										  </div>
-                                 <div class="form-group">
-										    <label  class="col-sm-2 control-label">To*</label>
-										    <div class="col-sm-10">
-										     	
-						                    <form action="/action_page.php">
-                                              <input class="form-control" type="date" id="DeliveryReportTo">
-                                            </form>
-										    </div>
-                                     	
-										  </div>
-                                   
-                                   <div class="form-group">
-												<label class="control-label col-md-2">Select Graph Type*</label>
-											<div class="col-md-10">
-												<select class="form-control">
-													<option>Table</option>
-													<option>Graph</option>
-													
-												</select>
-											</div>
-										</div>
-                               
-                                  
-				  						
-												<button class="btn btn-primary" type="submit" onclick="DeliveryReport()">
-													<i class="fa fa-save" ></i>
-													Search
-												</button>			 
-										  
-										</form>
+                            <div>
+                                <asp:DropDownList ID="delivery" runat="server"></asp:DropDownList>
+                                <asp:Button ID="button" runat="server" OnClick="viewReport" Text="View" />
                             </div>
-		  					
+                        <input type="hidden" id="locations" runat="server" />
+                        <div id="map" style="width: 100%; height: 500px;"></div>
+                        <script>
+                            var map;
+                            var redIcon = "http://maps.google.com/mapfiles/ms/micons/red.png";
+                            var greenIcon = "http://maps.google.com/mapfiles/ms/micons/green.png";
+                            var places = document.getElementById('<%= locations.ClientID %>').value;
+                            var arrPlaces = places.split("#");
+                            function initMap() {
+                                var myLatLng = { lat: -26.02, lng: 28.56 };
+                                map = new google.maps.Map(document.getElementById('map'), {
+                                    zoom: 4,
+                                    center: myLatLng
+                                });
+                                for (var loc in arrPlaces) {
+                                    console.log(arrPlaces[loc]);
+                                    var info = arrPlaces[loc].split("*");
+                                    var speed = parseFloat(info[1])
+                                    var icon = speed > 80 ? redIcon : greenIcon;
+                                    var coords = info[3].split(":");
+                                    var text = "Distance: " + info[0] + "\n";
+                                    text += "Speed: " + info[1] + "\n";
+                                    text += "Coordinates: " + info[3] + "\n";
+                                    text += "Time: " + info[2];
+                                    var marker = new google.maps.Marker({
+                                        position: new google.maps.LatLng(parseFloat(coords[0]), parseFloat(coords[1])),
+                                        icon: icon,
+                                        title: text,
+                                        map: map
+                                    })
+                                }
+                            }
+                        </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=initMap"
+    async defer></script>
+        <asp:Label ID="text" runat="server" Text="" ></asp:Label>
+                            </div>
 		  			</div>
 					</div>
 				</div>

@@ -30,9 +30,13 @@ namespace FMS{
 
         private void serverCheck(object source, ElapsedEventArgs a) {
             Util.print("Checking if server is online");
-            if(!rest.isRunning()) {
+            if (!rest.isRunning())
+            {
+                Util.print("Not running");
                 startServer(1998);
             }
+            else
+                Util.print("server running");
         }
 
         private void startServer(int port) {
@@ -51,8 +55,9 @@ namespace FMS{
         {
             routes.MapPageRoute("delivery", "delivery/{id}", "~/EditDelivery.aspx");
             routes.MapPageRoute("driver", "driver/{id}", "~/drivers.aspx");
-            routes.MapPageRoute("clients", "clients/{id}", "~/clients.aspx");
-            routes.MapPageRoute("trucks", "trucks/{id}", "~/trucks.aspx");
+            routes.MapPageRoute("client", "client/{id}", "~/clients.aspx");
+            routes.MapPageRoute("truck", "truck/{id}", "~/trucks.aspx");
+            routes.MapPageRoute("report", "report/{id}", "~/deliveryreport.aspx");
         }
     }
 

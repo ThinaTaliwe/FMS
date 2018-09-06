@@ -60,20 +60,8 @@
                     title: text,
                     map: map
                 })
-
-                //var place = arrPlaces[loc];
-                //var mark = place.split(":");
-                //console.log(mark);
-                //var marker = new google.maps.Marker({
-                //    position: new google.maps.LatLng(parseFloat(mark[0]), parseFloat(mark[1])),
-                //    icon: icon,
-                //    title: arrPlaces[loc],
-                //    map: map
-                //});
             }
         }
-        
-
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=initMap"
     async defer></script> <form>

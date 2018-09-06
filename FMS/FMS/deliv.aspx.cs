@@ -38,14 +38,6 @@ namespace FMS
                 }
 
             }
-            //query = "select location from locations where delivery like 12";
-            //var locs = Util.query(query);
-            //if(locs.HasRows) {
-            //    string strLocs = "";
-            //    while (locs.Read())
-            //        strLocs += locs.GetString(0) + "*";
-            //    locations.Value = strLocs;
-            //}
         }
 
         protected void getDeliv(object sender, EventArgs e)

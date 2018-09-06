@@ -29,6 +29,10 @@
 				</div>
   				<div class="panel-body">
   					<div class="row">
+                        <div>
+                            From: <input class="form-control" type="date" id="fromDate" runat="server"> <br />
+                            To: <input class="form-control" type="date" id="toDate" runat="server"> <br />
+                        </div> <asp:Button ID="view" runat="server" Text="View Kms Driven" OnClick="view_Click" />
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   					</div>
@@ -45,9 +49,17 @@
 		  </div>
 		</div>
     </div>
-
+    <input type="hidden" id="truckData" runat="server" />
     <script>
         window.onload = function () {
+            var input = document.getElementById('<%= truckData.ClientID %>').value.split("#");
+            console.log(input);
+            var data = [];
+            for (var c in input) {
+                var truck = input[c].split("*");
+                console.log(truck);
+                if (truck.length == 2 && parseFloat(truck[1]) > 0) data.push({ y: parseFloat(truck[1]), label: truck[0] });
+            }
 
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
@@ -63,16 +75,7 @@
                     showInLegend: true,
                     legendMarkerColor: "grey",
                     legendText: "Individual Trucks",
-                    dataPoints: [
-                        { y: 300878, label: "AA00BBGP" },
-                        { y: 266455, label: "AA00BBGP" },
-                        { y: 169709, label: "AA00BBGP" },
-                        { y: 158400, label: "AA00BBGP" },
-                        { y: 142503, label: "AA00BBGP" },
-                        { y: 101500, label: "AA00BBGP" },
-                        { y: 97800, label: "AA00BBGP" },
-                        { y: 80000, label: "AA00BBGP" }
-                    ]
+                    dataPoints: data
                 }]
             });
             chart.render();

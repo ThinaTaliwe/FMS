@@ -264,8 +264,8 @@ public class DriverService extends Service {
             response = read();
             if(response.contains(OK_CODE)) {
                 setDriver(name, pass);
-                response = read();
-                if(response != null) {
+                if(available()) {
+                    response = read();
                     Delivery deliv = Delivery.newAssignment(response);
                     if(deliv != null) setDelivery(deliv);
                 }

@@ -27,10 +27,10 @@ namespace FMS.App_Code
             }
         }
 
-        public double totalDistance() {
+        public double totalDistance(DateTime from, DateTime to) {
             double distance = 0;
             try {
-                var query = "select id from delivery where truck like '" + id  + "'";
+                var query = "select id from delivery where truck like '" + id  + "' and started > '" + from + "' and started < '" + to + "'";
                 var ids = Util.query(query);
                 if(ids.HasRows) {
                     List<int> strIDS = new List<int>();
