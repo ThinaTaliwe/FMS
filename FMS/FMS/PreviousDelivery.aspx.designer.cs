@@ -10,24 +10,15 @@
 namespace FMS {
     
     
-    public partial class DeliveryReport {
+    public partial class PreviousDelivery {
         
         /// <summary>
-        /// locations control.
+        /// tables control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden locations;
-        
-        /// <summary>
-        /// text control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label text;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tables;
     }
 }

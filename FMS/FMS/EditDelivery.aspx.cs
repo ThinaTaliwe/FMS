@@ -34,14 +34,10 @@ namespace FMS
                 }
             }
 
-            try {
-                string text ="id=" + Page.RouteData.Values["id"].ToString();
-                Response.Write(text);
-            } catch(Exception ex) {
-                System.Diagnostics.Debug.WriteLine(ex);
-            }
+          
 
             string id = Request.QueryString["order"];
+            Response.Write(id);
             //ordernum.Text = id;
             //Display Info regarding the asked order 
             var query = "SELECT id, client, depart_day, material, load FROM DELIVERY WHERE ID LIKE '" + id + "'";
