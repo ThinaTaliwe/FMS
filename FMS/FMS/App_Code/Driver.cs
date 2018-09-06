@@ -27,7 +27,18 @@ namespace FMS.App_Code
 
         public List<Delivery> deliveriesMade(DateTime from, DateTime to)
         {
-            var query = "select id from delivery where started > '" + from +  "' and started < '" + to + "' and driver like '" + id + "'";
+            var query = "select id from delivery where started > '" + from + "' and started < '" + to + "' and driver like '" + id + "'";
+            var reader = Util.query(query);
+            if (reader.HasRows)
+            {
+                List<int> list = new List<int>();
+                while (reader.Read())
+                    list.Add(reader.GetInt32(0));
+                List<Delivery> lstDelivs = new List<Delivery>();
+                foreach (int id in list)
+                    lstDelivs.Add(Delivery.getInstance(id));
+                return lstDelivs;
+            }
             return null;
         }
 

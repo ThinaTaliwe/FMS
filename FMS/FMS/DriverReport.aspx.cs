@@ -15,14 +15,14 @@ namespace FMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            viewHourWorked();
+            viewHoursWorked();
         }
 
         protected void ViewHours(object sender, EventArgs e) {
-            viewHourWorked();
+            viewHoursWorked();
         }
 
-        private void viewHourWorked() {
+        private void viewHoursWorked() {
             if(String.IsNullOrWhiteSpace(toDate.Value) || String.IsNullOrWhiteSpace(fromDate.Value)) {
                 to = DateTime.Now;
                 from = to.AddMonths(-1);
@@ -42,7 +42,45 @@ namespace FMS
                     var hours = driver.KmsDriven(from, to);
                     driverData.Value += driver.getName() + "*" + hours + "#";
                 }
+                viewInfo();
             }
+        }
+
+        private void viewInfo()
+        {
+            text.Text = "";
+            foreach (var driver in lstDrivers)
+            {
+                var info = driverInfo(new Driver(driver));
+                if (info != null)
+                    text.Text += info;
+            }
+        }
+
+        public string driverInfo(Driver driver)
+        {
+            var delivs = driver.deliveriesMade(from, to);
+            if(delivs != null)
+            {
+                string response = "Driver Info for: " + driver.getName() + "<br/>";
+                response += "From: " + from + "<br/>";
+                response += "To: " + to + "<br/>";
+                foreach (var delivery in delivs)
+                {
+                    var json = delivery.speedInfo();
+                    if (json != null)
+                    {
+                        response += "Delivery Order Num: " + delivery.getOrderNumber() + "<br/>";
+                        response += "Client: " + delivery.getClient().getCompany() + "<br/>";
+                        response += "Distance: " + json["distance"] + "<br/>";
+                        response += "Average Speed: " + json["speed"] + "<br/>";
+                        response += "Time (in hours): " + json["time"] + "<br/>";
+                        response += "Overspeed Ratio (%): " + json["overspeed_ratio"] + "<br/>";
+                    }
+                }
+                return response + "<br/>";
+            }
+            return null;
         }
     }
 }

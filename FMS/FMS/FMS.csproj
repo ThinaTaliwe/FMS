@@ -172,10 +172,6 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
-    <Content Include="App_Data\No.mdf" />
-    <Content Include="App_Data\No_log.ldf">
-      <DependentUpon>No.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\theDB.mdf" />
     <Content Include="App_Data\theDB_log.ldf">
       <DependentUpon>theDB.mdf</DependentUpon>
@@ -218,6 +214,7 @@
     <Content Include="global.json" />
     <Content Include="Connected Services\colloidAzureStorage\ConnectedService.json" />
     <None Include="Properties\PublishProfiles\FMS20180824051226 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Home.aspx" />
     <Content Include="Home_Dummy.html" />

@@ -13,6 +13,7 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Write(Util.GetLocalIPAddress());
             string query;
             if (!IsPostBack) {
                 query = "select id from delivery";
