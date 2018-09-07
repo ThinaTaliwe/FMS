@@ -56,7 +56,7 @@ public class MainActivity extends Base {
             @Override
             public void onClick(View view) {
                 try {
-                    service.login("1234567890000", "MMELI");
+                    service.login("9012129800089", "KagisoMokoena");
                     if(service.currentDelivery() == null) {
                         String response;
                         service.clearInputStream();

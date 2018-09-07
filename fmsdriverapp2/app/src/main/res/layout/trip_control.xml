@@ -8,29 +8,40 @@
 
     ]]>
 
-    <EditText
-        android:id="@+id/deliv_info"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:ems="10"
-        android:inputType="textMultiLine" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/start_end"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start trip" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/view_route"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="view route" />
 
-    <Button
-        android:id="@+id/get_route"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="get route" />
+            <EditText
+                android:id="@+id/deliv_info"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:ems="10"
+                android:inputType="textMultiLine" />
 
+            <Button
+                android:id="@+id/start_end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start trip" />
+
+            <Button
+                android:id="@+id/view_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="view route" />
+
+            <Button
+                android:id="@+id/get_route"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="get route" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

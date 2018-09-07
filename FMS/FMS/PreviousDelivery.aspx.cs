@@ -12,7 +12,7 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var query = "select [from], [to], truck, driver, client, started, completed, id  from Delivery";
+            var query = "select [from], [to], truck, driver, client, started, completed, id  from Delivery order by id desc";
             var rows = Util.query(query);
             var HTMLStr = "";
             var num = 0;
