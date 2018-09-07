@@ -13,7 +13,7 @@ namespace FMS.App_Code
 {
     public class Util
     {
-        public static string key = "AIzaSyChZ0yP0HTxPypmlDNYgkpQMXqQD3UASpw";
+        public static string key = "AIzaSyC9H32t06ZsT32y0EPOHAAUH0A42gIHq6E";
 
         public static JObject averageSpeed(List<string> coords, List<DateTime> times) {
             JObject json = new JObject();

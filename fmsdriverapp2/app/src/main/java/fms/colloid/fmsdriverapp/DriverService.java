@@ -302,19 +302,10 @@ public class DriverService extends Service {
                                 String text = read();
                                 if (text != null) {
                                     if(text.startsWith("{")) {
-                                        JSONObject json = new JSONObject(text);
-                                        String action = json.getString("action");
-                                        switch (action) {
-                                            case "assignment":
-                                                delivery = Delivery.newAssignment(text);
-                                                notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
-                                                sendLocation(delivery.getId());
-                                                setTimer(5000);
-                                                break;
-                                            default:
-                                                System.out.println(text);
-                                                break;
-                                        }
+                                        delivery = Delivery.newAssignment(text);
+                                        notification("New Assignment", delivery.toString(), new Intent(DriverService.this, CurrentDelivery.class));
+                                        sendLocation(delivery.getId());
+                                        setTimer(5000);
                                     } else {
                                         String[] parts = text.split(" ");
                                         switch (parts[0]) {
