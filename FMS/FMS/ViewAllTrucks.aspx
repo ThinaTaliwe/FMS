@@ -17,9 +17,7 @@
                                     <tr>
                                         <th>Truck Plate Number</th>
                                         <th>Load </th>
-                                        <th>Speed</th>
-                                        <th>Report</th>
-                                       
+                                        <th>Speed</th>                                      
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
