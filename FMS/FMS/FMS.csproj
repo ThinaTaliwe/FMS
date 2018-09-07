@@ -256,6 +256,9 @@
     <Content Include="TruckReport.aspx" />
     <Content Include="UpdateDelivery.aspx" />
     <Content Include="ViewAllTrucks.aspx" />
+    <Content Include="ViewClients.aspx" />
+    <Content Include="ViewDrivers.aspx" />
+    <Content Include="ViewEmployees.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -453,6 +456,27 @@
     </Compile>
     <Compile Include="ViewAllTrucks.aspx.designer.cs">
       <DependentUpon>ViewAllTrucks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewClients.aspx.cs">
+      <DependentUpon>ViewClients.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewClients.aspx.designer.cs">
+      <DependentUpon>ViewClients.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewDrivers.aspx.cs">
+      <DependentUpon>ViewDrivers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewDrivers.aspx.designer.cs">
+      <DependentUpon>ViewDrivers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewEmployees.aspx.cs">
+      <DependentUpon>ViewEmployees.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewEmployees.aspx.designer.cs">
+      <DependentUpon>ViewEmployees.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
