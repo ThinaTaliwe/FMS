@@ -75,6 +75,7 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.setTrafficEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(true);
         map.getUiSettings().setAllGesturesEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(true);
         try {
             LatLng dest = service.currentDelivery().getToCoords();
             map.addMarker(new MarkerOptions().position(dest).title(service.currentDelivery().getTo()));

@@ -220,11 +220,15 @@
             <div class="copy text-center">
                 Copyright 2018 <a href='#'>Colloid</a>
             </div>
-
+    <asp:Timer ID="timer" OnTick="timer_Tick" runat="server" Interval="10000" />
+    <asp:UpdatePanel ID="notifs" runat="server" UpdateMode="Conditional">
+        <Triggers><asp:AsyncPostBackTrigger ControlID="timer" /></Triggers>
+        <ContentTemplate>
+            Notifcations <hr /><br /><asp:Label ID="notification" runat="server" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
         </div>
     </footer>
-
-       
     </form>
 <!--Footer for website  -->
 

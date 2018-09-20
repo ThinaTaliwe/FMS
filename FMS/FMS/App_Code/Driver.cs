@@ -68,6 +68,14 @@ namespace FMS.App_Code
             return location.GetString(0);
         }
 
+        public int getMessage()
+        {
+            var query = "select message from drivers where id like '" + id + "'";
+            var message = Util.query(query);
+            message.Read();
+            return message.GetInt32(0);
+        }
+
         public void setCode(string value) { code = value; }
         public void setExpiry(DateTime value) { expiry = value; }
         public void setRestriction(int value) { restriction = value; }
