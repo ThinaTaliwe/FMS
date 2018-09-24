@@ -44,15 +44,15 @@ namespace FMS.App_Code
             }
         }
 
-		public List<Delivery> getDeliveries(Datetime from, DateTime to) {
-			var query = "select id from delivery where client like " + id;
+		public List<Delivery> getDeliveries(DateTime from, DateTime to) {
+            var query = "select id from delivery where client like " + id + " and started > '" + from + "' and started < '" + to + "'";
 			var reader = Util.query(query);
-			var list = new List<int>();
 			if(reader.HasRows) {
+                List<int> list = new List<int>();
 				while(reader.Read())
 					list.Add(reader.GetInt32(0));
 				var lstDelivs = new List<Delivery>();
-				foreach(int i : list) 
+				foreach(int i in list) 
 					lstDelivs.Add(Delivery.getInstance(i));
 				return lstDelivs;
 			}
