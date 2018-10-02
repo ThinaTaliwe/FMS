@@ -12,6 +12,11 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Color.Items.Add(new ListItem("Black"));
+            Color.Items.Add(new ListItem("White"));
+            Color.Items.Add(new ListItem("Blue"));
+            Color.Items.Add(new ListItem("Grey"));
+            Color.Items.Add(new ListItem("Silver"));
 
         }
 
