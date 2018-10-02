@@ -18,7 +18,9 @@
                                         <th>Name</th>
                                         <th>Surname </th>
                                         <th>Email</th>
-                                       
+                                        <th>Licence Code</th>
+                                        <th>Expiry</th>
+                                        <th>Restriction</th>
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
