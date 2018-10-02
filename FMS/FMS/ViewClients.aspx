@@ -17,6 +17,8 @@
                                     <tr>
                                         <th>Company Name</th>
                                         <th>Contact Person </th>
+                                        <th>Contact Number</th>
+                                        <th>Email Address</th>
                                         <th>Address</th>
                                        
                                     </tr>
