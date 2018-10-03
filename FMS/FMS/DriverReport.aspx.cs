@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FMS.App_Code;
+using Newtonsoft.Json.Linq;
 
 namespace FMS
 {
@@ -30,7 +31,6 @@ namespace FMS
                 }
                 if(!IsPostBack)
                 {
-                    
                     foreach(var driver in lstDrivers)
                     {
                         driverList.Items.Add(new ListItem(driver.getName() + " " + driver.getSurname()));
@@ -44,6 +44,19 @@ namespace FMS
             viewHoursWorked();
         }
 
+        private void setGraph(string title, string yAxisTitle, string legendText, List<string[]> values)
+        {
+            JObject json = new JObject();
+            json["title"] = title;
+            json["y_axis_title"] = yAxisTitle;
+            json["legend_text"] = legendText;
+            chart.Value = json.ToString();
+            string data = "";
+            foreach(var point in values)
+                data += point[0] + "*" + point[1] + "#";
+            chartData.Value = data;
+        }
+
         private void viewHoursWorked() {
             if(String.IsNullOrWhiteSpace(toDate.Value) || String.IsNullOrWhiteSpace(fromDate.Value)) {
                 to = DateTime.Now;
@@ -52,12 +65,13 @@ namespace FMS
                 to = DateTime.Parse(toDate.Value);
                 from = DateTime.Parse(fromDate.Value);
             }
-            chartData.Value = "";
+            List<string[]> data = new List<string[]>();
             foreach (Driver driver in lstDrivers)
             {
                 var hours = driver.KmsDriven(from, to);
-                chartData.Value += driver.getName() + "*" + hours + "#";
+                data.Add(new string[] { driver.getName(), hours.ToString() });
             }
+            setGraph("Driver Trips", "Kilometers (Km)", "Individual Trucks", data);
             viewInfo();
         }
 

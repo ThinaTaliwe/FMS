@@ -71,21 +71,23 @@
                 console.log(bar)
                 if (bar.length == 2 && parseFloat(bar[1]) > 0) bars.push({ y: parseFloat(bar[1]), label: bar[0] });
             }
-
+            var chart = document.getElementById('<%= chart.ClientID %>').value;
+            console.log(chart);
+            var json = JSON.parse(chart);
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",
                 title: {
-                    text: "Driver Trips "
+                    text: json["title"]
                 },
                 axisY: {
-                    title: "Kilometers (KM)"
+                    title: json["y_axis_title"]
                 },
                 data: [{
                     type: "column",
                     showInLegend: true,
                     legendMarkerColor: "grey",
-                    legendText: "Individual Trucks",
+                    legendText: json["legend_text"],
                     dataPoints: bars
                 }]
             });
