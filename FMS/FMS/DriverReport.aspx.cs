@@ -31,6 +31,7 @@ namespace FMS
                 }
                 if(!IsPostBack)
                 {
+                    driverList.Items.Add(new ListItem("Select a Driver"));
                     foreach(var driver in lstDrivers)
                     {
                         driverList.Items.Add(new ListItem(driver.getName() + " " + driver.getSurname()));
@@ -72,7 +73,18 @@ namespace FMS
                 data.Add(new string[] { driver.getName(), hours.ToString() });
             }
             setGraph("Driver Trips", "Kilometers (Km)", "Individual Trucks", data);
+            setSelectedText();
             viewInfo();
+        }
+
+        private void setSelectedText()
+        {
+            string text = "";
+            text += "Report Period" + "<br/>";
+            text += "From: " + from.Date.ToString() + "<br/>";
+            text += "To: " + to.Date.ToString() + "<br/>";
+            text += "Selected Driver: " + driverList.SelectedValue.ToString() + "<br/>";
+            reportText.Text = text;
         }
 
         private void viewInfo()

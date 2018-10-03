@@ -58,6 +58,15 @@ namespace FMS {
         protected global::System.Web.UI.UpdatePanel report;
         
         /// <summary>
+        /// reportText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reportText;
+        
+        /// <summary>
         /// chartData control.
         /// </summary>
         /// <remarks>

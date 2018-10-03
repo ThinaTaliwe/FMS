@@ -36,7 +36,7 @@
                           <asp:UpdatePanel ID="report" runat="server" UpdateMode="Always">
                               <Triggers><asp:AsyncPostBackTrigger ControlID="View" /></Triggers>
                               <ContentTemplate>
-
+        <asp:Label ID="reportText" runat="server" Text="" ></asp:Label>
                               </ContentTemplate>
                           </asp:UpdatePanel>
                         <input type="hidden" runat="server" id="chartData" />
