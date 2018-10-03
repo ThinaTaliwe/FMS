@@ -55,6 +55,23 @@ namespace FMS.App_Code
             } return distance;
         }
 
+        public List<Truck> getTruckList()
+        {
+            List<string> lstIDS = new List<string>();
+            List<Truck> lstTrucks = new List<Truck>();
+            var query = "select id from trucks";
+            var reader = Util.query(query);
+            if(reader.HasRows)
+            {
+                while (reader.Read())
+                    lstIDS.Add(reader.GetString(0));
+                foreach (var id in lstIDS)
+                    lstTrucks.Add(new Truck(id));
+                return lstTrucks;
+            }
+            return null;
+        }
+
         public string getID() { return id; }
         public int getLoad() { return load; }
         public int getSpeed() { return speed; }
