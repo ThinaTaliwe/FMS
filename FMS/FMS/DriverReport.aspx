@@ -29,10 +29,18 @@
   				<div class="panel-body">
   					<div class="row">
                         <div>
-                            From: <input class="form-control" type="date" id="fromDate" runat="server"> <br />
-                            To: <input class="form-control" type="date" id="toDate" runat="server"> <br />
-                        </div><asp:Button ID="Button1" runat="server" Text="View Hours Driven" OnClick="ViewHours" />
-                        <input type="hidden" runat="server" id="driverData" />
+                            From: <input class="form-control" type="date" id="fromDate" runat="server"> 
+                            To: <input class="form-control" type="date" id="toDate" runat="server"> 
+                            Drivers <asp:DropDownList ID="driverList" runat="server"></asp:DropDownList>
+                        </div><asp:Button ID="View" runat="server" Text="View Hours Driven" OnClick="ViewHours" />
+                          <asp:UpdatePanel ID="report" runat="server" UpdateMode="Always">
+                              <Triggers><asp:AsyncPostBackTrigger ControlID="View" /></Triggers>
+                              <ContentTemplate>
+
+                              </ContentTemplate>
+                          </asp:UpdatePanel>
+                        <input type="hidden" runat="server" id="chartData" />
+                        <input type="hidden" runat="server" id="chart" />
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
         <asp:Label ID="text" runat="server" Text="" ></asp:Label>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -52,9 +60,10 @@
     </div>
 
     <script>
-        window.onload = function () {
 
-            var lstDrivers = document.getElementById('<%= driverData.ClientID %>').value.split("#");
+        function load_graph() {
+
+            var lstDrivers = document.getElementById('<%= chartData.ClientID %>').value.split("#");
             console.log(lstDrivers);
             var bars = [];
             for (var c in lstDrivers) {
@@ -81,7 +90,8 @@
                 }]
             });
             chart.render();
-
         }
+
+        window.onload = load_graph()
     </script>
 </asp:Content>

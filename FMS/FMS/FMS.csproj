@@ -176,7 +176,6 @@
     <Content Include="App_Data\theDB_log.ldf">
       <DependentUpon>theDB.mdf</DependentUpon>
     </Content>
-    <Content Include="ClientLogin.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />
@@ -190,12 +189,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CreateDelivery.aspx" />
-    <Content Include="C_Info.aspx" />
-    <Content Include="C_InfoPast.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="deliv.aspx" />
     <Content Include="DeliveryReport.aspx" />
-    <Content Include="Deliv_Info.aspx" />
     <Content Include="Drag.html" />
     <Content Include="DriverReport.aspx" />
     <Content Include="EditDelivery.aspx" />
@@ -310,13 +306,6 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="ClientLogin.aspx.cs">
-      <DependentUpon>ClientLogin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ClientLogin.aspx.designer.cs">
-      <DependentUpon>ClientLogin.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -330,20 +319,6 @@
     </Compile>
     <Compile Include="CreateDelivery.aspx.designer.cs">
       <DependentUpon>CreateDelivery.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="C_Info.aspx.cs">
-      <DependentUpon>C_Info.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="C_Info.aspx.designer.cs">
-      <DependentUpon>C_Info.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="C_InfoPast.aspx.cs">
-      <DependentUpon>C_InfoPast.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="C_InfoPast.aspx.designer.cs">
-      <DependentUpon>C_InfoPast.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -365,13 +340,6 @@
     </Compile>
     <Compile Include="DeliveryReport.aspx.designer.cs">
       <DependentUpon>DeliveryReport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Deliv_Info.aspx.cs">
-      <DependentUpon>Deliv_Info.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Deliv_Info.aspx.designer.cs">
-      <DependentUpon>Deliv_Info.aspx</DependentUpon>
     </Compile>
     <Compile Include="DriverReport.aspx.cs">
       <DependentUpon>DriverReport.aspx</DependentUpon>

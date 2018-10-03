@@ -31,22 +31,49 @@ namespace FMS {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl toDate;
         
         /// <summary>
-        /// Button1 control.
+        /// driverList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.DropDownList driverList;
         
         /// <summary>
-        /// driverData control.
+        /// View control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden driverData;
+        protected global::System.Web.UI.WebControls.Button View;
+        
+        /// <summary>
+        /// report control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel report;
+        
+        /// <summary>
+        /// chartData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden chartData;
+        
+        /// <summary>
+        /// chart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden chart;
         
         /// <summary>
         /// text control.

@@ -11,11 +11,33 @@ namespace FMS
     public partial class DriverReport : System.Web.UI.Page
     {
         private DateTime from, to;
-        private List<string> lstDrivers;
+        private List<Driver> lstDrivers;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            viewHoursWorked();
+            string query = "select id from users where user_type like 'driver'";
+            var drivers = Util.query(query);
+            if (drivers.HasRows)
+            {
+                List<string> strDrivers = new List<string>();
+                while (drivers.Read())
+                    strDrivers.Add(drivers.GetString(0));
+                lstDrivers = new List<Driver>();
+                foreach (string id in strDrivers)
+                {
+                    Driver driver = new Driver(id);
+                    lstDrivers.Add(driver);
+                }
+                if(!IsPostBack)
+                {
+                    
+                    foreach(var driver in lstDrivers)
+                    {
+                        driverList.Items.Add(new ListItem(driver.getName() + " " + driver.getSurname()));
+                    }
+                }
+                viewHoursWorked();
+            }
         }
 
         protected void ViewHours(object sender, EventArgs e) {
@@ -30,20 +52,13 @@ namespace FMS
                 to = DateTime.Parse(toDate.Value);
                 from = DateTime.Parse(fromDate.Value);
             }
-            string query = "select id from users where user_type like 'driver'";
-            var drivers = Util.query(query);
-            if(drivers.HasRows) {
-                lstDrivers = new List<string>();
-                while (drivers.Read())
-                    lstDrivers.Add(drivers.GetString(0));
-                driverData.Value = "";
-                foreach(string id in lstDrivers) {
-                    Driver driver = new Driver(id);
-                    var hours = driver.KmsDriven(from, to);
-                    driverData.Value += driver.getName() + "*" + hours + "#";
-                }
-                viewInfo();
+            chartData.Value = "";
+            foreach (Driver driver in lstDrivers)
+            {
+                var hours = driver.KmsDriven(from, to);
+                chartData.Value += driver.getName() + "*" + hours + "#";
             }
+            viewInfo();
         }
 
         private void viewInfo()
@@ -51,7 +66,7 @@ namespace FMS
             text.Text = "";
             foreach (var driver in lstDrivers)
             {
-                var info = driverInfo(new Driver(driver));
+                var info = driverInfo(driver);
                 if (info != null)
                     text.Text += info;
             }
