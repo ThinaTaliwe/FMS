@@ -46,7 +46,10 @@ namespace FMS
                         Client.Items.Add(new ListItem(clients.GetString(0)));
                     }
                 }
-                Client.Items.Add(new ListItem("Other")); 
+                Client.Items.Add(new ListItem("Other"));
+                Material.Items.Add(new ListItem("Coal"));
+                Material.Items.Add(new ListItem("Pozzsand"));
+                Material.Items.Add(new ListItem("Clinkers"));
             }
         }
 

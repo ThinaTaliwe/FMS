@@ -36,7 +36,14 @@
 										    <div class="col-sm-10">
 										      <input class="form-control" id="TruckMaxSpeed" placeholder="" runat="server">
 										    </div>
-									
+									 <div class="form-group">
+                                              <label  class="col-sm-2 control-label"> Color </label>
+										    <div class="col-sm-10">
+                                                <select class="form-control" id="Color" runat="server">
+													<option>Select Color</option>
+												</select> 
+										    </div>
+										  </div>
                                    
                                
                                   

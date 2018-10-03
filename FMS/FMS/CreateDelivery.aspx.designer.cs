@@ -127,7 +127,7 @@ namespace FMS {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Material;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect Material;
         
         /// <summary>
         /// validMaterial control.

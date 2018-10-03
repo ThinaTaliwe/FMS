@@ -84,8 +84,10 @@
                                    <div class="form-group">
 										    <label class="col-sm-2 control-label">Material</label>
 										    <div class="col-sm-10">
-										      <input  class="form-control" id="Material" placeholder="Enter Material" runat="server">
-                                               <asp:RequiredFieldValidator id="validMaterial" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
+                                                 <select class="form-control" id="Material" runat="server">
+													<option>Select Material</option>
+												</select> 
+										       <asp:RequiredFieldValidator id="validMaterial" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
