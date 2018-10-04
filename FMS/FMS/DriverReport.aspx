@@ -73,7 +73,7 @@
             }
             var strChart = document.getElementById('<%= chart.ClientID %>').value;
             console.log(strChart);
-            var json = JSON.parse(chart);
+            var json = JSON.parse(strChart);
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",

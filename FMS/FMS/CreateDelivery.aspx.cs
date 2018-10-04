@@ -73,7 +73,7 @@ namespace FMS
                 //reading the drivers table
             }
             //Time & Date Format 
-            DateTime timeDate = DateTime.Parse(DeliveryDate.Value + " " + DeliveryTime.Value);
+            DateTime timeDate = DateTime.Parse(DeliveryDate.Value);
 
             //setting lat and long
             var Originaddress = here.Value;
