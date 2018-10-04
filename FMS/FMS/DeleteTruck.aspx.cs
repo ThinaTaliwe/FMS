@@ -22,9 +22,7 @@ namespace FMS
                     delTruck.Items.Add(new ListItem(rows.GetString(0)));
                 }  
             }
-            DropDownList items = new DropDownList();
-            items.DataSource = delTruck;
-            items.DataBind();
+            
         }
 
         protected void RemoveTruck(object sender, EventArgs e)
