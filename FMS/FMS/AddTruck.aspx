@@ -47,9 +47,9 @@
 													<option>Select Color</option>
 												</select> 
 										    </div>
-										  </div>     
-				  							<button class="btn btn-default" type="submit" onclick="CancelAddTruck()">Cancel</button>
-											<asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="Add_Truck"/>
+										  </div>
+									<asp:Button ID="btnClear" class="btn btn-default" runat="server" Text="Cancle" OnClick="CancelAddTruck"/>		
+                                  <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Submit" OnClick="Add_Truck"/>
                               </div>
                             </div>
 		  					
