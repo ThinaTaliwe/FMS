@@ -30,16 +30,16 @@
 
 	  
                                           
-									      <div class="form-group">
+									      <div class="form-group" role="form">
                                               <label  class="col-sm-2 control-label"> Truck(s) </label>
 										      <div class="col-sm-10">
                                                 <select class="form-control" id="delTruck" runat="server">
 													<option>Select Truck</option>
 												</select> 
 										    </div>
-                              
+                                            <asp:Button ID="btnRemove" class="btn btn-default" runat="server" Text="Remove" OnClick="RemoveTruck"/>
 										  </div>
-                            
+                                  
                                  
                               
                               
