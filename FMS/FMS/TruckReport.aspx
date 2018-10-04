@@ -80,12 +80,11 @@
                     type: "column",
                     showInLegend: true,
                     legendMarkerColor: "grey",
-                    legendText: ,json["legend_text"],
+                    legendText: json["legend_text"],
                     dataPoints: data
                 }]
             });
             chart.render();
-
         }
 
         window.onload = load_graph();

@@ -12,6 +12,7 @@ namespace FMS
     public partial class TruckReport : System.Web.UI.Page
     {
         private List<Truck> trucks;
+        private  DateTime from, to;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,7 +25,7 @@ namespace FMS
                 if(reader.HasRows)
                 {
                     while (reader.Read())
-                        truckList.Items.Add(new ListItem());
+                        truckList.Items.Add(new ListItem(reader.GetString(0)));
                 }
             }
             viewTruckRepot();
@@ -33,7 +34,6 @@ namespace FMS
         public string[] truckReport(Truck theTruck)
         {
             try {
-                DateTime from, to;
                 if (String.IsNullOrWhiteSpace(fromDate.Value)|| String.IsNullOrWhiteSpace(toDate.Value))
                 {
                     to = DateTime.Now;
@@ -71,6 +71,9 @@ namespace FMS
         {
             var text = "";
             text += "Report Period" + "<br/>";
+            text += "From: " + from.Date.ToString() + "<br/>";
+            text += "To: " + to.Date.ToString() + "<br/>";
+            reportText.InnerText = text;
         }
 
         private void viewTruckRepot()
