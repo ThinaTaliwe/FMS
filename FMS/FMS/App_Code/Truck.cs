@@ -8,19 +8,23 @@ namespace FMS.App_Code
     public class Truck
     {
         private string id{ get; set; }
+        private string brand { get; set; }
         private int load { get; set; }
         private int speed { get; set; }
+        private int class_code { get; set; }
 
         public Truck(string id)
         {
-            var query = "select id, [load], speed from trucks where id like '" + id + "';";
+            var query = "select id, brand, [load], speed, class_code from trucks where id like '" + id + "';";
             var truck = Util.query(query);
             if(truck.HasRows) {
                 if (truck.Read())
                 {
                     this.id = truck.GetString(0);
-                    load = truck.GetInt32(1);
-                    speed = truck.GetInt32(2);
+                    brand = truck.GetString(1);
+                    load = truck.GetInt32(2);
+                    speed = truck.GetInt32(3);
+                    class_code = truck.GetInt32(4);
                 }
                 else
                     Util.print("no truck read");
@@ -73,8 +77,10 @@ namespace FMS.App_Code
         }
 
         public string getID() { return id; }
+        public string getBrand() { return brand; }
         public int getLoad() { return load; }
         public int getSpeed() { return speed; }
+        public int getClass_code() { return class_code; }
 
     }
 }

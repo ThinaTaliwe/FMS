@@ -172,6 +172,8 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
+    <Content Include="App_Data\db_init.sql" />
+    <Content Include="App_Data\insert_data.sql" />
     <Content Include="App_Data\theDB.mdf" />
     <Content Include="App_Data\theDB_log.ldf">
       <DependentUpon>theDB.mdf</DependentUpon>
