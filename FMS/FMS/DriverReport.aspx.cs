@@ -112,6 +112,11 @@ namespace FMS
             }
         }
 
+        private void reloadScript()
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "graph", "load_graph();");
+        }
+
         public string driverInfo(Driver driver)
         {
             var delivs = driver.deliveriesMade(from, to);

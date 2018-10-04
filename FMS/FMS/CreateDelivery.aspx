@@ -215,7 +215,8 @@
                 //document.getElementById("itemRun").innerText = originInput;
                 //originIDs = originPlaceId;
                 //window.alert(origin.lat());
-
+                var route = response.routes[0];
+                console.log(route.legs[0].distance.value);
             } else {
                 window.alert('Directions request failed due to ' + status);
             }

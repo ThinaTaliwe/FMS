@@ -27,6 +27,17 @@ namespace FMS
                     while (reader.Read())
                         truckList.Items.Add(new ListItem(reader.GetString(0)));
                 }
+                if (String.IsNullOrWhiteSpace(fromDate.Value) || String.IsNullOrWhiteSpace(toDate.Value))
+                {
+                    to = DateTime.Now;
+                    from = to.AddMonths(-1);
+                }
+                else
+                {
+                    Util.print(fromDate.Value + toDate.Value);
+                    from = DateTime.Parse(fromDate.Value);
+                    to = DateTime.Parse(toDate.Value);
+                }
             }
             viewTruckRepot();
         }
@@ -34,15 +45,6 @@ namespace FMS
         public string[] truckReport(Truck theTruck)
         {
             try {
-                if (String.IsNullOrWhiteSpace(fromDate.Value)|| String.IsNullOrWhiteSpace(toDate.Value))
-                {
-                    to = DateTime.Now;
-                    from = to.AddMonths(-1);
-                } else {
-                    Util.print(fromDate.Value + toDate.Value);
-                    from = DateTime.Parse(fromDate.Value);
-                    to = DateTime.Parse(toDate.Value);
-                }
                 return new string[] { theTruck.getID(), Convert.ToString(theTruck.totalDistance(from, to)) };
             } catch(Exception ex) {
                 Util.print(ex.ToString());
@@ -52,6 +54,11 @@ namespace FMS
         protected void view_Click(object sender, EventArgs e)
         {
             viewTruckRepot();
+        }
+
+        private void reloadScript()
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "graph", "load_graph();");
         }
 
         private void setGraph(string title, string yAxisTitle, string legendText, List<string[]> values)
