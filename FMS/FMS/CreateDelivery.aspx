@@ -40,13 +40,6 @@
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
-                                 <div class="form-group">
-										    <label  class="col-sm-2 control-label">Delivery Time</label>
-										    <div class="col-sm-10">
-										     	
-                                              <input class="form-control" type="time" id="DeliveryTime" runat="server">
-										    </div>
-										  </div>
                                          <div class="form-group">
 										    <label  class="col-sm-2 control-label">Truck</label>
 										    <div class="col-sm-10">
@@ -119,6 +112,7 @@
 </div>
 
 <div id="map"></div>
+ <input type="hidden" runat="server" id="routeInfo" />
 
 <script>
     var originInput;
@@ -215,8 +209,21 @@
                 //document.getElementById("itemRun").innerText = originInput;
                 //originIDs = originPlaceId;
                 //window.alert(origin.lat());
-                var route = response.routes[0];
-                console.log(route.legs[0].distance.value);
+                var route = response.routes[0].legs[0];
+                var distance = route.distance.value;
+                var from_coords = route.start_location.toString();
+                var to_coords = route.end_location.toString();
+                var from_address = route.start_address.toString();
+                var to_address = route.end_address.toString();
+                var json = {
+                    "distance" : distance,
+                    "from_coords" : from_coords,
+                   "to_coords" : to_coords,
+                    "from_address" : from_address,
+                    "to_address" : to_address
+                }
+                document.getElementById('<%= routeInfo.ClientID %>').value = json;
+                console.log(json);
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
