@@ -1,7 +1,9 @@
 ﻿CREATE TABLE [dbo].[TRUCKS] (
     [ID]    VARCHAR (10) NOT NULL,
+	[BRAND] VARCHAR (25) NOT NULL,
     [LOAD]  INT          NOT NULL,
     [SPEED] INT          NOT NULL,
+	[CLASS_CODE] INT 	NOT NULL,
     PRIMARY KEY  ([ID])
 )
 

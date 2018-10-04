@@ -172,6 +172,8 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
+    <Content Include="App_Data\db_init.sql" />
+    <Content Include="App_Data\insert_data.sql" />
     <Content Include="App_Data\theDB.mdf" />
     <Content Include="App_Data\theDB_log.ldf">
       <DependentUpon>theDB.mdf</DependentUpon>
@@ -190,6 +192,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="CreateDelivery.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="DeleteTruck.aspx" />
     <Content Include="deliv.aspx" />
     <Content Include="DeliveryReport.aspx" />
     <Content Include="Drag.html" />
@@ -326,6 +329,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteTruck.aspx.cs">
+      <DependentUpon>DeleteTruck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteTruck.aspx.designer.cs">
+      <DependentUpon>DeleteTruck.aspx</DependentUpon>
     </Compile>
     <Compile Include="deliv.aspx.cs">
       <DependentUpon>deliv.aspx</DependentUpon>
