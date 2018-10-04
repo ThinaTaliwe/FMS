@@ -23,7 +23,7 @@ namespace FMS
         protected void Add_Truck(object sender, EventArgs e)
         {
             //Query for Adding the truck
-            var query = "INSERT INTO TRUCKS(ID, LOAD, SPEED) VALUES('" + TruckPlate.Value + "', '" + TruckMaxLoad.Value + "', '" + TruckMaxSpeed.Value  + "');";
+            var query = "INSERT INTO TRUCKS(ID, BRAND, LOAD, SPEED, CLASS_CODE) VALUES('" + TruckPlate.Value + "', '" + TruckBrand.Value + "', '" + TruckMaxLoad.Value + "', '" + TruckMaxSpeed.Value  + "', '" + TruckCode.Value + "');";
             Util.query(query);
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
