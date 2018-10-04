@@ -55,7 +55,7 @@ namespace FMS.App_Code
             } return distance;
         }
 
-        public List<Truck> getTruckList()
+        public static List<Truck> getTruckList()
         {
             List<string> lstIDS = new List<string>();
             List<Truck> lstTrucks = new List<Truck>();

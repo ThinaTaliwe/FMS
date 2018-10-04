@@ -5,20 +5,34 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FMS.App_Code;
+using Newtonsoft.Json.Linq;
 
 namespace FMS
 {
     public partial class TruckReport : System.Web.UI.Page
     {
+        private List<Truck> trucks;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            string query;
+            if(!IsPostBack)
+            {
+                trucks = Truck.getTruckList();
+                query = "select id from trucks";
+                var reader = Util.query(query);
+                if(reader.HasRows)
+                {
+                    while (reader.Read())
+                        truckList.Items.Add(new ListItem());
+                }
+            }
             viewTruckRepot();
         }
 
-        public string[] truckReport(string truck)
+        public string[] truckReport(Truck theTruck)
         {
             try {
-                Truck theTruck = new Truck(truck);
                 DateTime from, to;
                 if (String.IsNullOrWhiteSpace(fromDate.Value)|| String.IsNullOrWhiteSpace(toDate.Value))
                 {
@@ -29,7 +43,7 @@ namespace FMS
                     from = DateTime.Parse(fromDate.Value);
                     to = DateTime.Parse(toDate.Value);
                 }
-                return new string[] { truck, Convert.ToString(theTruck.totalDistance(from, to)) };
+                return new string[] { theTruck.getID(), Convert.ToString(theTruck.totalDistance(from, to)) };
             } catch(Exception ex) {
                 Util.print(ex.ToString());
             } return null;
@@ -40,27 +54,35 @@ namespace FMS
             viewTruckRepot();
         }
 
-        private void viewTruckRepot() {
-            var query = "select id from trucks";
-            var trucks = Util.query(query);
-            if (trucks.HasRows)
+        private void setGraph(string title, string yAxisTitle, string legendText, List<string[]> values)
+        {
+            JObject json = new JObject();
+            json["title"] = title;
+            json["y_axis_title"] = yAxisTitle;
+            json["legend_text"] = legendText;
+            chart.Value = json.ToString();
+            string data = "";
+            foreach (var point in values)
+                data += point[0] + "*" + point[1] + "#";
+            chartData.Value = data;
+        }
+
+        private void setSelectedText()
+        {
+            var text = "";
+            text += "Report Period" + "<br/>";
+        }
+
+        private void viewTruckRepot()
+        {
+            List<string[]> values = new List<string[]>();
+            foreach (var tr in trucks)
             {
-                List<string> strTrucks = new List<string>();
-                while (trucks.Read())
-                {
-                    strTrucks.Add(trucks.GetString(0));
-                }
-                truckData.Value = "";
-                foreach (var tr in strTrucks)
-                {
-                    var report = truckReport(tr);
-                    if(report != null) {
-                        var rep = report[0] + "*" + report[1] + "#";
-                        Util.print(rep);
-                        truckData.Value += rep;
-                    }
-                }
+                var report = truckReport(tr);
+                if (report != null)
+                    values.Add(report);
             }
+            setGraph("Truck Report", "Trucks", "Individual trucks", values);
         }
     }
 }

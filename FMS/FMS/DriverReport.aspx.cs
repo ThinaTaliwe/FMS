@@ -42,7 +42,21 @@ namespace FMS
         }
 
         protected void ViewHours(object sender, EventArgs e) {
-            viewHoursWorked();
+            setSelectedText();
+            var choice = driverList.SelectedValue.ToString();
+            if (choice == "Select a Driver")
+                viewHoursWorked();
+            else
+            {
+                var parts = choice.Split(' ');
+                foreach(var driver in lstDrivers)
+                {
+                    if(driver.getName() == parts[0] && driver.getSurname() == parts[1])
+                    {
+
+                    }
+                }
+            }
         }
 
         private void setGraph(string title, string yAxisTitle, string legendText, List<string[]> values)

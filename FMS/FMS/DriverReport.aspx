@@ -71,8 +71,8 @@
                 console.log(bar)
                 if (bar.length == 2 && parseFloat(bar[1]) > 0) bars.push({ y: parseFloat(bar[1]), label: bar[0] });
             }
-            var chart = document.getElementById('<%= chart.ClientID %>').value;
-            console.log(chart);
+            var strChart = document.getElementById('<%= chart.ClientID %>').value;
+            console.log(strChart);
             var json = JSON.parse(chart);
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
