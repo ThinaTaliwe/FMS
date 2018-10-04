@@ -32,6 +32,7 @@ import android.widget.TextView;
 public class Base extends AppCompatActivity {
 
     protected PopupWindow popup;
+    protected AlertDialog loading;
     protected LayoutInflater inflater;
     protected DriverService service;
     protected boolean serviceIsBounded;
@@ -111,25 +112,31 @@ public class Base extends AppCompatActivity {
         }
     }
 
-    protected void showLoading() {
+    protected AlertDialog showLoading() {
         /**
          * shows a loading symbol
          */
         try {
-            if(inflater == null) inflater = (LayoutInflater) Base.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.loading, (ViewGroup) findViewById(R.id.loading_1));
-            popup = new PopupWindow(layout, 300, 370, true);
-            popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+            View view = getLayoutInflater().inflate(R.layout.loading, null, false);
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setView(view)
+                    .setCancelable(true);
+            return alertDialog.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    protected void removeLoading() {
+        if(loading != null) loading.dismiss();
     }
 
     protected void dismiss() {
         /**
-         * removes loading symbol
+         * removes popup
          */
-        popup.dismiss();
+        if(popup != null) popup.dismiss();
     }
 
     @Override

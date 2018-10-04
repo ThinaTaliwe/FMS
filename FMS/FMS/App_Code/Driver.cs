@@ -61,7 +61,7 @@ namespace FMS.App_Code
             return km;
         }
 
-        public static List<Driver> driverList()
+        public static List<Driver> getDriverList()
         {
             List<Driver> lstDriver = new List<Driver>();
             List<string> lstIDS = new List<string>();

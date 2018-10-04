@@ -5,31 +5,47 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using FMS.App_Code;
+using Newtonsoft.Json.Linq;
 
 namespace FMS
 {
     public partial class TruckReport : System.Web.UI.Page
     {
+        private List<Truck> trucks;
+        private  DateTime from, to;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            viewTruckRepot();
-        }
-
-        public string[] truckReport(string truck)
-        {
-            try {
-                Truck theTruck = new Truck(truck);
-                DateTime from, to;
-                if (String.IsNullOrWhiteSpace(fromDate.Value)|| String.IsNullOrWhiteSpace(toDate.Value))
+            string query;
+            if(!IsPostBack)
+            {
+                trucks = Truck.getTruckList();
+                query = "select id from trucks";
+                var reader = Util.query(query);
+                if(reader.HasRows)
+                {
+                    while (reader.Read())
+                        truckList.Items.Add(new ListItem(reader.GetString(0)));
+                }
+                if (String.IsNullOrWhiteSpace(fromDate.Value) || String.IsNullOrWhiteSpace(toDate.Value))
                 {
                     to = DateTime.Now;
                     from = to.AddMonths(-1);
-                } else {
+                }
+                else
+                {
                     Util.print(fromDate.Value + toDate.Value);
                     from = DateTime.Parse(fromDate.Value);
                     to = DateTime.Parse(toDate.Value);
                 }
-                return new string[] { truck, Convert.ToString(theTruck.totalDistance(from, to)) };
+            }
+            viewTruckRepot();
+        }
+
+        public string[] truckReport(Truck theTruck)
+        {
+            try {
+                return new string[] { theTruck.getID(), Convert.ToString(theTruck.totalDistance(from, to)) };
             } catch(Exception ex) {
                 Util.print(ex.ToString());
             } return null;
@@ -40,27 +56,43 @@ namespace FMS
             viewTruckRepot();
         }
 
-        private void viewTruckRepot() {
-            var query = "select id from trucks";
-            var trucks = Util.query(query);
-            if (trucks.HasRows)
+        private void reloadScript()
+        {
+            Page.ClientScript.RegisterStartupScript(GetType(), "graph", "load_graph();");
+        }
+
+        private void setGraph(string title, string yAxisTitle, string legendText, List<string[]> values)
+        {
+            JObject json = new JObject();
+            json["title"] = title;
+            json["y_axis_title"] = yAxisTitle;
+            json["legend_text"] = legendText;
+            chart.Value = json.ToString();
+            string data = "";
+            foreach (var point in values)
+                data += point[0] + "*" + point[1] + "#";
+            chartData.Value = data;
+        }
+
+        private void setSelectedText()
+        {
+            var text = "";
+            text += "Report Period" + "<br/>";
+            text += "From: " + from.Date.ToString() + "<br/>";
+            text += "To: " + to.Date.ToString() + "<br/>";
+            reportText.InnerText = text;
+        }
+
+        private void viewTruckRepot()
+        {
+            List<string[]> values = new List<string[]>();
+            foreach (var tr in trucks)
             {
-                List<string> strTrucks = new List<string>();
-                while (trucks.Read())
-                {
-                    strTrucks.Add(trucks.GetString(0));
-                }
-                truckData.Value = "";
-                foreach (var tr in strTrucks)
-                {
-                    var report = truckReport(tr);
-                    if(report != null) {
-                        var rep = report[0] + "*" + report[1] + "#";
-                        Util.print(rep);
-                        truckData.Value += rep;
-                    }
-                }
+                var report = truckReport(tr);
+                if (report != null)
+                    values.Add(report);
             }
+            setGraph("Truck Report", "Trucks", "Individual trucks", values);
         }
     }
 }

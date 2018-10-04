@@ -32,6 +32,8 @@
                         <div>
                             From: <input class="form-control" type="date" id="fromDate" runat="server"> <br />
                             To: <input class="form-control" type="date" id="toDate" runat="server"> <br />
+                            Truck: <asp:DropDownList ID="truckList" runat="server"></asp:DropDownList>
+                            <label id="reportText" runat="server" />
                         </div> <asp:Button ID="view" runat="server" Text="View Kms Driven" OnClick="view_Click" />
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -49,10 +51,12 @@
 		  </div>
 		</div>
     </div>
-    <input type="hidden" id="truckData" runat="server" />
+    <input type="hidden" id="chartData" runat="server" />
+    <input type="hidden" id="chart" runat="server" />
     <script>
-        window.onload = function () {
-            var input = document.getElementById('<%= truckData.ClientID %>').value.split("#");
+
+        function load_graph() {
+            var input = document.getElementById('<%= chartData.ClientID %>').value.split("#");
             console.log(input);
             var data = [];
             for (var c in input) {
@@ -60,26 +64,29 @@
                 console.log(truck);
                 if (truck.length == 2 && parseFloat(truck[1]) > 0) data.push({ y: parseFloat(truck[1]), label: truck[0] });
             }
-
+            var strChart = document.getElementById('<%= chart.ClientID %>').value;
+            console.log(strChart);
+            var json = JSON.parse(strChart);
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",
                 title: {
-                    text: "Truck Kilometers "
+                    text: json["title"]
                 },
                 axisY: {
-                    title: "Kilometers (KM)"
+                    title: json["y_axis_title"]
                 },
                 data: [{
                     type: "column",
                     showInLegend: true,
                     legendMarkerColor: "grey",
-                    legendText: "Individual Trucks",
+                    legendText: json["legend_text"],
                     dataPoints: data
                 }]
             });
             chart.render();
-
         }
+
+        window.onload = load_graph();
     </script>
 </asp:Content>

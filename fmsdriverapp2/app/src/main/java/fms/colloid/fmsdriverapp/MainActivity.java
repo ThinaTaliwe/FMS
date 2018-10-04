@@ -1,6 +1,7 @@
 package fms.colloid.fmsdriverapp;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class MainActivity extends Base {
                 }, 0);
             }
         }
+        AlertDialog alertDialog = showDia();
     }
 
     @Override
