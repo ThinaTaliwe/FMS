@@ -3,7 +3,7 @@
 	[BRAND] VARCHAR (25) NOT NULL,
     [LOAD]  INT          NOT NULL,
     [SPEED] INT          NOT NULL,
-	[CLASS_CODE] varchar(10) 	NOT NULL default ('C1'),
+	[CLASS_CODE] INT 	NOT NULL,
     PRIMARY KEY  ([ID])
 )
 

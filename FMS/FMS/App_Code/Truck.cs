@@ -11,7 +11,7 @@ namespace FMS.App_Code
         private string brand { get; set; }
         private int load { get; set; }
         private int speed { get; set; }
-        private int class_code { get; set; }
+        private string class_code { get; set; }
 
         public Truck(string id)
         {
@@ -24,7 +24,7 @@ namespace FMS.App_Code
                     brand = truck.GetString(1);
                     load = truck.GetInt32(2);
                     speed = truck.GetInt32(3);
-                    class_code = truck.GetInt32(4);
+                    class_code = truck.GetString(4);
                 }
                 else
                     Util.print("no truck read");
@@ -80,7 +80,7 @@ namespace FMS.App_Code
         public string getBrand() { return brand; }
         public int getLoad() { return load; }
         public int getSpeed() { return speed; }
-        public int getClass_code() { return class_code; }
+        public string getClass_code() { return class_code; }
 
     }
 }
