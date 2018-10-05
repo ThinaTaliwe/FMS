@@ -84,36 +84,15 @@ namespace FMS.App_Code
             return null;
         }
 
-        public static Delivery homeRun(string driver, string truck, string authority) {
-            var query = "select id from clients where name like 'mmeli'";
-            var id = Util.query(query);
-            id.Read();
-            Client home = new Client(id.GetInt32(0));
-            Delivery deliv = new Delivery();
-            deliv.orderNum = "home";
-            deliv.truck = truck;
-            deliv.driver = driver;
-            id.Read();
-            deliv.client = home.getID();
-            deliv.load = 0;
-            deliv.material = "empty";
-            deliv.departDay = DateTime.Now;
-            deliv.authority = authority;
-            deliv.to = getCoords(home.getLocation());
-            deliv.from = new Driver(driver).lastLocation();
-            Delivery.save(deliv);
-            return deliv;
-        }
+        public int save() { return Delivery.save(this); }
 
-        public void save() { Delivery.save(this); }
-
-        public static void save(Delivery deliv)
+        public static int save(Delivery deliv)
         {
             var query = "select * from delivery where id like " + deliv.id;
             var isValid = Util.query(query);
             if (!isValid.HasRows)
             {
-                query = "insert into delivery(order_num, truck, driver, client, [load], material, depary_day, authority, [from], [to])";
+                query = "insert into delivery(order_num, truck, driver, client, [load], material, depart_day, authority, [from], [to])";
                 query += "values(";
                 query += "'" + deliv.orderNum + "', ";
                 query += "'" + deliv.truck + "', ";
@@ -126,6 +105,8 @@ namespace FMS.App_Code
                 query += "'" + deliv.from + "', ";
                 query += "'" + deliv.to + "'";
                 query += ");";
+                Util.query(query);
+                return deliv.id;
             }
             else
             {
@@ -141,13 +122,18 @@ namespace FMS.App_Code
                 query += "[from] = '" + deliv.from + "',";
                 query += "[to] = '" + deliv.to + "'";
                 query += "where id like " + deliv.id + ";";
+                Util.query(query);
+                query = "select id from delivery where order_num like '" + deliv.orderNum + "' order by id desc";
+                var reader = Util.query(query);
+                reader.Read();
+                int id = reader.GetInt32(0);
+                return id;
             }
-            Util.query(query);
         }
 
         public static Delivery getInstance(int id)
         {
-            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed FROM DELIVERY WHERE ID LIKE '" + id + "'";
+            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed, distance FROM DELIVERY WHERE ID LIKE '" + id + "'";
             var deliv = Util.query(query);
             if (deliv.HasRows)
             {
@@ -165,6 +151,7 @@ namespace FMS.App_Code
                     delivery.load = deliv.GetInt32(7);
                     delivery.departDay = deliv.GetDateTime(8);
                     delivery.authority = deliv.GetString(9);
+                    delivery.distance = deliv.GetInt32(13);
                     if (!deliv.IsDBNull(10))
                     {
                         delivery.accepted = deliv.GetDateTime(10);
@@ -248,6 +235,7 @@ namespace FMS.App_Code
         public void setDepartDay(DateTime value) { departDay = value; }
         public void setArrivalDay(DateTime value) { arrivalDay = value; }
         public void setAuthority(string value) { authority = value; }
+        public void setDistance(int distance) { this.distance = distance; }
 
         public int getID() {return id;}
         public string getOrderNumber() { return orderNum; }
@@ -265,6 +253,6 @@ namespace FMS.App_Code
         public DateTime getStarted() { return started; }
         public DateTime getCompleted() { return completed; }
         public string getLocation() { return LastLocation(id)[0]; }
-
+        public int getDistance() { return distance; }
     }
 }
