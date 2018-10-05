@@ -17,7 +17,7 @@ namespace FMS
             Delivery delivery = Delivery.getInstance(Convert.ToInt32(check));
 
             //Dname.InnerHtml = delivery.ToString();
-            orderNum.InnerHtml = delivery.getLocation();
+            //orderNum.InnerHtml = delivery.getLocation();
             //if (delivery.HasRows)
             //{
             //    while (delivery.Read())
