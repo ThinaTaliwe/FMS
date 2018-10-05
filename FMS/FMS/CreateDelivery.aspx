@@ -219,8 +219,9 @@
                     "from_address" : from_address,
                     "to_address" : to_address
                 }
-                document.getElementById('<%= routeInfo.ClientID %>').value = json;
-                console.log(json);
+                var strRoute = JSON.stringify(json);
+                document.getElementById('<%= routeInfo.ClientID %>').value = strRoute;
+                console.log(strRoute, typeof(strRoute));
             } else {
                 window.alert('Directions request failed due to ' + status);
             }

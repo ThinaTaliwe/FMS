@@ -21,6 +21,7 @@ namespace FMS.App_Code
         private DateTime accepted { get; set; }
         private DateTime started { get; set; }
         private DateTime completed { get; set; }
+        private int distance { get; set; }
 
         public string getFromCoords() {
             return getCoords(from);
