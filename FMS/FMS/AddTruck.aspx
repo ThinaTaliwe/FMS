@@ -5,6 +5,16 @@
             <section class="wrapper">
                 <div class="content-box-large">
 
+                    	  			<div class="row">
+	  				<div class="col-md-12 panel-info">
+			  			<div class="content-box-header panel-heading">
+		  					<div class="panel-title ">Add Truck</div>
+						
+			  			</div>
+
+			  		</div>
+	  			</div>
+
 				<div class="row">
 					<div class="col-md-12">
 						<div class="content-box-large">

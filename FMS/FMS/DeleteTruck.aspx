@@ -4,30 +4,20 @@
             <section class="wrapper">
                 <div class="content-box-large">
 
+                  <div class="row">
+	  				<div class="col-md-12 panel-info">
+			  			<div class="content-box-header panel-heading">
+		  					<div class="panel-title ">Delete Truck</div>
+						
+			  			</div>
+
+			  		</div>
+	  			</div>
+
 				<div class="row">
 					<div class="col-md-12">
 						<div class="content-box-large">
 		  				    <div class="panel-body">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	  
                                           
 									      <div class="form-group" role="form">
                                               <label  class="col-sm-2 control-label"> Truck(s) </label>
