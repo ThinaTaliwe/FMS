@@ -1,15 +1,12 @@
 ﻿<%@ Page Title="Create Delivery" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateDelivery.aspx.cs" Inherits="FMS.CreateDelivery" EnableEventValidation="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
-        <div class="page-content">
-    	<div class="row">
-		  <div class="col-md-10">
-
+    <section id="main-content">
+            <section class="wrapper">
+                <div class="content-box-large">
 	  			<div class="row">
 	  				<div class="col-md-12 panel-info">
 			  			<div class="content-box-header panel-heading">
 		  					<div class="panel-title ">Create Delivery</div>
-                             <div class="panel-title" ><label id="Error" runat="server"></label></div>
 
 			  			</div>
                 
@@ -253,6 +250,7 @@
 	  		<!--  Page content -->
 		  </div>
 
-		</div>
-    </div>
+
+            </section>
+        </section>
 </asp:Content>

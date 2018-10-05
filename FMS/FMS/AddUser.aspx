@@ -1,14 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddUser.aspx.cs" Inherits="FMS.AddUser" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-      <div class="page-content">
-    	<div class="row">
-		  <div class="col-md-10">
+ <section id="main-content">
+            <section class="wrapper">
+                <div class="content-box-large">
 
 	  			<div class="row">
 	  				<div class="col-md-12 panel-info">
 			  			<div class="content-box-header panel-heading">
 		  					<div class="panel-title ">Add User</div>
-						
 			  			</div>
 
 			  		</div>
@@ -71,6 +70,6 @@
 
 	  		<!--  Page content -->
 		  </div>
-		</div>
-    </div>
+           </section>
+        </section>
 </asp:Content>

@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Driver Reports" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DriverReport.aspx.cs" Inherits="FMS.DriverReport" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="page-content">
-    	<div class="row">
-		  <div class="col-md-10">
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="content-box-large">
 
 	  			<div class="row">
 	  				<div class="col-md-12 panel-info">
@@ -56,8 +56,8 @@
 
 	  		<!--  Page content -->
 		  </div>
-		</div>
-    </div>
+           </section>
+        </section>
 
     <script>
 
