@@ -67,8 +67,9 @@
                                         <label class="col-sm-2 control-label">First Issue</label>
                                         <div class="col-sm-10">
 
-                                            <input class="form-control" type="date" id="LicenceIssueDate" runat="server">
-                                        </div>
+                                            <input class="form-control" type="date" id="LicenceIssueDate" runat="server"> 
+                                            <asp:RegularExpressionValidator ID="IssueRegValidator" runat="server" ControlToValidate="LicenceIssueDate" ValidationExpression="^[0-9]*$" ErrorMessage="Enter Numbers Please" Text="*"></asp:RegularExpressionValidator>
+                                            </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Expiry Date</label>
