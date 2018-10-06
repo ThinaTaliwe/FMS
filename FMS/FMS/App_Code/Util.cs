@@ -170,7 +170,7 @@ namespace FMS.App_Code
                 lon1 = from[1];
                 lat2 = to[0];
                 lon2 = to[1];
-                var r = 6371.0;
+                var r = 6371000.0;
                 var phi1 = toRad(lat1);
                 var phi2 = toRad(lat2);
                 var deltaPhi = toRad(lat2 - lat1);

@@ -14,26 +14,21 @@ namespace FMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            var query = "select [from], [to], truck, driver, client, accepted from Delivery WHERE COMPLETED is null AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate())) order by id desc";
+            var query = "select id from Delivery WHERE COMPLETED is null AND (Month(DEPART_DAY) = Month(getdate()) AND YEAR(DEPART_DAY) = YEAR(getdate())) order by id desc";
             var rows = Util.query(query);
             //var client = Util.getClient() 
             var HTMLStr = "";
             if (rows.HasRows)
             {
-                var assignedStr = "";
+                List<int> lstIds = new List<int>();
                 while (rows.Read())
+                    lstIds.Add(rows.GetInt32(0));
+                Delivery delivery;
+                foreach(var id in lstIds)
                 {
-                    Delivery deliv = Delivery.getInstance(10);
-                    try {
-                        var date = rows.GetDateTime(5);
-                        if (date != null) assignedStr = "Yes";
-                        else assignedStr = "No";
-                    } catch(Exception ex) {
-                        Util.print(ex.ToString());
-                        assignedStr = "No";
-                    }
-                    var Driver_MmeliThing = new Driver(rows.GetString(3));
-                    HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Delivery.getAddress(rows.GetString(0)) + "</td> <td> " + Delivery.getAddress(rows.GetString(1)) + "</td> <td> " + Driver_MmeliThing.getName() + " " + Driver_MmeliThing.getSurname() + "</td> <td> " + "--" + "</td> <td> "  + assignedStr + "</td> </tr>";
+                    delivery = Delivery.getInstance(id);
+                    var accepted = delivery.getAccepted() == null ? "Yes" : "No";
+                    HTMLStr += "<tr> <td> " + delivery.getClient().getCompany() + "</td> <td> " + delivery.getFromAddress() + "</td> <td> " + delivery.getToAddress() + "</td> <td> " + delivery.getDriver().getName() + " " + delivery.getDriver().getSurname() + "</td> <td> " + delivery.ETA() + "</td> <td> " + accepted + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }
