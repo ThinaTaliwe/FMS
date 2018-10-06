@@ -179,6 +179,7 @@
     <Content Include="App_Data\theDB_log.ldf">
       <DependentUpon>theDB.mdf</DependentUpon>
     </Content>
+    <Content Include="ClientInfo.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />
@@ -195,8 +196,10 @@
     <Content Include="Default.aspx" />
     <Content Include="DeleteTruck.aspx" />
     <Content Include="deliv.aspx" />
+    <Content Include="DeliveryInfo.aspx" />
     <Content Include="DeliveryReport.aspx" />
     <Content Include="Drag.html" />
+    <Content Include="DriverInfo.aspx" />
     <Content Include="DriverReport.aspx" />
     <Content Include="EditDelivery.aspx" />
     <Content Include="EditDelivery1.aspx" />
@@ -257,6 +260,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="TableTest.aspx" />
+    <Content Include="TruckInfo.aspx" />
     <Content Include="TruckReport.aspx" />
     <Content Include="UpdateDelivery.aspx" />
     <Content Include="ViewAllTrucks.aspx" />
@@ -310,6 +314,13 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ClientInfo.aspx.cs">
+      <DependentUpon>ClientInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientInfo.aspx.designer.cs">
+      <DependentUpon>ClientInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -345,12 +356,26 @@
     <Compile Include="deliv.aspx.designer.cs">
       <DependentUpon>deliv.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DeliveryInfo.aspx.cs">
+      <DependentUpon>DeliveryInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeliveryInfo.aspx.designer.cs">
+      <DependentUpon>DeliveryInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DeliveryReport.aspx.cs">
       <DependentUpon>DeliveryReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DeliveryReport.aspx.designer.cs">
       <DependentUpon>DeliveryReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverInfo.aspx.cs">
+      <DependentUpon>DriverInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverInfo.aspx.designer.cs">
+      <DependentUpon>DriverInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="DriverReport.aspx.cs">
       <DependentUpon>DriverReport.aspx</DependentUpon>
@@ -446,6 +471,13 @@
     </Compile>
     <Compile Include="TableTest.aspx.designer.cs">
       <DependentUpon>TableTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TruckInfo.aspx.cs">
+      <DependentUpon>TruckInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TruckInfo.aspx.designer.cs">
+      <DependentUpon>TruckInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="TruckReport.aspx.cs">
       <DependentUpon>TruckReport.aspx</DependentUpon>
