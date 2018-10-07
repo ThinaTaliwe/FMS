@@ -191,7 +191,7 @@ namespace FMS.App_Code
                     travelled = Util.totalDistance(coords);
                 }
                 var todo = distance - travelled;
-                eta = Convert.ToString((todo / 1000) / 70);
+                eta = Convert.ToString((todo / 1000) / 40);
                 return eta;
             }
         }

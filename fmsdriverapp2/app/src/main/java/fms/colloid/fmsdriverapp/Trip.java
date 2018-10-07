@@ -107,21 +107,6 @@ public class Trip extends Base implements OnMapReadyCallback {
         }
     }
 
-    public String[][] getRouteInfo(String route) {
-        String[][] result = null;
-        try {
-            String[] parts = route.split(" ");
-            result = new String[parts.length][3];
-            result[0][0] = unPad(parts[0]);
-            for (int c = 1; c < parts.length; c++) {
-                result[c] = parts[c].split("#");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return result;
-    }
-
     public String unPad(String text) {
         return text.replace('_', ' ').replace('#', ' ');
     }

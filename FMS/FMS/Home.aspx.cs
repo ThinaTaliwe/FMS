@@ -27,7 +27,7 @@ namespace FMS
                 foreach(var id in lstIds)
                 {
                     delivery = Delivery.getInstance(id);
-                    var accepted = delivery.getAccepted() == null ? "Yes" : "No";
+                    var accepted = delivery.getAccepted() == null ? "No" : "Yes";
                     HTMLStr += "<tr> <td> " + delivery.getClient().getCompany() + "</td> <td> " + delivery.getFromAddress() + "</td> <td> " + delivery.getToAddress() + "</td> <td> " + delivery.getDriver().getName() + " " + delivery.getDriver().getSurname() + "</td> <td> " + delivery.ETA() + "</td> <td> " + accepted + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
