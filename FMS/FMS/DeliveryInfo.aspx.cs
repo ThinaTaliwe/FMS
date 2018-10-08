@@ -26,7 +26,21 @@ namespace FMS
             //    }
             //    tables.InnerHtml = HTMLStr;
             //}
-
+            var query = "select id, brand, load, speed, class_code from Trucks";
+            var rows = Util.query(check);
+            //var client = Util.getClient() 
+            var HTMLStr = "";
+           if (rows.HasRows)
+            {
+                //Order.InnerHtml = rows.GetString(0);
+                while (rows.Read())
+                {
+                    Dname.InnerHtml = "Name: ";
+                    orderNum.InnerHtml += rows.GetString(0);
+                    orderNum.InnerHtml = rows.GetString(1);
+        
+                }
+            }
         }
     }
 }

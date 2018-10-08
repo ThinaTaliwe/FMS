@@ -18,12 +18,13 @@ namespace FMS
             var HTMLStr = "";
             if (rows.HasRows)
             {
+                //Order.InnerHtml = rows.GetString(0);
                 while (rows.Read())
                 {
                     HTMLStr += "<tr>  <td> <a href='TruckInfo.aspx'>" + rows.GetString(0) + "</a></td> <td> " + rows.GetString(1) + "</td> <td> " + rows.GetInt32(2) + "</td><td> " + rows.GetInt32(3) + "</td><td> " + rows.GetString(4) + "</td></tr>";
                 }
                 tables.InnerHtml = HTMLStr;
-            }
+            }  
         }
     }
 }
