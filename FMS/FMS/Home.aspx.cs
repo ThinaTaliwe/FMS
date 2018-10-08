@@ -27,7 +27,9 @@ namespace FMS
                 foreach(var id in lstIds)
                 {
                     delivery = Delivery.getInstance(id);
-                    var accepted = delivery.getAccepted() == null ? "No" : "Yes";
+                    var accepted = "";
+                    if (delivery.getAccepted() == null) accepted = "No";
+                    else accepted = delivery.getAccepted().TimeOfDay.ToString();
                     HTMLStr += "<tr> <td> " + delivery.getClient().getCompany() + "</td> <td> " + delivery.getFromAddress() + "</td> <td> " + delivery.getToAddress() + "</td> <td> " + delivery.getDriver().getName() + " " + delivery.getDriver().getSurname() + "</td> <td> " + delivery.ETA() + "</td> <td> " + accepted + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
