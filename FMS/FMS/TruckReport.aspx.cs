@@ -39,6 +39,11 @@ namespace FMS
                     to = DateTime.Parse(toDate.Value);
                 }
             }
+            string id = Request.QueryString["id"];
+            if(!String.IsNullOrEmpty(id))
+            {
+                Response.Write("Selectetd truck: " + id);
+            }
             viewTruckRepot();
         }
 

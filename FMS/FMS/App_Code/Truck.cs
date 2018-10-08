@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,18 @@ namespace FMS.App_Code
         private int load { get; set; }
         private int speed { get; set; }
         private string class_code { get; set; }
+
+        override
+        public string ToString()
+        {
+            JObject json = new JObject();
+            json["id"] = id;
+            json["brand"] = brand;
+            json["load"] = load;
+            json["speed"] = speed;
+            json["class"] = class_code;
+            return json.ToString();
+        }
 
         public Truck(string id)
         {
