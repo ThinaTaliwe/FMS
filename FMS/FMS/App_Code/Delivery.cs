@@ -92,7 +92,7 @@ namespace FMS.App_Code
             var isValid = Util.query(query);
             if (!isValid.HasRows)
             {
-                query = "insert into delivery(order_num, truck, driver, client, [load], material, depart_day, authority, [from], [to])";
+                query = "insert into delivery(order_num, truck, driver, client, [load], material, depart_day, authority, [from], [to], distance)";
                 query += "values(";
                 query += "'" + deliv.orderNum + "', ";
                 query += "'" + deliv.truck + "', ";
@@ -103,7 +103,8 @@ namespace FMS.App_Code
                 query += "'" + deliv.departDay + "', ";
                 query += "'" + deliv.authority + "', ";
                 query += "'" + deliv.from + "', ";
-                query += "'" + deliv.to + "'";
+                query += "'" + deliv.to + "', ";
+                query += "'" + deliv.distance + "'";
                 query += ");";
                 Util.query(query);
                 return deliv.id;
@@ -172,31 +173,29 @@ namespace FMS.App_Code
             }
         }
 
-        public static string[] getDest(int id)
+        public string ETA()
         {
-            string query = "select [to] from delivery where id like '" + id + "'";
-            var dest = Util.query(query);
-            if (dest.HasRows)
+            if (started == null)
+                return "--";
+            else
             {
-                dest.Read();
-                string place = dest.GetString(0);
-                return place.Split('#');
+                string eta = "";
+                var query = "select location, time from locations where delivery like " + id;
+                var points = Util.query(query);
+                var travelled = 0.0;
+                if (points.HasRows)
+                {
+                    List<string> coords = new List<string>();
+                    while (points.Read())
+                        coords.Add(points.GetString(0));
+                    travelled = Util.totalDistance(coords);
+                }
+                var todo = distance - travelled;
+                eta = Convert.ToString((todo / 1000) / 40);
+                return eta;
             }
-            return null;
         }
-
-        public static string[] getOrigin(int id)
-        {
-            string query = "select [from] from delivery where id like '" + id + "'";
-            var origin = Util.query(query);
-            if (origin.HasRows)
-            {
-                origin.Read();
-                string place = origin.GetString(0);
-                return place.Split('#');
-            }
-            return null;
-        }
+        
 
         public static string getAddress(string text)
         {

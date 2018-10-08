@@ -27,24 +27,28 @@
 					</div>
 				</div>
   				<div class="panel-body">
-  					<div class="row">
                         <div>
-                            From: <input class="form-control" type="date" id="fromDate" runat="server"> 
-                            To: <input class="form-control" type="date" id="toDate" runat="server"> 
-                            Drivers <asp:DropDownList ID="driverList" runat="server"></asp:DropDownList>
-                        </div><asp:Button ID="View" runat="server" Text="View Hours Driven" OnClick="ViewHours" />
-                          <asp:UpdatePanel ID="report" runat="server" UpdateMode="Always">
-                              <Triggers><asp:AsyncPostBackTrigger ControlID="View" /></Triggers>
-                              <ContentTemplate>
+                            <table class="table" style="width: 95%; margin-right: 0px">
+                                <tbody>
+                                    <tr> 
+                                        <td style="width: 155px">From: </td> <td style="width: 177px"> <input class="form-control" type="date" id="fromDate" runat="server"></td>
+                                        <td style="width: 37px">To: </td> <td><input class="form-control" type="date" id="toDate" runat="server" style="width: 77%"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 155px; height: 46px">Driver: </td> <td style="width: 177px; height: 46px"> <asp:DropDownList ID="driverList" runat="server" CssClass="col-md-offset-0" Height="38px" Width="178px"></asp:DropDownList></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 155px"><asp:Button ID="View" runat="server" Text="View Hours Driven" OnClick="ViewHours" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div
         <asp:Label ID="reportText" runat="server" Text="" ></asp:Label>
-                              </ContentTemplate>
-                          </asp:UpdatePanel>
                         <input type="hidden" runat="server" id="chartData" />
                         <input type="hidden" runat="server" id="chart" />
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
         <asp:Label ID="text" runat="server" Text="" ></asp:Label>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  					</div>
   				</div>
   			</div>
                             </div>
