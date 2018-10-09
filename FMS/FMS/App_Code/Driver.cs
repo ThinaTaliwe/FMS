@@ -91,17 +91,11 @@ namespace FMS.App_Code
         {
             var query = "select message from drivers where id like '" + id + "'";
             var message = Util.query(query);
-            message.Read(); 
-            var intMsg = message.GetInt32(0);
-            switch (intMsg)
-            {
-                case -1:
-                    return String.Format("{0} has a flat tyre", name);
-                case 0:
-                    return null;
-                default:
-                    return null;
-            }
+            message.Read();
+            if (message.IsDBNull(0))
+                return null;
+            else
+                return message.GetString(0);
         }
 
         public void setCode(string value) { code = value; }

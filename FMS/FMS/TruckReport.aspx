@@ -20,7 +20,6 @@
 		  				<div class="panel-body">
                                 			<div class="content-box-large">
   				<div class="panel-heading">
-					<div class="panel-title">Last Month</div>
 					
 					<div class="panel-options">
 						<a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
@@ -28,16 +27,32 @@
 					</div>
 				</div>
   				<div class="panel-body">
-  					<div class="row">
-                        <div>
-                            From: <input class="form-control" type="date" id="fromDate" runat="server"> <br />
-                            To: <input class="form-control" type="date" id="toDate" runat="server"> <br />
-                            Truck: <asp:DropDownList ID="truckList" runat="server"></asp:DropDownList>
-                            <label id="reportText" runat="server" />
-                        </div> <asp:Button ID="view" runat="server" Text="View Kms Driven" OnClick="view_Click" />
+
+                      <table>
+                          <tbody>
+                              <tr>
+                                  <td>
+                                      From: <input class="form-control" type="date" id="fromDate" runat="server">
+                                  </td>
+                                  <td>
+                                      To:  <input class="form-control" type="date" id="toDate" runat="server">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      Truck:  <asp:DropDownList ID="truckList" runat="server"></asp:DropDownList>
+                                  </td>
+                              </tr>
+                              <tr>
+                                   <label id="reportText" runat="server" />
+                              </tr>
+                              <tr>
+                                  <asp:Button ID="view" runat="server" Text="View Kms Driven" OnClick="view_Click" />
+                              </tr>
+                          </tbody>
+                      </table>
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  					</div>
   				</div>
   			</div>
                             </div>

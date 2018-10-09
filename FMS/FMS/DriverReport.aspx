@@ -46,13 +46,12 @@
         <asp:Label ID="reportText" runat="server" Text="" ></asp:Label>
                         <input type="hidden" runat="server" id="chartData" />
                         <input type="hidden" runat="server" id="chart" />
-  						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+  						<div id="graph" style="height: 370px; width: 100%;"></div>
         <asp:Label ID="text" runat="server" Text="" ></asp:Label>
-                     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   				</div>
   			</div>
                             </div>
-		  					
 		  			</div>
 					</div>
 				</div>
@@ -65,6 +64,9 @@
 
     <script>
 
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(load_graph);
+
         function load_graph() {
 
             var lstDrivers = document.getElementById('<%= chartData.ClientID %>').value.split("#");
@@ -73,31 +75,22 @@
             for (var c in lstDrivers) {
                 var bar = lstDrivers[c].split("*");
                 console.log(bar)
-                if (bar.length == 2 && parseFloat(bar[1]) > 0) bars.push({ y: parseFloat(bar[1]), label: bar[0] });
+                if (bar.length == 2 && parseFloat(bar[1]) > 0) bars.push([bar[0], parseFloat(bar[1])]);
             }
             var strChart = document.getElementById('<%= chart.ClientID %>').value;
             console.log(strChart);
             var json = JSON.parse(strChart);
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                theme: "light2",
-                title: {
-                    text: json["title"]
-                },
-                axisY: {
-                    title: json["y_axis_title"]
-                },
-                data: [{
-                    type: "column",
-                    showInLegend: true,
-                    legendMarkerColor: "grey",
-                    legendText: json["legend_text"],
-                    dataPoints: bars
-                }]
-            });
-            chart.render();
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', json["legend_text"]);
+            data.addColumn('number', json["y_axis_title"]);
+            data.addRows(bars);
+            var options = {
+                'title': json["title"],
+                'width': 600,
+                'height': 500
+            }
+            var chart = new google.visualization.BarChart(document.getElementById('graph'));
+            chart.draw(data, options);
         }
-
-        window.onload = load_graph()
     </script>
 </asp:Content>
