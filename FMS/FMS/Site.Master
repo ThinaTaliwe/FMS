@@ -209,15 +209,28 @@
              <div class="col-md-2">
                 <div class="sidebar content-box" style="display: block;">
                     <script src="Content/js/custom.js"></script>
+                    <table>
+                        <thead>
+                            Notifications
+                        </thead>
                         <asp:Timer ID="timer" OnTick="timer_Tick" runat="server" Interval="100000" />
                         <asp:UpdatePanel ID="notifs" runat="server" UpdateMode="Conditional">
                             <Triggers><asp:AsyncPostBackTrigger ControlID="timer" /></Triggers>
                             <ContentTemplate>
-                                Notifcations
+                                <tbody>
+                                    <tr>
+                                        Details of message
+                                    </tr>
+                                    <tr>
+                                        <td><input type="button" value="View" /></td>
+                                        <td><input type="button" value="Remove" /></td>
+                                    </tr>
+                                </tbody>
                                 <hr/>
                                 <asp:Label ID="notification" runat="server" />
                             </ContentTemplate>
                         </asp:UpdatePanel>
+                    </table>
                 </div>
             </div>
             </div>

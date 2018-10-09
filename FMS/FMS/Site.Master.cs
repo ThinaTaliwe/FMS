@@ -30,19 +30,15 @@ namespace FMS
 
         protected void timer_Tick(object sender, EventArgs e)
         {
-            List<string> lstDrivers = new List<string>();
-            var query = "select id from users where user_type like 'driver'";
-            var drivers = Util.query(query);
-            while(drivers.Read())
-                lstDrivers.Add(drivers.GetString(0));
+            checkMessages();
             string message = "";
-            foreach(string id in lstDrivers)
-            {
-                Driver driver = new Driver(id);
-                string part = String.Format("Driver: {0}, message {1} \n", driver.getName(), driver.getMessage());
-                message += part;
-            }
+            
             notification.Text = message;
+        }
+
+        private string newNotif(int msgID, int delivID)
+        {
+            return null;
         }
 
         private void checkMessages()
