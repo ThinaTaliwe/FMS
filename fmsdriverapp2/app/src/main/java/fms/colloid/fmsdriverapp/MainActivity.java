@@ -22,7 +22,6 @@ public class MainActivity extends Base {
                 }, 0);
             }
         }
-        AlertDialog alertDialog = showDia();
     }
 
     @Override

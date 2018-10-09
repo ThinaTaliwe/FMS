@@ -128,10 +128,6 @@ public class Base extends AppCompatActivity {
         return null;
     }
 
-    protected void removeLoading() {
-        if(loading != null) loading.dismiss();
-    }
-
     protected void dismiss() {
         /**
          * removes popup

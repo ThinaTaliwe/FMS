@@ -52,7 +52,6 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.onCreate(mapViewBundle);
         map.getMapAsync(this);
         loading = showLoading();
-
     }
 
     @Override
@@ -81,7 +80,7 @@ public class Trip extends Base implements OnMapReadyCallback {
         try {
             LatLng dest = service.currentDelivery().getToCoords();
             map.addMarker(new MarkerOptions().position(dest).title(service.currentDelivery().getTo()));
-            //map.moveCamera(CameraUpdateFactory.newLatLngZoom(delmas, 10));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(dest, 10));
             map.getUiSettings().setMapToolbarEnabled(true);
             map.getUiSettings().setZoomControlsEnabled(true);
             map.getUiSettings().isMyLocationButtonEnabled();
@@ -92,6 +91,7 @@ public class Trip extends Base implements OnMapReadyCallback {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            System.err.println("destination not placed on map");
         }
         dismiss();
     }
@@ -128,50 +128,10 @@ public class Trip extends Base implements OnMapReadyCallback {
                         Delivery delivery = service.currentDelivery();
                         final EditText delivInfo = (EditText) layout.findViewById(R.id.deliv_info);
                         delivInfo.setText(delivery.toString());
-                        final Button getRoute, viewRoute, startEnd;
-                        getRoute = (Button) layout.findViewById(R.id.get_route);
-                        viewRoute = (Button) layout.findViewById(R.id.view_route);
+                        final Button startEnd;
                         startEnd = (Button) layout.findViewById(R.id.start_end);
                         if (service.currentDelivery().started()) startEnd.setText("End Trip");
                         else startEnd.setText("Start Trip");
-
-                        getRoute.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                    showLoading();
-                                    Delivery delivery = service.currentDelivery();
-                                    service.send(delivery.getRouteRequest(service));
-                                    String response = service.read();
-                                    if (response.contains(DriverService.OK_CODE))
-                                        response = service.read();
-                                    delivery.setRoute(response);
-                                    map.getMapAsync(Trip.this);
-                                    if (delivery.hasRoute()) {
-                                        service.log("Route Added to Map");
-                                    } else service.log("Route not added to map, error occurred");
-                                    dismiss();
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        });
-
-                        viewRoute.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                    String text;
-                                    if (service.currentDelivery().hasRoute())
-                                        text = service.currentDelivery().getRouteDirections();
-                                    else
-                                        text = "No current delivery\n Click Get Route to request a route";
-                                    showInfo(text);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        });
 
                         startEnd.setOnClickListener(new View.OnClickListener() {
 

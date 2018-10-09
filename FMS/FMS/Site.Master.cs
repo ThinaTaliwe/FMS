@@ -44,5 +44,24 @@ namespace FMS
             }
             notification.Text = message;
         }
+
+        private void checkMessages()
+        {
+            List<string> lstMessages;
+            object list = Session["notifs"];
+            if (list == null)
+                lstMessages = new List<string>();
+            else
+                lstMessages = list as List<string>;
+            var drivers = Driver.getDriverList();
+            foreach(var driver in drivers)
+            {
+                var msg = driver.getMessage();
+                if (lstMessages.Contains(msg))
+                    continue;
+                else
+                    lstMessages.Add(msg);
+            }
+        }
     }
 }
