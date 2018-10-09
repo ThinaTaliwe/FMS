@@ -27,7 +27,7 @@ namespace FMS
             //    tables.InnerHtml = HTMLStr;
             //}
             var query = "select id, brand, load, speed, class_code from Trucks";
-            var rows = Util.query(check);
+            var rows = Util.query(query);
             //var client = Util.getClient() 
             var HTMLStr = "";
            if (rows.HasRows)
@@ -35,9 +35,9 @@ namespace FMS
                 //Order.InnerHtml = rows.GetString(0);
                 while (rows.Read())
                 {
-                    Dname.InnerHtml = "Name: ";
-                    orderNum.InnerHtml += rows.GetString(0);
-                    orderNum.InnerHtml = rows.GetString(1);
+                    //Dname.InnerHtml = "Name: ";
+                    //orderNum.InnerHtml += rows.GetString(0);
+                    //orderNum.InnerHtml = rows.GetString(1);
         
                 }
             }

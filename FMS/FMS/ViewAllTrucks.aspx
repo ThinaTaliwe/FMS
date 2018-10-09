@@ -19,10 +19,6 @@
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
-                                    <tr>
-                                    <td id="Order" runat="server">  </td>
-                                    <td id="Name" runat="server"> </td>
-                                        </tr>
                                 </tbody>
                             </table>
                         </div><! --/content-panel -->

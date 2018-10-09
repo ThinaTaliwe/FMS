@@ -7,29 +7,7 @@
 
                     <div class="col-md-10">
                         <div class="content-panel">
-                            <table class="nav-justified" >
-                                <tr>
-                                    <td id="orderNum" runat="server"></td>
-                                    <td id="Dname" runat="server"></td>
-                                </tr>
-                                <tr>
-                                    <td id="">&nbsp;</td>
-                                    <td id="">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td id="">&nbsp;</td>
-                                    <td id="">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td id="">&nbsp;</td>
-                                    <td id="">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td id="">&nbsp;</td>
-                                    <td id="">&nbsp;</td>
-                                </tr>
-                            </table>
-                           
+                            
                         </div><! --/content-panel -->
                     </div><!-- /col-md-12 -->
     
