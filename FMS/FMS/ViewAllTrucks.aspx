@@ -19,7 +19,6 @@
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
-                                   
                                 </tbody>
                             </table>
                         </div><! --/content-panel -->

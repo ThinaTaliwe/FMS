@@ -95,7 +95,8 @@ namespace FMS.App_Code
             if (message.IsDBNull(0))
                 return null;
             else
-                return message.GetString(0);
+                //from getString to getInt32.toString()
+                return message.GetInt32(0).ToString();
         }
 
         public void setCode(string value) { code = value; }

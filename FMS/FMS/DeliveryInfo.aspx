@@ -7,35 +7,24 @@
 
                     <div class="col-md-10">
                         <div class="content-panel">
-                            <table class="nav-justified" >
-                                <tr>
-                                    <td id="orderNum" runat="server"></td>
-                                    <td id="Dname" runat="server"></td>
-                                </tr>
-                                <tr>
-                                    <td id="">&nbsp;</td>
-                                    <td id="">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td id="">&nbsp;</td>
-                                    <td id="">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td id="">&nbsp;</td>
-                                    <td id="">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td id="">&nbsp;</td>
-                                    <td id="">&nbsp;</td>
-                                </tr>
-                            </table>
-                           
+                             <table class="table">
+                            <thead>
+                                    <tr>
+                                        <th>Delivery Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody runat="server" id="tables">
+                                </tbody>
+
+                            <!-- <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>-->
+                 
+                             </table>
+                            <asp:Button ID="delivery" runat="server" Text="Report" OnClick="report_Click" />
                         </div><! --/content-panel -->
                     </div><!-- /col-md-12 -->
     
                     </div><!-- /col-md-12 -->
                 </div><!-- row -->  
 
-            </section><! --/wrapper -->
-        </section><!-- /MAIN CONTENT -->
+            </section><!-- /wrapper -->
 </asp:Content>

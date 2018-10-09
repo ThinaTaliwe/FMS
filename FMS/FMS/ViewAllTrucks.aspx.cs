@@ -18,6 +18,7 @@ namespace FMS
             List<string> lstIDs = new List<string>();
             if (rows.HasRows)
             {
+                //Order.InnerHtml = rows.GetString(0);
                 while (rows.Read())
                     lstIDs.Add(rows.GetString(0));
                 foreach(var id in lstIDs)
@@ -26,7 +27,7 @@ namespace FMS
                     HTMLStr += "<tr>  <td> <a href='TruckInfo?id=" + truck.getID() + "'>" + truck.getID() + "</a></td> <td> " + truck.getBrand() + "</td> <td> " + truck.getLoad() + "</td><td> " + truck.getSpeed() + "</td><td> " + truck.getClass_code() + "</td></tr>";
                 }
                 tables.InnerHtml = HTMLStr;
-            }
+            }  
         }
     }
 }

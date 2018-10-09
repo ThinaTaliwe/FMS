@@ -13,21 +13,30 @@ namespace FMS {
     public partial class DeliveryInfo {
         
         /// <summary>
-        /// orderNum control.
+        /// tables control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell orderNum;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tables;
         
         /// <summary>
-        /// Dname control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Dname;
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// delivery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button delivery;
     }
 }
