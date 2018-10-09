@@ -10,37 +10,26 @@ namespace FMS
 {
     public partial class DeliveryInfo : System.Web.UI.Page
     {
+        private Delivery d;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            string check = Request.QueryString["id"]; ;
-            Delivery delivery = Delivery.getInstance(Convert.ToInt32(check));
-
-            //Dname.InnerHtml = delivery.ToString();
-            //orderNum.InnerHtml = delivery.getLocation();
-            //if (delivery.HasRows)
-            //{
-            //    while (delivery.Read())
-            //    {
-            //        HTMLStr += "<tr>  <td> <a href='TruckInfo.aspx'>" + rows.GetString(0) + "</a></td> <td> " + rows.GetString(1) + "</td> <td> " + rows.GetInt32(2) + "</td><td> " + rows.GetInt32(3) + "</td><td> " + rows.GetString(4) + "</td></tr>";
-            //    }
-            //    tables.InnerHtml = HTMLStr;
-            //}
-            var query = "select id, brand, load, speed, class_code from Trucks";
-            var rows = Util.query(query);
-            //var client = Util.getClient() 
             var HTMLStr = "";
-           if (rows.HasRows)
-            {
-                //Order.InnerHtml = rows.GetString(0);
-                while (rows.Read())
-                {
-                    //Dname.InnerHtml = "Name: ";
-                    //orderNum.InnerHtml += rows.GetString(0);
-                    //orderNum.InnerHtml = rows.GetString(1);
-        
-                }
-            }
+            // ClientID
+            string id = Request.QueryString["id"];
+            d = new Delivery();
+            //Label1.Text = truck.ToString();
+            //Delist = client_var.getDeliveries();
+
+
+            HTMLStr += "<tr> <td> Client : " + d.getClient() + "</td> " +
+                        "</tr>";
+            tables.InnerHtml = HTMLStr;
+        }
+        protected void report_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("DeliveryReport?id=" + d.getID());
         }
     }
+
 }

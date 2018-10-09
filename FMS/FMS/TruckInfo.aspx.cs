@@ -19,15 +19,15 @@ namespace FMS
             string id = Request.QueryString["id"];
             truck = new Truck(id);
             //Label1.Text = truck.ToString();
-            HTMLStr += "<tr> <td> Number Plate:     " + truck.getID() + "</td> " +
+            HTMLStr += "<tr> <td> Number Plate :     " + truck.getID() + "</td> " +
                         "</tr>" +
-                        "<tr><td> Truck Brand:      " + truck.getBrand() + "</td> " +
+                        "<tr><td> Truck Brand :      " + truck.getBrand() + "</td> " +
                         "</tr>" +
-                        "<tr><td> Load Capacity:    " + truck.getLoad() + "</td>" +
+                        "<tr><td> Load Capacity :    " + truck.getLoad() + "</td>" +
                         "</tr>" +
-                        "<tr><td> Maximum Speed:    " + truck.getSpeed() + "</td>" +
+                        "<tr><td> Maximum Speed :    " + truck.getSpeed() + "</td>" +
                         "</tr>" +
-                        "<tr><td> Licence Code:     " + truck.getClass_code() + "</td>" +
+                        "<tr><td> Licence Code :     " + truck.getClass_code() + "</td>" +
                         "</tr>";
                         tables.InnerHtml = HTMLStr;
         }
