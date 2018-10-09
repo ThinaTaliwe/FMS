@@ -24,7 +24,13 @@ namespace FMS
 
             HTMLStr += "<tr> <td> Name : " + objDriver.getName() + "</td> " +
                         "</tr>" +
-                        "<tr><td> Location : " + objDriver.getMessage() + "</td>" +
+                        "<tr><td> Code : " + objDriver.getCode() + "</td>" +
+                        "</tr>" +
+                         "<tr><td> First Issue : " + objDriver.getFirstIssue() + "</td>" +
+                        "</tr>" +
+                         "<tr><td> Expiry : " + objDriver.getExpiry() + "</td>" +
+                        "</tr>" +
+                        "<tr><td> Message : " + objDriver.getMessage() + "</td>" +
                         "</tr>";
             tables.InnerHtml = HTMLStr;
         }
