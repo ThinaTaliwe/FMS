@@ -31,6 +31,15 @@ namespace FMS {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
         
         /// <summary>
+        /// removedNotifs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden removedNotifs;
+        
+        /// <summary>
         /// timer control.
         /// </summary>
         /// <remarks>
@@ -55,6 +64,6 @@ namespace FMS {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label notification;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl notification;
     }
 }

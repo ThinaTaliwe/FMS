@@ -87,16 +87,22 @@ namespace FMS.App_Code
             return location.GetString(0);
         }
 
-        public string getMessage()
+        public string[] getMessage()
         {
             var query = "select message from drivers where id like '" + id + "'";
             var message = Util.query(query);
             message.Read();
-            if (message.IsDBNull(0))
-                return null;
-            else
+            try
+            {
+                string text = message.GetInt32(0).ToString();
+                var array = text.Split('#');
+                return new string[] {name, array[0], array[1] };
+            } catch(Exception ex)
+            {
+                Util.print(ex.ToString());
+            }
+            return null;
                 //from getString to getInt32.toString()
-                return message.GetInt32(0).ToString();
         }
 
         public void setCode(string value) { code = value; }
