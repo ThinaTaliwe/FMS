@@ -36,8 +36,24 @@ namespace FMS
 
         protected void confirm_delivery(object sender, EventArgs e)
         {
-            //Query for Adding the truck
-            Page.Response.Redirect("Client_Thanks");
+            //Add to database
+            string order = Request.QueryString["order"];
+            var query = "SELECT id FROM DELIVERY WHERE order_num LIKE '" + order + "'";
+            System.Diagnostics.Debug.WriteLine(query);
+            var rows = Util.query(query);
+
+            if (rows.HasRows)
+            {
+                while (rows.Read())
+                {
+                    Delivery delClient = Delivery.getInstance(rows.GetInt32(0));
+                    var query2 = "UPDATE DELIVERY SET CONFIRMATION = '0' WHERE ID LIKE " + delClient.getID();
+                    System.Diagnostics.Debug.WriteLine(query);
+                    Util.query(query);
+                    Page.Response.Redirect("Client_Thanks");
+
+                }
+            }
         }
 
     }
