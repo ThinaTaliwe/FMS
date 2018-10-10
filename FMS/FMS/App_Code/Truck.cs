@@ -44,6 +44,36 @@ namespace FMS.App_Code
             }
         }
 
+        public JObject getSummary(DateTime from, DateTime to)
+        {
+            JObject json = new JObject();
+            var lstDelveries = deliveriesMade(from, to);
+            var km = 0.0;
+            JObject jsonMat = new JObject();
+            foreach(var delivery in lstDelveries)
+            {
+
+            }
+            return null;
+        }
+
+        public List<Delivery> deliveriesMade(DateTime from, DateTime to)
+        {
+            var query = "select id from delivery where started > '" + from + "' and started < '" + to + "' and truck like '" + id + "'";
+            var reader = Util.query(query);
+            if (reader.HasRows)
+            {
+                List<int> list = new List<int>();
+                while (reader.Read())
+                    list.Add(reader.GetInt32(0));
+                List<Delivery> lstDelivs = new List<Delivery>();
+                foreach (int id in list)
+                    lstDelivs.Add(Delivery.getInstance(id));
+                return lstDelivs;
+            }
+            return null;
+        }
+
         public double totalDistance(DateTime from, DateTime to) {
             double distance = 0;
             try {

@@ -135,7 +135,7 @@ namespace FMS.App_Code
 
         public static Delivery getInstance(int id)
         {
-            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed, distance, confirmed FROM DELIVERY WHERE ID LIKE '" + id + "'";
+            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed, distance, confirmation FROM DELIVERY WHERE ID LIKE '" + id + "'";
             var deliv = Util.query(query);
             if (deliv.HasRows)
             {

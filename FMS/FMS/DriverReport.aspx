@@ -7,7 +7,7 @@
 	  			<div class="row">
 	  				<div class="col-md-12 panel-info">
 			  			<div class="content-box-header panel-heading">
-		  					<div class="panel-title ">Truck Report </div>
+		  					<div class="panel-title ">Driver Report </div>
 						
 			  			</div>
 
