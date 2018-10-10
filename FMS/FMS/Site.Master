@@ -220,7 +220,10 @@
                         </asp:UpdatePanel>
                     <script>
                         function remove(id) {
-                            document.getElementById('<%= removedNotifs.ClientID %>').value += id + "#";
+                            var removed = document.getElementById('<%= removedNotifs.ClientID %>').value
+                            removed += id + "#";
+                            document.getElementById('<%= removedNotifs.ClientID %>').value = removed
+                            console.log(removed);
                             document.getElementById(id.toString()).innerText = "";
                         }
 
