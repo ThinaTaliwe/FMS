@@ -95,6 +95,8 @@ namespace FMS.App_Code
                                         //accept [delivery_id]
                                          query = "update delivery set accepted = '" + now + "' where id like '" + parts[1] + "'";
                                         Util.query(query);
+                                        query = "update drivers set message = '" + parts[1] + "#1' where id like '" + driver + "'";
+                                        Util.query(query);
                                         send(OK_CODE);
                                         break;
                                     case "location":

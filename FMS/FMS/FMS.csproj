@@ -176,9 +176,9 @@
     <Content Include="AddUser.aspx" />
     <Content Include="AllDeliveries.aspx" />
     <Content Include="App_Data\db_init.sql" />
-    <Content Include="App_Data\Done.mdf" />
-    <Content Include="App_Data\Done_log.ldf">
-      <DependentUpon>Done.mdf</DependentUpon>
+    <Content Include="App_Data\Donee.mdf" />
+    <Content Include="App_Data\Donee_log.ldf">
+      <DependentUpon>Donee.mdf</DependentUpon>
     </Content>
     <Content Include="App_Data\insert_data.sql" />
     <Content Include="ClientDummy.aspx" />
