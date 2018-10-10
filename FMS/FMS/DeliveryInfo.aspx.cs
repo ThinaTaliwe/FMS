@@ -18,7 +18,7 @@ namespace FMS
             //DeliveryID
             string id = Request.QueryString["id"];
             // Response.Write("id: " + id);
-            d = Delivery.getInstance(Convert.ToInt32(1));
+            d = Delivery.getInstance(Convert.ToInt32(id));
             //Label1.Text = Delivery.ToString();
             HTMLStr += "<tr> <td> Delivery ID : " + d.getID() + "</td> " +
                         "</tr>" +
