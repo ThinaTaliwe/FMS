@@ -213,7 +213,7 @@
                     <h3>Notifications</h3>
                     <script src="Content/js/custom.js"></script>
                         <input type="hidden" id="removedNotifs" runat="server" />
-                        <asp:Timer ID="timer" OnTick="timer_Tick" runat="server" Interval="5000" />
+                        <asp:Timer ID="timer" OnTick="timer_Tick" runat="server" Interval="30000" />
                         <asp:UpdatePanel ID="notifs" runat="server" UpdateMode="Conditional">
                             <Triggers><asp:AsyncPostBackTrigger ControlID="timer" /></Triggers>
                             <ContentTemplate>

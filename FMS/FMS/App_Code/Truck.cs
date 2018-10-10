@@ -44,7 +44,7 @@ namespace FMS.App_Code
             }
         }
 
-        public JObject getSummary(DateTime from, DateTime to)
+        public JObject summary(DateTime from, DateTime to)
         {
             JObject json = new JObject();
             var lstDelveries = deliveriesMade(from, to);
@@ -52,9 +52,16 @@ namespace FMS.App_Code
             JObject jsonMat = new JObject();
             foreach(var delivery in lstDelveries)
             {
-
+                if (jsonMat[delivery.getMaterial()] == null)
+                    jsonMat[delivery.getMaterial()] = 0;
+                int load = Convert.ToInt32(jsonMat[delivery.getMaterial()]);
+                load += delivery.getLoad();
+                json[delivery.getMaterial()] = load;
+                km += delivery.getDistance();
             }
-            return null;
+            json["km"] = km;
+            json["material"] = jsonMat;
+            return json;
         }
 
         public List<Delivery> deliveriesMade(DateTime from, DateTime to)

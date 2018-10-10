@@ -1,4 +1,5 @@
 ﻿using FMS.App_Code;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace FMS
             string id = Request.QueryString["id"];
             // Response.Write("id: " + id);
             d = Delivery.getInstance(Convert.ToInt32(id));
+            viewDelivery(Convert.ToInt32(id));
             //Label1.Text = Delivery.ToString();
             HTMLStr += "<tr> <td> Delivery ID : " + d.getID() + "</td> " +
                         "</tr>" +
@@ -38,6 +40,33 @@ namespace FMS
         protected void report_Click(object sender, EventArgs e)
         {
             Response.Redirect("DeliveryReport?id=" + d.getID());
+        }
+
+        private void viewDelivery(int id)
+        {
+            Delivery delivery = Delivery.getInstance(id);
+            if (delivery != null)
+            {
+                var json = delivery.speedInfo();
+                if (json != null)
+                {
+                    JArray info = (JArray)json["info"];
+                    string location;
+                    foreach (JObject token in info)
+                    {
+                        location = token["distance"] + "*";
+                        location += token["speed"] + "*";
+                        location += token["time"] + "*";
+                        location += token["coords"];
+                        locations.Value += location + "#";
+                        location = "";
+                    }
+                }
+                else
+                {
+
+                }
+            }
         }
     }
 

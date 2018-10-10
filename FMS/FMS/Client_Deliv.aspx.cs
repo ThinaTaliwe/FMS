@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json.Linq;
 
 namespace FMS
 {
@@ -27,8 +28,9 @@ namespace FMS
                 {
                     Delivery delClient = Delivery.getInstance(rows.GetInt32(0));
                     HTMLStr += "<h3> Delivery Information </h3> " + "<p> Order Number: " + delClient.getOrderNumber() + "</p> <p> Truck Plate: " + delClient.getTruck().getID() + "</p> </p> Driver Name: " + delClient.getDriver().getName() + "</p> <p> Origin: " + delClient.getFromAddress() + "</p> <p> Destination: " + delClient.getToAddress() + "</p> <p> Load (tons): " + delClient.getLoad() + "</p> <p> ETA: " + delClient.ETA() + " hours </p> <p> Material: " + delClient.getMaterial()  + "</p>";
+                    viewDelivery(delClient.getID());
                 }
-                   }
+              }
                 tables.InnerHtml = HTMLStr;
 
             
@@ -51,6 +53,33 @@ namespace FMS
                     System.Diagnostics.Debug.WriteLine(query);
                     Util.query(query);
                     Page.Response.Redirect("Client_Thanks");
+
+                }
+            }
+        }
+
+        private void viewDelivery(int id)
+        {
+            Delivery delivery = Delivery.getInstance(id);
+            if (delivery != null)
+            {
+                var json = delivery.speedInfo();
+                if (json != null)
+                {
+                    JArray info = (JArray)json["info"];
+                    string location;
+                    foreach (JObject token in info)
+                    {
+                        location = token["distance"] + "*";
+                        location += token["speed"] + "*";
+                        location += token["time"] + "*";
+                        location += token["coords"];
+                        locations.Value += location + "#";
+                        location = "";
+                    }
+                }
+                else
+                {
 
                 }
             }

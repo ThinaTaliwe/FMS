@@ -24,7 +24,7 @@ namespace FMS
             if (!timer.Enabled)
             {
                 timer.Enabled = true;
-                timer.Interval = 5000;
+                timer.Interval = 30000;
             }
         }
 

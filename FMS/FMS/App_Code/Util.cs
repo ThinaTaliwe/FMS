@@ -41,12 +41,13 @@ namespace FMS.App_Code
                         overSpeed++;
                     marks.Add(jsonMark);
                     prevCoords = currentCoords;
+                    prevTime = currentTime;
                 }
-                json["distance"] = distance;
-                json["speed"] = distance / hours;
-                json["time"] = hours;
+                json["distance"] = Math.Round(distance, 2);
+                json["speed"] = Math.Round(distance / hours, 2);
+                json["time"] = Math.Round(hours, 2);
                 json["info"] = marks;
-                json["overspeed_ratio"] = (Convert.ToDouble(overSpeed) / coords.Count) * 100;
+                json["overspeed_ratio"] = Math.Round((Convert.ToDouble(overSpeed) / coords.Count) * 100, 2);
             }
             else
                 return null;
@@ -170,7 +171,7 @@ namespace FMS.App_Code
                 lon1 = from[1];
                 lat2 = to[0];
                 lon2 = to[1];
-                var r = 6371000.0;
+                var r = 6371.0;
                 var phi1 = toRad(lat1);
                 var phi2 = toRad(lat2);
                 var deltaPhi = toRad(lat2 - lat1);

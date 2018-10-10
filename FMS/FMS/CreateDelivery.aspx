@@ -213,7 +213,7 @@
                 var from_address = route.start_address.toString();
                 var to_address = route.end_address.toString();
                 var json = {
-                    "distance" : distance,
+                    "distance": parseFloat(distance) / 1000.0,
                     "from_coords" : from_coords,
                    "to_coords" : to_coords,
                     "from_address" : from_address,
