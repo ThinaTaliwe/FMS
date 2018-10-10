@@ -109,6 +109,7 @@
                             <!-- Sub menu -->
                             <ul>
                                 <li><a href="CreateDelivery">Create Delivery</a></li>
+                                <li><a href="AllDeliveries" > All Deliveries</a></li>
                                 <li><a href="UpdateDelivery">Upcoming Deliveries</a></li>
                                 <li><a href="PreviousDelivery">Previous Delivery</a></li>    
                             </ul>
@@ -208,9 +209,7 @@
 
              <div class="col-md-2">
                 <div class="sidebar content-box" style="display: block;">
-<<<<<<< HEAD
-                    	<h5>Notifications</h5>
-=======
+                    	
                     <script src="Content/js/custom.js"></script>
                     <table>
                         <thead>
@@ -234,7 +233,6 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </table>
->>>>>>> 8f41cc4533a943c04dac64fc68fa0d11be2d0175
                 </div>
             </div>
             </div>

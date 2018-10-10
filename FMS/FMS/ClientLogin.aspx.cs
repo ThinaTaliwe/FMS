@@ -30,14 +30,14 @@ namespace FMS
             msg.From = new MailAddress("khamorudu@gmail.com");
             msg.To.Add(new MailAddress("216090091@student.uj.ac.za"));
 
-            msg.Subject = "This is a test Email subject";
+            msg.Subject = "Details for upcoming delivery";
             msg.IsBodyHtml = true;
-            msg.Body = string.Format("<html><head></head><body><b>Test HTML Email</b></body>");
+            msg.Body = string.Format("<html><head></head><body><b>Hi There </b> </br> Thank you for using new era commerce, you can get more information about the delivery and confirm once it has been delivered on this <a href= " + " http://localhost:53436/Client_Deliv?order=1234 " + "> </a> </ body > ");
 
             try
             {
                 client.Send(msg);
-                Response.Write("Your message has been successfully sent.");
+                Page.Response.Redirect(Page.Request.Url.ToString(), true);
             }
             catch (Exception ex)
             {

@@ -28,11 +28,11 @@
                                     
                                 </div>
                        
-                        
-                        <button class="button" type="submit" onclick="ConfirmDelivery()">
-													<i class="fa fa-save" ></i>
-													Confirm Delivery
-												</button>			 
+                        <form runat="server">
+
+                            <asp:Button ID="btn" class="btn btn-primary" runat="server" Text="Confirm Delivery Delivered" OnClick="confirm_delivery"/>
+                        </form>
+			 
                     </div>
                 </div>
             </div>

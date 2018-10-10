@@ -243,7 +243,7 @@ namespace FMS.App_Code
         public Client getClient() { return new Client(client); }
         public string getToAddress() { return getAddress(to); }
         public string getFromAddress() { return getAddress(from); ; }
-        public string geMaterial() { return material; }
+        public string getMaterial() { return material; }
         public int getLoad() { return load; }
         public DateTime getDepartDay() { return departDay; }
         public DateTime getArrivalDay() { return arrivalDay; }

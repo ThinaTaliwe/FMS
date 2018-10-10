@@ -27,6 +27,7 @@ namespace FMS
             Util.query(query);
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
+
         protected void CancelAddTruck(object sender, EventArgs e)
         {
             //Clear inputs

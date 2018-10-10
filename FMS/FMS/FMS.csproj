@@ -174,16 +174,19 @@
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
+    <Content Include="AllDeliveries.aspx" />
     <Content Include="App_Data\db_init.sql" />
     <Content Include="App_Data\Done.mdf" />
     <Content Include="App_Data\Done_log.ldf">
       <DependentUpon>Done.mdf</DependentUpon>
     </Content>
     <Content Include="App_Data\insert_data.sql" />
+    <Content Include="ClientDummy.aspx" />
     <Content Include="ClientLogin.aspx" />
     <Content Include="Client_Deliv.aspx" />
     <Content Include="Client_Delivery.html" />
     <Content Include="ClientInfo.aspx" />
+    <Content Include="Client_Thanks.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
     <Content Include="Content\ass\css\login.css" />
@@ -307,6 +310,13 @@
     <Compile Include="AddUser.aspx.designer.cs">
       <DependentUpon>AddUser.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AllDeliveries.aspx.cs">
+      <DependentUpon>AllDeliveries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllDeliveries.aspx.designer.cs">
+      <DependentUpon>AllDeliveries.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Code\Admin.cs" />
     <Compile Include="App_Code\Client.cs" />
     <Compile Include="App_Code\Delivery.cs" />
@@ -325,6 +335,13 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ClientDummy.aspx.cs">
+      <DependentUpon>ClientDummy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientDummy.aspx.designer.cs">
+      <DependentUpon>ClientDummy.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ClientInfo.aspx.cs">
       <DependentUpon>ClientInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -338,6 +355,13 @@
     </Compile>
     <Compile Include="Client_Deliv.aspx.designer.cs">
       <DependentUpon>Client_Deliv.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Client_Thanks.aspx.cs">
+      <DependentUpon>Client_Thanks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Client_Thanks.aspx.designer.cs">
+      <DependentUpon>Client_Thanks.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

@@ -8,6 +8,7 @@ using FMS.App_Code;
 using GoogleMaps.LocationServices;
 using FMS.App_Code;
 using Newtonsoft.Json.Linq;
+using System.Net.Mail;
 
 namespace FMS
 {
@@ -55,13 +56,15 @@ namespace FMS
 
         protected void btn_Click(object sender, EventArgs e)
         {
-            string tempIDquery = "SELECT ID FROM CLIENTS WHERE COMPANY LIKE '" + Client.Value + "'";
+            string tempIDquery = "SELECT ID, email FROM CLIENTS WHERE COMPANY LIKE '" + Client.Value + "'";
             var tempID = Util.query(tempIDquery);
+            var clientEmail = "";
             int IDnow = 0; 
             if (tempID.HasRows)
             {
                 tempID.Read();
                 IDnow = tempID.GetInt32(0);
+                clientEmail = tempID.GetString(1);
             }
             string DriverTempQuery = "SELECT ID FROM USERS WHERE NAME LIKE '" + DriverChosen.Value.Split(' ')[0]  + "' AND SURNAME LIKE '" + DriverChosen.Value.Split(' ')[1] + "'";
             var DriverTemp = Util.query(DriverTempQuery);
@@ -97,12 +100,19 @@ namespace FMS
             //var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY, distance) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + latlngOrigin + "', '" + latlngDest + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + authority + "', " + json["distance"] + ");";
             //Util.query(query);
             delivery.save();
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+
+            //send mail to client
+            sendEmail(clientEmail); 
         }
 
         private string parseCoords(string coords)
         {
             return coords.Replace('(', ' ').Replace(')', ' ').Trim().Replace(',', ':');
+        }
+
+        private void sendEmail(string email)
+        {
+          
         }
     }
 }
