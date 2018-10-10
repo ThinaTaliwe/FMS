@@ -1,15 +1,12 @@
 ﻿<%@ Page Title="Create Delivery" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateDelivery.aspx.cs" Inherits="FMS.CreateDelivery" EnableEventValidation="false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
-        <div class="page-content">
-    	<div class="row">
-		  <div class="col-md-10">
-
+    <section id="main-content">
+            <section class="wrapper">
+                <div class="content-box-large">
 	  			<div class="row">
 	  				<div class="col-md-12 panel-info">
 			  			<div class="content-box-header panel-heading">
 		  					<div class="panel-title ">Create Delivery</div>
-                             <div class="panel-title" ><label id="Error" runat="server"></label></div>
 
 			  			</div>
                 
@@ -27,7 +24,7 @@
 										    <label  class="col-sm-2 control-label">Order Number</label>
 										    <div class="col-sm-10">
 										      <input class="form-control" id="OrderNum" placeholder="Enter Order Number" runat="server">
-                                               <asp:RequiredFieldValidator id="validOrderNum" runat="server" controlToValidate="OrderNum" errorMessage="Enter order number" display="dynamic">
+                                               <asp:RequiredFieldValidator id="validOrderNum" runat="server" style="color:Red;" controlToValidate="OrderNum" errorMessage="Enter order number" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
@@ -36,15 +33,8 @@
 										    <div class="col-sm-10">
 										     	
                                               <input class="form-control" type="date" id="DeliveryDate" runat="server">
-                                               <asp:RequiredFieldValidator id="validDeliveryDate" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
+                                               <asp:RequiredFieldValidator id="validDeliveryDate" style="color:Red;" runat="server" controlToValidate="DeliveryDate" errorMessage="Enter date" display="dynamic">
                                                </asp:RequiredFieldValidator>
-										    </div>
-										  </div>
-                                 <div class="form-group">
-										    <label  class="col-sm-2 control-label">Delivery Time</label>
-										    <div class="col-sm-10">
-										     	
-                                              <input class="form-control" type="time" id="DeliveryTime" runat="server">
 										    </div>
 										  </div>
                                          <div class="form-group">
@@ -53,7 +43,7 @@
 										      <select class="form-control" id="TruckChosen" runat="server">
 													<option>Select A Truck</option>
 												</select> 
-                                               <asp:RequiredFieldValidator id="validTruckChosen" runat="server" controlToValidate="TruckChosen" errorMessage="choose truck" display="dynamic">
+                                               <asp:RequiredFieldValidator id="validTruckChosen" style="color:Red;" runat="server" controlToValidate="TruckChosen" errorMessage="choose truck" display="dynamic">
                                                </asp:RequiredFieldValidator>
 			
 										    </div>
@@ -64,7 +54,7 @@
 										      <select class="form-control" id="Client" runat="server">
 													<option>Select A Client</option>
 												</select> 
-                                               <asp:RequiredFieldValidator id="validClient" runat="server" controlToValidate="Client" errorMessage="Choose client" display="dynamic">
+                                               <asp:RequiredFieldValidator id="validClient" style="color:Red;" runat="server" controlToValidate="Client" errorMessage="Choose client" display="dynamic">
                                                </asp:RequiredFieldValidator>
 			
 										    </div>
@@ -75,7 +65,7 @@
 										      <select class="form-control" id="DriverChosen" runat="server">
 													<option>Select A Driver</option>
 												</select> 
-                                               <asp:RequiredFieldValidator id="validDriver" runat="server" controlToValidate="DriverChosen" errorMessage="Choose driver" display="dynamic">
+                                               <asp:RequiredFieldValidator id="validDriver" style="color:Red;" runat="server" controlToValidate="DriverChosen" errorMessage="Choose driver" display="dynamic">
                                                </asp:RequiredFieldValidator>
 			
 										    </div>
@@ -87,7 +77,7 @@
                                                  <select class="form-control" id="Material" runat="server">
 													<option>Select Material</option>
 												</select> 
-										       <asp:RequiredFieldValidator id="validMaterial" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
+										       <asp:RequiredFieldValidator id="validMaterial" style="color:Red;" runat="server" controlToValidate="Material" errorMessage="Enter material" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
@@ -97,7 +87,7 @@
 										      <input  class="form-control" id="Load" placeholder="Enter Load" runat="server">
                                                  <input  class="form-control" type="hidden" id="here" value="" runat="server">
                                                  <input  class="form-control" type="hidden" id="there" value="" runat="server">
-                                               <asp:RequiredFieldValidator id="validLoad" runat="server" controlToValidate="Load" errorMessage="Enter Load" display="dynamic">
+                                               <asp:RequiredFieldValidator id="validLoad" style="color:Red;" runat="server" controlToValidate="Load" errorMessage="Enter Load" display="dynamic">
                                                </asp:RequiredFieldValidator>
 										    </div>
 										  </div>
@@ -119,6 +109,7 @@
 </div>
 
 <div id="map"></div>
+ <input type="hidden" runat="server" id="routeInfo" />
 
 <script>
     var originInput;
@@ -215,7 +206,22 @@
                 //document.getElementById("itemRun").innerText = originInput;
                 //originIDs = originPlaceId;
                 //window.alert(origin.lat());
-
+                var route = response.routes[0].legs[0];
+                var distance = route.distance.value;
+                var from_coords = route.start_location.toString();
+                var to_coords = route.end_location.toString();
+                var from_address = route.start_address.toString();
+                var to_address = route.end_address.toString();
+                var json = {
+                    "distance" : distance,
+                    "from_coords" : from_coords,
+                   "to_coords" : to_coords,
+                    "from_address" : from_address,
+                    "to_address" : to_address
+                }
+                var strRoute = JSON.stringify(json);
+                document.getElementById('<%= routeInfo.ClientID %>').value = strRoute;
+                console.log(strRoute, typeof(strRoute));
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
@@ -245,6 +251,7 @@
 	  		<!--  Page content -->
 		  </div>
 
-		</div>
-    </div>
+
+            </section>
+        </section>
 </asp:Content>

@@ -31,6 +31,24 @@ namespace FMS {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl toDate;
         
         /// <summary>
+        /// truckList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList truckList;
+        
+        /// <summary>
+        /// reportText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl reportText;
+        
+        /// <summary>
         /// view control.
         /// </summary>
         /// <remarks>
@@ -40,12 +58,21 @@ namespace FMS {
         protected global::System.Web.UI.WebControls.Button view;
         
         /// <summary>
-        /// truckData control.
+        /// chartData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden truckData;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden chartData;
+        
+        /// <summary>
+        /// chart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden chart;
     }
 }

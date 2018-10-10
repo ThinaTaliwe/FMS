@@ -1,70 +1,71 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="deliv.aspx.cs" Inherits="FMS.deliv" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" %>
 
-<!DOCTYPE html>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 80%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+<head id="Head1" runat="server">
+    <title>Timer Example Page</title>
+    <script runat="server">
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            OriginalTime.Text = DateTime.Now.ToLongTimeString();
+        }
+
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            StockPrice.Text = GetStockPrice();
+            TimeOfPrice.Text = DateTime.Now.ToLongTimeString();
+        }
+
+        private string GetStockPrice()
+        {
+            double randomStockPrice = 50 + new Random().NextDouble();
+            return randomStockPrice.ToString("C");
+        }
+
+        protected void RadioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            Timer1.Enabled = true;
+            Timer1.Interval = 10000;
+        }
+
+        protected void RadioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            Timer1.Enabled = true;
+            Timer1.Interval = 60000;
+        }
+
+        protected void RadioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            Timer1.Enabled = false;
+        }
+
+</script>
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+        <asp:Timer ID="Timer1" OnTick="Timer1_Tick" runat="server" Interval="10000" />
+
+        <asp:UpdatePanel ID="StockPricePanel" runat="server" UpdateMode="Conditional">
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="Timer1" />
+        </Triggers>
+        <ContentTemplate>
+            Stock price is <asp:Label id="StockPrice" runat="server"></asp:Label><BR />
+            as of <asp:Label id="TimeOfPrice" runat="server"></asp:Label>  
+            <br />
+
+        </ContentTemplate>
+        </asp:UpdatePanel>
         <div>
-            <asp:DropDownList ID="delivery" runat="server"></asp:DropDownList>
-            <asp:DropDownList ID="driver" runat="server"></asp:DropDownList>
-            <asp:DropDownList ID="truck" runat="server"></asp:DropDownList>
-            <asp:Button ID="button" runat="server" OnClick="getDeliv" Text="View" />
+        <br />
+        Update stock price every:<br />
+        <asp:RadioButton ID="RadioButton1" AutoPostBack="true" GroupName="TimerFrequency" runat="server" Text="10 seconds" OnCheckedChanged="RadioButton1_CheckedChanged" /><br />
+        <asp:RadioButton ID="RadioButton2" AutoPostBack="true" GroupName="TimerFrequency" runat="server" Text="60 seconds" OnCheckedChanged="RadioButton2_CheckedChanged" /><br />
+        <asp:RadioButton ID="RadioButton3" AutoPostBack="true" GroupName="TimerFrequency" runat="server" Text="Never" OnCheckedChanged="RadioButton3_CheckedChanged" />
+        <br />
+        Page loaded at <asp:Label ID="OriginalTime" runat="server"></asp:Label>
         </div>
     </form>
-    <input type="hidden" id="locations" runat="server" />
-    <div id="map"></div>
-    <script>
-        var map;
-        var redIcon = "http://maps.google.com/mapfiles/ms/micons/red.png";
-        var greenIcon = "http://maps.google.com/mapfiles/ms/micons/green.png";
-        var places = document.getElementById("locations").value;
-        var arrPlaces = places.split("#");
-        function initMap() {
-            var myLatLng = { lat: -26.02, lng: 28.56 };
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: myLatLng
-            });
-            for (var loc in arrPlaces) {
-                console.log(arrPlaces[loc]);
-                var info = arrPlaces[loc].split("*");
-                var speed = parseFloat(info[1])
-                var icon = speed > 80 ? redIcon : greenIcon;
-                var coords = info[3].split(":");
-                var text = "Distance: " + info[0] + "\n";
-                text += "Speed: " + info[1] + "\n";
-                text += "Coordinates: " + info[3] + "\n";
-                text += "Time: " + info[2];
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(parseFloat(coords[0]), parseFloat(coords[1])),
-                    icon: icon,
-                    title: text,
-                    map: map
-                })
-            }
-        }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBelHfLMXxL73XH_xMQ4p15uT-3GQztZYE&callback=initMap"
-    async defer></script> <form>
-        <asp:Label ID="text" runat="server" Text="" ></asp:Label></form>
 </body>
 </html>

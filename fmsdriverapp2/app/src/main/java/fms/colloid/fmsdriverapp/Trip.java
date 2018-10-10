@@ -37,6 +37,8 @@ public class Trip extends Base implements OnMapReadyCallback {
 
     private MapView map;
     private Button info;
+    private PopupWindow popupWindow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class Trip extends Base implements OnMapReadyCallback {
         map = (MapView) findViewById(R.id.map);
         map.onCreate(mapViewBundle);
         map.getMapAsync(this);
-        showLoading();
+        loading = showLoading();
     }
 
     @Override
@@ -66,7 +68,6 @@ public class Trip extends Base implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         System.out.println("getMapAsync()");
-        dismiss();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -75,51 +76,40 @@ public class Trip extends Base implements OnMapReadyCallback {
         map.setTrafficEnabled(true);
         map.getUiSettings().setMapToolbarEnabled(true);
         map.getUiSettings().setAllGesturesEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(true);
         try {
             LatLng dest = service.currentDelivery().getToCoords();
             map.addMarker(new MarkerOptions().position(dest).title(service.currentDelivery().getTo()));
-            //map.moveCamera(CameraUpdateFactory.newLatLngZoom(delmas, 10));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(dest, 10));
             map.getUiSettings().setMapToolbarEnabled(true);
             map.getUiSettings().setZoomControlsEnabled(true);
             map.getUiSettings().isMyLocationButtonEnabled();
             map.moveCamera(CameraUpdateFactory.newLatLng(dest));
             Delivery deliv = service.currentDelivery();
-            if(deliv.hasRoute()) {
+            if (deliv.hasRoute()) {
                 addRoute(map, deliv.getPolylines());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            System.err.println("destination not placed on map");
         }
         dismiss();
     }
 
     public void addRoute(GoogleMap map, ArrayList<LatLng> polyline) {
         try {
-            if(polyline == null) return;
+            if (polyline == null) return;
             PolylineOptions options = new PolylineOptions().width(10).color(Color.BLACK).geodesic(true);
             Polyline line = map.addPolyline(options);
             line.setPoints(polyline);
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public String[][] getRouteInfo(String route) {
-        String[][] result = null;
-        try {
-            String[] parts = route.split(" ");
-            result = new String[parts.length][3];
-            result[0][0] = unPad(parts[0]);
-            for(int c = 1; c < parts.length; c++) {
-                result[c] = parts[c].split("#");
-            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return result;
     }
 
-    public String unPad(String text) { return text.replace('_', ' ').replace('#',  ' '); }
+    public String unPad(String text) {
+        return text.replace('_', ' ').replace('#', ' ');
+    }
 
     @Override
     protected void setControls() {
@@ -131,55 +121,17 @@ public class Trip extends Base implements OnMapReadyCallback {
                 @Override
                 public void onClick(View view) {
                     try {
-                        if(inflater == null) inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        if (inflater == null)
+                            inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View layout = inflater.inflate(R.layout.trip_control, null);
 
                         Delivery delivery = service.currentDelivery();
                         final EditText delivInfo = (EditText) layout.findViewById(R.id.deliv_info);
                         delivInfo.setText(delivery.toString());
-                        final Button getRoute, viewRoute, startEnd;
-                        getRoute = (Button) layout.findViewById(R.id.get_route);
-                        viewRoute = (Button) layout.findViewById(R.id.view_route);
+                        final Button startEnd;
                         startEnd = (Button) layout.findViewById(R.id.start_end);
-                        if(service.currentDelivery().started()) startEnd.setText("End Trip");
+                        if (service.currentDelivery().started()) startEnd.setText("End Trip");
                         else startEnd.setText("Start Trip");
-
-                        getRoute.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                    showLoading();
-                                    Delivery delivery = service.currentDelivery();
-                                    service.send(delivery.getRouteRequest(service));
-                                    String response = service.read();
-                                    if(response.contains(DriverService.OK_CODE)) response = service.read();
-                                    delivery.setRoute(response);
-                                    map.getMapAsync(Trip.this);
-                                    if(delivery.hasRoute()) {
-                                        service.log("Route Added to Map");
-                                    } else service.log("Route not added to map, error occurred");
-                                    dismiss();
-                                }
-                                catch(Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        });
-
-                        viewRoute.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                    String text;
-                                    if(service.currentDelivery().hasRoute()) text = service.currentDelivery().getRouteDirections();
-                                    else text = "No current delivery\n Click Get Route to request a route";
-                                    showInfo(text);
-                                }
-                                catch(Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        });
 
                         startEnd.setOnClickListener(new View.OnClickListener() {
 
@@ -187,7 +139,7 @@ public class Trip extends Base implements OnMapReadyCallback {
                             public void onClick(View view) {
                                 try {
                                     Delivery deliv = service.currentDelivery();
-                                    if(!deliv.started()) {
+                                    if (!deliv.started()) {
                                         service.startDelivery(deliv);
                                         startEnd.setText("End Delivery");
                                     } else {
@@ -212,7 +164,9 @@ public class Trip extends Base implements OnMapReadyCallback {
         }
     }
 
-    public MapView getMap() {return map; }
+    public MapView getMap() {
+        return map;
+    }
 
     @Override
     protected void onResume() {

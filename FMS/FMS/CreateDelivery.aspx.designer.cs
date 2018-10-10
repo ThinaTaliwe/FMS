@@ -13,15 +13,6 @@ namespace FMS {
     public partial class CreateDelivery {
         
         /// <summary>
-        /// Error control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Error;
-        
-        /// <summary>
         /// OrderNum control.
         /// </summary>
         /// <remarks>
@@ -56,15 +47,6 @@ namespace FMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validDeliveryDate;
-        
-        /// <summary>
-        /// DeliveryTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl DeliveryTime;
         
         /// <summary>
         /// TruckChosen control.
@@ -173,6 +155,15 @@ namespace FMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validLoad;
+        
+        /// <summary>
+        /// routeInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden routeInfo;
         
         /// <summary>
         /// btn control.

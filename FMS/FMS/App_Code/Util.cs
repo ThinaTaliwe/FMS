@@ -170,7 +170,7 @@ namespace FMS.App_Code
                 lon1 = from[1];
                 lat2 = to[0];
                 lon2 = to[1];
-                var r = 6371.0;
+                var r = 6371000.0;
                 var phi1 = toRad(lat1);
                 var phi2 = toRad(lat2);
                 var deltaPhi = toRad(lat2 - lat1);
@@ -191,13 +191,15 @@ namespace FMS.App_Code
         public static double[] getCoords(string coords) {
             try {
                 string[] parts = coords.Replace('.', ',').Split(':');
-                if(parts.Length != 2) {
+                if(parts.Length >= 2)
+                    return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
+                else
+                {
                     string latLng = getLatLong(coords);
                     string[] prtsLatLng = latLng.Split(':');
                     if (prtsLatLng.Length == 2)
                         return getCoords(latLng);
                 }
-                else return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
             } catch (Exception ex) {
                 print("invalid coords given " + coords + ex);
             }

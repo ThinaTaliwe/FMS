@@ -21,7 +21,7 @@ namespace FMS
                 while (rows.Read())
                 {
 
-                    HTMLStr += "<tr> <td> " + rows.GetString(0) + "</td> <td> " + rows.GetString(1)  + "</td> <td> " + rows.GetString(2) + "</td> <td> " + rows.GetString(3) + "</td> <td> " + rows.GetString(4) + "</td> </tr>";
+                    HTMLStr += "<tr> <td> <a href='ClientInfo.aspx'>" + rows.GetString(0) + "</a></td> <td> " + rows.GetString(1)  + "</td> <td> " + rows.GetString(2) + "</td> <td> " + rows.GetString(3) + "</td> <td> " + rows.GetString(4) + "</td> </tr>";
 
                 }
                 tables.InnerHtml = HTMLStr;

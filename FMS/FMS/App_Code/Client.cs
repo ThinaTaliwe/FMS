@@ -44,6 +44,21 @@ namespace FMS.App_Code
             }
         }
 
+		public List<Delivery> getDeliveries(DateTime from, DateTime to) {
+            var query = "select id from delivery where client like " + id + " and started > '" + from + "' and started < '" + to + "'";
+			var reader = Util.query(query);
+			if(reader.HasRows) {
+                List<int> list = new List<int>();
+				while(reader.Read())
+					list.Add(reader.GetInt32(0));
+				var lstDelivs = new List<Delivery>();
+				foreach(int i in list) 
+					lstDelivs.Add(Delivery.getInstance(i));
+				return lstDelivs;
+			}
+			return null;
+		}
+
         public string getName() { return name; }
         public string getCompany() { return company; }
         public string getTelephone() { return telephone; }

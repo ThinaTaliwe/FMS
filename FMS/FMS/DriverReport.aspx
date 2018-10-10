@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Driver Reports" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DriverReport.aspx.cs" Inherits="FMS.DriverReport" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="page-content">
-    	<div class="row">
-		  <div class="col-md-10">
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="content-box-large">
 
 	  			<div class="row">
 	  				<div class="col-md-12 panel-info">
@@ -27,20 +27,31 @@
 					</div>
 				</div>
   				<div class="panel-body">
-  					<div class="row">
                         <div>
-                            From: <input class="form-control" type="date" id="fromDate" runat="server"> <br />
-                            To: <input class="form-control" type="date" id="toDate" runat="server"> <br />
-                        </div><asp:Button ID="Button1" runat="server" Text="View Hours Driven" OnClick="ViewHours" />
-                        <input type="hidden" runat="server" id="driverData" />
-  						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                            <table class="table" style="width: 95%; margin-right: 0px">
+                                <tbody>
+                                    <tr> 
+                                        <td style="width: 155px">From: </td> <td style="width: 177px"> <input class="form-control" type="date" id="fromDate" runat="server"></td>
+                                        <td style="width: 37px">To: </td> <td><input class="form-control" type="date" id="toDate" runat="server" style="width: 77%"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 155px; height: 46px">Driver: </td> <td style="width: 177px; height: 46px"> <asp:DropDownList ID="driverList" runat="server" CssClass="col-md-offset-0" Height="38px" Width="178px"></asp:DropDownList></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 155px"><asp:Button ID="View" runat="server" Text="View Hours Driven" OnClick="ViewHours" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div
+        <asp:Label ID="reportText" runat="server" Text="" ></asp:Label>
+                        <input type="hidden" runat="server" id="chartData" />
+                        <input type="hidden" runat="server" id="chart" />
+  						<div id="graph" style="height: 370px; width: 100%;"></div>
         <asp:Label ID="text" runat="server" Text="" ></asp:Label>
-                     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  					</div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   				</div>
   			</div>
                             </div>
-		  					
 		  			</div>
 					</div>
 				</div>
@@ -48,40 +59,38 @@
 
 	  		<!--  Page content -->
 		  </div>
-		</div>
-    </div>
+           </section>
+        </section>
 
     <script>
-        window.onload = function () {
 
-            var lstDrivers = document.getElementById('<%= driverData.ClientID %>').value.split("#");
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(load_graph);
+
+        function load_graph() {
+
+            var lstDrivers = document.getElementById('<%= chartData.ClientID %>').value.split("#");
             console.log(lstDrivers);
             var bars = [];
             for (var c in lstDrivers) {
                 var bar = lstDrivers[c].split("*");
                 console.log(bar)
-                if (bar.length == 2 && parseFloat(bar[1]) > 0) bars.push({ y: parseFloat(bar[1]), label: bar[0] });
+                if (bar.length == 2 && parseFloat(bar[1]) > 0) bars.push([bar[0], parseFloat(bar[1])]);
             }
-
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                theme: "light2",
-                title: {
-                    text: "Driver Trips "
-                },
-                axisY: {
-                    title: "Kilometers (KM)"
-                },
-                data: [{
-                    type: "column",
-                    showInLegend: true,
-                    legendMarkerColor: "grey",
-                    legendText: "Individual Trucks",
-                    dataPoints: bars
-                }]
-            });
-            chart.render();
-
+            var strChart = document.getElementById('<%= chart.ClientID %>').value;
+            console.log(strChart);
+            var json = JSON.parse(strChart);
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', json["legend_text"]);
+            data.addColumn('number', json["y_axis_title"]);
+            data.addRows(bars);
+            var options = {
+                'title': json["title"],
+                'width': 600,
+                'height': 500
+            }
+            var chart = new google.visualization.BarChart(document.getElementById('graph'));
+            chart.draw(data, options);
         }
     </script>
 </asp:Content>

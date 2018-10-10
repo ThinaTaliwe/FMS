@@ -61,11 +61,42 @@ namespace FMS.App_Code
             return km;
         }
 
+        public static List<Driver> getDriverList()
+        {
+            List<Driver> lstDriver = new List<Driver>();
+            List<string> lstIDS = new List<string>();
+            var query = "select id from users where user_type like 'driver'";
+            var reader = Util.query(query);
+            if(reader.HasRows)
+            {
+                while(reader.Read())
+                    lstIDS.Add(reader.GetString(0));
+                foreach(var id in lstIDS)
+                {
+                    lstDriver.Add(new Driver(id));
+                }
+                return lstDriver;
+            }
+            return null;
+        }
+
         public string lastLocation() {
             var query = "select location from location where driver like '" + id + "' order by time desc";
             var location = Util.query(query);
             location.Read();
             return location.GetString(0);
+        }
+
+        public string getMessage()
+        {
+            var query = "select message from drivers where id like '" + id + "'";
+            var message = Util.query(query);
+            message.Read();
+            if (message.IsDBNull(0))
+                return null;
+            else
+                //from getString to getInt32.toString()
+                return message.GetInt32(0).ToString();
         }
 
         public void setCode(string value) { code = value; }

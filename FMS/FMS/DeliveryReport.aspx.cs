@@ -13,7 +13,7 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string check = Request.QueryString["orderNumID"];
+            string check = Request.QueryString["id"];
             viewDelivery(Convert.ToInt32(check));
         }
 

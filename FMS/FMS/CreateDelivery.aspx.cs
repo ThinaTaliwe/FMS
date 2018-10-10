@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using FMS.App_Code;
 using GoogleMaps.LocationServices;
 using FMS.App_Code;
-
+using Newtonsoft.Json.Linq;
 
 namespace FMS
 {
@@ -73,20 +73,36 @@ namespace FMS
                 //reading the drivers table
             }
             //Time & Date Format 
-            DateTime timeDate = DateTime.Parse(DeliveryDate.Value + " " + DeliveryTime.Value);
+            DateTime timeDate = DateTime.Parse(DeliveryDate.Value);
 
             //setting lat and long
-            var Originaddress = here.Value;
-
-            String latlngOrigin = Util.getLatLong(Originaddress) + "#" + Originaddress;
-
-            var Destaddress = there.Value;
-            String latlngDest = Util.getLatLong(Destaddress) + "#" + Destaddress;
-            
-            //string driver = DriverChosen.Value.Split(' ')[1];
-            var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + latlngOrigin + "', '" + latlngDest + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + "1234567890123" + "');";
-            Util.query(query);
+            var strJson = routeInfo.Value;
+            Util.print(strJson);
+            var json = JObject.Parse(strJson);
+            String latlngOrigin = parseCoords(json["from_coords"].ToString()) + "#" + json["from_address"];
+            String latlngDest = parseCoords(json["to_coords"].ToString()) + "#" + json["to_address"];
+            var authority = Session["user"] as string;
+            Delivery delivery = new Delivery();
+            delivery.setOrderNum(OrderNum.Value);
+            delivery.setTruck(TruckChosen.Value);
+            delivery.setDriver(DriverID);
+            delivery.setClient(IDnow);
+            delivery.setFrom(latlngOrigin);
+            delivery.setTo(latlngDest);
+            delivery.setMaterial(Material.Value);
+            delivery.setLoad(Convert.ToInt32(Load.Value));
+            delivery.setDepartDay(timeDate);
+            delivery.setAuthority(authority);
+            delivery.setDistance(Convert.ToInt32(json["distance"]));
+            //var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY, distance) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + latlngOrigin + "', '" + latlngDest + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + authority + "', " + json["distance"] + ");";
+            //Util.query(query);
+            delivery.save();
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
+        }
+
+        private string parseCoords(string coords)
+        {
+            return coords.Replace('(', ' ').Replace(')', ' ').Trim().Replace(',', ':');
         }
     }
 }

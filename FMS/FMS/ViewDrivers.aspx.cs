@@ -26,7 +26,7 @@ namespace FMS
                     {
                         while (rows2.Read())
                         {
-                            HTMLStr += "<tr> <td> " + rows.GetString(0) + "</td> <td> " + "000 000 0000" + "</td> <td> " + rows.GetString(1) + "</td> <td> " + rows.GetString(2) + "</td> <td> " + rows2.GetString(0) + "</td> <td> " + rows2.GetDateTime(2) + "</td> <td> " + rows2.GetInt32(1) + "</td> </tr>";
+                            HTMLStr += "<tr> <td> <a href='DriverInfo.aspx'>" + rows.GetString(0) + " </a> </td> <td> " + "000 000 0000" + "</td> <td> " + rows.GetString(1) + "</td> <td> " + rows.GetString(2) + "</td> <td> " + rows2.GetString(0) + "</td> <td> " + rows2.GetDateTime(2) + "</td> <td> " + rows2.GetInt32(1) + "</td> </tr>";
                         }
                     }
                 }

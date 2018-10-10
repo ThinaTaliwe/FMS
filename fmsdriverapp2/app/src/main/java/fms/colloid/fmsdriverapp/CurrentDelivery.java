@@ -26,6 +26,11 @@ public class CurrentDelivery extends Base {
 
     @Override
     protected void setControls() {
+        if(service.currentDelivery() == null && service.verified()) {
+            service.send("current");
+            String response = service.read();
+            service.setDelivery(Delivery.newAssignment(response));
+        }
         accept = (Button) findViewById(R.id.accept);
         accept.setOnClickListener(new View.OnClickListener() {
 

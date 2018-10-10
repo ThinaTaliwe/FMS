@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [dbo].[TRUCKS] (
     [ID]    VARCHAR (10) NOT NULL,
-	[BRAND] VARCHAR (25) NOT NULL default ('Benz'),
+	[BRAND] VARCHAR (25) NOT NULL,
     [LOAD]  INT          NOT NULL,
     [SPEED] INT          NOT NULL,
-	[CLASS_CODE] varchar(10) 	NOT NULL default ('C1'),
+	[CLASS_CODE] INT 	NOT NULL,
     PRIMARY KEY  ([ID])
 )
 
@@ -55,15 +55,12 @@ CREATE TABLE [dbo].[DELIVERY] (
     [COMPLETED]    DATETIME      NULL,
     [ACCEPTED]     DATETIME      NULL,
     [STARTED]      DATETIME      NULL,
-	[DISTANCE] INT default (0) not null,
     PRIMARY KEY CLUSTERED ([ID] ASC),
+    FOREIGN KEY ([TRUCK]) REFERENCES [dbo].[TRUCKS] ([ID]),
     FOREIGN KEY ([DRIVER]) REFERENCES [dbo].[DRIVERS] ([ID]),
     FOREIGN KEY ([DRIVER]) REFERENCES [dbo].[DRIVERS] ([ID]),
-    FOREIGN KEY ([AUTHORITY]) REFERENCES [dbo].[USERS] ([ID]),
-    FOREIGN KEY ([TRUCK]) REFERENCES [dbo].[TRUCKS] ([ID])
+    FOREIGN KEY ([AUTHORITY]) REFERENCES [dbo].[USERS] ([ID])
 );
-
-
 
 create table locations (
 	[delivery] int not null,

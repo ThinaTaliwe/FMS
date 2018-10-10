@@ -12,18 +12,22 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var query = "select id, load, speed from Trucks";
+            var query = "select id from Trucks";
             var rows = Util.query(query);
-            //var client = Util.getClient() 
             var HTMLStr = "";
+            List<string> lstIDs = new List<string>();
             if (rows.HasRows)
             {
+                //Order.InnerHtml = rows.GetString(0);
                 while (rows.Read())
+                    lstIDs.Add(rows.GetString(0));
+                foreach(var id in lstIDs)
                 {
-                    HTMLStr += "<tr> <td> " + rows.GetString(0) + "</td> <td> " + rows.GetInt32(1) + "</td> <td> " + rows.GetInt32(2) + "</td> </tr>";
+                    Truck truck = new Truck(id);
+                    HTMLStr += "<tr>  <td> <a href='TruckInfo?id=" + truck.getID() + "'>" + truck.getID() + "</a></td> <td> " + truck.getBrand() + "</td> <td> " + truck.getLoad() + "</td><td> " + truck.getSpeed() + "</td><td> " + truck.getClass_code() + "</td></tr>";
                 }
                 tables.InnerHtml = HTMLStr;
-            }
+            }  
         }
     }
 }

@@ -10,51 +10,33 @@
 namespace FMS {
     
     
-    public partial class SiteMaster {
+    public partial class ClientInfo {
         
         /// <summary>
-        /// user control.
+        /// tables control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor user;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tables;
         
         /// <summary>
-        /// MainContent control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// timer control.
+        /// client control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.Timer timer;
-        
-        /// <summary>
-        /// notifs control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel notifs;
-        
-        /// <summary>
-        /// notification control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label notification;
+        protected global::System.Web.UI.WebControls.Button client;
     }
 }
