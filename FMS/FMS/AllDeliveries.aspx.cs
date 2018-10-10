@@ -17,15 +17,35 @@ namespace FMS
             var HTMLStr = "";
             var num = 0;
             int orderNumID = 0;
-            if (rows.HasRows)
+
+            // Query a list of IDs
+            var IDquery = "select id from Delivery";
+            var IDrows = Util.query(IDquery);
+            //Create List of string to store all these IDs
+            List<String> lstIDz = new List<string>();
+            List<Delivery> objLst = new List<Delivery>();
+            int i = 0;
+
+            // Check if IDrows has elements/data
+            if (rows.HasRows || IDrows.HasRows)
             {
                 while (rows.Read())
                 {
+                    while(IDrows.Read())
+                    // Add all IDz to the list
+                    lstIDz.Add(Convert.ToString(IDrows.GetInt32(0)));
+                    //create object for all the IDZ
+                    foreach (var id in lstIDz)
+                    {
+                        Delivery objDelivery = Delivery.getInstance(Convert.ToInt32(id));
+                        objLst.Add(objDelivery);
+                    }
                     num++;
                     orderNumID = rows.GetInt32(7);
                     String From = Delivery.getAddress(rows.GetString(0));
                     String To = Delivery.getAddress(rows.GetString(1));
                     string start, end;
+
                     if (!rows.IsDBNull(5))
                     {
                         start = Convert.ToString(rows.GetDateTime(5).TimeOfDay);
@@ -40,8 +60,7 @@ namespace FMS
                         end = "Not Applicable";
                         start = "Not Applicable";
                     }
-
-                        HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + From + "</td> <td> " + To + "</td> <td> " + start + "</td> <td> " + end + "</td> <td> " + "</td> <td> <a href=" + "DeliveryReport?id=" + orderNumID + "> Report </a> </tr>";
+                        HTMLStr += "<tr> <td><a href='DeliveryInfo?id=" + objLst[i].getID() + "'>" + objLst[i].getID() + "</a></td><td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + From + "</td> <td> " + To + "</td> <td> " + start + "</td> <td> " + end + "</td> <td> " + "</td> <td> <a href=" + "DeliveryReport?id=" + orderNumID + "> Report </a> </td></tr>";
                   
                 }
                 tables.InnerHtml = HTMLStr;

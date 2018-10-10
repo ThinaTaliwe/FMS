@@ -30,13 +30,8 @@
                             </table>
                         </div><! --/content-panel -->
                     </div><!-- /col-md-12 -->
-
-                    
                     </div><!-- /col-md-12 -->
                 </div><!-- row -->
-
-                
-
             </section><! --/wrapper -->
         </section><!-- /MAIN CONTENT -->
 </asp:Content>

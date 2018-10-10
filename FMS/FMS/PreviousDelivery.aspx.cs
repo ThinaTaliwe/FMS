@@ -26,6 +26,7 @@ namespace FMS
                     String From = Delivery.getAddress(rows.GetString(0));
                     String To = Delivery.getAddress(rows.GetString(1));
                     string start, end;
+
                     if (!rows.IsDBNull(5))
                     {
                         start = Convert.ToString(rows.GetDateTime(5).TimeOfDay);
@@ -42,7 +43,7 @@ namespace FMS
                     }
                     if (!rows.IsDBNull(6))
                     {
-                        HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + From + "</td> <td> " + To + "</td> <td> " + start + "</td> <td> " + end + "</td> <td> " + "</td> <td> <a href=" + "DeliveryReport?id=" + orderNumID + "> Report </a> </tr>";
+                        HTMLStr += "<tr> <td> <a href='DeliveryInfo.aspx'>" + new Client(rows.GetInt32(4)).getCompany() + " </td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + From + "</td> <td> " + To + "</td> <td> " + start + "</td> <td> " + end + "</td> <td> " + "</td> <td> <a href=" + "DeliveryReport?id=" + orderNumID + "> Report </a> </tr>";
                     }
                 }
                 tables.InnerHtml = HTMLStr;
