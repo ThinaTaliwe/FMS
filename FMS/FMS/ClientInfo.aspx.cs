@@ -16,9 +16,10 @@ namespace FMS
         {
             var HTMLStr = "";
             // ClientID
-            string id = Request.QueryString["id"];
+            int id = Convert.ToInt32(Request.QueryString["id"]);
+            Response.Write("id: " + id);
             client_var = new Client(id);
-            //Label1.Text = truck.ToString();
+            Label1.Text = client_var.ToString();
             //Delist = client_var.getDeliveries();
 
 

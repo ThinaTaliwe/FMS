@@ -17,7 +17,7 @@
                                 <tbody runat="server" id="tables">
                                 </tbody>
 
-                            <!-- <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>-->
+                            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                  
                              </table>
                             <asp:Button ID="client" runat="server" Text="Report" OnClick="report_Click" />

@@ -24,7 +24,7 @@ namespace FMS
                 foreach(var id in lstIDs)
                 {
                     Truck truck = new Truck(id);
-                    HTMLStr += "<tr>  <td> <a href='TruckInfo?id=" + truck.getID() + "'>" + truck.getID() + "</a></td> <td> " + truck.getBrand() + "</td> <td> " + truck.getLoad() + "</td><td> " + truck.getSpeed() + "</td><td> " + truck.getClass_code() + "</td></tr>";
+                    HTMLStr += "<tr>  <td><a href='TruckInfo?id=" + truck.getID() + "'>" + truck.getID() + "</a></td> <td> " + truck.getBrand() + "</td> <td> " + truck.getLoad() + "</td><td> " + truck.getSpeed() + "</td><td> " + truck.getClass_code() + "</td></tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }  

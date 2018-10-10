@@ -10,21 +10,19 @@
 
                     <div class="col-md-10">
                         <div class="content-panel">
-                            <hr>
                             <table class="table">
                                 <!-- Heading --> 
                                 <thead>
                                     <tr>
-                                        <th>Company Name</th>
-                                        <th>Contact Person </th>
-                                        <th>Contact Number</th>
-                                        <th>Email Address</th>
-                                        <th>Address</th>
-                                       
+                                        <th> Name</th>
+                                        <th> Company </th>
+                                        <th> Telephone</th>
+                                        <th> Email</th>
+                                        <th> Location<th>
+                                        <th> ID</th>
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
-                                    
                                 </tbody>
                             </table>
                         </div><! --/content-panel -->

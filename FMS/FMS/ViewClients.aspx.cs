@@ -12,17 +12,21 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var query = "select company, name, telephone, email, location from Clients";
+            var query = "select id from Clients";
             var rows = Util.query(query);
-            //var client = Util.getClient() 
             var HTMLStr = "";
+            List<string> lstIDs = new List<string>();
             if (rows.HasRows)
             {
+                Response.Write("WE HAVE ROWS");
+                //Order.InnerHtml = rows.GetString(0);
                 while (rows.Read())
+                    lstIDs.Add(Convert.ToString(rows.GetInt32(0)));
+                Response.Write("WE HAVE IDS");
+                foreach (var id in lstIDs)
                 {
-
-                    HTMLStr += "<tr> <td> <a href='ClientInfo.aspx'>" + rows.GetString(0) + "</a></td> <td> " + rows.GetString(1)  + "</td> <td> " + rows.GetString(2) + "</td> <td> " + rows.GetString(3) + "</td> <td> " + rows.GetString(4) + "</td> </tr>";
-
+                    Client client = new Client(id);
+                    HTMLStr += "<tr> <td> <a href='ClientInfo?id=" + client.getID() + "></a></td> <td> " + client.getName() + "</td> <td> " + client.getCompany() + "</td> <td> " + client.getTelephone() + "</td> <td> " + client.getEmail() + "</td> <td> " + client.getLocation() + "</td> </tr>";
                 }
                 tables.InnerHtml = HTMLStr;
             }
