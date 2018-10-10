@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddTruck.aspx.cs" Inherits="FMS.AddTruck" %>
+﻿<%@ Page Title="Add Truck" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddTruck.aspx.cs" Inherits="FMS.AddTruck" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
       <div class="page-content">
     	<div class="row">

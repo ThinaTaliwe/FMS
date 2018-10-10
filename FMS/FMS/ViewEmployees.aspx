@@ -17,6 +17,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Surname </th>
+                                        <th>Cell Number</th>
                                         <th>Email</th>
                                         <th>Position</th>
                                        
