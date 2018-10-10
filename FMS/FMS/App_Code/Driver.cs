@@ -96,7 +96,7 @@ namespace FMS.App_Code
             {
                 string text = message.GetString(0);
                 var array = text.Split('#');
-                return new string[] {name, array[0], array[1] };
+                return new string[] {name, array[0], array[1], id.ToString() };
             } catch(Exception ex)
             {
                 Util.print(ex.ToString());

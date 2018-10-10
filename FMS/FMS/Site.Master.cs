@@ -132,7 +132,7 @@ namespace FMS
                         if (Convert.ToInt32(msg[1]) == killed)
                         {
                             lstMessages.Remove(msg);
-                            var query = "update drivers set message = 0 where id like '" + msg[0] + "'";
+                            var query = "update drivers set message = 0 where id like '" + msg[3] + "'";
                             Util.query(query);
                         }
                     }

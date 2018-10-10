@@ -109,6 +109,7 @@
                             <!-- Sub menu -->
                             <ul>
                                 <li><a href="CreateDelivery">Create Delivery</a></li>
+                                <li><a href="AllDeliveries" > All Deliveries</a></li>
                                 <li><a href="UpdateDelivery">Upcoming Deliveries</a></li>
                                 <li><a href="PreviousDelivery">Previous Delivery</a></li>    
                             </ul>
@@ -208,6 +209,7 @@
 
              <div class="col-md-2">
                 <div class="sidebar content-box" style="display: block;">
+
                     <h3>Notifications</h3>
                     <script src="Content/js/custom.js"></script>
                         <input type="hidden" id="removedNotifs" runat="server" />
@@ -218,9 +220,13 @@
                                 <div id="notification" runat="server"></div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
+                    </table>
                     <script>
                         function remove(id) {
-                            document.getElementById('<%= removedNotifs.ClientID %>').value += id + "#";
+                            var removed = document.getElementById('<%= removedNotifs.ClientID %>').value
+                            removed += id + "#";
+                            document.getElementById('<%= removedNotifs.ClientID %>').value = removed
+                            console.log(removed);
                             document.getElementById(id.toString()).innerText = "";
                         }
 
