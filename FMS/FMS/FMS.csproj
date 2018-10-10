@@ -170,15 +170,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="AddClient.aspx" />
     <Content Include="AddDriver.aspx" />
     <Content Include="AddTruck.aspx" />
     <Content Include="AddUser.aspx" />
     <Content Include="App_Data\db_init.sql" />
-    <Content Include="App_Data\insert_data.sql" />
-    <Content Include="App_Data\theDB.mdf" />
-    <Content Include="App_Data\theDB_log.ldf">
-      <DependentUpon>theDB.mdf</DependentUpon>
+    <Content Include="App_Data\Done.mdf" />
+    <Content Include="App_Data\Done_log.ldf">
+      <DependentUpon>Done.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\insert_data.sql" />
+    <Content Include="ClientLogin.aspx" />
+    <Content Include="Client_Deliv.aspx" />
+    <Content Include="Client_Delivery.html" />
     <Content Include="ClientInfo.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\ass\confirmDate.css" />
@@ -275,6 +279,13 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddClient.aspx.cs">
+      <DependentUpon>AddClient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddClient.aspx.designer.cs">
+      <DependentUpon>AddClient.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddDriver.aspx.cs">
       <DependentUpon>AddDriver.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -320,6 +331,13 @@
     </Compile>
     <Compile Include="ClientInfo.aspx.designer.cs">
       <DependentUpon>ClientInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Client_Deliv.aspx.cs">
+      <DependentUpon>Client_Deliv.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Client_Deliv.aspx.designer.cs">
+      <DependentUpon>Client_Deliv.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

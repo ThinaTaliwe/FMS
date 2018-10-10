@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+﻿<%@ Page Title="Add Truck" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddTruck.aspx.cs" Inherits="FMS.AddTruck" %>
+=======
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AddTruck.aspx.cs" Inherits="FMS.AddTruck" %>
 
+>>>>>>> 8f41cc4533a943c04dac64fc68fa0d11be2d0175
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <section id="main-content">
             <section class="wrapper">
