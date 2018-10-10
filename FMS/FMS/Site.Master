@@ -208,33 +208,27 @@
 
              <div class="col-md-2">
                 <div class="sidebar content-box" style="display: block;">
-<<<<<<< HEAD
-                    	<h5>Notifications</h5>
-=======
+                    <h3>Notifications</h3>
                     <script src="Content/js/custom.js"></script>
-                    <table>
-                        <thead>
-                            Notifications
-                        </thead>
-                        <asp:Timer ID="timer" OnTick="timer_Tick" runat="server" Interval="100000" />
+                        <input type="hidden" id="removedNotifs" runat="server" />
+                        <asp:Timer ID="timer" OnTick="timer_Tick" runat="server" Interval="5000" />
                         <asp:UpdatePanel ID="notifs" runat="server" UpdateMode="Conditional">
                             <Triggers><asp:AsyncPostBackTrigger ControlID="timer" /></Triggers>
                             <ContentTemplate>
-                                <tbody>
-                                    <tr>
-                                        Details of message
-                                    </tr>
-                                    <tr>
-                                        <td><input type="button" value="View" /></td>
-                                        <td><input type="button" value="Remove" /></td>
-                                    </tr>
-                                </tbody>
-                                <hr/>
-                                <asp:Label ID="notification" runat="server" />
+                                <div id="notification" runat="server"></div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                    </table>
->>>>>>> 8f41cc4533a943c04dac64fc68fa0d11be2d0175
+                    <script>
+                        function remove(id) {
+                            document.getElementById('<%= removedNotifs.ClientID %>').value += id + "#";
+                            document.getElementById(id.toString()).innerText = "";
+                        }
+
+                        function view(id) {
+                            remove(id);
+                            window.location = "deliveryinfo?id=" + id;
+                        }
+                    </script>
                 </div>
             </div>
             </div>
