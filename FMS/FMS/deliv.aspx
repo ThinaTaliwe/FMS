@@ -6,7 +6,8 @@
     <title>Example Page</title>
     <script>
         function foo(val) {
-            document.getElementById(val).innerText = "";
+            document.getElementById(val).innerText = "Removed this";
+            document.getElementById('theDiv').innerText = "It worked";
         }
     </script>
 </head>
@@ -15,5 +16,6 @@
          kosovodfjnv
         <input type="button" value="click me" onclick="foo('test')" />
     </div>
+    <div id="theDiv"></div>
 </body>
 </html>

@@ -94,7 +94,7 @@ namespace FMS.App_Code
             message.Read();
             try
             {
-                string text = message.GetInt32(0).ToString();
+                string text = message.GetString(0);
                 var array = text.Split('#');
                 return new string[] {name, array[0], array[1] };
             } catch(Exception ex)
@@ -102,7 +102,6 @@ namespace FMS.App_Code
                 Util.print(ex.ToString());
             }
             return null;
-                //from getString to getInt32.toString()
         }
 
         public void setCode(string value) { code = value; }

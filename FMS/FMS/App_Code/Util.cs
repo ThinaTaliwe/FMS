@@ -191,15 +191,7 @@ namespace FMS.App_Code
         public static double[] getCoords(string coords) {
             try {
                 string[] parts = coords.Replace('.', ',').Split(':');
-                if(parts.Length >= 2)
-                    return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
-                else
-                {
-                    string latLng = getLatLong(coords);
-                    string[] prtsLatLng = latLng.Split(':');
-                    if (prtsLatLng.Length == 2)
-                        return getCoords(latLng);
-                }
+                return new double[] { Double.Parse(parts[0]), Double.Parse(parts[1]) };
             } catch (Exception ex) {
                 print("invalid coords given " + coords + ex);
             }
