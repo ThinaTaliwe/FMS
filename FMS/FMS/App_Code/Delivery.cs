@@ -21,6 +21,7 @@ namespace FMS.App_Code
         private DateTime accepted { get; set; }
         private DateTime started { get; set; }
         private DateTime completed { get; set; }
+        private DateTime confirmed { get; set; }
         private int distance { get; set; }
 
         public string getFromCoords() {
@@ -134,7 +135,7 @@ namespace FMS.App_Code
 
         public static Delivery getInstance(int id)
         {
-            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed, distance FROM DELIVERY WHERE ID LIKE '" + id + "'";
+            var query = "SELECT order_num, truck, driver, client, [from], [to], material, [load], depart_day, authority, accepted, started, completed, distance, confirmation FROM DELIVERY WHERE ID LIKE '" + id + "'";
             var deliv = Util.query(query);
             if (deliv.HasRows)
             {
@@ -161,6 +162,10 @@ namespace FMS.App_Code
                             if (!deliv.IsDBNull(12)) {
                                 delivery.completed = deliv.GetDateTime(12);
                             }
+                        }
+                        if(!deliv.IsDBNull(14))
+                        {
+                            delivery.confirmed = deliv.GetDateTime(14);
                         }
                     }
                 }
@@ -235,6 +240,7 @@ namespace FMS.App_Code
         public void setArrivalDay(DateTime value) { arrivalDay = value; }
         public void setAuthority(string value) { authority = value; }
         public void setDistance(int distance) { this.distance = distance; }
+        public void setConfirmed(DateTime time) { this.confirmed = time; }
 
         public int getID() {return id;}
         public string getOrderNumber() { return orderNum; }
@@ -253,5 +259,6 @@ namespace FMS.App_Code
         public DateTime getCompleted() { return completed; }
         public string getLocation() { return LastLocation(id)[0]; }
         public int getDistance() { return distance; }
+        public DateTime getConfirmed() { return confirmed; }
     }
 }

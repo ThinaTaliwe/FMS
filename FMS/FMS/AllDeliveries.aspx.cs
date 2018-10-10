@@ -61,6 +61,10 @@ namespace FMS
                         start = "Not Applicable";
                     }
                         HTMLStr += "<tr> <td><a href='DeliveryInfo?id=" + objLst[i].getID() + "'>" + objLst[i].getID() + "</a></td><td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + From + "</td> <td> " + To + "</td> <td> " + start + "</td> <td> " + end + "</td> <td> " + "</td> <td> <a href=" + "DeliveryReport?id=" + orderNumID + "> Report </a> </td></tr>";
+
+
+                       // HTMLStr += "<tr> <td> " + new Client(rows.GetInt32(4)).getCompany() + "</td> <td> " + Convert.ToString(rows.GetString(2)) + "</td> <td> " + From + "</td> <td> " + To + "</td> <td> " + start + "</td> <td> " + end + "</td> <td> " + "</td> <td> <a href=" + "DeliveryDetails?id=" + orderNumID + "> Report </a> </tr>";
+
                   
                 }
                 tables.InnerHtml = HTMLStr;
