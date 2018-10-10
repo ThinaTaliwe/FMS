@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,6 +24,22 @@ namespace FMS.App_Code
                 expiry = driver.GetDateTime(2);
                 restriction = Convert.ToInt32(driver.GetInt32(3));
             }
+        }
+
+        public JObject summary(DateTime from, DateTime to)
+        {
+            JObject json = new JObject();
+            var lstDelivs = deliveriesMade(from, to);
+            double km = 0.0, hours = 0.0;
+            foreach(var deliv in lstDelivs)
+            {
+                var info = deliv.speedInfo();
+                km += Convert.ToDouble(info["distance"]);
+                hours += Convert.ToDouble(info["time"]);
+            }
+            json["km"] = km;
+            json["time"] = hours;
+            return json;
         }
 
         public List<Delivery> deliveriesMade(DateTime from, DateTime to)
