@@ -47,7 +47,7 @@
                                    <label id="reportText" runat="server" />
                               </tr>
                               <tr>
-                                  <asp:Button ID="view" runat="server" Text="View Kms Driven" OnClick="view_Click" />
+                                  <asp:Button ID="view" runat="server" Text="View Kms Driven" OnClick="view_Click"  class="btn btn-default" />
                               </tr>
                           </tbody>
                       </table>

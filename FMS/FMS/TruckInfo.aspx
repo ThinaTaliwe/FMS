@@ -20,7 +20,7 @@
                             <!-- <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>-->
                  
                              </table>
-                            <asp:Button ID="report" runat="server" Text="Report" OnClick="report_Click" />
+                            <asp:Button ID="report" runat="server" Text="Report" OnClick="report_Click"  class="btn btn-default" />
                         </div><! --/content-panel -->
                     </div><!-- /col-md-12 -->
     

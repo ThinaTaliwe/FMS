@@ -35,6 +35,14 @@ namespace FMS
                         "</tr>" +
                         "<tr><td> Delivery Material :  " + d.getMaterial() + "</td>" +
                         "</tr>";
+            HTMLStr += "<tr><td> Delivery Origin :  " + d.getFromAddress() + "</td>" +
+                        "</tr>";
+            HTMLStr += "<tr><td> Delivery Desination :  " + d.getToAddress() + "</td>" +
+                        "</tr>";
+            HTMLStr += "<tr><td> Delivery Acceptance :  " + d.getAccepted() + "</td>" +
+                        "</tr>";
+            HTMLStr += "<tr><td> Delivery Confirmation :  " + d.getConfirmed() + "</td>" +
+                        "</tr>";
             tables.InnerHtml = HTMLStr;
         }
         protected void report_Click(object sender, EventArgs e)
