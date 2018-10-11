@@ -17,26 +17,27 @@ namespace FMS
         protected void Page_Load(object sender, EventArgs e)
         {
             string query;
-            if(!IsPostBack)
+            trucks = Truck.getTruckList();
+            if (String.IsNullOrWhiteSpace(fromDate.Value) || String.IsNullOrWhiteSpace(toDate.Value))
             {
-                trucks = Truck.getTruckList();
+                to = DateTime.Now;
+                from = to.AddMonths(-1);
+            }
+            else
+            {
+                Util.print(fromDate.Value + toDate.Value);
+                from = DateTime.Parse(fromDate.Value);
+                to = DateTime.Parse(toDate.Value);
+            }
+            if (!IsPostBack)
+            {
                 query = "select id from trucks";
                 var reader = Util.query(query);
                 if(reader.HasRows)
                 {
+                    truckList.Items.Add(new ListItem("All Trucks"));
                     while (reader.Read())
                         truckList.Items.Add(new ListItem(reader.GetString(0)));
-                }
-                if (String.IsNullOrWhiteSpace(fromDate.Value) || String.IsNullOrWhiteSpace(toDate.Value))
-                {
-                    to = DateTime.Now;
-                    from = to.AddMonths(-1);
-                }
-                else
-                {
-                    Util.print(fromDate.Value + toDate.Value);
-                    from = DateTime.Parse(fromDate.Value);
-                    to = DateTime.Parse(toDate.Value);
                 }
             }
             string id = Request.QueryString["id"];
@@ -58,7 +59,29 @@ namespace FMS
 
         protected void view_Click(object sender, EventArgs e)
         {
-            viewTruckRepot();
+            var choice = truckList.SelectedValue.ToString();
+            if(choice == "All Trucks") 
+                viewTruckRepot();
+            else
+            {
+                foreach(var truck in trucks)
+                {
+                    if(truck.getID() == choice)
+                    {
+                        chartData.Value = "none";
+                        var json = truck.summary(from, to);
+                        var html = "<br/><br/>Truck: " + truck.getID() + "<br/>";
+                        html += "Total Distance Driven (km): " + json["km"];
+                        var obj = json["material"];
+                        html += "Coal Delivered: " + obj["Coal"] + "<br/>";
+                        html += "Clinkers Delivered: " + obj["Clinkers"] + "<br/>";
+                        html += "Pozzsand Delivered: " + obj["Pozzsand"] + "<br/>";
+                        html += "Total Time on Road (hours): " + json["time"];
+                        truckInfo.InnerHtml = html;
+                        return;
+                    }
+                }
+            }
         }
 
         private void reloadScript()

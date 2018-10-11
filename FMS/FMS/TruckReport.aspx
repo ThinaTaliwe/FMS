@@ -52,6 +52,7 @@
                           </tbody>
                       </table>
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                        <div id="truckInfo" runat="server" ></div>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   				</div>
   			</div>
@@ -71,7 +72,13 @@
     <script>
 
         function load_graph() {
-            var input = document.getElementById('<%= chartData.ClientID %>').value.split("#");
+            var info = document.getElementById('<%= chartData.ClientID %>').value;
+            if (info == "none") {
+                document.getElementById("chartContainer").innerHTML = "";
+                document.getElementById("chartContainer").style.height = 0;
+                return;
+            }
+            var input = info.split("#");
             console.log(input);
             var data = [];
             for (var c in input) {

@@ -13,15 +13,13 @@ namespace FMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-        }
-
-        protected void timer_Tick(object sender, EventArgs e)
-        {
-            var now = DateTime.Now.ToString();
-            Util.print(now);
-            Response.Write(now);
-            update_text.Text = now;
+            DateTime now = DateTime.Now;
+            Driver driver = new Driver("1234567770123");
+            Truck truck = new Truck("DEF456MP");
+            Response.Write("ekse");
+            var jsonDri = driver.summary(now.AddMonths(-1), now);
+            var jsonTru = truck.summary(now.AddMonths(-1), now);
+            text.Text = jsonDri.ToString() + jsonTru.ToString();
         }
     }
 }

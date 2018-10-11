@@ -50,17 +50,21 @@ namespace FMS.App_Code
             var lstDelveries = deliveriesMade(from, to);
             var km = 0.0;
             JObject jsonMat = new JObject();
-            foreach(var delivery in lstDelveries)
+            if (lstDelveries != null)
             {
-                if (jsonMat[delivery.getMaterial()] == null)
-                    jsonMat[delivery.getMaterial()] = 0;
-                int load = Convert.ToInt32(jsonMat[delivery.getMaterial()]);
-                load += delivery.getLoad();
-                json[delivery.getMaterial()] = load;
-                km += delivery.getDistance();
+                foreach (var delivery in lstDelveries)
+                {
+                    if (jsonMat[delivery.getMaterial()] == null)
+                        jsonMat[delivery.getMaterial()] = 0;
+                    int load = Convert.ToInt32(jsonMat[delivery.getMaterial()]);
+                    load += delivery.getLoad();
+                    jsonMat[delivery.getMaterial()] = load;
+                    km += delivery.getDistance();
+                }
             }
             json["km"] = km;
             json["material"] = jsonMat;
+            Util.print("Summary: " + json.ToString());
             return json;
         }
 

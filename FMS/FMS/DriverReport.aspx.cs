@@ -31,7 +31,7 @@ namespace FMS
                 }
                 if(!IsPostBack)
                 {
-                    driverList.Items.Add(new ListItem("Select a Driver"));
+                    driverList.Items.Add(new ListItem("All Drivers"));
                     foreach(var driver in lstDrivers)
                     {
                         driverList.Items.Add(new ListItem(driver.getName() + " " + driver.getSurname()));
@@ -53,7 +53,13 @@ namespace FMS
                 {
                     if(driver.getName() == parts[0] && driver.getSurname() == parts[1])
                     {
-
+                        chartData.Value = "none";
+                        var json = driver.summary(from, to);
+                        var html = "<br/><br/>Driver: " + driver.getName() + "<br/>";
+                        html += "Total Distance Driven (km): " + json["km"];
+                        html += "Total Time on Road (hours): " + json["time"];
+                        driverInfo.InnerHtml = html;
+                        return;
                     }
                 }
             }
@@ -88,9 +94,8 @@ namespace FMS
             }
             setGraph("Driver Trips", "Kilometers (Km)", "Individual Trucks", data);
             setSelectedText();
-            viewInfo();
         }
-
+        
         private void setSelectedText()
         {
             string text = "";
@@ -99,48 +104,6 @@ namespace FMS
             text += "To: " + to.Date.ToString() + "<br/>";
             text += "Selected Driver: " + driverList.SelectedValue.ToString() + "<br/>";
             reportText.Text = text;
-        }
-
-        private void viewInfo()
-        {
-            text.Text = "";
-            foreach (var driver in lstDrivers)
-            {
-                var info = driverInfo(driver);
-                if (info != null)
-                    text.Text += info;
-            }
-        }
-
-        private void reloadScript()
-        {
-            Page.ClientScript.RegisterStartupScript(GetType(), "graph", "load_graph();");
-        }
-
-        public string driverInfo(Driver driver)
-        {
-            var delivs = driver.deliveriesMade(from, to);
-            if(delivs != null)
-            {
-                string response = "Driver Info for: " + driver.getName() + "<br/>";
-                response += "From: " + from + "<br/>";
-                response += "To: " + to + "<br/>";
-                foreach (var delivery in delivs)
-                {
-                    var json = delivery.speedInfo();
-                    if (json != null)
-                    {
-                        response += "Delivery Order Num: " + delivery.getOrderNumber() + "<br/>";
-                        response += "Client: " + delivery.getClient().getCompany() + "<br/>";
-                        response += "Distance: " + json["distance"] + "<br/>";
-                        response += "Average Speed: " + json["speed"] + "<br/>";
-                        response += "Time (in hours): " + json["time"] + "<br/>";
-                        response += "Overspeed Ratio (%): " + json["overspeed_ratio"] + "<br/>";
-                    }
-                }
-                return response + "<br/>";
-            }
-            return null;
-        }
+        }        
     }
 }

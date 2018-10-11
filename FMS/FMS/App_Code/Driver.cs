@@ -31,14 +31,18 @@ namespace FMS.App_Code
             JObject json = new JObject();
             var lstDelivs = deliveriesMade(from, to);
             double km = 0.0, hours = 0.0;
-            foreach(var deliv in lstDelivs)
+            if (lstDelivs != null)
             {
-                var info = deliv.speedInfo();
-                km += Convert.ToDouble(info["distance"]);
-                hours += Convert.ToDouble(info["time"]);
+                foreach (var deliv in lstDelivs)
+                {
+                    var info = deliv.speedInfo();
+                    km += Convert.ToDouble(info["distance"]);
+                    hours += Convert.ToDouble(info["time"]);
+                }
             }
             json["km"] = km;
             json["time"] = hours;
+            Util.print("Summary: " + json.ToString());
             return json;
         }
 

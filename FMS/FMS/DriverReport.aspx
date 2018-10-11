@@ -47,7 +47,7 @@
                         <input type="hidden" runat="server" id="chartData" />
                         <input type="hidden" runat="server" id="chart" />
   						<div id="graph" style="height: 370px; width: 100%;"></div>
-        <asp:Label ID="text" runat="server" Text="" ></asp:Label>
+                        <div id="driverInfo" runat="server"></div>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   				</div>
   			</div>
@@ -65,7 +65,14 @@
 
     <script>
         function load_graph() {
-            var lstDrivers = document.getElementById('<%= chartData.ClientID %>').value.split("#");
+            var info = document.getElementById('<%= chartData.ClientID %>').value;
+            if (info == "none") {
+                document.getElementById("graph").innerHTML = "";
+                document.getElementById("graph").style.height = 0;
+                console.log(info);
+                return;
+            }
+            var lstDrivers = info.split("#");
             console.log(lstDrivers);
             var bars = [];
             for (var c in lstDrivers) {

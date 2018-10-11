@@ -76,12 +76,12 @@ namespace FMS {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden chart;
         
         /// <summary>
-        /// text control.
+        /// driverInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label text;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl driverInfo;
     }
 }

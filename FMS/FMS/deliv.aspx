@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="deliv.aspx.cs" Inherits="FMS.deliv" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,5 +17,6 @@
         <input type="button" value="click me" onclick="foo('test')" />
     </div>
     <div id="theDiv"></div>
+    <asp:Label ID="text" runat="server" Text="Label"></asp:Label>
 </body>
 </html>
