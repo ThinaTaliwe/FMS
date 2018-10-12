@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AllDeliveries.aspx.cs" Inherits="FMS.AllDeliveries" %>
+﻿<%@ Page Title="All Deliveries" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AllDeliveries.aspx.cs" Inherits="FMS.AllDeliveries" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <section id="main-content">
 
@@ -21,7 +21,7 @@
                                         <th>Destination</th>
                                         <th>Start</th>
                                         <th>End</th>
-                                        <th>Details</th>
+                                        <th>View</th>
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
