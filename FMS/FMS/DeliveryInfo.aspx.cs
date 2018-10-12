@@ -22,8 +22,7 @@ namespace FMS
             d = Delivery.getInstance(Convert.ToInt32(id));
             viewDelivery(Convert.ToInt32(id));
             //Label1.Text = Delivery.ToString();
-            HTMLStr += "<tr> <td> Delivery ID : " + d.getID() + "</td> " +
-                        "</tr>" +
+            HTMLStr += 
                         "<tr><td> Delivery Truck : <a href='TruckInfo?id=" + d.getTruck().getID() + "'>" + d.getTruck().getID() + "</a>" +
                         "<tr><td> Delivery Driver : " + d.getDriver().getName() + "</td>" +
                         "</tr>" +

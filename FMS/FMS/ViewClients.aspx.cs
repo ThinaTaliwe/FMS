@@ -15,19 +15,18 @@ namespace FMS
             var query = "select id from Clients";
             var rows = Util.query(query);
             var HTMLStr = "";
-            List<string> lstIDs = new List<string>();
+            List<int> lstIDs = new List<int>();
             if (rows.HasRows)
             {
-                Response.Write("WE HAVE ROWS");
                 //Order.InnerHtml = rows.GetString(0);
                 while (rows.Read())
-                    lstIDs.Add(Convert.ToString(rows.GetInt32(0)));
-                Response.Write("WE HAVE IDS");
+                    lstIDs.Add(rows.GetInt32(0));
                 foreach (var id in lstIDs)
                 {
                     Client client = new Client(id);
-                    HTMLStr += "<tr> <td> <a href='ClientInfo?id=" + client.getID() + "></a></td> <td> " + client.getName() + "</td> <td> " + client.getCompany() + "</td> <td> " + client.getTelephone() + "</td> <td> " + client.getEmail() + "</td> <td> " + client.getLocation() + "</td> </tr>";
+                    HTMLStr += "<tr> <td> " + client.getName() + "</td> <td> " + client.getCompany() + "</td> <td> " + client.getTelephone() + "</td> <td> " + client.getEmail() + "</td> <td> " + client.getLocation() + "</td> </tr>";
                 }
+                Util.print(HTMLStr);
                 tables.InnerHtml = HTMLStr;
             }
         }

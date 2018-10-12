@@ -16,6 +16,7 @@ namespace FMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            date();
             string query = "select id from users where user_type like 'driver'";
             var drivers = Util.query(query);
             if (drivers.HasRows)
@@ -37,32 +38,43 @@ namespace FMS
                         driverList.Items.Add(new ListItem(driver.getName() + " " + driver.getSurname()));
                     }
                 }
-                viewHoursWorked();
+                string dr = Request.QueryString["id"];
+                if (!String.IsNullOrEmpty(dr))
+                {
+                    Driver Driv = new Driver(dr);
+                    driverList.SelectedValue = Driv.getName() + " " + Driv.getSurname();
+                }
+                report();
             }
         }
 
-        protected void ViewHours(object sender, EventArgs e) {
+        private void report()
+        {
             setSelectedText();
             var choice = driverList.SelectedValue.ToString();
-            if (choice == "Select a Driver")
+            if (choice == "All Drivers")
                 viewHoursWorked();
             else
             {
                 var parts = choice.Split(' ');
-                foreach(var driver in lstDrivers)
+                foreach (var driver in lstDrivers)
                 {
-                    if(driver.getName() == parts[0] && driver.getSurname() == parts[1])
+                    if (driver.getName() == parts[0] && driver.getSurname() == parts[1])
                     {
                         chartData.Value = "none";
                         var json = driver.summary(from, to);
                         var html = "<br/><br/>Driver: " + driver.getName() + "<br/>";
-                        html += "Total Distance Driven (km): " + json["km"];
-                        html += "Total Time on Road (hours): " + json["time"];
+                        html += "Total Distance Driven (km): " + json["km"] + "<br/>";
+                        html += "Total Time on Road (hours): " + json["time"] + "<br/>";
                         driverInfo.InnerHtml = html;
                         return;
                     }
                 }
             }
+        }
+
+        protected void ViewHours(object sender, EventArgs e) {
+            report();
         }
 
         private void setGraph(string title, string yAxisTitle, string legendText, List<string[]> values)
@@ -78,14 +90,21 @@ namespace FMS
             chartData.Value = data;
         }
 
-        private void viewHoursWorked() {
-            if(String.IsNullOrWhiteSpace(toDate.Value) || String.IsNullOrWhiteSpace(fromDate.Value)) {
+        private void date()
+        {
+            if (String.IsNullOrWhiteSpace(toDate.Value) || String.IsNullOrWhiteSpace(fromDate.Value))
+            {
                 to = DateTime.Now;
                 from = to.AddMonths(-1);
-            } else {
+            }
+            else
+            {
                 to = DateTime.Parse(toDate.Value);
                 from = DateTime.Parse(fromDate.Value);
             }
+        }
+
+        private void viewHoursWorked() {
             List<string[]> data = new List<string[]>();
             foreach (Driver driver in lstDrivers)
             {

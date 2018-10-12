@@ -27,30 +27,26 @@
 					</div>
 				</div>
   				<div class="panel-body">
-
-                      <table>
-                          <tbody>
+                      
+                            <table class="table" style="width: 95%; margin-right: 0px">
+                                <tbody>
+                                    <tr> 
+                                        <td style="width: 155px">From: </td> <td style="width: 177px"> <input class="form-control" type="date" id="fromDate" runat="server"></td>
+                                        <td style="width: 37px">To: </td> <td><input class="form-control" type="date" id="toDate" runat="server" style="width: 77%"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 155px; height: 46px">Driver: </td> <td style="width: 177px; height: 46px"> <asp:DropDownList ID="truckList" runat="server" CssClass="col-md-offset-0" Height="38px" Width="178px"></asp:DropDownList></td>
+                                    </tr>
                               <tr>
                                   <td>
-                                      From: <input class="form-control" type="date" id="fromDate" runat="server">
-                                  </td>
-                                  <td>
-                                      To:  <input class="form-control" type="date" id="toDate" runat="server">
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                      Truck:  <asp:DropDownList ID="truckList" runat="server"></asp:DropDownList>
-                                  </td>
-                              </tr>
-                              <tr>
                                    <label id="reportText" runat="server" />
+                                  </td>
                               </tr>
-                              <tr>
-                                  <asp:Button ID="view" runat="server" Text="View Kms Driven" OnClick="view_Click"  class="btn btn-default" />
-                              </tr>
-                          </tbody>
-                      </table>
+                                    <tr>
+                                        <td style="width: 155px"><asp:Button ID="View" runat="server" Text="View Report" OnClick="view_Click" class="btn btn-default" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
   						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
                         <div id="truckInfo" runat="server" ></div>
                      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

@@ -43,9 +43,9 @@ namespace FMS
             string id = Request.QueryString["id"];
             if(!String.IsNullOrEmpty(id))
             {
-                Response.Write("Selectetd truck: " + id);
+                truckList.SelectedValue = id;
             }
-            viewTruckRepot();
+            report();
         }
 
         public string[] truckReport(Truck theTruck)
@@ -59,19 +59,24 @@ namespace FMS
 
         protected void view_Click(object sender, EventArgs e)
         {
+            report();
+        }
+
+        private void report()
+        {
             var choice = truckList.SelectedValue.ToString();
-            if(choice == "All Trucks") 
+            if (choice == "All Trucks")
                 viewTruckRepot();
             else
             {
-                foreach(var truck in trucks)
+                foreach (var truck in trucks)
                 {
-                    if(truck.getID() == choice)
+                    if (truck.getID() == choice)
                     {
                         chartData.Value = "none";
                         var json = truck.summary(from, to);
                         var html = "<br/><br/>Truck: " + truck.getID() + "<br/>";
-                        html += "Total Distance Driven (km): " + json["km"];
+                        html += "Total Distance Driven (km): " + json["km"] + "<br/>";
                         var obj = json["material"];
                         html += "Coal Delivered: " + obj["Coal"] + "<br/>";
                         html += "Clinkers Delivered: " + obj["Clinkers"] + "<br/>";
@@ -82,11 +87,6 @@ namespace FMS
                     }
                 }
             }
-        }
-
-        private void reloadScript()
-        {
-            Page.ClientScript.RegisterStartupScript(GetType(), "graph", "load_graph();");
         }
 
         private void setGraph(string title, string yAxisTitle, string legendText, List<string[]> values)

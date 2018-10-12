@@ -21,7 +21,7 @@
             <TextView
                 android:id="@+id/routeText"
                 android:layout_width="217dp"
-                android:layout_height="285dp"
+                android:layout_height="485dp"
                 android:layout_centerInParent="true"
                 android:padding="25sp"
                 android:text="info goes here" />

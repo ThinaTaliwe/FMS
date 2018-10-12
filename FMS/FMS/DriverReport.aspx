@@ -38,7 +38,7 @@
                                         <td style="width: 155px; height: 46px">Driver: </td> <td style="width: 177px; height: 46px"> <asp:DropDownList ID="driverList" runat="server" CssClass="col-md-offset-0" Height="38px" Width="178px"></asp:DropDownList></td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 155px"><asp:Button ID="View" runat="server" Text="View Hours Driven" OnClick="ViewHours"  class="btn btn-default" /></td>
+                                        <td style="width: 155px"><asp:Button ID="View" runat="server" Text="View Report" OnClick="ViewHours" class="btn btn-default" /></td>
                                     </tr>
                                 </tbody>
                             </table>

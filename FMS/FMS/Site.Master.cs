@@ -26,9 +26,15 @@ namespace FMS
                 timer.Enabled = true;
                 timer.Interval = 30000;
             }
+            tick();
         }
 
         protected void timer_Tick(object sender, EventArgs e)
+        {
+            tick();
+        }
+
+        private void tick()
         {
             Util.print("tick()");
             string message = "";
@@ -59,8 +65,8 @@ namespace FMS
                     notif += "Found delivery site empty<br/>";
                     break;
             }
-            notif += "<input type=\"button\" onclick=\"view('"+ delivID +"')\" value=\"View\"/>";
-            notif += "<input type=\"button\" onclick=\"remove('" + delivID + "')\" value=\"Remove\"/>";
+            notif += "<input class=\"btn btn-default\"  type=\"button\" onclick=\"view('" + delivID +"')\" value=\"View\"/>";
+            notif += "<input class=\"btn btn-default\"  type=\"button\" onclick=\"remove('" + delivID + "')\" value=\"Remove\"/>";
             notif += "<hr/>";
             notif += "</div>";
             Util.print(notif);

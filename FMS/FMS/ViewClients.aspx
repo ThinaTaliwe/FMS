@@ -19,7 +19,6 @@
                                         <th> Telephone</th>
                                         <th> Email</th>
                                         <th> Location<th>
-                                        <th> ID</th>
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
