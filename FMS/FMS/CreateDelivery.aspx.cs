@@ -47,7 +47,6 @@ namespace FMS
                         Client.Items.Add(new ListItem(clients.GetString(0)));
                     }
                 }
-                Client.Items.Add(new ListItem("Other"));
                 Material.Items.Add(new ListItem("Coal"));
                 Material.Items.Add(new ListItem("Pozzsand"));
                 Material.Items.Add(new ListItem("Clinkers"));
@@ -85,7 +84,7 @@ namespace FMS
             String latlngOrigin = parseCoords(json["from_coords"].ToString()) + "#" + json["from_address"];
             String latlngDest = parseCoords(json["to_coords"].ToString()) + "#" + json["to_address"];
             var authority = Session["user"] as string;
-            Delivery delivery = new Delivery();
+            delivery = new Delivery();
             delivery.setOrderNum(OrderNum.Value);
             delivery.setTruck(TruckChosen.Value);
             delivery.setDriver(DriverID);
@@ -100,7 +99,7 @@ namespace FMS
             //var query = "INSERT INTO DELIVERY(ORDER_NUM, TRUCK, DRIVER, CLIENT, [FROM], [TO], MATERIAL, [LOAD], DEPART_DAY, AUTHORITY, distance) VALUES('" + OrderNum.Value + "', '" + TruckChosen.Value + "', '" + DriverID + "', '" + IDnow + "', '" + latlngOrigin + "', '" + latlngDest + "', '" + Material.Value + "', '" + Load.Value + "', '" + timeDate + "', '" + authority + "', " + json["distance"] + ");";
             //Util.query(query);
             delivery.save();
-
+            
             //send mail to client
             sendEmail(clientEmail); 
         }
@@ -112,7 +111,34 @@ namespace FMS
 
         private void sendEmail(string email)
         {
-          
+            SmtpClient client = new SmtpClient();
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = true;
+            client.Host = "smtp.gmail.com";
+            client.Port = 587;
+
+            // setup Smtp authentication
+            System.Net.NetworkCredential credentials =
+                new System.Net.NetworkCredential("khamorudu@gmail.com", "AndileAyanda123!");
+            client.UseDefaultCredentials = false;
+            client.Credentials = credentials;
+
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress("khamorudu@gmail.com");
+            msg.To.Add(new MailAddress("216090091@student.uj.ac.za"));
+
+            msg.Subject = "Details for upcoming delivery";
+            msg.IsBodyHtml = true;
+            msg.Body = string.Format("<html><head></head><body><b>Hi There </b> </br> Thank you for using new era commerce, you can get more information about the delivery and confirm once it has been delivered on the link below - just copy and paste it to your search engine: http://" + "localhost:53436/Client_Deliv?order=7788" + ""+ " </a> </ body > ");
+
+            try
+            {
+                client.Send(msg);
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Could not send the e-mail - error: " + ex.Message);
+            }
         }
     }
 }

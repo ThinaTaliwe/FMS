@@ -3,6 +3,8 @@
     <section id="main-content">
 
 
+           
+
             <section class="wrapper">
                 <div class="content-box-large">
                 <h3>All Clients</h3>
@@ -10,6 +12,7 @@
 
                     <div class="col-md-10">
                         <div class="content-panel">
+                            <hr>
                             <table class="table">
                                 <!-- Heading --> 
                                 <thead>
@@ -22,17 +25,13 @@
                                     </tr>
                                 </thead>
                                 <tbody runat="server" id="tables">
+                                    
                                 </tbody>
                             </table>
                         </div><! --/content-panel -->
                     </div><!-- /col-md-12 -->
-
-                    
                     </div><!-- /col-md-12 -->
                 </div><!-- row -->
-
-                
-
             </section><! --/wrapper -->
         </section><!-- /MAIN CONTENT -->
 </asp:Content>
